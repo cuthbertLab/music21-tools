@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Name:         trecento/cadencebook.py
 # Purpose:      classes for reading in trecento cadences from a MS Excel spreadsheet
 #
@@ -7,7 +7,7 @@
 #
 # Copyright:    Copyright © 2009, 2012 Michael Scott Cuthbert and the music21 Project
 # License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 '''
 The file trecento/cadences.xls contains (in a modified TinyNotation format) incipits
 and cadences for hundreds of trecento ballatas (in a sheet called "fischer_ballata")
@@ -63,7 +63,8 @@ class TrecentoSheet:
                 xbook = xlrd.open_workbook(str(self.filename))
             except IOError:
                 xbook = xlrd.open_workbook(str(common.getSourceFilePath()
-                                                        / 'alpha' / 'trecento'
+                                                        / 'alpha'
+                                                        / 'trecento'
                                                         / self.filename))
 
 
@@ -207,6 +208,8 @@ class BallataSheet(TrecentoSheet):
 
 class KyrieSheet(TrecentoSheet):
     sheetname = "kyrie"
+
+
 class GloriaSheet(TrecentoSheet):
     '''
     shortcut to a worksheet containing all the known 14th and early 15th c.
@@ -215,8 +218,6 @@ class GloriaSheet(TrecentoSheet):
 
 
     2011-August: all encoded except some very fragmentary pieces.
-
-
 
     >>> cadenceSpreadSheet = alpha.trecento.cadencebook.GloriaSheet()
     >>> gloriaNo20 = cadenceSpreadSheet.makeWork(20)
