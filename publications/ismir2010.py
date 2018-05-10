@@ -525,7 +525,8 @@ def demoBachSearch():
     import random
     from music21 import key
 
-    fpList = corpus.search('bach').search('.xml')
+    fpList = list(corpus.search('bach').search('.xml'))
+    
     random.shuffle(fpList)
     results = stream.Stream()
 
@@ -533,7 +534,8 @@ def demoBachSearch():
         print (fp.sourcePath)
         s = fp.parse()
         # get key, mode
-        key, mode = s.analyze('key')[:2]
+        key = s.analyze('key')
+        mode = key.mode
         if mode == 'minor':
             pFirst = []
             pLast = []
@@ -546,8 +548,8 @@ def demoBachSearch():
             cFirst = chord.Chord(pFirst)
             cFirst.quarterLength = 2
             cFirst.transpose(12, inPlace=True)
-            cFirst.addLyric(fn)
-            cFirst.addLyric('%s %s' % (key, mode))
+            cFirst.addLyric(str(fp.sourcePath))
+            cFirst.addLyric('%s' % (key,))
 
             cLast = chord.Chord(pLast)
             cLast.quarterLength = 2
@@ -671,9 +673,9 @@ if __name__ == "__main__":
     #beethovenSearch()
 
     #demoBachSearchBrief()
-
+    demoBachSearch()
     #demoGraphMessiaenBrief()
-    demoGraphMessiaen()
+    #demoGraphMessiaen()
 
 #------------------------------------------------------------------------------
 # eof
