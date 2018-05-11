@@ -47,13 +47,15 @@ def bachParallels():
 
                 jfn = c.parts[j].flat.notesAndRests.stream()
                 for k in range(len(omi) - 1):
-                    n1pi = omi[k]['element']
-                    n2pi = omi[k + 1]['element']
-                    n1pj = jfn.getElementsByOffset(offsetStart=omi[k]['endTime'] - .001,
-                                                   offsetEnd=omi[k]['endTime'] - .001,
+                    offsetThis = omi[k]
+                    offsetNext = omi[k + 1]
+                    n1pi = offsetThis.element
+                    n2pi = offsetNext.element
+                    n1pj = jfn.getElementsByOffset(offsetStart=offsetThis.endTime - .001,
+                                                   offsetEnd=offsetThis.endTime - .001,
                                                    mustBeginInSpan=False)[0]
-                    n2pj = jfn.getElementsByOffset(offsetStart=omi[k + 1]['offset'],
-                                                   offsetEnd=omi[k + 1]['offset'],
+                    n2pj = jfn.getElementsByOffset(offsetStart=offsetNext.offset,
+                                                   offsetEnd=offsetNext.offset,
                                                    mustBeginInSpan=False)[0]
                     if n1pj is n2pj:
                         continue # no oblique motion

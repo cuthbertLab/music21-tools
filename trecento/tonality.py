@@ -25,7 +25,7 @@ too often.
 import unittest
 from collections import defaultdict
 
-from music21.alpha.trecento import cadencebook
+from . import cadencebook
 
 class TonalityCounter:
     '''

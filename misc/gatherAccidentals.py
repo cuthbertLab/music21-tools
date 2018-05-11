@@ -5,7 +5,7 @@
 #
 # Authors:      Hugh Zabriskie
 #
-# Copyright:    Copyright © 2015 Michael Scott Cuthbert and the music21 Project
+# Copyright:    Copyright © 2015, 2018 Michael Scott Cuthbert and the music21 Project
 # License:      BSD or LGPL, see license.txt
 #--------------------------------------------------------
 '''
@@ -89,7 +89,7 @@ def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
     >>> from pprint import pprint
     >>> from music21 import *
     >>> s1 = stream.Stream()
-    >>> demos.gatherAccidentals.getAccidentalCount(s1)
+    >>> getAccidentalCount(s1)
     {}
 
     >>> s2 = stream.Stream()
@@ -98,13 +98,13 @@ def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
     >>> note3 = note.Note("D-4")
     >>> for note in [note1, note2, note3]:
     ...    s2.append(note)
-    >>> pprint(demos.gatherAccidentals.getAccidentalCount(s2))
+    >>> pprint(getAccidentalCount(s2))
     {'flat': 1, 'sharp': 1}
-    >>> pprint(demos.gatherAccidentals.getAccidentalCount(s2, True))
+    >>> pprint(getAccidentalCount(s2, True))
     {'flat': 1, 'natural': 1, 'sharp': 1}
 
     >>> s = corpus.parse('bach/bwv66.6')
-    >>> demos.gatherAccidentals.getAccidentalCount(s)
+    >>> getAccidentalCount(s)
     {'sharp': 87}
 
     '''
@@ -139,14 +139,14 @@ def getAccidentalCountSum(scores, includeNonAccidentals=False, excludeZeros=True
     >>> s1.append(note.Note('C4'))
     >>> s2 = stream.Score()         # all types of streams are valid
     >>> s2.append(note.Note('C#4'))
-    >>> demos.gatherAccidentals.getAccidentalCountSum([s1, s2])
+    >>> getAccidentalCountSum([s1, s2])
     {'sharp': 1}
-    >>> pprint(demos.gatherAccidentals.getAccidentalCountSum([s1, s2], True))
+    >>> pprint(getAccidentalCountSum([s1, s2], True))
     {'natural': 1, 'sharp': 1}
 
     >>> s3 = corpus.parse('bach/bwv7.7')
     >>> s4 = corpus.parse('bach/bwv66.6')
-    >>> pprint(demos.gatherAccidentals.getAccidentalCountSum([s3, s4], True))
+    >>> pprint(getAccidentalCountSum([s3, s4], True))
     {'natural': 324, 'sharp': 195}
     '''
     tally = _initializeTally()
@@ -168,7 +168,7 @@ def _initializeTally():
     Private method.
     TODO: change to pitch.Accidental.listNames()
 
-    >>> accidentalTally = demos.gatherAccidentals._initializeTally()
+    >>> accidentalTally = _initializeTally()
     >>> from pprint import pprint as pp
     >>> pp(accidentalTally)
     {'double-flat': 0,
@@ -199,7 +199,7 @@ def _deleteZeros(tally, excludeZeros):
 
     >>> from pprint import pprint
     >>> dict = {'a': 5, 'b': 3, 'c': 0}
-    >>> pprint(demos.gatherAccidentals._deleteZeros(dict, True))
+    >>> pprint(_deleteZeros(dict, True))
     {'a': 5, 'b': 3}
     '''
     if excludeZeros:
@@ -282,5 +282,5 @@ class TestSlow(unittest.TestCase):
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test) # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
+    music21.mainTest(Test, 'moduleRelative') # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
 

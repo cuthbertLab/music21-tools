@@ -6,7 +6,7 @@
 #
 # Authors:      Michael Scott Cuthbert
 #
-# Copyright:    Copyright © 2011 Michael Scott Cuthbert and the music21 Project
+# Copyright:    Copyright © 2011, 2018 Michael Scott Cuthbert and the music21 Project
 # License:      BSD or LGPL, see license.txt
 #-------------------------------------------------------------------------------
 
@@ -58,13 +58,12 @@ def generateToneRows(numberToGenerate=1000, cardinality=12):
     '''
     generates a list of random 12-tone rows.
 
-    >>> from music21.demos import eschbeg
-    >>> #_DOCS_SHOW eschbeg.generateToneRows(4)
+    >>> #_DOCS_SHOW generateToneRows(4)
     ['T310762985E4', '9E036T472158', '5879E3T12064', '417T26E95038']
 
     generate random 3-note sets:
 
-    >>> #_DOCS_SHOW eschbeg.generateToneRows(4, 3)
+    >>> #_DOCS_SHOW generateToneRows(4, 3)
     ['840', 'T61', 'T10', '173']
     '''
     allNotes = "0123456789TE"
@@ -80,8 +79,7 @@ def generateRandomRows(numberToGenerate=1000):
     generates random rows which might have the
     same note twice, but never twice in a row.
 
-    >>> from music21.demos import eschbeg
-    >>> #_DOCS_SHOW eschbeg.generateRandomRows(4)
+    >>> #_DOCS_SHOW generateRandomRows(4)
     ['67051534121', '05874071696', 'E082T6569674', '4E8383E4E395']
     '''
     returnRows = []
@@ -138,8 +136,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
     in the ESCHBEG set and two other trichords (037 = major/minor triad; 048 = augmented triad)
     appear just as often.
 
-    >>> from music21.demos import eschbeg
-    >>> print(eschbeg.findEmbeddedChords("0234589"))
+    >>> print(findEmbeddedChords("0234589"))
     [012]: (234) (345)
     [013]: (235)
     [023]: (023) (245)
@@ -164,7 +161,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
 
     This is the all trichord hexachord:
 
-    >>> print(eschbeg.findEmbeddedChords("012478", skipInverse=True))
+    >>> print(findEmbeddedChords("012478", skipInverse=True))
     [012]: (012)
     [013]: (124)
     [014]: (014)
@@ -180,7 +177,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
 
     But it does not contain every inversion:
 
-    >>> print(eschbeg.findEmbeddedChords("012478"))
+    >>> print(findEmbeddedChords("012478"))
     [012]: (012)
     [013]: (124)
     [023]:
@@ -261,14 +258,14 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
     There are 39 chords in that list, but #0 is blank, so that you can reference them by
     conventional Forte numbers.  Thus there are 38 in actuality.
 
-    >>> allTrichordAndInversionHeptachords = demos.eschbeg.uniquenessOfEschbeg()
+    >>> allTrichordAndInversionHeptachords = uniquenessOfEschbeg()
     >>> len(allTrichordAndInversionHeptachords)
     16
 
     So almost half of all heptachords have a complete set of trichords and inversions. How many
     have all trichords without inversion?
 
-    >>> len(demos.eschbeg.uniquenessOfEschbeg(skipInverse=True))
+    >>> len(uniquenessOfEschbeg(skipInverse=True))
     18
 
     So, not too many more.
@@ -277,17 +274,17 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
 
     Is there an all-tetrachord heptachord?
 
-    >>> len(demos.eschbeg.uniquenessOfEschbeg(searchCardinality=4, skipInverse=True))
+    >>> len(uniquenessOfEschbeg(searchCardinality=4, skipInverse=True))
     0
 
     Nope.  What about octachord?
 
-    >>> len(demos.eschbeg.uniquenessOfEschbeg(cardinality=8, searchCardinality=4, skipInverse=True))
+    >>> len(uniquenessOfEschbeg(cardinality=8, searchCardinality=4, skipInverse=True))
     2
 
     Yep! what are they?
 
-    >>> demos.eschbeg.uniquenessOfEschbeg(cardinality=8, searchCardinality=4, skipInverse=True)
+    >>> uniquenessOfEschbeg(cardinality=8, searchCardinality=4, skipInverse=True)
     ['01234689', '01235679']
 
     Notice that they're the complement sets of the all-interval tetrachords 0146 and 0137!
@@ -297,12 +294,12 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
     >>> numOctochords = len(chord.tables.FORTE[8]) - 1
     >>> numOctochords
     29
-    >>> len(demos.eschbeg.uniquenessOfEschbeg(cardinality=8, searchCardinality=3, skipInverse=True))
+    >>> len(uniquenessOfEschbeg(cardinality=8, searchCardinality=3, skipInverse=True))
     22
 
     Nope.  Seven are not.  We can see them by reversing showMatching
 
-    >>> demos.eschbeg.uniquenessOfEschbeg(cardinality=8, searchCardinality=3, skipInverse=True,
+    >>> uniquenessOfEschbeg(cardinality=8, searchCardinality=3, skipInverse=True,
     ...                                   showMatching=False)
     ['01234567', '01235678', '01236789', '02345679', '01234679', '0123578T', '0134679T']
 
@@ -331,7 +328,7 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest()
+    music21.mainTest('moduleRelative')
 
     #print findEmbeddedChords(cardinality=5)
     #p, t = priorProbability(100000, enforce12Tone=False)

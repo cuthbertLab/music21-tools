@@ -4,13 +4,13 @@ Python script to find out certain statistics about the trecento cadences
 '''
 
 import unittest
-from music21.alpha import trecento
+from . import cadencebook
 
 def countTimeSig():
     '''
     counts how many time signatures of each type appear
     '''
-    ballataObj = trecento.cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
 
     timeSigCounter = {}
     totalPieces = 0.0
@@ -34,8 +34,6 @@ def countTimeSig():
 def sortByPMFC(work):
     '''
     Sort a work according to which one comes first in PMFC:
-
-    >>> from music21.alpha.trecento.runTrecentoCadence import sortByPMFC
 
     >>> class Work:
     ...    def __init__(self, id):
@@ -65,7 +63,7 @@ def makePDFfromPieces(start=1, finish=2):
     >>> #_DOCS_SHOW makePDFfromPieces(200, 209)
     '''
     from music21 import stream
-    ballataObj = music21.trecento.cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
     for i in range(start, finish):  ## some random pieces
@@ -105,7 +103,7 @@ def makePDFfromPieces(start=1, finish=2):
 #    lStr.runThroughLily()
 
 def makePDFfromPiecesWithCapua(start=2, finish=3):
-    ballataObj = music21.trecento.cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
     for i in range(start, finish):  ## some random pieces
@@ -150,7 +148,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
 
 
 def checkValidity():
-    ballataObj = music21.trecento.cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
 
     for i in range(1,378):
         randomPiece = ballataObj.makeWork(i) #random.randint(231, 312)
@@ -178,7 +176,7 @@ class Test(unittest.TestCase):
 if __name__ == "__main__":
     #makePDFfromPiecesWithCapua()
     import music21
-    music21.mainTest(Test)
+    music21.mainTest(Test, 'moduleRelative')
 
 
 #------------------------------------------------------------------------------

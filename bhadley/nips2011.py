@@ -5,13 +5,15 @@ Methods used to create the data in the NIPS2011 paper.
 
 import json
 try:
-    import orange, orngTree
+    import Orange as orange
 except ImportError:
     if __name__ == '__main__':
         print("Orange must be installed to run this.")
         exit()
     orange = None
-    orngTree = None
+    orngTree = None 
+
+orngTree = orange.classification.tree
 
 try:
     import BeautifulSoup
@@ -96,8 +98,8 @@ def nipsEvalFine():
 
     Coarse evaluations worked much better
     '''
-    data1 = orange.ExampleTable('d:/desktop/year1.tab')
-    data2 = orange.ExampleTable('d:/desktop/year2.tab')
+    data1 = orange.data.table.Table('d:/desktop/year1.tab')
+    data2 = orange.data.table.Table('d:/desktop/year2.tab')
 
     learners = {}
     learners['maj'] = orange.MajorityLearner
@@ -127,8 +129,8 @@ def nipsEvalCoarse():
 
     Worked rather well...
     '''
-    data1 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year5-ourExtractors-1.tab')
-    data2 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year6-ourExtractors-2.tab')
+    data1 = orange.data.table.Table('d:/docs/research/music21/nips-2011/year5-ourExtractors-1.tab')
+    data2 = orange.data.table.Table('d:/docs/research/music21/nips-2011/year6-ourExtractors-2.tab')
 
     #data1 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year7-midi-only-1.tab')
     #data2 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year8-midi-only-2.tab')

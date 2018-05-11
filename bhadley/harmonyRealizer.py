@@ -212,7 +212,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         output = generateContrapuntalBassLine(smoothBassCS, generatePopSongRules())
         mergeLeadSheetAndBassLine(testFile1, output).show()
 
-    def testRealizeLeadsheet(self, music21Stream):
+    def xtestRealizeLeadsheet(self, music21Stream):
         '''
         Example realization (using fbRealizer - chordSymbols flavor) of any leadsheet
         converted to a music21Stream

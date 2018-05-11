@@ -38,7 +38,7 @@ def rhythmLine(baseNote=None, minLength=8.0, maxProbability=0.5):
             direction = -1
         while y < currentProbability:
 #            print(x, currentProbability)
-            newNote.ps += direction
+            newNote.pitch.ps += direction
             currentProbability *= 0.75
             y = random.random()
 

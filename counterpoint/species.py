@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-alpha.counterpoint.species -- set of tools for dealing with Species Counterpoint and
+species -- set of tools for dealing with Species Counterpoint and
 later other forms of counterpoint.
 
 Mostly coded by Jackie Rogoff -- some routines have been moved to
@@ -47,6 +47,7 @@ class ModalCounterpoint:
         any note that has harmonic interval of a fifth and is preceded by a
         harmonic interval of a fifth.
 
+        >>> from music21 import note, stream
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
         >>> n3 = note.Note('B3')
@@ -60,7 +61,7 @@ class ModalCounterpoint:
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
 
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.findParallelFifths(cp.stream1, cp.stream2)
         3
         >>> n1.editorial.harmonicInterval.name
@@ -93,6 +94,7 @@ class ModalCounterpoint:
         where the two streams reach a fifth through parallel motion, but is
         not a parallel fifth.
 
+        >>> from music21 import note, stream
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
         >>> n3 = note.Note('B3')
@@ -105,7 +107,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.findHiddenFifths(cp.stream1, cp.stream2)
         2
         >>> n2.editorial['hiddenFifth']
@@ -132,13 +134,13 @@ class ModalCounterpoint:
         (i.e. argument order is isParallelFifth(v1n1, v1n2, v2n1, v2n2)),
         returns True if the two harmonic intervals are P5 and False otherwise.
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('B-3')
         >>> m1 = note.Note('D4')
         >>> m2 = note.Note('F4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isParallelFifth(n1, m1, n2, m2) #(n1, n2) and (m1, m2) are chords
         False
         >>> cp.isParallelFifth(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
@@ -162,11 +164,13 @@ class ModalCounterpoint:
         is isHiddenFifth(v1n1, v1n2, v2n1, v2n2)), returns True if
         there is a hidden fifth and false otherwise.
 
+        >>> from music21 import note, stream
+
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('B-3')
         >>> m1 = note.Note('E4')
         >>> m2 = note.Note('F4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isHiddenFifth(n1, m1, n2, m2) #(n1, n2) and (m1, m2) are chords
         False
         >>> cp.isHiddenFifth(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
@@ -203,6 +207,8 @@ class ModalCounterpoint:
         any note that has harmonic interval of an octave and is preceded by a
         harmonic interval of an octave.
 
+        >>> from music21 import note, stream
+
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
         >>> n3 = note.Note('B3')
@@ -215,7 +221,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.findParallelOctaves(cp.stream1, cp.stream2)
         3
         >>> n2.editorial.parallelOctave
@@ -256,6 +262,7 @@ class ModalCounterpoint:
         but is not a parallel octave.
 
 
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('F3')
         >>> n2 = note.Note('A3')
@@ -271,7 +278,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.findHiddenOctaves(cp.stream1, cp.stream2)
         2
         >>> n2.editorial.hiddenOctave
@@ -302,13 +309,14 @@ class ModalCounterpoint:
         isParallelOctave(v1n1, v1n2, v2n1, v2n2)), returns True if the two
         harmonic intervals are P8 and False otherwise.
 
+        >>> from music21 import note, stream
 
 
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
         >>> m1 = note.Note('A4')
         >>> m2 = note.Note('B-4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isParallelOctave(n1, m1, n2, m2) #(n1, n2) and (m1, m2) are chords
         False
         >>> cp.isParallelOctave(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
@@ -335,12 +343,13 @@ class ModalCounterpoint:
         returns True if there is a hidden octave and false otherwise.
 
 
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
         >>> m1 = note.Note('F4')
         >>> m2 = note.Note('B-4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isHiddenOctave(n1, m1, n2, m2) #(n1, n2) and (m1, m2) are chords
         False
         >>> cp.isHiddenOctave(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
@@ -375,6 +384,7 @@ class ModalCounterpoint:
         assigns a flag under note.editorial["parallelUnison"] for
         any note that has harmonic interval of P1 and is preceded by a P1.
 
+        >>> from music21 import note, stream
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
         >>> n3 = note.Note('B4')
@@ -387,7 +397,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.findParallelUnisons(cp.stream1, cp.stream2)
         3
         >>> n2.editorial.parallelUnison
@@ -421,11 +431,13 @@ class ModalCounterpoint:
         isParallelFifth(v1n1, v1n2, v2n1, v2n2)) returns True if the two
         harmonic intervals are P1 and False otherwise.
 
+        >>> from music21 import note, stream
+
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
         >>> m1 = note.Note('A3')
         >>> m2 = note.Note('B-3')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isParallelUnison(n1, m1, n2, m2) #(n1, n2) and (m1, m2) are chords
         False
         >>> cp.isParallelUnison(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
@@ -451,12 +463,11 @@ class ModalCounterpoint:
         "legal" according to 21M.301 rules of counterpoint. Legal harmonic
         intervals include 'P1', 'P5', 'P8', 'm3', 'M3', 'm6', and 'M6'.
 
-
-
+        >>> from music21 import note, stream
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
         >>> e = note.Note('E4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isValidHarmony(c, d)
         False
         >>> cp.isValidHarmony(c, c)
@@ -479,13 +490,13 @@ class ModalCounterpoint:
         'm6', and 'M6', from before. 'P4' is now included because it is legal
         for middle harmonies.
 
-
+        >>> from music21 import note, stream
 
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
         >>> e = note.Note('E4')
         >>> f = note.Note('F4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isValidMiddleHarmony(c, d)
         False
         >>> cp.isValidMiddleHarmony(c, c)
@@ -508,7 +519,7 @@ class ModalCounterpoint:
         include 'P1', 'P5', 'P8', 'm3', 'M3', 'm6', and 'M6'. Also assumes that
         final interval must be a perfect unison or octave.
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -522,7 +533,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=sop, stream2=bass)
+        >>> cp = ModalCounterpoint(stream1=sop, stream2=bass)
         >>> cp.allValidHarmony(cp.stream1, cp.stream2)
         False
         >>> n4.name = 'C4'
@@ -566,7 +577,7 @@ class ModalCounterpoint:
         middle voices, 'P4' is also allowed and the final interval is allowed
         to be a fifth.
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -580,7 +591,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.allValidHarmonyMiddleVoices(cp.stream1, cp.stream2)
         True
         >>> n1.name = 'F#4'
@@ -608,6 +619,7 @@ class ModalCounterpoint:
         '''Given two simultaneous streams, counts the number of notes (in the
         first stream given) that create illegal harmonies when attacked.
 
+        >>> from music21 import note, stream
 
 
         >>> n1 = note.Note('G4')
@@ -622,7 +634,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.countBadHarmonies(cp.stream1, cp.stream2)
         0
         >>> n1.name = 'F#4'
@@ -643,13 +655,13 @@ class ModalCounterpoint:
         include 'P4', 'P5', 'P8', 'm2', 'M2', 'm3', 'M3', and 'm6'.
 
         SHOULD BE RENAMED isValidMelody?
-
-
+        
+        >>> from music21 import note, stream
 
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
         >>> e = note.Note('E#4')
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint()
+        >>> cp = ModalCounterpoint()
         >>> cp.isValidStep(c, d)
         True
         >>> cp.isValidStep(c, c)
@@ -671,7 +683,7 @@ class ModalCounterpoint:
 
         SHOULD BE RENAMED allValidMelody?
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('G-4')
         >>> n2 = note.Note('A4')
@@ -685,7 +697,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.isValidMelody(cp.stream1)
         False
         >>> n1.name = 'F#4'
@@ -705,7 +717,7 @@ class ModalCounterpoint:
 
         SHOULD BE RENAMED countBadMelodies?
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('G-4')
         >>> n2 = note.Note('A4')
@@ -719,7 +731,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.countBadSteps(cp.stream1)
         2
         >>> n1.name = 'F#4'
@@ -743,6 +755,8 @@ class ModalCounterpoint:
         and also puts the appropriate tags in note.editorial under
         `.parallelFifth` and `.hiddenFifth`.
 
+        >>> from music21 import note, stream
+
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('D4')
         >>> n3 = note.Note('E4')
@@ -755,7 +769,7 @@ class ModalCounterpoint:
         >>> m4 = note.Note('C5')
         >>> s2 = stream.Stream()
         >>> s2.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(s1, s2)
+        >>> cp = ModalCounterpoint(s1, s2)
         >>> cp.findAllBadFifths(cp.stream1, cp.stream2)
         2
         '''
@@ -767,6 +781,8 @@ class ModalCounterpoint:
         '''Given two streams, returns the total parallel and hidden octaves,
         and also puts the appropriate tags in note.editorial under
         `.parallelOctave` and `.hiddenOctave`.
+
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('D4')
@@ -780,7 +796,7 @@ class ModalCounterpoint:
         >>> m4 = note.Note('F5')
         >>> s2 = stream.Stream()
         >>> s2.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(s1, s2)
+        >>> cp = ModalCounterpoint(s1, s2)
         >>> cp.findAllBadOctaves(cp.stream1, cp.stream2)
         2
 
@@ -794,8 +810,7 @@ class ModalCounterpoint:
         number of consecutive harmonic thirds exceeds the limit and False
         otherwise.
 
-
-
+        >>> from music21 import note, stream
         >>> n1 = note.Note('E4')
         >>> n2 = note.Note('F4')
         >>> n3 = note.Note('G4')
@@ -808,7 +823,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.tooManyThirds(cp.stream1, cp.stream2)
         True
         >>> cp.tooManyThirds(cp.stream1, cp.stream2, 4)
@@ -864,8 +879,7 @@ class ModalCounterpoint:
         number of consecutive harmonic sixths exceeds the limit and False
         otherwise.
 
-
-
+        >>> from music21 import note, stream
         >>> n1 = note.Note('E4')
         >>> n2 = note.Note('F4')
         >>> n3 = note.Note('G4')
@@ -878,7 +892,7 @@ class ModalCounterpoint:
         >>> bass.append([n1, n2, n3, n4])
         >>> sop = stream.Stream()
         >>> sop.append([m1, m2, m3, m4])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(stream1=bass, stream2=sop)
+        >>> cp = ModalCounterpoint(stream1=bass, stream2=sop)
         >>> cp.tooManySixths(cp.stream1, cp.stream2)
         True
         >>> cp.tooManySixths(cp.stream1, cp.stream2, 4)
@@ -935,7 +949,7 @@ class ModalCounterpoint:
         stream that raises all the leading tones of the original stream. Also
         raises the sixth if applicable to avoid augmented intervals.
 
-
+        >>> from music21 import note, stream
 
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('G4')
@@ -950,7 +964,7 @@ class ModalCounterpoint:
         >>> s2 = stream.Stream()
         >>> s1.append([n1, n2, n3, n4, n5, n6, n7, n8, n9])
         >>> s2.append([n1, n2, n3, n4, n5, n6, n7, n8, n9])
-        >>> cp = alpha.counterpoint.species.ModalCounterpoint(s1, s2)
+        >>> cp = ModalCounterpoint(s1, s2)
         >>> aMinor = scale.MinorScale(n3)
         >>> s2 = cp.raiseLeadingTone(s1, aMinor)
         >>> s2.notes[1].name
@@ -1614,7 +1628,7 @@ def getRandomCF(mode=None):
 
 
 
-    >>> cf = alpha.counterpoint.species.getRandomCF()
+    >>> cf = getRandomCF()
     >>> sorted(list(cf.keys()))
     ['mode', 'notes']
     >>> isinstance(cf['notes'], str)
@@ -1694,7 +1708,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test)
+    music21.mainTest(Test, 'moduleRelative')
 
 
 #------------------------------------------------------------------------------

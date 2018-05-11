@@ -11,7 +11,7 @@ from music21 import chord
 from music21 import stream
 from music21 import harmony
 from music21 import scale
-from music21.alpha.theoryAnalysis import theoryAnalyzer
+from ..theoryAnalysis import theoryAnalyzer
 
 
 

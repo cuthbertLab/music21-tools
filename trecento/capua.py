@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #-------------------------------------------------------------------------------
-# Name:         demos.trecento.capua.py
+# Name:         py
 # Purpose:      The regola of Nicolaus de Capua for Musica Ficta
 #
 # Authors:      Michael Scott Cuthbert
@@ -25,7 +25,7 @@ harmonic problems in the music.
 import unittest
 
 from music21 import exceptions21
-from music21.alpha.trecento import cadencebook
+from . import cadencebook
 from music21 import stream
 from music21 import note
 from music21 import pitch
@@ -61,12 +61,12 @@ def applyCapuaToCadencebookWork(thisWork):
 
     >>> import copy
 
-    >>> b = alpha.trecento.cadencebook.BallataSheet().makeWork(331) # Francesco, Non Creder Donna
+    >>> b = cadencebook.BallataSheet().makeWork(331) # Francesco, Non Creder Donna
     >>> bOrig = copy.deepcopy(b)
-    >>> demos.trecento.capua.applyCapuaToCadencebookWork(b)
+    >>> applyCapuaToCadencebookWork(b)
     >>> bFN = b.asScore().flat.notes
     >>> for n in bFN:
-    ...    demos.trecento.capua.capuaFictaToAccidental(n)
+    ...    capuaFictaToAccidental(n)
     >>> bOrigFN = bOrig.asScore().flat.notes
     >>> for i in range(len(bFN)):
     ...    if bFN[i].pitch != bOrigFN[i].pitch:
@@ -556,12 +556,12 @@ def compareThreeFictas(srcStream1, srcStream2):
     srcStream1 and srcStream2 should be .flat.notesAndRests
 
 
-    >>> b = alpha.trecento.cadencebook.BallataSheet().makeWork(331).asScore()
+    >>> b = cadencebook.BallataSheet().makeWork(331).asScore()
     >>> #_DOCS_SHOW b.show()
     >>> b0n = b.parts[0].flat.notesAndRests.stream()
     >>> b1n = b.parts[1].flat.notesAndRests.stream()
-    >>> demos.trecento.capua.applyCapuaToStream(b0n)
-    >>> demos.trecento.capua.compareThreeFictas(b0n, b1n)
+    >>> applyCapuaToStream(b0n)
+    >>> compareThreeFictas(b0n, b1n)
     >>> for n in b0n:
     ...    pass
 
@@ -812,7 +812,7 @@ def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
 #    >>> foundPieceOpus.show('lily.pdf')
 
-#    >>> #_DOCS_SHOW (totalDict, foundPieceOpus) = demos.trecento.capua.correctedMin6()
+#    >>> #_DOCS_SHOW (totalDict, foundPieceOpus) = correctedMin6()
 #    >>> totalDict = {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, #_DOCS_HIDE
 #    ...    'capuaNotPmfc': 27, 'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82} #_DOCS_HIDE
 #    >>> pp(totalDict)
@@ -925,7 +925,7 @@ def improvedHarmony(startPiece=2, endPiece=459):
     Returns a dict showing the results
 
 
-    >>> #_DOCS_SHOW demos.trecento.capua.improvedHarmony()
+    >>> #_DOCS_SHOW improvedHarmony()
     >>> print("{'imperfCapua': 22, 'imperfIgnored': 155, " + #_DOCS_HIDE
     ...    "'perfCapua': 194, 'perfIgnored': 4057}") #_DOCS_HIDE
     {'imperfCapua': 22, 'imperfIgnored': 155, 'perfCapua': 194, 'perfIgnored': 4057}

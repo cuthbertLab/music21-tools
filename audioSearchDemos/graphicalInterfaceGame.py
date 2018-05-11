@@ -14,7 +14,7 @@
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 import math
-from music21.demos.audioSearchDemos import repetitionGame
+import repetitionGame
 
 import tkinter #  @UnresolvedImport @Reimport
 

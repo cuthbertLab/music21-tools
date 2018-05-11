@@ -126,16 +126,14 @@ def prependBlankMeasures(myStream, measuresToAppend=1, *, inPlace=False):
     adds one (default) or more blank measures (filled with
     rests) to be beginning of myStream
 
-
-    >>> from music21.alpha.trecento import quodJactatur
-    >>> qj = quodJactatur.getQJ()
+    >>> qj = getQJ()
     >>> qj.duration.quarterLength
     70.0
     >>> qj.flat.notesAndRests[0]
     <music21.note.Note C>
     >>> len(qj.getElementsByClass(stream.Measure))
     35
-    >>> qj2 = quodJactatur.prependBlankMeasures(qj, 10, inPlace=False)
+    >>> qj2 = prependBlankMeasures(qj, 10, inPlace=False)
     >>> qj2.duration.quarterLength
     90.0
     >>> qj2.flat.notesAndRests[0]
@@ -192,8 +190,7 @@ def getQJ():
     loads Quod Jactatur from the corpus, transposes it to
     an easy to view range and stores it in the cache.
 
-    >>> from music21.alpha.trecento import quodJactatur
-    >>> qj = quodJactatur.getQJ()
+    >>> qj = getQJ()
     >>> qj.flat.notesAndRests[0]
     <music21.note.Note C>
     '''
@@ -492,7 +489,7 @@ class Test(unittest.TestCase):
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest()
+    music21.mainTest('moduleRelative')
 #    bentWolfSolution()
 #    possibleSolution()
 #    findRetrogradeVoices()

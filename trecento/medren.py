@@ -28,7 +28,6 @@ from music21 import note
 from music21 import pitch
 from music21 import stream
 from music21 import tempo
-from music21.alpha import trecento
 
 from music21 import environment
 environLocal = environment.Environment('medren')
@@ -361,7 +360,7 @@ class GeneralMensuralNote(base.Music21Object):
         >>> from music21.alpha import trecento
 
         >>> s = stream.Stream()
-        >>> s.append(trecento.notation.Divisione('.p.'))
+        >>> s.append(notation.Divisione('.p.'))
         >>> for i in range(3):
         ...    s.append(medren.MensuralNote('A', 'SB'))
         >>> s.append(trecento.notation.Punctus())
@@ -674,7 +673,7 @@ class MensuralNote(GeneralMensuralNote, note.Note):
 
     # scaling?
     def __init__(self, *arguments, **keywords):
-        note.Note.__init__(self, *arguments, **keywords) # do not replace with super
+        note.Note.__init__(self, **keywords) # do not replace with super
         GeneralMensuralNote.__init__(self) # due to different arguments, keywords
         self._gettingDuration = False
         self._mensuralType = 'brevis'
@@ -712,15 +711,12 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         Only pitch is shown as a test. For other cases, please see the docs for
         :meth:``music21.medren.GeneralMensuralNote.__eq__``
 
-        >>> from music21.alpha import medren
-        >>> from music21.alpha import trecento
-
-        >>> m = medren.MensuralNote('A', 'minima')
-        >>> n = medren.MensuralNote('B', 'minima')
+        >>> m = MensuralNote('A', 'minima')
+        >>> n = MensuralNote('B', 'minima')
         >>> m == n
         False
         >>> s_2 = stream.Stream()
-        >>> s_2.append(trecento.notation.Divisione('.q.'))
+        >>> s_2.append(notation.Divisione('.q.'))
         >>> s_2.append(m)
         >>> s_2.append(n)
         >>> m == n
@@ -2173,7 +2169,7 @@ def testStretto():
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test) #TestExternal)
+    music21.mainTest(Test, 'moduleRelative') #TestExternal)
     #music21.medren.testConvertMensuralMeasure()
 #    almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') #liber 277 (pdf401)
 #    puer = converter.parse('G4 d d d e d c c d c e d d', '4/4') # puer natus est 408 (pdf 554)

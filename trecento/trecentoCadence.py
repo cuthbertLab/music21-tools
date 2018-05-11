@@ -42,7 +42,7 @@ class CadenceConverter(tinyNotation.Converter):
     Subclass of Tiny Notation that calls these tokens instead of the defaults
 
 
-    >>> dLucaGloriaIncipit = alpha.trecento.trecentoCadence.CadenceConverter(
+    >>> dLucaGloriaIncipit = CadenceConverter(
     ...     "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
     >>> dLucaGloriaIncipit.rightBarline = 'final'
     >>> dLucaGloriaIncipit.elements
@@ -111,7 +111,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test)
+    music21.mainTest(Test, 'moduleRelative')
 
 #------------------------------------------------------------------------------
 # eof

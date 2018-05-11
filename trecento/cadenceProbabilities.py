@@ -5,7 +5,7 @@ Module to determine how often we would expect to have Francesco\'s cadences happ
 from collections import defaultdict
 #import random
 
-from music21.alpha.trecento import cadencebook
+from . import cadencebook
 
 #def getRandomIncipitNote(p):
 #    probabilities = []

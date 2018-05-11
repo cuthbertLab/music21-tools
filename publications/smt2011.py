@@ -17,10 +17,6 @@ from music21 import environment, corpus
 _MOD = 'demo/smt2011.py'
 environLocal = environment.Environment(_MOD)
 
-
-
-
-
 def ex01():
     # beethoven
     #s1 = corpus.parse('opus18no1/movement3.xml')
@@ -145,16 +141,14 @@ def exShenker():
     analysis.insert(0, chordReduction)
     analysis.show()
 
-
-
-
 def demoMakeChords():
     # wtc no 1
     #src = corpus.parse('bwv65.2').measures(0, 5)
     src = corpus.parse('opus18no1/movement3.xml').measures(0, 10)
-    src.flattenParts().makeChords(minimumWindowSize=3).show()
-
-
+    c = src.flattenParts().makeChords(minimumWindowSize=3)
+    print(c.write())
+    c.show()
+    
     src = corpus.parse('opus18no1/movement3.xml').measures(0, 10)
     src.chordify().show()
 

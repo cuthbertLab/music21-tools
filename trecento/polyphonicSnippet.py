@@ -29,10 +29,11 @@ class PolyphonicSnippet(stream.Score):
     The fourth is the cadence type (optional), the fifth is the time signature
     if not the same as the time signature of the parentPiece.
 
-    >>> cantus = alpha.trecento.trecentoCadence.CadenceConverter(
+    >>> from . import trecentoCadence
+    >>> cantus = trecentoCadence.CadenceConverter(
     ...         "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
-    >>> tenor = alpha.trecento.trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
-    >>> ps = alpha.trecento.polyphonicSnippet.PolyphonicSnippet(
+    >>> tenor = trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
+    >>> ps = PolyphonicSnippet(
     ...         [cantus, tenor, None, "8-8", "6/8"],
     ...         parentPiece=alpha.trecento.cadencebook.BallataSheet().makeWork(3))
     >>> ps.elements
@@ -48,23 +49,23 @@ class PolyphonicSnippet(stream.Score):
 
     OMIT_FROM_DOCS
 
-    >>> dummy = alpha.trecento.polyphonicSnippet.PolyphonicSnippet()
+    >>> dummy = PolyphonicSnippet()
     >>> dummy.elements
     ()
 
     >>> dumClass = dummy.__class__
     >>> dumClass
-    <class 'music21.alpha.trecento.polyphonicSnippet.PolyphonicSnippet'>
+    <class 'music21.PolyphonicSnippet'>
 
     >>> dumdum = dumClass()
     >>> dumdum.__class__
-    <class 'music21.alpha.trecento.polyphonicSnippet.PolyphonicSnippet'>
+    <class 'music21.PolyphonicSnippet'>
 
     >>> ps2 = ps.__class__()
     >>> ps2.elements
     ()
 
-    >>> dummy2 = alpha.trecento.polyphonicSnippet.Incipit()
+    >>> dummy2 = Incipit()
     >>> dummy2.elements
     ()
     '''
@@ -166,7 +167,7 @@ class PolyphonicSnippet(stream.Score):
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
         >>> fiveExcelRows = [s1, s2, s3, '', '2/2']
-        >>> ps = alpha.trecento.polyphonicSnippet.PolyphonicSnippet(fiveExcelRows)
+        >>> ps = PolyphonicSnippet(fiveExcelRows)
         >>> ps.findLongestCadence()
         4.0
 
@@ -189,7 +190,7 @@ class PolyphonicSnippet(stream.Score):
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
         >>> fiveExcelRows = [s1, s2, s3, '', '1/2']
-        >>> ps = alpha.trecento.polyphonicSnippet.PolyphonicSnippet(fiveExcelRows)
+        >>> ps = PolyphonicSnippet(fiveExcelRows)
         >>> ps.findLongestCadence()
         4.0
         >>> ps.measuresShort(s2)
@@ -226,7 +227,7 @@ class Incipit(PolyphonicSnippet):
         >>> s3 = stream.Part([ts])
         >>> s3.repeatAppend(note.Note(type='quarter'), 1)
         >>> fiveExcelRows = [s1, s2, s3, '', '1/4']
-        >>> ps = alpha.trecento.polyphonicSnippet.Incipit(fiveExcelRows)
+        >>> ps = Incipit(fiveExcelRows)
         >>> ps.backPadLine(s2)
         >>> s2.show('text')
         {0.0} <music21.stream.Measure 1 offset=0.0>
@@ -292,7 +293,7 @@ class FrontPaddedSnippet(PolyphonicSnippet):
         >>> s3 = stream.Part([ts])
         >>> s3.repeatAppend(note.Note(type='quarter'), 1)
         >>> fiveExcelRows = [s1, s2, s3, '', '1/4']
-        >>> ps = alpha.trecento.polyphonicSnippet.FrontPaddedSnippet(fiveExcelRows)
+        >>> ps = FrontPaddedSnippet(fiveExcelRows)
         >>> ps.frontPadLine(s2)
         >>> s2.show('text')
         {0.0} <music21.stream.Measure 1 offset=0.0>
@@ -399,7 +400,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test, TestExternal)
+    music21.mainTest(Test, TestExternal, 'moduleRelative')
 
 #------------------------------------------------------------------------------
 # eof

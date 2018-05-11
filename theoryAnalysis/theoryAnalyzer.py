@@ -38,13 +38,13 @@ because they provide easy access to the components within them, and
 those components (notes, chords, etc.) contain
 a direct pointer to the original object in the score.
 
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getVerticalities`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getVLQs`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getThreeNoteLinearSegments`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getLinearSegments`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getVerticalityNTuplets`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getHarmonicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getMelodicIntervals`
+* :meth:`~Analyzer.getVerticalities`
+* :meth:`~Analyzer.getVLQs`
+* :meth:`~Analyzer.getThreeNoteLinearSegments`
+* :meth:`~Analyzer.getLinearSegments`
+* :meth:`~Analyzer.getVerticalityNTuplets`
+* :meth:`~Analyzer.getHarmonicIntervals`
+* :meth:`~Analyzer.getMelodicIntervals`
 
 You can then iterate through these objects and access the attributes directly. Here is an example
 of this that will analyze the root motion in a score:
@@ -54,7 +54,7 @@ of this that will analyze the root motion in a score:
     >>> p = harmony.realizeChordSymbolDurations(p)
     >>> averageMotion = 0
 
-    >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+    >>> ads = Analyzer()
     >>> l = ads.getLinearSegments(p, 0, 2, ['Harmony'])
     >>> # gets a list of tuples, adjacent chord symbol objects in the score
     >>> for x in l:
@@ -68,11 +68,11 @@ of this that will analyze the root motion in a score:
 These methods return voiceLeading objects identified by certain methods. For example,
 they may return all the parallel fifths in the score as voiceLeadingQuartetObjects.
 
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getHarmonicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getMelodicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getParallelFifths`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getPassingTones`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.getNeighborTones`
+* :meth:`~Analyzer.getHarmonicIntervals`
+* :meth:`~Analyzer.getMelodicIntervals`
+* :meth:`~Analyzer.getParallelFifths`
+* :meth:`~Analyzer.getPassingTones`
+* :meth:`~Analyzer.getNeighborTones`
 
 **identify music theory objects in score**
 These identify methods were the original purpose of theoryAnalyzer, to identify interesting
@@ -81,31 +81,31 @@ However, if you find these methods more
 useful as 'get' methods (such as those above), merely run the identify method and
 access the analyzer's ``self.analysisData[scoreId]['dictKey']``
 
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyParallelFifths`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyParallelOctaves`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyParallelUnisons`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyHiddenFifths`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyHiddenOctaves`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyImproperResolutions`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyLeapNotSetWithStep`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyOpensIncorrectly`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyClosesIncorrectly`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyPassingTones`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyDissonantHarmonicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyImproperDissonantIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyDissonantMelodicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyObliqueMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifySimilarMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyParallelMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyContraryMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyOutwardContraryMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyInwardContraryMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyAntiParallelMotion`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyTonicAndDominant`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyHarmonicIntervals`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyScaleDegrees`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyMotionType`
-* :meth:`~music21.alpha.theoryAnalysis.theoryAnalyzer.Analyzer.identifyCommonPracticeErrors`
+* :meth:`~Analyzer.identifyParallelFifths`
+* :meth:`~Analyzer.identifyParallelOctaves`
+* :meth:`~Analyzer.identifyParallelUnisons`
+* :meth:`~Analyzer.identifyHiddenFifths`
+* :meth:`~Analyzer.identifyHiddenOctaves`
+* :meth:`~Analyzer.identifyImproperResolutions`
+* :meth:`~Analyzer.identifyLeapNotSetWithStep`
+* :meth:`~Analyzer.identifyOpensIncorrectly`
+* :meth:`~Analyzer.identifyClosesIncorrectly`
+* :meth:`~Analyzer.identifyPassingTones`
+* :meth:`~Analyzer.identifyDissonantHarmonicIntervals`
+* :meth:`~Analyzer.identifyImproperDissonantIntervals`
+* :meth:`~Analyzer.identifyDissonantMelodicIntervals`
+* :meth:`~Analyzer.identifyObliqueMotion`
+* :meth:`~Analyzer.identifySimilarMotion`
+* :meth:`~Analyzer.identifyParallelMotion`
+* :meth:`~Analyzer.identifyContraryMotion`
+* :meth:`~Analyzer.identifyOutwardContraryMotion`
+* :meth:`~Analyzer.identifyInwardContraryMotion`
+* :meth:`~Analyzer.identifyAntiParallelMotion`
+* :meth:`~Analyzer.identifyTonicAndDominant`
+* :meth:`~Analyzer.identifyHarmonicIntervals`
+* :meth:`~Analyzer.identifyScaleDegrees`
+* :meth:`~Analyzer.identifyMotionType`
+* :meth:`~Analyzer.identifyCommonPracticeErrors`
 
 **special use case: remove passing tones/neighbor tones**
 These methods provide a preliminary implementation for removing passing tones and
@@ -162,13 +162,16 @@ from music21 import chord
 from music21 import corpus
 from music21 import duration
 from music21 import exceptions21
+from music21 import harmony
 from music21 import interval
 from music21 import key
+from music21 import meter
 from music21 import note
 from music21 import roman
+from music21 import stream
 from music21 import voiceLeading
 
-from music21.alpha.theoryAnalysis import theoryResult
+from . import theoryResult
 
 from music21 import environment
 _MOD = 'theoryAnalyzer.py'
@@ -213,7 +216,7 @@ class Analyzer:
         >>> p = stream.Part()
         >>> s = stream.Score()
         >>> s.insert(0, p)
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.addAnalysisData(s)
         >>> ads.store[s.id] is not None
         True
@@ -260,7 +263,7 @@ class Analyzer:
         >>> part1.append(n3)
         >>> sc.insert(part0)
         >>> sc.insert(part1)
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
 
         >>> ads.getVerticalities(sc)
         [<music21.voiceLeading.Verticality contentDict=...>,
@@ -358,7 +361,7 @@ class Analyzer:
         >>> part1.append(note.Note('e4'))
         >>> part1.append(note.Note('f5'))
         >>> sc.insert(part1)
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getVLQs(sc, 0, 1)
         [<music21.voiceLeading.VoiceLeadingQuartet v1n1=<music21.note.Note C>,
                                                    v1n2=<music21.note.Note G>,
@@ -404,7 +407,7 @@ class Analyzer:
         >>> part0.append(note.Note('c5'))
         >>> part0.append(note.Note('c6'))
         >>> sc.insert(part0)
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getThreeNoteLinearSegments(sc, 0)
         [<music21.voiceLeading.ThreeNoteLinearSegment n1=<music21.note.Note C>
             n2=<music21.note.Note G> n3=<music21.note.Note C> >,
@@ -452,7 +455,7 @@ class Analyzer:
         >>> part0.append(note.Note('c6'))
         >>> sc.insert(part0)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> len(ads.getLinearSegments(sc, 0, 3, ['Note']))
         2
         >>> ads.getLinearSegments(sc, 0, 3, ['Note'])
@@ -559,7 +562,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> len(ads.getVerticalityNTuplets(sc, 3))
         2
         >>> ads.getVerticalityNTuplets(sc, 3)[1]
@@ -610,7 +613,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> len(ads.getHarmonicIntervals(sc, 0, 1))
         2
         >>> ads.getHarmonicIntervals(sc, 0, 1)[0].name
@@ -646,7 +649,7 @@ class Analyzer:
         >>> part0.append(note.Note('c5'))
         >>> sc.insert(part0)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getMelodicIntervals(sc,0)
         [<music21.interval.Interval P5>, <music21.interval.Interval P4>]
         >>> ads.getMelodicIntervals(sc, 0)[0].name
@@ -679,7 +682,7 @@ class Analyzer:
         >>> p.append(note.Rest(1.0))
         >>> sc.append(p)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getNotes(sc, 0)
         [<music21.note.Note C>, <music21.note.Note C>, <music21.note.Note C>, None]
 
@@ -715,7 +718,7 @@ class Analyzer:
         >>> sc.insert(part1)
         >>> sc.insert(part2)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getAllPartNumPairs(sc)
         [(0, 1), (0, 2), (1, 2)]
         >>> ads.getAllPartNumPairs(sc)[0]
@@ -973,7 +976,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyParallelFifths(sc)
         >>> len(ads.store[sc.id]['ResultDict']['parallelFifths'])
         2
@@ -1019,7 +1022,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getParallelFifths(sc)
         [<music21.voiceLeading.VoiceLeadingQuartet v1n1=<music21.note.Note D>,
             v1n2=<music21.note.Note E>, v2n1=<music21.note.Note G>, v2n2=<music21.note.Note A>  >,
@@ -1065,7 +1068,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyParallelOctaves(sc)
         >>> len(ads.store[sc.id]['ResultDict']['parallelOctaves'])
         1
@@ -1107,7 +1110,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getParallelOctaves(sc)
         [<music21.voiceLeading.VoiceLeadingQuartet v1n1=<music21.note.Note C>,
               v1n2=<music21.note.Note G>, v2n1=<music21.note.Note C>, v2n2=<music21.note.Note G>  >]
@@ -1152,7 +1155,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyParallelUnisons(sc)
         >>> len(ads.store[sc.id]['ResultDict']['parallelUnisons'])
         3
@@ -1200,7 +1203,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyHiddenFifths(sc)
         >>> len(ads.store[sc.id]['ResultDict']['hiddenFifths'])
         1
@@ -1247,7 +1250,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyHiddenOctaves(sc)
         >>> len(ads.store[sc.id]['ResultDict']['hiddenOctaves'])
         1
@@ -1294,7 +1297,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyImproperResolutions(sc)
         >>> len(ads.store[sc.id]['ResultDict']['improperResolution'])
         1
@@ -1346,7 +1349,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyLeapNotSetWithStep(sc)
         >>> len(ads.store[sc.id]['ResultDict']['LeapNotSetWithStep'])
         1
@@ -1389,7 +1392,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyOpensIncorrectly(sc)
         >>> len(ads.store[sc.id]['ResultDict']['opensIncorrectly'])
         1
@@ -1427,7 +1430,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.setKeyMeasureMap(sc,{1:'G'})
         >>> ads.identifyClosesIncorrectly(sc)
         >>> len(ads.store[sc.id]['ResultDict']['closesIncorrectly'])
@@ -1473,7 +1476,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyPassingTones(sc)
         >>> len(ads.store[sc.id]['ResultDict']['unaccentedPassingTones'])
         1
@@ -1515,7 +1518,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getPassingTones(sc)
         [<music21.note.Note G>]
         '''
@@ -1556,7 +1559,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.getNeighborTones(sc)
         [<music21.note.Note B>]
         '''
@@ -1597,7 +1600,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.removePassingTones(sc)
         >>> for x in sc.flat.notes:
         ...   print(x)
@@ -1625,8 +1628,6 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
-
-        >>> from music21.alpha.theoryAnalysis import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1643,7 +1644,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.removeNeighborTones(sc)
         >>> for x in sc.flat.notes:
         ...   print(x)
@@ -1694,7 +1695,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyNeighborTones(sc)
         >>> len(ads.store[sc.id]['ResultDict']['unaccentedNeighborTones'])
         1
@@ -1745,7 +1746,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyDissonantHarmonicIntervals(sc)
         >>> len(ads.store[sc.id]['ResultDict']['dissonantHarmonicIntervals'])
         3
@@ -1792,7 +1793,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyImproperDissonantIntervals(sc)
         >>> len(ads.store[sc.id]['ResultDict']['improperDissonantIntervals'])
         2
@@ -1865,7 +1866,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyDissonantMelodicIntervals(sc)
         >>> len(ads.store[sc.id]['ResultDict']['dissonantMelodicIntervals'])
         2
@@ -2005,7 +2006,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.setKeyMeasureMap(sc, {0: 'Bb'} )
         >>> ads.identifyTonicAndDominant(sc)
         >>> len(ads.store[sc.id]['ResultDict']['romanNumeralsVandI'])
@@ -2090,7 +2091,7 @@ class Analyzer:
         if not specified ALL
         possible combinations
 
-        :class:`~music21.alpha.theoryAnalysis.theoryAnalyzerIntervalTheoryResult`
+        :class:`~theoryAnalyzerIntervalTheoryResult`
         created with ``.value`` set to the string most commonly
         used to identify the interval (0 through 9, with A4 and d5)
 
@@ -2112,7 +2113,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyHarmonicIntervals(sc)
         >>> len(ads.store[sc.id]['ResultDict']['harmonicIntervals'])
         4
@@ -2161,7 +2162,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.setKeyMeasureMap(sc, {0:'G'})
         >>> ads.identifyScaleDegrees(sc)
         >>> len(ads.store[sc.id]['ResultDict']['scaleDegrees'])
@@ -2211,7 +2212,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyMotionType(sc)
         >>> len(ads.store[sc.id]['ResultDict']['motionType'])
         3
@@ -2287,7 +2288,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.identifyCommonPracticeErrors(sc)
         >>> print(ads.getResultsString(sc))
         commonPracticeErrors:
@@ -2350,7 +2351,7 @@ class Analyzer:
 
 
         >>> sc = stream.Score()
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.addAnalysisData(sc)
         >>> ads.store[sc.id]['ResultDict'] = {'sampleDictKey': 'sample response',
         ...        'h1':'another sample response', '5':'third sample response'}
@@ -2405,7 +2406,6 @@ class Analyzer:
         for analysis purposes only - no key object is actually added to the score.
         Check the music xml to verify measure numbers; pickup measures are usually 0.
 
-        >>> from music21.alpha.theoryAnalysis import *
         >>> n1 = note.Note('c5')
         >>> n1.quarterLength = 4
         >>> n2 = note.Note('f4')
@@ -2421,7 +2421,7 @@ class Analyzer:
         >>> sc.insert(part0)
         >>> sc.insert(part1)
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.setKeyMeasureMap(sc, {1:'C',2:'a'})
         >>> ads.getKeyMeasureMap(sc)[1]
         'C'
@@ -2438,10 +2438,9 @@ class Analyzer:
         uses keyMeasureMap to return music21 key object. If keyMeasureMap not specified,
         returns key analysis of theory score as a whole.
 
-        >>> from music21.alpha.theoryAnalysis import *
         >>> s = stream.Score()
 
-        >>> ads = alpha.theoryAnalysis.theoryAnalyzer.Analyzer()
+        >>> ads = Analyzer()
         >>> ads.setKeyMeasureMap(s, {1:'C', 2:'G', 4:'a', 7:'C'})
         >>> ads.getKeyAtMeasure(s, 3)
         <music21.key.Key of G major>
@@ -2538,4 +2537,4 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test) #, runTest='testFastVerticalityCheck')
+    music21.mainTest(Test, 'moduleRelative') #, runTest='testFastVerticalityCheck')

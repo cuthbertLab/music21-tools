@@ -45,9 +45,9 @@ def fromStream(inputStream):
 class GregorianStream(stream.Stream):
     r'''
 
-    >>> s = alpha.chant.GregorianStream()
+    >>> s = GregorianStream()
     >>> s.append(clef.AltoClef())
-    >>> n = alpha.chant.GregorianNote("C4")
+    >>> n = GregorianNote("C4")
     >>> l = note.Lyric("Po")
     >>> l.syllabic = "start"
     >>> n.lyrics.append(l)
@@ -86,7 +86,7 @@ class GregorianStream(stream.Stream):
 
     def clefToGABC(self, clefIn):
         '''
-        >>> s = alpha.chant.GregorianStream()
+        >>> s = GregorianStream()
         >>> c = clef.AltoClef()
         >>> s.clefToGABC(c)
         '(c3)'
@@ -107,7 +107,7 @@ class GregorianNote(note.Note):
     Example: a very special note.
 
 
-    >>> n = alpha.chant.GregorianNote("C4")
+    >>> n = GregorianNote("C4")
     >>> n.liquescent = True
     >>> n.quilisma = True
     >>> n.basicShape = 'virga'  # default: punctus
@@ -209,9 +209,7 @@ class GregorianNote(note.Note):
 
         see http://home.gna.org/gregorio/gabc/ for more details.  'd' = lowest line
 
-
-
-        >>> n = alpha.chant.GregorianNote("C4")
+        >>> n = GregorianNote("C4")
         >>> c = clef.AltoClef()
         >>> n.toBasicGABC(c)
         'h'
@@ -281,7 +279,7 @@ class GregorianNote(note.Note):
     See the docs for Gregorio for graphical representations of these figures.
 
 
-    >>> n = alpha.chant.GregorianNote("D3")
+    >>> n = GregorianNote("D3")
     >>> n.fill
     'solid'
     >>> n.fill = 'cavum'
@@ -337,7 +335,7 @@ class BaseScoreConverter:
     def writeFile(self, text=None):
         '''
 
-        >>> bsc = alpha.chant.BaseScoreConverter()
+        >>> bsc = BaseScoreConverter()
         >>> filePath = bsc.writeFile('hello')
         >>> assert(filePath.endswith('.gabc')) #_DOCS_HIDE
         >>> filePath = '/var/folders/k9/T/music21/tmpekHFCr.gabc' #_DOCS_HIDE
@@ -360,7 +358,7 @@ class BaseScoreConverter:
         converts a .gabc file to LaTeX using the
         gregorio converter.  Returns the filename with .tex substituted for .gabc
 
-        >>> bsc = alpha.chant.BaseScoreConverter()
+        >>> bsc = BaseScoreConverter()
         >>> fn = '~cuthbert/Library/Gregorio/examples/Populas.gabc'
         >>> #_DOCS_SHOW newFp = bsc.launchGregorio(fn)
         >>> #_DOCS_SHOW bsc.gregorioCommand
@@ -473,7 +471,7 @@ SCOREGOESHERE
         Puts the correct information into the TeXWrapper for the document
 
 
-        >>> wrapper = alpha.chant.DefaultTeXWrapper()
+        >>> wrapper = DefaultTeXWrapper()
         >>> class Converter():
         ...    score = r'\note{C}' + "\n" + r'\endgregorioscore %' + "\n" + r'\endinput %'
         ...    incipit = 'Gaudeamus Omnes'
@@ -579,7 +577,7 @@ _DOC_ORDER = []
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test)
+    music21.mainTest(Test, 'moduleRelative')
 
 #------------------------------------------------------------------------------
 # eof
