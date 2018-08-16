@@ -310,11 +310,11 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     {0.0} <music21.stream.Measure 1 offset=0.0>
         {0.0} <music21.clef.TrebleClef>
         {0.0} <music21.meter.TimeSignature 4/4>
-        {0.0} <...medren.Ligature object at 0x...>
+        {0.0} <trecento.medren.Ligature object at 0x...>
         {0.0} <music21.bar.Barline style=final>
     >>> tTNN = ts.flat.getElementsByClass('Ligature')[0]
     >>> tTNN
-    <music21...medren.Ligature...>
+    <trecento.medren.Ligature...>
     >>> [str(p) for p in tTNN.pitches]
     ['F4', 'G4', 'A4', 'G4', 'F4', 'C4']
 
@@ -362,13 +362,13 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     >>> tTNS.show('text')
     {0.0} <music21.bar.Barline style=final>
     {0.0} <music21.clef.MensuralClef>
-    {0.0} <music21.Divisione .p.>
-    {0.0} <music21...medren.MensuralNote semibrevis C>
-    {0.0} <music21...medren.MensuralNote semibrevis D>
-    {0.0} <music21...medren.MensuralNote semibrevis E>
-    {0.0} <music21.Punctus...>
-    {0.0} <music21...medren.MensuralNote brevis D>
-    {0.0} <music21...medren.Ligature...>
+    {0.0} <...Divisione .p.>
+    {0.0} <...medren.MensuralNote semibrevis C>
+    {0.0} <...medren.MensuralNote semibrevis D>
+    {0.0} <...medren.MensuralNote semibrevis E>
+    {0.0} <...Punctus...>
+    {0.0} <...medren.MensuralNote brevis D>
+    {0.0} <...medren.Ligature...>
     '''
     bracketStateMapping = {
         'trip': tinyNotation.TripletState,
@@ -492,7 +492,7 @@ class Divisione(meter.TimeSignature):
             super().__init__(self.timeString)
 
     def __str__(self):
-        return '<music21.Divisione %s>' % self.standardSymbol
+        return '<notation.Divisione %s>' % self.standardSymbol
 
     __repr__ = __str__
 
@@ -1930,7 +1930,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
             pInd, lInd = 0, 0
             while lInd < len(lengths):
                 if lengths[lInd] == 'P':
-                    mStream.append(trecento.notation.Punctus())
+                    mStream.append(Punctus())
                     lInd += 1
                 else:
                     if pitches[pInd] == 'R':
@@ -2021,14 +2021,14 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         lowerClef = medren.MensuralClef('C')
         lowerClef.line = 3
 
-        upper.append(trecento.notation.Divisione('.p.'))
+        upper.append(Divisione('.p.'))
         upper.append(upperClef)
         processStream(upper, pitches_upper_1, lengths_upper_1)
         processStream(upper, pitches_upper_2, lengths_upper_2)
         processStream(upper, pitches_upper_3, lengths_upper_3, downStems_upper_3)
         processStream(upper, pitches_upper_4, lengths_upper_4)
 
-        lower.append(trecento.notation.Divisione('.p.'))
+        lower.append(Divisione('.p.'))
         lower.append(lowerClef)
         processStream(lower, pitches_lower_1, lengths_lower_1)
         lower.append(lowerlig)
@@ -2094,4 +2094,4 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, TestExternal, 'moduleRelative')
+    music21.mainTest(Test, TestExternal, 'importPlusRelative')

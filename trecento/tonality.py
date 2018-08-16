@@ -53,9 +53,9 @@ class TonalityCounter:
     flat) repsectively.
 
 
-    >>> from music21.alpha.trecento import cadencebook
+    >>> from trecento import cadencebook
     >>> threeBallata = cadencebook.BallataSheet()[15:18]
-    >>> tc1 = alpha.trecento.tonality.TonalityCounter(threeBallata)
+    >>> tc1 = TonalityCounter(threeBallata)
     >>> tc1.run()
     >>> print(tc1.output)
                         Bench'amar    C    D
@@ -350,7 +350,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test) #External)
+    music21.mainTest(Test, 'importPlusRelative') #External)
 
 
 #------------------------------------------------------------------------------

@@ -489,7 +489,7 @@ class Test(unittest.TestCase):
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest('moduleRelative')
+    music21.mainTest('importPlusRelative')
 #    bentWolfSolution()
 #    possibleSolution()
 #    findRetrogradeVoices()

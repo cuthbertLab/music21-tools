@@ -1221,7 +1221,7 @@ if (__name__ == "__main__"):
 #    if len(foundPieceOpus) > 0:
 #        foundPieceOpus.show('lily.png')
     import music21
-    music21.mainTest(Test) #TestExternal) #, TestExternal)
+    music21.mainTest(Test, 'importPlusRelative') #TestExternal) #, TestExternal)
 
 #    correctedMin6()
 #    correctedMaj3()
