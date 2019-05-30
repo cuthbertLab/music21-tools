@@ -30,13 +30,13 @@ def lowerLines():
                 appendNote = copy.deepcopy(rowNotes[currentNote % 10])
             else: # second set of rotations is up a step:
                 appendNote = rowNotes[currentNote % 10].transpose(2)
-#                if phraseNumber == 8 and addNote == 9: # mistaken transpositions by RCS
-#                    appendNote = appendNote.transpose(-1)
-#                    appendNote.lyrics.append(note.Lyric(text="*", number=3))
-#
-#                elif phraseNumber == 9 and addNote == 6:
-#                    appendNote = appendNote.transpose(2)
-#                    appendNote.lyrics.append(note.Lyric(text="*", number=3))
+#                 if phraseNumber == 8 and addNote == 9: # mistaken transpositions by RCS
+#                     appendNote = appendNote.transpose(-1)
+#                     appendNote.lyrics.append(note.Lyric(text="*", number=3))
+# 
+#                 elif phraseNumber == 9 and addNote == 6:
+#                     appendNote = appendNote.transpose(2)
+#                     appendNote.lyrics.append(note.Lyric(text="*", number=3))
 
             if addNote == 0:
                 if phraseNumber != 8:
@@ -56,7 +56,7 @@ def lowerLines():
                         appendNote.lyrics.append(note.Lyric(text="*", number=3))
 
                 currentNote += 1
-            if addNote == 20-phraseNumber: # correct Last Notes
+            if addNote == 20 - phraseNumber: # correct Last Notes
                 #if phraseNumber == 12: # bug in Finale for accidental display?
                 #    appendNote.pitch.accidental.displayStatus = True
                 if phraseNumber in fixLastNoteLengths:
