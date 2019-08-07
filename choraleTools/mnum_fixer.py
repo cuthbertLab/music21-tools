@@ -47,8 +47,29 @@ def runOne(c, cName):
             perfect = True if short == 0 else False
             pickup = True if not perfect and short > (barQl / 2) else False
             truncated = True if not perfect and short < (barQl / 2) else False
+            half = True if not perfect and short == (barQl / 2) else False
 
-            if perfect:
+            if half and priorMeasureWasIncomplete==False:
+                priorMeasureWasIncomplete = True
+                priorMeasureDuration = mQl
+                priorMeasure = m
+                m.number = mn - measureNumberShift
+                partNumSuffix.append((mn - measureNumberShift, ms))
+            elif half and priorMeasureWasIncomplete and priorMeasureDuration == short:
+                priorMeasureWasIncomplete = False
+                m.paddingLeft = short
+                priorMeasure = m
+                priorMeasureDuration = mQl
+                measureNumberShift += 1
+                if ms is None:
+                    ms = 'a'
+                else:
+                    ms = ms + 'a'
+                m.number = mn - measureNumberShift
+                m.numberSuffix = ms
+                partNumSuffix.append((mn - measureNumberShift, ms))
+                
+            elif perfect:
                 priorMeasureWasIncomplete = False
                 priorMeasureDuration = mQl
                 priorMeasure = m
