@@ -10,7 +10,7 @@
 #               fbRealizer: Jose Cabal-Ugaz
 #
 # Copyright:    (c) 2011 The music21 Project
-# License:      LGPL
+# License:      LGPL or BSD
 #-------------------------------------------------------------------------------
 
 #    TODO:

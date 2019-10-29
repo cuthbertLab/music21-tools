@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
-# Name:         py
-# Purpose:      The regola of Nicolaus de Capua for Musica Ficta
+# -------------------------------------------------------------------------------
+# Name:         capua.py
+# Purpose:      The regolae of Nicolaus de Capua for Musica Ficta
 #
 # Authors:      Michael Scott Cuthbert
 #
-# Copyright:    Copyright © 2008-2012, 2015 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2008-2012, 2015, 2019
+#               Michael Scott Cuthbert and the music21 Project
+# License:      BSD, see license.txt
+# -------------------------------------------------------------------------------
 
 '''
 The `regola` of Nicolaus de Capua are four rules for determining
@@ -27,7 +28,6 @@ import unittest
 from music21 import exceptions21
 from . import cadencebook
 from music21 import stream
-from music21 import note
 from music21 import pitch
 from music21 import interval
 
@@ -41,8 +41,10 @@ RULE_THREE = 4
 RULE_FOUR_A = 8
 RULE_FOUR_B = 16
 
+
 class CapuaException(exceptions21.Music21Exception):
     pass
+
 
 def applyCapuaToScore(thisWork):
     '''
@@ -52,6 +54,7 @@ def applyCapuaToScore(thisWork):
     '''
     for thisPart in thisWork.parts:
         applyCapuaToStream(thisPart.flat.notes.stream())
+
 
 def applyCapuaToCadencebookWork(thisWork):
     '''
@@ -70,7 +73,7 @@ def applyCapuaToCadencebookWork(thisWork):
     >>> bOrigFN = bOrig.asScore().flat.notes
     >>> for i in range(len(bFN)):
     ...    if bFN[i].pitch != bOrigFN[i].pitch:
-    ...        print("%s %s" % (str(bFN[i].pitch), str(bOrigFN[i].pitch)))
+    ...        print('%s %s' % (str(bFN[i].pitch), str(bOrigFN[i].pitch)))
     F#3 F3
     C#3 C3
     C#3 C3
@@ -79,6 +82,7 @@ def applyCapuaToCadencebookWork(thisWork):
     for thisSnippet in thisWork.snippets:
         applyCapuaToScore(thisSnippet)
 
+
 def applyCapuaToStream(thisStream):
     '''
     Apply all the Capua rules to a Stream.  Runs `clearFicta`, `capuaRuleOne`, `capuaRuleTwo`,
@@ -86,9 +90,9 @@ def applyCapuaToStream(thisStream):
 
     Runs in place.
     '''
-    for n in thisStream:
-        if hasattr(n, 'editorial') and n.editorial.ficta is not None:
-            n.editorial.misc['pmfc-ficta'] = n.editorial.ficta
+    for n in thisStream.notes:
+        if hasattr(n.editorial, 'ficta'):
+            n.editorial.pmfcFicta = n.editorial.ficta
             clearAccidental(n)
 
     clearFicta(thisStream)
@@ -103,10 +107,10 @@ def capuaRuleOne(srcStream):
     Applies Nicolaus de Capua's first rule to the given srcStream, i.e. if a line descends
     a major second then ascends back to the original note, the major second is
     made into a minor second. Also copies the relevant accidentals into
-    `Note.editorial.misc["saved-accidental"]` and changes `Note.style.color`
+    `Note.editorial.savedAccidental` and changes `Note.style.color`
     for rule 1 (blue green blue).
 
-    The relevant Rule number is also stored in `Note.editorial.misc['capua_rule_number']` which
+    The relevant Rule number is also stored in `Note.editorial.capuaRuleNumber']` which
     can be got out by OR-ing this.
 
     Returns the number of notes that were changed (not counting notes whose colors were changed).
@@ -119,7 +123,7 @@ def capuaRuleOne(srcStream):
         n2 = ssn[i + 1]
         n3 = ssn[i + 2]
 
-        if (n1.isRest or n2.isRest or n3.isRest):
+        if n1.isRest or n2.isRest or n3.isRest:
             continue
 
         i1 = interval.notesToInterval(n1, n2)
@@ -129,34 +133,35 @@ def capuaRuleOne(srcStream):
                 or n3.pitch.accidental is not None):
             continue
 
-        ### never seems to improve things...
-        if n2.step == "A" or n2.step == "D":
+        # never seems to improve things...
+        if n2.step == 'A' or n2.step == 'D':
             continue
 
-        ## e.g. G, F, G => G, F#, G
-        if (i1.directedName == "M-2"
-                and i2.directedName == "M2"):
+        # e.g. G, F, G => G, F#, G
+        if (i1.directedName == 'M-2'
+                and i2.directedName == 'M2'):
             numChanged += 1
-            if ("capua" in n2.editorial.misc):
-                n2.editorial.misc['capua_rule_number'] += RULE_ONE
+            if 'capuaRuleNumber' in n2.editorial:
+                n2.editorial.capuaRuleNumber += RULE_ONE
             else:
-                n2.editorial.misc['capua_rule_number'] = RULE_ONE
-            if (n2.pitch.accidental is not None and n2.pitch.accidental.name == "flat"):
-                n2.editorial.misc["saved-accidental"] = n2.pitch.accidental
+                n2.editorial.capuaRuleNumber = RULE_ONE
+            if n2.pitch.accidental is not None and n2.pitch.accidental.name == 'flat':
+                n2.editorial.savedAccidental = n2.pitch.accidental
                 n2.pitch.accidental = None
-                n2.editorial.ficta = pitch.Accidental("natural")
-                n2.editorial.misc["capua-ficta"] = pitch.Accidental("natural")
-                n1.style.color = "blue"
-                n2.style.color = "forestGreen"
-                n3.style.color = "blue"
+                n2.editorial.ficta = pitch.Accidental('natural')
+                n2.editorial.capuaFicta = pitch.Accidental('natural')
+                n1.style.color = 'blue'
+                n2.style.color = 'forestGreen'
+                n3.style.color = 'blue'
             else:
-                n2.editorial.ficta = pitch.Accidental("sharp")
-                n2.editorial.misc["capua-ficta"] = pitch.Accidental("sharp")
-                n1.style.color = "blue"
-                n2.style.color = "ForestGreen"
-                n3.style.color = "blue"
+                n2.editorial.ficta = pitch.Accidental('sharp')
+                n2.editorial.capuaFicta = pitch.Accidental('sharp')
+                n1.style.color = 'blue'
+                n2.style.color = 'ForestGreen'
+                n3.style.color = 'blue'
 
     return numChanged
+
 
 def capuaRuleTwo(srcStream):
     '''
@@ -192,39 +197,40 @@ def capuaRuleTwo(srcStream):
                 or n4.pitch.accidental is not None):
             continue
 
-        ### never seems to improve things...
-        if n3.step == "A" or n3.step == "D":
+        # never seems to improve things...
+        if n3.step == 'A' or n3.step == 'D':
             continue
 
         # e.g., D E F G => D E F# G
         #    or F A Bb C => F A B C
-        if (i1.directedName == "M2"
-                and i2.directedName == "m2"
-                and i3.directedName == "M2"):
+        if (i1.directedName == 'M2'
+                and i2.directedName == 'm2'
+                and i3.directedName == 'M2'):
             numChanged += 1
-            if ("capua" in n3.editorial.misc):
-                n3.editorial.misc['capua_rule_number'] += RULE_TWO
+            if 'capuaRuleNumber' in n3.editorial:
+                n3.editorial.capuaRuleNumber += RULE_TWO
             else:
-                n3.editorial.misc['capua_rule_number'] = RULE_TWO
+                n3.editorial.capuaRuleNumber = RULE_TWO
 
-            if (n3.pitch.accidental is not None and n3.pitch.accidental.name == "flat"):
-                n3.editorial.misc["saved-accidental"] = n3.pitch.accidental
+            if n3.pitch.accidental is not None and n3.pitch.accidental.name == 'flat':
+                n3.editorial.savedAccidental = n3.pitch.accidental
                 n3.pitch.accidental = None
-                n3.editorial.ficta = pitch.Accidental("natural")
-                n3.editorial.misc["capua-ficta"] = pitch.Accidental("natural")
-                n1.style.color = "purple"
-                n2.style.color = "purple"
-                n3.style.color = "ForestGreen"
-                n4.style.color = "purple"
+                n3.editorial.ficta = pitch.Accidental('natural')
+                n3.editorial.capuaFicta = pitch.Accidental('natural')
+                n1.style.color = 'purple'
+                n2.style.color = 'purple'
+                n3.style.color = 'ForestGreen'
+                n4.style.color = 'purple'
             else:
-                n3.editorial.ficta = pitch.Accidental("sharp")
-                n3.editorial.misc["capua-ficta"] = pitch.Accidental("sharp")
-                n1.style.color = "purple"
-                n2.style.color = "purple"
-                n3.style.color = "ForestGreen"
-                n4.style.color = "purple"
+                n3.editorial.ficta = pitch.Accidental('sharp')
+                n3.editorial.capuaFicta = pitch.Accidental('sharp')
+                n1.style.color = 'purple'
+                n2.style.color = 'purple'
+                n3.style.color = 'ForestGreen'
+                n4.style.color = 'purple'
 
     return numChanged
+
 
 def capuaRuleThree(srcStream):
     '''
@@ -257,25 +263,26 @@ def capuaRuleThree(srcStream):
                 or n3.pitch.accidental is not None):
             continue
 
-        ### never seems to improve things...
-        if n2.step == "A" or n2.step == "D":
+        # never seems to improve things...
+        if n2.step == 'A' or n2.step == 'D':
             continue
 
         # e.g., E C D => E C# D
-        if (i1.directedName  == "M-3"
-                and i2.directedName  == "M2"):
+        if (i1.directedName  == 'M-3'
+                and i2.directedName  == 'M2'):
             numChanged += 1
-            if ("capua" in n2.editorial.misc):
-                n2.editorial.misc['capua_rule_number'] += RULE_THREE
+            if 'capuaRuleNumber' in n2.editorial:
+                n2.editorial.capuaRuleNumber += RULE_THREE
             else:
-                n2.editorial.misc['capua_rule_number'] = RULE_THREE
-            n2.editorial.ficta = pitch.Accidental("sharp")
-            n2.editorial.misc["capua-ficta"] = pitch.Accidental("sharp")
-            n1.style.color = "DeepPink"
-            n2.style.color = "ForestGreen"
-            n3.style.color = "DeepPink"
+                n2.editorial.capuaRuleNumber = RULE_THREE
+            n2.editorial.ficta = pitch.Accidental('sharp')
+            n2.editorial.capuaFicta = pitch.Accidental('sharp')
+            n1.style.color = 'DeepPink'
+            n2.style.color = 'ForestGreen'
+            n3.style.color = 'DeepPink'
 
     return numChanged
+
 
 def capuaRuleFourA(srcStream):
     '''
@@ -310,24 +317,25 @@ def capuaRuleFourA(srcStream):
                 or n3.pitch.accidental is not None):
             continue
 
-        ### never seems to improve things...
-        if n2.step == "A" or n2.step == "D":
+        # never seems to improve things...
+        if n2.step == 'A' or n2.step == 'D':
             continue
 
         # e.g., D B A => D Bb A
-        if i1.directedName  == "m-3" and i2.directedName  == "M-2":
+        if i1.directedName  == 'm-3' and i2.directedName  == 'M-2':
             numChanged += 1
-            if ("capua" in n2.editorial.misc):
-                n2.editorial.misc['capua_rule_number'] += RULE_FOUR_A
+            if 'capuaRuleNumber' in n2.editorial:
+                n2.editorial.capuaRuleNumber += RULE_FOUR_A
             else:
-                n2.editorial.misc['capua_rule_number'] = RULE_FOUR_A
-            n2.editorial.ficta = pitch.Accidental("flat")
-            n2.editorial.misc["capua-ficta"] = pitch.Accidental("flat")
-            n1.style.color = "orange"
-            n2.style.color = "ForestGreen"
-            n3.style.color = "orange"
+                n2.editorial.capuaRuleNumber = RULE_FOUR_A
+            n2.editorial.ficta = pitch.Accidental('flat')
+            n2.editorial.capuaFicta = pitch.Accidental('flat')
+            n1.style.color = 'orange'
+            n2.style.color = 'ForestGreen'
+            n3.style.color = 'orange'
 
     return numChanged
+
 
 def capuaRuleFourB(srcStream):
     '''
@@ -336,8 +344,8 @@ def capuaRuleFourB(srcStream):
     Applies more probable interpretation of Capua's fourth rule to the given
     srcStream, i.e. if a descending minor third is followed by a descending major
     second, the intervals will be changed to a major third followed by a minor
-    second. Also copies any relevant accidental to note.editorial.misc under
-    "saved-accidental" and changes note.style.color for rule 4 (orange
+    second. Also copies any relevant accidental to note.editorial.savedAccidental
+    and changes note.style.color for rule 4 (orange
     green orange).
 
     returns the number of times a note was changed.
@@ -359,72 +367,77 @@ def capuaRuleFourB(srcStream):
                 or n3.pitch.accidental is not None):
             continue
 
-        ### never seems to improve things...
-        if n2.step == "A" or n2.step == "D":
+        # never seems to improve things...
+        if n2.step == 'A' or n2.step == 'D':
             continue
 
         # e.g., D F G => D F# G  or G Bb C => G B C
-        if i1.directedName == "m3" and i2.directedName == "M2":
+        if i1.directedName == 'm3' and i2.directedName == 'M2':
             numChanged += 1
-            if ("capua" in n2.editorial.misc):
-                n2.editorial.misc['capua_rule_number'] += RULE_FOUR_B
+            if 'capuaRuleNumber' in n2.editorial:
+                n2.editorial.capuaRuleNumber += RULE_FOUR_B
             else:
-                n2.editorial.misc['capua_rule_number'] = RULE_FOUR_B
-            if (n2.pitch.accidental is not None and n2.pitch.accidental.name == "flat"):
-                n2.editorial.misc["saved-accidental"] = n2.pitch.accidental
+                n2.editorial.capuaRuleNumber = RULE_FOUR_B
+            if n2.pitch.accidental is not None and n2.pitch.accidental.name == 'flat':
+                n2.editorial.savedAccidental = n2.pitch.accidental
                 n2.pitch.accidental = None
-                n2.editorial.ficta = pitch.Accidental("natural")
-                n2.editorial.misc["capua-ficta"] = pitch.Accidental("natural")
-                n1.style.color = "orange"
-                n2.style.color = "green"
-                n3.style.color = "orange"
+                n2.editorial.ficta = pitch.Accidental('natural')
+                n2.editorial.capuaFicta = pitch.Accidental('natural')
+                n1.style.color = 'orange'
+                n2.style.color = 'green'
+                n3.style.color = 'orange'
             else:
-                n2.editorial.ficta = pitch.Accidental("sharp")
-                n2.editorial.misc["capua-ficta"] = pitch.Accidental("sharp")
-                n1.style.color = "orange"
-                n2.style.color = "green"
-                n3.style.color = "orange"
+                n2.editorial.ficta = pitch.Accidental('sharp')
+                n2.editorial.capuaFicta = pitch.Accidental('sharp')
+                n1.style.color = 'orange'
+                n2.style.color = 'green'
+                n3.style.color = 'orange'
 
     return numChanged
+
 
 def clearFicta(srcStream1):
     '''
     In the given srcStream, moves anything under note.editorial.ficta into
-    note.editorial.misc under "saved-ficta".
+    note.editorial.savedFicta.
     '''
 
     for n2 in srcStream1.flat.notes:
-        if  n2.editorial.ficta is not None:
-            n2.editorial.misc["saved-ficta"] = n2.editorial.ficta
+        if hasattr(n2.editorial, 'ficta'):
+            n2.editorial.savedFicta = n2.editorial.ficta
         n2.editorial.ficta = None
+
 
 def restoreFicta(srcStream1):
     '''
-    In the given srcStream, moves anything under note.editorial.misc["saved-ficta"]
+    In the given srcStream, moves anything under note.editorial.savedFicta
     back to note.editorial.ficta.
     '''
     for n2 in srcStream1:
-        if  "saved-ficta" in n2.editorial.misc:
-            n2.editorial.ficta = n2.editorial.misc["saved-ficta"]
-            n2.editorial.misc["saved-ficta"] = None
+        if hasattr(n2.editorial, 'savedFicta') and n2.editorial.savedFicta is not None:
+            n2.editorial.ficta = n2.editorial.savedFicta
+            n2.editorial.savedFicta = None
+
 
 def clearAccidental(note1):
     '''
-    moves the accidental to `Note.editorial.misc['saved-accidental']` and c
-    lears `Note.pitch.accidental`
+    moves the accidental to `note1.editorial.savedAccidental` and
+    clears `note1.pitch.accidental`
     '''
     if note1.pitch.accidental is not None:
-        note1.editorial.misc["saved-accidental"] = note1.pitch.accidental
+        note1.editorial.savedAccidental = note1.pitch.accidental
         note1.pitch.accidental = None
+
 
 def restoreAccidental(note1):
     '''
-    takes `Note.editorial.music['saved-accidental']` and moves it back
+    takes `Note.editorial.savedAccidental` and moves it back
     to the `Note.pitch.accidental`
     '''
-    if  "saved-accidental" in note1.editorial.misc:
-        note1.pitch.accidental = note1.editorial.misc["saved-accidental"]
-        note1.editorial.misc["saved-accidental"] = None
+    if hasattr(note1.editorial, 'savedAccidental'):
+        note1.pitch.accidental = note1.editorial.savedAccidental
+        note1.editorial.savedAccidental = None
+
 
 def fictaToAccidental(note1):
     '''
@@ -435,59 +448,65 @@ def fictaToAccidental(note1):
             clearAccidental(note1)
         note1.pitch.accidental = note1.editorial.ficta
 
+
 def pmfcFictaToAccidental(note1):
     '''
-    Moves any ficta in `Note.editorial.misc['pmfc-ficta']` to the `Note.pitch.accidental`
+    Moves any ficta in `Note.editorial.pmfcFicta` to the `Note.pitch.accidental`
     object and saves the previous accidental by calling `clearAccidental()` first.
     '''
-    if ("pmfc-ficta" in note1.editorial.misc
-            and note1.editorial.misc["pmfc-ficta"] is not None):
+    if (hasattr(note1.editorial, 'pmfcFicta')
+            and note1.editorial.pmfcFicta is not None):
         clearAccidental(note1)
-        note1.pitch.accidental = note1.editorial.misc["pmfc-ficta"]
+        note1.pitch.accidental = note1.editorial.pmfcFicta
+
 
 def capuaFictaToAccidental(note1):
     '''
-    Moves Capua's ficta from `Note.editorial.misc['capua-ficta']` to the
+    Moves Capua's ficta from `Note.editorial.capuaFicta` to the
     `Note.pitch.accidental` object.  Saves the previous accidental by calling
     `clearAccidental` first.
     '''
-    if ("capua-ficta" in note1.editorial.misc
-            and note1.editorial.misc["capua-ficta"] is not None):
+    if (hasattr(note1.editorial, 'capuaFicta')
+            and note1.editorial.capuaFicta is not None):
         clearAccidental(note1)
-        note1.pitch.accidental = note1.editorial.misc["capua-ficta"]
+        note1.pitch.accidental = note1.editorial.capuaFicta
+
 
 def evaluateRules(srcStream1, srcStream2):
     '''
     Runs evaluation method for capua on one srcStream only, and evaluating harmonies,
     for each srcStream; then runs method for applying capua rules to both and evaluating
     the resulting harmonies.
-    ''' #Returns SOMETHING USEFUL TO BE DETERMINED
-    #srcStream1Count = evaluateCapuaOnesrcStream(srcStream1, srcStream2)
-    #srcStream2Count = evaluateCapuaOnesrcStream(srcStream2, srcStream1)
+    '''
+    # Returns SOMETHING USEFUL TO BE DETERMINED
+    # srcStream1Count = evaluateCapuaOnesrcStream(srcStream1, srcStream2)
+    # srcStream2Count = evaluateCapuaOnesrcStream(srcStream2, srcStream1)
     bothCount = evaluateCapuaTwoStreams(srcStream1, srcStream2)
-    #do something with them...
+    # do something with them...
     return bothCount
+
 
 def evaluateCapuaOnesrcStream(srcStream1, srcStream2):
     '''
     Runs Capua rules on one srcStream only and evaluates the harmonies; stores harmonies
-    under "capua1FictaHarmony" in note.editorial.misc; returns a list of the number of
+    under 'capua1FictaHarmony' in note.editorial; returns a list of the number of
     [perfect cons, imperfect cons, dissonances].
     '''
     applyCapuaToStream(srcStream1)
     for note1 in srcStream1:
         capuaFictaToAccidental(note1)
-    srcStream1Count = compareOnesrcStream(srcStream1, srcStream2, "capua1srcStream")
+    srcStream1Count = compareOnesrcStream(srcStream1, srcStream2, 'capua1srcStream')
     for note1 in srcStream1:
         restoreAccidental(note1)
     return srcStream1Count
 
+
 def evaluateCapuaTwoStreams(srcStream1, srcStream2):
     '''
     Runs Capua rules on both srcStreams and evaluates the harmonies; stores harmonies
-    under "capua2FictaHarmony" in note.editorial.misc; returns a dictionary that contains
+    under 'capua2FictaHarmony' in note.editorial; returns a dictionary that contains
     the number of [perfect cons, imperfect cons, dissonances] for each srcStream, which can
-    be obtained with keys "srcStream1Count" and "srcStream2Count".
+    be obtained with keys 'srcStream1Count' and 'srcStream2Count'.
     '''
     applyCapuaToStream(srcStream1)
     applyCapuaToStream(srcStream2)
@@ -495,16 +514,18 @@ def evaluateCapuaTwoStreams(srcStream1, srcStream2):
         capuaFictaToAccidental(note1)
     for note2 in srcStream2:
         capuaFictaToAccidental(note2)
-    srcStream1Count = compareOnesrcStream(srcStream1, srcStream2, "capua2srcStream")
-    srcStream2Count = compareOnesrcStream(srcStream2, srcStream1, "capua2srcStream")
+    srcStream1Count = compareOnesrcStream(srcStream1, srcStream2, 'capua2srcStream')
+    srcStream2Count = compareOnesrcStream(srcStream2, srcStream1, 'capua2srcStream')
     for note1 in srcStream1:
         restoreAccidental(note1)
     for note2 in srcStream2:
         restoreAccidental(note2)
-    bothCount = {}
-    bothCount["srcStream1Count"] = srcStream1Count
-    bothCount["srcStream2Count"] = srcStream2Count
+    bothCount = {
+        'srcStream1Count': srcStream1Count,
+        'srcStream2Count': srcStream2Count,
+    }
     return bothCount
+
 
 def evaluateEditorsFicta(srcStream1, srcStream2):
     '''
@@ -516,45 +537,44 @@ def evaluateEditorsFicta(srcStream1, srcStream2):
         pmfcFictaToAccidental(note1)
     for note2 in srcStream2:
         pmfcFictaToAccidental(note2)
-    editorProfile = compareOnesrcStream(srcStream1, srcStream2, "editor")
+    editorProfile = compareOnesrcStream(srcStream1, srcStream2, 'editor')
     for note1 in srcStream1:
         restoreAccidental(note1)
     for note2 in srcStream2:
         restoreAccidental(note2)
     return editorProfile
 
+
 def evaluateWithoutFicta(srcStream1, srcStream2):
     '''
     Clears all ficta, then evaluates the harmonies of the two srcStreams. Returns
     a list of lists of the interval counts for each.
     '''
-    clearFicta(srcStream1) #probably not necessary to clear ficta, but just to be safe
+    clearFicta(srcStream1)  # probably not necessary to clear ficta, but just to be safe
     clearFicta(srcStream2)
-    noneProfile1 = compareOnesrcStream(srcStream1, srcStream2, None)
-    #noneProfile2 = compareOnesrcStream(srcStream2, srcStream1, None)
+    noneProfile1 = compareOnesrcStream(srcStream1, srcStream2, '')
+    # noneProfile2 = compareOnesrcStream(srcStream2, srcStream1, '')
     restoreFicta(srcStream1)
     restoreFicta(srcStream2)
     return noneProfile1
 
 
-
-PerfectCons = ["P1", "P5", "P8"]
-ImperfCons  = ["m3", "M3", "m6", "M6"]
-Others      = ["m2", "M2", "A2", "d3", "A3", "d4", "P4", "A4", "d5", "A5", "d6",
-               "A6", "d7", "m7", "M7", "A7"]
+PerfectCons = ['P1', 'P5', 'P8']
+ImperfCons  = ['m3', 'M3', 'm6', 'M6']
+Others      = ['m2', 'M2', 'A2', 'd3', 'A3', 'd4', 'P4', 'A4', 'd5', 'A5', 'd6',
+               'A6', 'd7', 'm7', 'M7', 'A7']
 
 PERFCONS = 1
 IMPERFCONS = 2
 OTHERS = 3
 
+
 def compareThreeFictas(srcStream1, srcStream2):
     '''
     compares the output of noFicta, pmfcFicta, and capuaFicta and attaches each interval
-    to a note.editorial.misc tag.
-
+    to a note.editorial tag.
 
     srcStream1 and srcStream2 should be .flat.notesAndRests
-
 
     >>> b = cadencebook.BallataSheet().makeWork(331).asScore()
     >>> #_DOCS_SHOW b.show()
@@ -564,42 +584,33 @@ def compareThreeFictas(srcStream1, srcStream2):
     >>> compareThreeFictas(b0n, b1n)
     >>> for n in b0n:
     ...    pass
-
-    #print(n.pitch, n.editorial.misc['normal-harmonicInterval'],
-    #    n.editorial.misc['pmfc-harmonicInterval'], n.editorial.misc['capua-harmonicInterval']
-
     '''
-    ### populates the editorial.interval attribute on each note
+    # populates the editorial.interval attribute on each note
     srcStream1.attachIntervalsBetweenStreams(srcStream2)
     srcStream2.attachIntervalsBetweenStreams(srcStream1)
 
     for note1 in srcStream1.notes:
-        if (hasattr(note1.editorial.harmonicInterval, 'name')):
-            note1.editorial.misc['normal-harmonicInterval'
-                                 ] = note1.editorial.harmonicInterval.name
+        if hasattr(note1.editorial.harmonicInterval, 'name'):
+            note1.editorial.normalHarmonicInterval = note1.editorial.harmonicInterval.name
 
-        if "pmfc-ficta" in note1.editorial.misc:
+        if 'pmfcFicta' in note1.editorial:
             pmfcFictaToAccidental(note1)
             note1.editorial.harmonicInterval.reinit()
-            if (hasattr(note1.editorial.harmonicInterval, 'name')):
-                note1.editorial.misc['pmfc-harmonicInterval'
-                                     ] = note1.editorial.harmonicInterval.name
+            if hasattr(note1.editorial.harmonicInterval, 'name'):
+                note1.editorial.pmfcHarmonicInterval = note1.editorial.harmonicInterval.name
             restoreAccidental(note1)
         else:
-            if (hasattr(note1.editorial.harmonicInterval, 'name')):
-                note1.editorial.misc['pmfc-harmonicInterval'
-                                     ] = note1.editorial.harmonicInterval.name
-        if "capua-ficta" in note1.editorial.misc:
+            if hasattr(note1.editorial.harmonicInterval, 'name'):
+                note1.editorial.pmfcHarmonicInterval = note1.editorial.harmonicInterval.name
+        if 'capuaFicta' in note1.editorial:
             capuaFictaToAccidental(note1)
             note1.editorial.harmonicInterval.reinit()
-            if (hasattr(note1.editorial.harmonicInterval, 'name')):
-                note1.editorial.misc['capua-harmonicInterval'
-                                     ] = note1.editorial.harmonicInterval.name
+            if hasattr(note1.editorial.harmonicInterval, 'name'):
+                note1.editorial.capuaHarmonicInterval = note1.editorial.harmonicInterval.name
             restoreAccidental(note1)
         else:
-            if (hasattr(note1.editorial.harmonicInterval, 'name')):
-                note1.editorial.misc['capua-harmonicInterval'
-                                     ] = note1.editorial.harmonicInterval.name
+            if hasattr(note1.editorial.harmonicInterval, 'name'):
+                note1.editorial.capuaHarmonicInterval = note1.editorial.harmonicInterval.name
 
 
 def compareSrcStreamCapuaToEditor(srcStream1):
@@ -625,6 +636,7 @@ def compareSrcStreamCapuaToEditor(srcStream1):
             totalDict[thisKey] += thisDict[thisKey]
     return totalDict
 
+
 def compareNoteCapuaToEditor(note1):
     '''
     Takes in a single note and returns a dictionary showing how many notes
@@ -646,24 +658,18 @@ def compareNoteCapuaToEditor(note1):
     if note1.isRest:
         return statsDict
     statsDict['totalNotes'] += 1
-    if ("pmfc-ficta" in note1.editorial.misc
-           and "capua-ficta" in note1.editorial.misc):
+    if 'pmfcFicta' in note1.editorial and 'capuaFicta' in note1.editorial:
         statsDict['pmfcAlt'] += 1
         statsDict['capuaAlt'] += 1
         statsDict['pmfcAndCapua'] += 1
-    elif "pmfc-ficta" in note1.editorial.misc:
+    elif 'pmfcFicta' in note1.editorial:
         statsDict['pmfcAlt'] += 1
         statsDict['pmfcNotCapua'] += 1
-        #if note1.editorial.harmonicInterval:
-        #    pass
-        #    #print "In PMFC: " + note1.editorial.harmonicInterval.name
-    elif "capua-ficta" in note1.editorial.misc:
+    elif 'capuaFicta' in note1.editorial:
         statsDict['capuaAlt'] += 1
         statsDict['capuaNotPmfc'] += 1
-        #if note1.editorial.harmonicInterval:
-        #    pass
-        #    # print "In Capua: " + note1.editorial.harmonicInterval.name
     return statsDict
+
 
 def compareOnesrcStream(srcStream1, srcStream2, fictaType='editor'):
     '''
@@ -672,13 +678,13 @@ def compareOnesrcStream(srcStream1, srcStream2, fictaType='editor'):
     the fictaHarmony and fictaInterval in note.editorial if there is ficta, or to the
     noFictaHarmony if there is no ficta for that note. Returns a list of the number
     of perfect consonances, imperfect consonances, and other (dissonances) for srcStream1.
-    For the fictaType variable, write "editor" or "capua", "capua1srcStream" or "capua2srcStream".
+    For the fictaType variable, write 'editor' or 'capua', 'capua1srcStream' or 'capua2srcStream'.
     '''
     perfectConsCount = 0
     imperfConsCount = 0
     othersCount = 0
 
-    ### populates the note.editorial.harmonicInterval object
+    # populates the note.editorial.harmonicInterval object
     srcStream1.attachIntervalsBetweenStreams(srcStream2)
     srcStream2.attachIntervalsBetweenStreams(srcStream1)
     for note1 in srcStream1.notes:
@@ -692,121 +698,125 @@ def compareOnesrcStream(srcStream1, srcStream2, fictaType='editor'):
             hasFicta = True
 
         iType = getIntervalType(interval1)
-        if hasFicta and fictaType == "editor":
-            environLocal.printDebug("found ficta of Editor type")
-            note1.editorial.misc["editorFictaHarmony"] = iType
-            note1.editorial.misc["editorFictaInterval"] = interval1
-        elif hasFicta and fictaType == "capua1srcStream":
-            environLocal.printDebug("found ficta of capua1srcStream type")
-            note1.editorial.misc["capua1FictaHarmony"] = iType
-            note1.editorial.misc["capua1FictaInterval"] = interval1
-        elif hasFicta and fictaType == "capua2srcStream":
-            environLocal.printDebug("found ficta of capua2srcStream type")
-            note1.editorial.misc["capua2FictaHarmony"] = iType
-            note1.editorial.misc["capua2FictaInterval"] = interval1
+        if hasFicta and fictaType == 'editor':
+            environLocal.printDebug('found ficta of Editor type')
+            note1.editorial.editorFictaHarmony = iType
+            note1.editorial.editorFictaInterval = interval1
+        elif hasFicta and fictaType == 'capua1srcStream':
+            environLocal.printDebug('found ficta of capua1srcStream type')
+            note1.editorial.capua1FictaHarmony = iType
+            note1.editorial.capua1FictaInterval = interval1
+        elif hasFicta and fictaType == 'capua2srcStream':
+            environLocal.printDebug('found ficta of capua2srcStream type')
+            note1.editorial.capua2FictaHarmony = iType
+            note1.editorial.capua2FictaInterval = interval1
         else:
-            note1.editorial.misc["noFictaHarmony"] = iType
+            note1.editorial.noFictaHarmony = iType
 
-        if iType == "perfect cons":
+        if iType == 'perfect cons':
             perfectConsCount += 1
-        elif iType == "imperfect cons":
+        elif iType == 'imperfect cons':
             imperfConsCount += 1
-        elif iType == "dissonance":
+        elif iType == 'dissonance':
             othersCount += 1
         else:
-            raise CapuaException("Hmmm.... I thought we already trapped this for errors...")
+            raise CapuaException('Hmmm.... I thought we already trapped this for errors...')
     return [perfectConsCount, imperfConsCount, othersCount]
 
+
 def getIntervalType(interval1):
-    '''returns either None (if interval is undef),  "perfect cons", "imperfect cons", "dissonance"
+    '''returns either None (if interval is undef),  'perfect cons', 'imperfect cons', 'dissonance'
     or an error depending on how the interval fits into 14th century harmonic principles'''
     if interval1 is None:
         return None
     elif interval1.diatonic is None:
         return None
     elif interval1.diatonic.name in PerfectCons:
-        return "perfect cons"
+        return 'perfect cons'
     elif interval1.diatonic.name in ImperfCons:
-        return "imperfect cons"
+        return 'imperfect cons'
     elif interval1.diatonic.name in Others:
-        return "dissonance"
+        return 'dissonance'
     else:
-        raise CapuaException("Wow!  The first " + interval1.niceName +
-            " I have ever seen in 14th century music!  Go publish!  (or check for errors...)")
+        raise CapuaException(
+            'Wow!  The first ' + interval1.niceName
+            + ' I have ever seen in 14th century music!  Go publish!  (or check for errors...)'
+        )
 
-betterColor = "green"
-worseColor = "red"
-neutralColor = "blue"
 
-##def compareAll(srcStream1, srcStream2):
-##    # needs to evaluate fictaHarmony, noFictaHarmony to determine color of note,
-##    # also evaluate counters for perfect, imperfect, and other intervals
-##    pass
+betterColor = 'green'
+worseColor = 'red'
+neutralColor = 'blue'
+
 
 def colorCapuaFicta(srcStream1, srcStream2, oneOrBoth='both'):
     '''
     Given two srcStreams, applies the capua rules and colors each note (in
-    note.editorial.misc under "ficta-color") as compared to the srcStreams with no ficta,
+    note.editorial.fictaColor) as compared to the srcStreams with no ficta,
     using betterColor, worseColor, and neutralColor.
 
     '''
     srcStream1.attachIntervalsBetweenStreams(srcStream2)
     srcStream2.attachIntervalsBetweenStreams(srcStream1)
     capuaCount = evaluateRules(srcStream1, srcStream2)
-    environLocal.printDebug("Capua count: %r" % capuaCount)
+    environLocal.printDebug('Capua count: %r' % capuaCount)
     noFictaCount = evaluateWithoutFicta(srcStream1, srcStream2)
-    environLocal.printDebug("No ficta count: %r" % noFictaCount)
+    environLocal.printDebug('No ficta count: %r' % noFictaCount)
     for note1 in srcStream1:
         colorNote(note1, oneOrBoth)
     for note2 in srcStream2:
         colorNote(note2, oneOrBoth)
 
+
 def colorNote(note1, oneOrBoth='both'):
     '''
     Applies all rules to a note according to what harmonies are better/worse/neutral.
     '''
-    if "capua2FictaHarmony" not in note1.editorial.misc:
+    if 'capua2FictaHarmony' not in note1.editorial:
         return
-    elif oneOrBoth == "one":
-        capuaHarmony = note1.editorial.misc["capua1FictaHarmony"]
-    elif oneOrBoth == "both":
-        capuaHarmony = note1.editorial.misc["capua2FictaHarmony"]
+    elif oneOrBoth == 'one':
+        capuaHarmony = note1.editorial.capua1FictaHarmony
+    elif oneOrBoth == 'both':
+        capuaHarmony = note1.editorial.capua2FictaHarmony
     else:
         raise CapuaException('Please specify "one" or "both" for the variable "oneOrBoth".')
-    nonCapuaHarmony = note1.editorial.misc["noFictaHarmony"]
-    #nonCapuaHarmony = getIntervalType(nonCapuaInterval)
-    ruleOne(nonCapuaHarmony, capuaHarmony)
-    #ruleTwo(....), ruleThree(...), and so on
-
-def ruleOne(nonCapuaHarmony, capuaHarmony):
-    '''Colors a note based on the rule dissonance -> perfect cons is better,
-    perfect cons -> dissonance is worse.'''
-    if nonCapuaHarmony == "dissonance" and capuaHarmony == "perfect cons":
-        note.editorial.misc["ficta-color"] = betterColor #@UndefinedVariable
-        #can put the color somewhere else; I didn't want to step on the color-coded
-        #capua rules
-    elif nonCapuaHarmony == "perfect cons" and capuaHarmony == "dissonance":
-        note.editorial.misc["ficta-color"] = worseColor #@UndefinedVariable
+    nonCapuaHarmony = note1.editorial.noFictaHarmony
+    # nonCapuaHarmony = getIntervalType(nonCapuaInterval)
+    ruleOne(note1, nonCapuaHarmony, capuaHarmony)
+    # ruleTwo(....), ruleThree(...), and so on
 
 
-def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
+def ruleOne(note1, nonCapuaHarmony, capuaHarmony):
+    '''
+    Colors a note based on the rule dissonance -> perfect cons is better,
+    perfect cons -> dissonance is worse.
+    '''
+    if nonCapuaHarmony == 'dissonance' and capuaHarmony == 'perfect cons':
+        note1.editorial.fictaColor = betterColor
+        # can put the color somewhere else; I didn't want to step on the color-coded
+        # capua rules
+    elif nonCapuaHarmony == 'perfect cons' and capuaHarmony == 'dissonance':
+        note1.editorial.fictaColor = worseColor
+
+
+def findCorrections(correctionType='Maj3', startPiece=2, endPiece=459):
     '''
     Find all cases where a Major 3rd moves inward to unison (within the next two or
     three notes, excluding rests)
     and see how often the PMFC editors correct it to minor 3rd and how often Capua gets it.
 
-    or if correctionType == "min6" find all instances of a minor 6th moving outward to
+    or if correctionType == 'min6' find all instances of a minor 6th moving outward to
     octave and see how often the PMFC
     editors correct it to a Major 6th and how often Capua gets it.
 
 #    >>> from pprint import pprint as pp
-#    >>> (totalDict, foundPieceOpus) = findCorrections(correctionType="Maj3", 2, 50)
+#    >>> (totalDict, foundPieceOpus) = findCorrections(correctionType='Maj3', 2, 50)
 #    >>> pp(totalDict)
 #    {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, 'capuaNotPmfc': 27,
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
 #    >>> foundPieceOpus.show('lily.pdf')
 
-#    >>> (totalDict, foundPieceOpus) = findCorrections(correctionType="min6")
+#    >>> (totalDict, foundPieceOpus) = findCorrections(correctionType='min6')
 #    >>> pp(totalDict)
 #    {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, 'capuaNotPmfc': 27,
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
@@ -835,33 +845,31 @@ def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
     if correctionType == 'Maj3':
         notesToCheck = 1
         simpleNameToCheck = 'm3'
-    elif correctionType == "min6":
-        notesToCheck = 2 # allows Landini cadences, but not much more
+    elif correctionType == 'min6':
+        notesToCheck = 2  # allows Landini cadences, but not much more
         simpleNameToCheck = 'M6'
     else:
-        raise CapuaException("Invalid correctionType to check; I can check 'Maj3' or 'min6'")
+        raise CapuaException('Invalid correctionType to check; I can check "Maj3" or "min6"')
 
     foundPieceOpus = stream.Opus()
 
-    for i in range(startPiece, endPiece):  # all ballate
-#    for i in range(2, 29):  # small number of ballate
-#    for i in range(232, 373):  # all of Landini ballate
-        pieceObj = ballataObj.makeWork(i)  ## N.B. -- we now use Excel column numbers
+    for j in range(startPiece, endPiece):  # all ballate
+        pieceObj = ballataObj.makeWork(j)  # N.B. -- we now use Excel column numbers
         if pieceObj.incipit is None:
             continue
-        environLocal.warn("Working on piece number %d, %s " % (i, pieceObj.title))
+        environLocal.warn('Working on piece number %d, %s ' % (j, pieceObj.title))
         for thisSnippet in pieceObj.snippets:
             thisSnippetAppended = False
             if thisSnippet is None:
                 continue
-            if "Incipit" in thisSnippet.classes:
+            if 'Incipit' in thisSnippet.classes:
                 continue
             thisSnippetParts = thisSnippet.parts
             if len(thisSnippetParts) < 2:
                 continue
             srcStream1 = thisSnippetParts['C'].flat.notesAndRests
             srcStream2 = thisSnippetParts['T'].flat.notesAndRests
-            ## ignore 3rd voice for now...
+            # ignore 3rd voice for now...
             srcStream1.attachIntervalsBetweenStreams(srcStream2)
             srcStream2.attachIntervalsBetweenStreams(srcStream1)
 
@@ -872,7 +880,7 @@ def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
             applyCapuaToStream(srcStream2)
 
             for ss in [srcStream1, srcStream2]:
-                srcStreamNotes = ss.notes # get rid of rests
+                srcStreamNotes = ss.notes  # get rid of rests
                 srcStreamLen = len(srcStreamNotes)
                 for (i, note1) in enumerate(srcStreamNotes):
                     if (note1.editorial.harmonicInterval is None
@@ -885,20 +893,20 @@ def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
                             nextFewNotes = srcStreamNotes[i + 1:]
                     else:
                         nextFewNotes = srcStreamNotes[(i + 1):(i + 1 + notesToCheck)]
-                    #nextFewNotes = srcStream1.notesFollowingNote(note1,
-                    #        notesToCheck, allowRests = False)
+                    # nextFewNotes = srcStream1.notesFollowingNote(note1,
+                    #                       notesToCheck, allowRests = False)
                     foundP8 = False
                     for thisNote in nextFewNotes:
                         if thisNote is None:
                             raise CapuaException(
-                                "This was only supposed to return non-None, what is up???")
+                                'This was only supposed to return non-None, what is up???')
                         if thisNote.editorial.harmonicInterval is None:
-                            continue  ## probably a rest; should not happen
+                            continue  # probably a rest; should not happen
                         if (correctionType == 'Maj3'
-                                and thisNote.editorial.harmonicInterval.simpleName == "P1"):
+                                and thisNote.editorial.harmonicInterval.simpleName == 'P1'):
                             foundP8 = True
                         elif (correctionType == 'min6'
-                                and thisNote.editorial.harmonicInterval.semiSimpleName == "P8"):
+                                and thisNote.editorial.harmonicInterval.semiSimpleName == 'P8'):
                             foundP8 = True
                     if foundP8 is False:
                         continue
@@ -914,7 +922,8 @@ def findCorrections(correctionType="Maj3", startPiece=2, endPiece=459):
                             thisSnippetAppended = True
                         totalDict[thisKey] += newResults[thisKey]
 
-    return (totalDict, foundPieceOpus)
+    return totalDict, foundPieceOpus
+
 
 def improvedHarmony(startPiece=2, endPiece=459):
     '''
@@ -934,37 +943,35 @@ def improvedHarmony(startPiece=2, endPiece=459):
     ballataObj = cadencebook.BallataSheet()
 
     checkDict = {
-                 "perfIgnored": 0,
-                 "perfCapua": 0,
-                 "imperfIgnored": 0,
-                 "imperfCapua": 0
+                 'perfIgnored': 0,
+                 'perfCapua': 0,
+                 'imperfIgnored': 0,
+                 'imperfCapua': 0
                  }
 
-    for i in range(startPiece, endPiece):  # all ballate
-#    for i in range(2, 29):  # small number of ballate
-#    for i in range(232, 373):  # all of Landini ballate
-        # environLocal.printDebug("Working on piece number %d " % i)
-        pieceObj = ballataObj.makeWork(i)  ## N.B. -- we now use Excel column numbers
+    for j in range(startPiece, endPiece):  # all ballate
+        # environLocal.printDebug('Working on piece number %d ' % j)
+        pieceObj = ballataObj.makeWork(j)  # N.B. -- we now use Excel column numbers
         if pieceObj.incipit is None:
             continue
         for thisSnippet in pieceObj.snippets:
-            #thisSnippetAppended = False
+            # thisSnippetAppended = False
             if thisSnippet is None:
                 continue
-            if "Incipit" in thisSnippet.classes:
+            if 'Incipit' in thisSnippet.classes:
                 continue
             thisSnippetParts = thisSnippet.parts
             if len(thisSnippetParts) < 2:
                 continue
             srcStream1 = thisSnippetParts['C'].flat.notesAndRests
-            srcStream2 = thisSnippetParts['T'].flat.notesAndRests  ## ignore 3rd voice for now...
+            srcStream2 = thisSnippetParts['T'].flat.notesAndRests  # ignore 3rd voice for now...
             srcStream1.attachIntervalsBetweenStreams(srcStream2)
-            #srcStream2.attachIntervalsBetweenStreams(srcStream1)
+            # srcStream2.attachIntervalsBetweenStreams(srcStream1)
             applyCapuaToStream(srcStream1)
 
             for ss in [srcStream1, srcStream2]:
-                srcStreamNotes = ss.notes # get rid of rests
-                #srcStreamLen = len(srcStreamNotes)
+                srcStreamNotes = ss.notes  # get rid of rests
+                # srcStreamLen = len(srcStreamNotes)
 
                 for (i, note1) in enumerate(srcStreamNotes):
                     hI = note1.editorial.harmonicInterval
@@ -973,38 +980,40 @@ def improvedHarmony(startPiece=2, endPiece=459):
                             hI.generic.simpleUndirected == 4):
                         continue
 
-                    #### KEEP PROGRAMMING FROM HERE
-                    if hI.diatonic.specificName == "Perfect":
-                        if "capua-ficta" in note1.editorial.misc:
-                            checkDict["perfCapua"] += 1  ## ugh Capua changed a P1, P5, or P8
+                    # KEEP PROGRAMMING FROM HERE
+                    if hI.diatonic.specificName == 'Perfect':
+                        if 'capuaFicta' in note1.editorial:
+                            checkDict['perfCapua'] += 1  # ugh Capua changed a P1, P5, or P8
                         else:
-                            checkDict["perfIgnored"] +=1 ## yay Capua left it alone
+                            checkDict['perfIgnored'] += 1  # yay Capua left it alone
                     else:
-                        if "capua-ficta" in note1.editorial.misc:
-                            checkDict["imperfCapua"] += 1
-                            ## yay Capua changed a A1 or d1, A5 or d5, or A8 or d8
+                        if 'capuaFicta' in note1.editorial:
+                            checkDict['imperfCapua'] += 1
+                            # yay Capua changed a A1 or d1, A5 or d5, or A8 or d8
                         else:
-                            checkDict["imperfIgnored"] +=1 ## hrumph, Capua left it alone
+                            checkDict['imperfIgnored'] += 1  # hrumph, Capua left it alone
 
     return checkDict
+
 
 def runPiece(pieceNum=331, snipNum=0):  # random default piece...
     ballataObj = cadencebook.BallataSheet()
     pieceObj = ballataObj.makeWork(pieceNum)
-#    pieceObj.snippets[0].lily.showPNG()
+    # pieceObj.snippets[0].lily.showPNG()
     applyCapuaToScore(pieceObj)
-#    pieceObj.snippets[snipNum].show('lily.png')
+    # pieceObj.snippets[snipNum].show('lily.png')
     srcStream = pieceObj.snippets[snipNum].parts[0].flat.notesAndRests
     cmpStream = pieceObj.snippets[snipNum].parts[1].flat.notesAndRests
-    ## ignore 3rd voice for now...
+    # ignore 3rd voice for now...
     srcStream.attachIntervalsBetweenStreams(cmpStream)
 
     for n in srcStream.notes:
         if n.editorial.harmonicInterval is not None:
             environLocal.printDebug(n.name)
             environLocal.printDebug(n.editorial.harmonicInterval.semiSimpleName)
-            if "capua-ficta" in n.editorial.misc:
-                environLocal.printDebug(n.editorial.misc['capua-ficta'])
+            if 'capuaFicta' in n.editorial:
+                environLocal.printDebug(n.editorial.capuaFicta)
+
 
 def ruleFrequency(startNumber=2, endNumber=459):
     ballataObj = cadencebook.BallataSheet()
@@ -1013,10 +1022,8 @@ def ruleFrequency(startNumber=2, endNumber=459):
     num3 = 0
     num4a = 0
     num4b = 0
-    for i in range(startNumber, endNumber): # all ballate
-#        if (i == 15):
-#            pass
-        pieceObj = ballataObj.makeWork(i)  ## N.B. -- we now use Excel column numbers
+    for i in range(startNumber, endNumber):  # all ballate
+        pieceObj = ballataObj.makeWork(i)  # N.B. -- we now use Excel column numbers
         for thisPolyphonicSnippet in pieceObj.snippets:
             if thisPolyphonicSnippet is None:
                 continue
@@ -1028,7 +1035,8 @@ def ruleFrequency(startNumber=2, endNumber=459):
                 num4a += capuaRuleFourA(thisStream)
                 num4b += capuaRuleFourB(thisStream)
 
-    return (num1, num2, num3, num4a, num4b)
+    return num1, num2, num3, num4a, num4b
+
 
 class Test(unittest.TestCase):
 
@@ -1036,64 +1044,59 @@ class Test(unittest.TestCase):
         pass
 
     def testRunNonCrederDonna(self):
-        pieceNum = 331 # Francesco, PMFC 4 6-7: Non creder, donna
+        pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
         ballataObj = cadencebook.BallataSheet()
         pieceObj = ballataObj.makeWork(pieceNum)
 
         applyCapuaToCadencebookWork(pieceObj)
         srcStream = pieceObj.snippets[0].parts[0].flat.notesAndRests.stream()
         cmpStream = pieceObj.snippets[0].parts[1].flat.notesAndRests.stream()
-        ## ignore 3rd voice for now...
+        # ignore 3rd voice for now...
         srcStream.attachIntervalsBetweenStreams(cmpStream)
         cmpStream.attachIntervalsBetweenStreams(srcStream)
 
-        #colorCapuaFicta(srcStream, cmpStream, 'both')
+        # colorCapuaFicta(srcStream, cmpStream, 'both')
 
         outList = []
         for n in srcStream:
             if n.editorial.harmonicInterval is not None:
-                outSublist = []
-                outSublist.append(n.name)
-                outSublist.append(n.editorial.harmonicInterval.simpleName)
-                if "capua-ficta" in n.editorial.misc:
-                    outSublist.append(repr(n.editorial.misc['capua-ficta']))
+                outSublist = [n.name, n.editorial.harmonicInterval.simpleName]
+                if 'capuaFicta' in n.editorial:
+                    outSublist.append(repr(n.editorial.capuaFicta))
                 else:
                     outSublist.append(None)
                 outList.append(outSublist)
 
         self.assertEqual(outList,
-                         [['A', 'P5', None], ['A', 'M6', None],
-                          ['G', 'P5', None], ['G', 'm6', None],
-                          ['A', 'm7', None], ['F', 'd5', '<accidental sharp>'],
-                          ['G', 'm6', None], ['A', 'P1', None],
-                          ['B', 'M6', None], ['A', 'P5', None],
-                          ['G', 'm7', None], ['G', 'm6', None],
-                          ['F', 'd5', None], ['E', 'M3', None],
-                          ['D', 'P1', None]
-                         ])
-        #pieceObj.asOpus().show('lily.pdf')
+                         [
+                             ['A', 'P5', None], ['A', 'M6', None],
+                             ['G', 'P5', None], ['G', 'm6', None],
+                             ['A', 'm7', None], ['F', 'd5', '<accidental sharp>'],
+                             ['G', 'm6', None], ['A', 'P1', None],
+                             ['B', 'M6', None], ['A', 'P5', None],
+                             ['G', 'm7', None], ['G', 'm6', None],
+                             ['F', 'd5', None], ['E', 'M3', None],
+                             ['D', 'P1', None]
+                          ])
+        # pieceObj.asOpus().show('lily.pdf')
 
         return pieceObj
 
     def testRun1(self):
         ballataSht = cadencebook.BallataSheet()
-        pieceObj = ballataSht.makeWork(20)  ## N.B. -- we now use Excel column numbers
+        pieceObj = ballataSht.makeWork(20)  # N.B. -- we now use Excel column numbers
         if pieceObj.incipit is None:
             return None
         cadenceA = pieceObj.cadenceA
         if len(cadenceA.parts) >= 2:
             srcStream1 = cadenceA.parts[0].flat.notes.stream()
-            srcStream2 = cadenceA.parts[1].flat.notes.stream()  ## ignore 3rd voice for now...
-        clearFicta(srcStream1)
-        compareThreeFictas(srcStream1, srcStream2)
-        cons, imperfCons, diss = compareOnesrcStream(srcStream1, srcStream2)
+            srcStream2 = cadenceA.parts[1].flat.notes.stream()  # ignore 3rd voice for now...
+            clearFicta(srcStream1)
+            compareThreeFictas(srcStream1, srcStream2)
+            cons, imperfCons, diss = compareOnesrcStream(srcStream1, srcStream2)
 
-#        for note in srcStream1:
-#                print note.name
-#                print note.editorial.ficta
-#                print note.editorial.harmonicInterval.diatonic.name
-        restoreFicta(srcStream1)
-        self.assertEqual([cons, imperfCons, diss], [4, 3, 3])
+            restoreFicta(srcStream1)
+            self.assertEqual([cons, imperfCons, diss], [4, 3, 3])
 
     def testColorCapuaFicta(self):
         from music21.note import Note
@@ -1107,31 +1110,30 @@ class Test(unittest.TestCase):
         stream2 = Stream()
         stream2.append([n21, n22, n23, n24])
 
-
-        ### Need twoStreamComparer to Work
+        # Need twoStreamComparer to Work
         evaluateWithoutFicta(stream1, stream2)
-        assert n13.editorial.harmonicInterval.name == "d5", n13.editorial.harmonicInterval.name
+        assert n13.editorial.harmonicInterval.name == 'd5', n13.editorial.harmonicInterval.name
         evaluateCapuaTwoStreams(stream1, stream2)
 
-        colorCapuaFicta(stream1, stream2, "both")
-        assert n13.editorial.harmonicInterval.name == "P5", n13.editorial.harmonicInterval.name
+        colorCapuaFicta(stream1, stream2, 'both')
+        assert n13.editorial.harmonicInterval.name == 'P5', n13.editorial.harmonicInterval.name
 #
-#        assert n11.style.color == "yellow"
-#        assert n12.style.color == "yellow"
-#        assert n13.style.color == "green"
-#        assert n14.style.color == "yellow"
+#        assert n11.style.color == 'yellow'
+#        assert n12.style.color == 'yellow'
+#        assert n13.style.color == 'green'
+#        assert n14.style.color == 'yellow'
 #
-#        assert n11.editorial.harmonicInterval.name == "M2"
-#        assert n21.editorial.harmonicInterval.name == "M2"
+#        assert n11.editorial.harmonicInterval.name == 'M2'
+#        assert n21.editorial.harmonicInterval.name == 'M2'
 #
-#        assert n13.editorial.harmonicInterval.name == "P5"
-#        assert n13.editorial.misc["noFictaHarmony"] == "perfect cons"
-#        assert n13.editorial.misc["capua2FictaHarmony"] == "perfect cons"
-#        assert n13.editorial.misc["capua2FictaInterval"].name == "P5"
-#        assert n13.style.color == "green"
+#        assert n13.editorial.harmonicInterval.name == 'P5'
+#        assert n13.editorial.noFictaHarmony == 'perfect cons'
+#        assert n13.editorial.capua2FictaHarmony == 'perfect cons'
+#        assert n13.editorial.capua2FictaInterval.name == 'P5'
+#        assert n13.style.color == 'green'
 
-class TestExternal(unittest.TestCase): # pragma: no cover
 
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
@@ -1143,8 +1145,8 @@ class TestExternal(unittest.TestCase): # pragma: no cover
     def testShowFourA(self):
         ballataObj = cadencebook.BallataSheet()
         showStream = stream.Opus()
-        for i in range(2, 45): #459): # all ballate
-            pieceObj = ballataObj.makeWork(i)  ## N.B. -- we now use Excel column numbers
+        for i in range(2, 45):  # 459): # all ballate
+            pieceObj = ballataObj.makeWork(i)  # N.B. -- we now use Excel column numbers
             theseSnippets = pieceObj.snippets
             for thisSnippet in theseSnippets:
                 if thisSnippet is None:
@@ -1158,6 +1160,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
                     showStream.insert(0, thisSnippet)
 
         showStream.show('lily.pdf')
+
 
 class TestSlow(unittest.TestCase):
 
@@ -1176,19 +1179,19 @@ class TestSlow(unittest.TestCase):
             }
 
         for i in range(232, 349):  # 232-349 is most of Landini PMFC
-            pieceObj = ballataObj.makeWork(i)  ## N.B. -- we now use Excel column numbers
+            pieceObj = ballataObj.makeWork(i)  # N.B. -- we now use Excel column numbers
             if pieceObj.incipit is None:
                 continue
             environLocal.printDebug(pieceObj.title)
             cadenceA = pieceObj.cadenceA
             if cadenceA is not None and len(cadenceA.parts) >= 2:
-                srcStream1 = cadenceA.parts[0] #.flat.notesAndRests
-                #srcStream2 = cadenceA.parts[1].flat.notesAndRests
-                ## ignore 3rd voice for now...
-                #twoStreams1 = twoStreams.TwoStreamComparer(srcStream1, srcStream2)
-                #twoStreams1.intervalToOtherStreamWhenAttacked()
-                #srcStream1.attachIntervalsBetweenStreams(srcStream2)
-                #srcStream2.attachIntervalsBetweenStreams(srcStream1)
+                srcStream1 = cadenceA.parts[0]  # .flat.notesAndRests
+                # srcStream2 = cadenceA.parts[1].flat.notesAndRests
+                # # ignore 3rd voice for now...
+                # twoStreams1 = twoStreams.TwoStreamComparer(srcStream1, srcStream2)
+                # twoStreams1.intervalToOtherStreamWhenAttacked()
+                # srcStream1.attachIntervalsBetweenStreams(srcStream2)
+                # srcStream2.attachIntervalsBetweenStreams(srcStream1)
 
                 applyCapuaToStream(srcStream1)
                 thisDict = compareSrcStreamCapuaToEditor(srcStream1)
@@ -1213,20 +1216,16 @@ class TestSlow(unittest.TestCase):
         self.assertEqual(num4b, 104)
 
 
-if (__name__ == "__main__"):
-    #runPiece(267)
-#    (totalDict, foundPieceOpus) = findCorrections(correctionType="min6",
-#                startPiece=21, endPiece=22)
-#    print totalDict
-#    if len(foundPieceOpus) > 0:
-#        foundPieceOpus.show('lily.png')
+if __name__ == '__main__':
+    # runPiece(267)
+    # (totalDict, foundPieceOpus) = findCorrections(correctionType='min6',
+    #             startPiece=21, endPiece=22)
+    # print totalDict
+    # if len(foundPieceOpus) > 0:
+    #     foundPieceOpus.show('lily.png')
     import music21
-    music21.mainTest(Test, 'importPlusRelative') #TestExternal) #, TestExternal)
+    music21.mainTest(Test, 'importPlusRelative')  # , TestExternal)
 
-#    correctedMin6()
-#    correctedMaj3()
-#    improvedHarmony()
-
-#------------------------------------------------------------------------------
-# eof
-
+    # correctedMin6()
+    # correctedMaj3()
+    # improvedHarmony()
