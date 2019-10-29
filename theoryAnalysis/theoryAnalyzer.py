@@ -1458,7 +1458,7 @@ class Analyzer:
 
         Optionally label each identified passing tone with an editorial
         :class:`~music21.editorial.NoteEditorial` value of
-        editorialValue at ``note.editorial.misc[editorialDictKey]``
+        editorialValue at ``note.editorial.[editorialDictKey]``
 
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
