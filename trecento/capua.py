@@ -267,8 +267,8 @@ def capuaRuleThree(srcStream):
             continue
 
         # e.g., E C D => E C# D
-        if (i1.directedName  == 'M-3'
-                and i2.directedName  == 'M2'):
+        if (i1.directedName == 'M-3'
+                and i2.directedName == 'M2'):
             numChanged += 1
             if 'capuaRuleNumber' in n2.editorial:
                 n2.editorial.capuaRuleNumber += RULE_THREE
@@ -321,7 +321,7 @@ def capuaRuleFourA(srcStream):
             continue
 
         # e.g., D B A => D Bb A
-        if i1.directedName  == 'm-3' and i2.directedName  == 'M-2':
+        if i1.directedName == 'm-3' and i2.directedName == 'M-2':
             numChanged += 1
             if 'capuaRuleNumber' in n2.editorial:
                 n2.editorial.capuaRuleNumber += RULE_FOUR_A
@@ -559,9 +559,9 @@ def evaluateWithoutFicta(srcStream1, srcStream2):
 
 
 PerfectCons = ['P1', 'P5', 'P8']
-ImperfCons  = ['m3', 'M3', 'm6', 'M6']
-Others      = ['m2', 'M2', 'A2', 'd3', 'A3', 'd4', 'P4', 'A4', 'd5', 'A5', 'd6',
-               'A6', 'd7', 'm7', 'M7', 'A7']
+ImperfCons = ['m3', 'M3', 'm6', 'M6']
+Others = ['m2', 'M2', 'A2', 'd3', 'A3', 'd4', 'P4', 'A4', 'd5', 'A5', 'd6',
+          'A6', 'd7', 'm7', 'M7', 'A7']
 
 PERFCONS = 1
 IMPERFCONS = 2
@@ -982,9 +982,9 @@ def improvedHarmony(startPiece=2, endPiece=459):
                     # KEEP PROGRAMMING FROM HERE
                     if hI.diatonic.specificName == 'Perfect':
                         if 'capuaFicta' in note1.editorial:
-                            checkDict['perfCapua'] += 1  # ugh Capua changed a P1, P5, or P8
+                            checkDict['perfCapua'] += 1  # ugh, Capua changed a P1, P5, or P8
                         else:
-                            checkDict['perfIgnored'] += 1  # yay Capua left it alone
+                            checkDict['perfIgnored'] += 1  # yay, Capua left it alone
                     else:
                         if 'capuaFicta' in note1.editorial:
                             checkDict['imperfCapua'] += 1

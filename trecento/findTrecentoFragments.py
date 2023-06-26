@@ -30,7 +30,7 @@ class IntervalSearcher:
         stIntervalListLength = len(stIntervalList)
         if self.intervalLength > stIntervalListLength:
             return False
-        #print "Length of Stream: " + str(streamLength)
+        # print("Length of Stream: " + str(streamLength))
         for i in range(stIntervalListLength + 1 - self.intervalLength):
             for j in range(self.intervalLength):
                 streamInterval = stIntervalList[i + j]
@@ -40,7 +40,7 @@ class IntervalSearcher:
                     break
             else:
                 for colorNote in range(i, i + self.intervalLength):
-                    ## does not exactly work because of rests, oh well
+                    # does not exactly work because of rests, oh well
                     cmpStream.notesAndRests[colorNote].style.color = "blue"
                 return True
         return False
@@ -65,7 +65,7 @@ class NoteSearcher:
                     break
                 if streamNote.isNote and (self.noteList[j].step != streamNote.step):
                     break
-            else:  ## success!
+            else:  # success!
                 for colorNote in range(i, self.noteLength):
                     sN[colorNote].style.color = "blue"
                 return True
@@ -90,7 +90,7 @@ def searchForNotes(notesStr):
         else:
             tNObj = note.Rest()
         noteObjArr.append(tNObj)
-    ballataObj  = cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
     searcher1 = NoteSearcher(noteObjArr)
     streamOpus = stream.Opus()
 
@@ -107,16 +107,16 @@ def colorFound(searcher1, thisCadence, streamOpus, thisWork, i):
     if searcher1.compareToStream(thisCadence.parts[i].flat) is True:
         notesStr = ""
         for thisNote in thisCadence.parts[i].flat.notesAndRests:
-            #thisNote.style.color = "blue"
+            # thisNote.style.color = "blue"
             if thisNote.isRest is False:
                 notesStr += thisNote.nameWithOctave + " "
             else:
                 notesStr += "r "
         streamOpus.insert(0, thisCadence)
-#                    streamLily += ("\\score {" +
-#                            "<< \\time " + str(thisCadence.timeSig) +
-#                            "\n \\new Staff {" + str(thisCadence.parts[i].lily) + "} >>" +
-#                            thisCadence.header() + "\n}\n")
+        # streamLily += ("\\score {" +
+        #         "<< \\time " + str(thisCadence.timeSig) +
+        #         "\n \\new Staff {" + str(thisCadence.parts[i].lily) + "} >>" +
+        #         thisCadence.header() + "\n}\n")
         print("In piece %r found in stream %d: %s" % (thisWork.title, i, notesStr))
 
 def searchForIntervals(notesStr):
@@ -137,10 +137,10 @@ def searchForIntervals(notesStr):
     for i in range(len(noteObjArr) - 1):
         int1 = interval.notesToInterval(noteObjArr[i], noteObjArr[i + 1])
         interObjArr.append(int1)
-    #print interObjArr
+    # print(interObjArr)
 
     searcher1 = IntervalSearcher(interObjArr)
-    ballataObj  = cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
 
     streamOpus = stream.Opus()
 
@@ -156,14 +156,14 @@ def searchForIntervals(notesStr):
         streamOpus.show('lily.png')
 
 def findRandomVerona():
-    searchForNotes("A4 F4 G4 E4 F4 G4")  #p. 4 cadence 1
-    searchForNotes("F4 G4 A4 G4 A4 F4 G4 A4") #p. 4 incipit 2
+    searchForNotes("A4 F4 G4 E4 F4 G4")  # p. 4 cadence 1
+    searchForNotes("F4 G4 A4 G4 A4 F4 G4 A4")  # p. 4 incipit 2
 
 def findCasanatense522():
     searchForIntervals("D4 E4 D4 C4 D4 E4 F4")
 
 def findRavi3ORegina():
-    searchForNotes("G16 G16 F8 E16") # should be cadence A, cantus
+    searchForNotes("G16 G16 F8 E16")  # should be cadence A, cantus
 
 
 def searchForVat1969():
@@ -173,30 +173,35 @@ def searchForVat1969():
     these notes.  Find it!'''
 
     ballataObj = cadencebook.BallataSheet()
-    thisWork = None
+    _thisWork = None
+    cadB1 = None
+    cadB2 = None
     for thisWork in ballataObj:
         cadB1 = thisWork.cadenceB1Class()
         cadB2 = thisWork.cadenceB2Class()
-        if (cadB2 is None or not cadB2.parts):
+        if cadB2 is None or not cadB2.parts:
             continue
-        if (cadB1 is None or not cadB1.parts):
+        if cadB1 is None or not cadB1.parts:
             continue
+
+    if cadB1 is None or cadB2 is None:
+        return
 
     for i in range(len(cadB2.parts)):
         strB1 = cadB1.parts[i].flat
         strB2 = cadB2.parts[i].flat
         if len(strB1.notesAndRests) < 3 or len(strB2.notesAndRests) < 3:
             break
-#             if findUpDown(strB1.notesAndRests[-3],
-#                           strB1.notesAndRests[-2],
-#                           strB1.notesAndRests[-1]):
-#                 if findUpDown(strB2.notesAndRests[-3],
-#                               strB2.notesAndRests[-2],
-#                               strB2.notesAndRests[-1]):
-#                     print(thisWork.title.encode('utf-8') + "   ",)
-#                     b1b2int = interval.Interval(note1=strB1.notesAndRests[-1],
-#                                                 note2=strB2.notesAndRests[-1])
-#                     print(b1b2int.diatonic.generic.niceName)
+            # if findUpDown(strB1.notesAndRests[-3],
+            #               strB1.notesAndRests[-2],
+            #               strB1.notesAndRests[-1]):
+            #     if findUpDown(strB2.notesAndRests[-3],
+            #                   strB2.notesAndRests[-2],
+            #                   strB2.notesAndRests[-1]):
+            #         print(thisWork.title.encode('utf-8') + "   ",)
+            #         b1b2int = interval.Interval(note1=strB1.notesAndRests[-1],
+            #                                     note2=strB2.notesAndRests[-1])
+            #         print(b1b2int.diatonic.generic.niceName)
 
 def findUpDown(n1, n2, n3):
     if n1.isRest or n2.isRest or n3.isRest:
@@ -210,7 +215,7 @@ def findUpDown(n1, n2, n3):
     return True
 
 def audioVirelaiSearch():
-    #from music21 import audioSearch
+    # from music21 import audioSearch
     from music21.audioSearch import transcriber
     from music21 import search
     virelaisSheet = cadencebook.TrecentoSheet(sheetname='virelais')
@@ -226,9 +231,9 @@ def audioVirelaiSearch():
             except IndexError:
                 pass
     searchScore = transcriber.runTranscribe(show=False, plot=False, seconds=10.0, saveFile=False)
-    #from music21 import converter
-    #searchScore = converter.parse("c'4 a8 a4 g8 b4. d'4. c8 b a g f4", '6/8')
-    #searchScore.show()
+    # from music21 import converter
+    # searchScore = converter.parse("c'4 a8 a4 g8 b4. d'4. c8 b a g f4", '6/8')
+    # searchScore.show()
     l = search.approximateNoteSearch(searchScore, virelaiCantuses)
     for i in l:
         print(i.metadata.title, i.matchProbability)
@@ -244,39 +249,40 @@ def findSimilarGloriaParts():
 
 
 def savedSearches():
-#    searchForIntervals("E4 C4 C4 B3") # Assisi 187.1
-#    searchForIntervals("D4 C4 C4 C4")   # Assisi 187.2
-#    searchForIntervals("D4 A3 A3 A3 B3 C4") # Donna si to fallito TEST
-#    searchForNotes("G3 D3 R D3 D3 E3 F3") # Donna si to fallito TEST - last note = F#
-#    searchForIntervals("F3 C3 C3 F3 G3") # Bologna Archivio: Per seguirla TEST
-#    searchForNotes("F3 E3 F3 G3 F3 E3")  # Mons archive fragment -- see FB Aetas Aurea post
-    searchForNotes("F4 G4 F4 B4 G4 A4 G4 F4 E4") # or B-4.  Paris 25406 --
+    pass
+    # searchForIntervals("E4 C4 C4 B3")  # Assisi 187.1
+    # searchForIntervals("D4 C4 C4 C4")  # Assisi 187.2
+    # searchForIntervals("D4 A3 A3 A3 B3 C4")  # Donna si to fallito TEST
+    # searchForNotes("G3 D3 R D3 D3 E3 F3")  # Donna si to fallito TEST - last note = F#
+    # searchForIntervals("F3 C3 C3 F3 G3")  # Bologna Archivio: Per seguirla TEST
+    # searchForNotes("F3 E3 F3 G3 F3 E3")  # Mons archive fragment -- see FB Aetas Aurea post
+    searchForNotes("F4 G4 F4 B4 G4 A4 G4 F4 E4")  # or B-4.  Paris 25406 --
     #   Dominique Gatte pen tests
 
-#    searchForNotes("D4 D4 C4 D4") # Fortuna Rira Seville 25 TEST! CANNOT FIND
-#    searchForNotes("D4 C4 B3 A3 G3") # Tenor de monaco so tucto Seville 25
-#    searchForNotes("E4 D4 C4 B3 A3 B3 C4") # Benedicamus Domino Seville 25
-#    searchForNotes("D4 E4 C4 D4 E4 D4 C4") # Benedicamus Domino Seville 25
-######    searchForIntervals("A4 A4 G4 A4 G4 A4") # Reina f. 18r top. = QUAL NOVITA
-#    searchForIntervals("G4 F4 F4 E4 E4 D4 D4 C4") # london 29987 88v C
-#    searchForIntervals("C4 B3 A3 A3 G3 G3 A3") # London 29987 88v T
-    #searchForNotes("G3 E3 F3 G3 F3 E3 D3 C3")  # probable French piece,
-    #   Nuremberg 9, but worth a check
-#    searchForIntervals("A4 A4 G4 G4 F4 E4") # Nuremberg 9a, staff 6 probable French Piece
-#    findCasanatense522()
-#    findRandomVerona()
-#    findRavi3ORegina()
-    #searchForIntervals("D4 B4 D4 C4 D4") # cadence formula from 15th c. that
+    # searchForNotes("D4 D4 C4 D4")  # Fortuna Rira Seville 25 TEST! CANNOT FIND
+    # searchForNotes("D4 C4 B3 A3 G3")  # Tenor de monaco so tucto Seville 25
+    # searchForNotes("E4 D4 C4 B3 A3 B3 C4")  # Benedicamus Domino Seville 25
+    # searchForNotes("D4 E4 C4 D4 E4 D4 C4")  # Benedicamus Domino Seville 25
+    # searchForIntervals("A4 A4 G4 A4 G4 A4")  # Reina f. 18r top. = QUAL NOVITA
+    # searchForIntervals("G4 F4 F4 E4 E4 D4 D4 C4")  # london 29987 88v C
+    # searchForIntervals("C4 B3 A3 A3 G3 G3 A3")  # London 29987 88v T
+    # searchForNotes("G3 E3 F3 G3 F3 E3 D3 C3")  # probable French piece,
+    # # Nuremberg 9, but worth a check
+    # searchForIntervals("A4 A4 G4 G4 F4 E4") # Nuremberg 9a, staff 6 probable French Piece
+    # findCasanatense522()
+    # findRandomVerona()
+    # findRavi3ORegina()
+    # searchForIntervals("D4 B4 D4 C4 D4")  # cadence formula from 15th c. that
     # Lisa Colton was searching for in earlier sources -- none found
-    #searchForIntervals("G4 A4 G4 F4 E4 F4 G4 E4") # Prague XVII.J.17-14_1r piece 1
+    # searchForIntervals("G4 A4 G4 F4 E4 F4 G4 E4") # Prague XVII.J.17-14_1r piece 1
     # -- possible contrafact -- no correct matches
-    #searchForIntervals("G4 A4 B4 G4 F4 G4 F4 E4") # Prague XVII.J.17-14_1r piece 2
+    # searchForIntervals("G4 A4 B4 G4 F4 G4 F4 E4") # Prague XVII.J.17-14_1r piece 2
     # -- possible contrafact -- no matches
-    #searchForIntervals("F4 A4 F4 G4 F4 G4 A4") # Duke white notation manuscript
+    # searchForIntervals("F4 A4 F4 G4 F4 G4 A4") # Duke white notation manuscript
 
 if __name__ == "__main__":
     savedSearches()
-    #audioVirelaiSearch()
+    # audioVirelaiSearch()
 
 
 

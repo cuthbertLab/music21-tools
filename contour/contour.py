@@ -42,7 +42,7 @@ def _getExtendedModules():
             'could not find matplotlib, contour mapping is not allowed (numpy is also required)')
     if 'numpy' in base._missingImport:
         raise ContourException('could not find numpy, contour mapping is not allowed')
-    import matplotlib.pyplot as plt # @UnresolvedImport
+    import matplotlib.pyplot as plt
     import numpy
     return (plt, numpy)
 

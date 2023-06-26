@@ -10,11 +10,8 @@
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
 
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
-
 from . import cadencebook
-#this is a terrible way of doing this...
+# this is a terrible way of doing this...
 from music21 import stream
 
 
@@ -35,10 +32,10 @@ def findInWork(work, searchInterval=7):
     containsInterval = False
     for astream in streams:
         intervals = astream.flat.melodicIntervals(skipRests=True)
-        #genints = []
+        # genints = []
         for thisInterval in intervals:
             if thisInterval is not None:
-                #genints.append(thisInterval.generic)
+                # genints.append(thisInterval.generic)
                 if thisInterval.generic.undirected == searchInterval:
                     containsInterval = True
 #                    try:
@@ -46,10 +43,10 @@ def findInWork(work, searchInterval=7):
                     thisInterval.noteEnd.style.color = 'blue'
 #                    except:
 #                        pass # not worth dying if the startNote can't be found
-                    #print(thisInterval.note1.nameWithOctave + ' -- ' +
-                    #    thisInterval.note2.nameWithOctave)
-                    #interval.note1.style.color = "blue" #this doesn't actually work yet....
-                    #interval.note2.style.color = "blue"
+                    # print(thisInterval.note1.nameWithOctave + ' -- ' +
+                    #       thisInterval.note2.nameWithOctave)
+                    # interval.note1.style.color = "blue"  # this doesn't actually work yet....
+                    # interval.note2.style.color = "blue"
     return containsInterval
 
 if __name__ == "__main__":

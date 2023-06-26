@@ -125,7 +125,7 @@ def prepareChinaEurope2():
     ds2.write('d:/desktop/folkTest.tab')
 
 def testChinaEuropeFull():
-    import orange, orngTree # @UnresolvedImport
+    import orange, orngTree
     data1 = orange.ExampleTable('d:/desktop/1.tab')
     data2 = orange.ExampleTable('d:/desktop/2.tab')
 

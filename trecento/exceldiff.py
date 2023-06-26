@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from music21.ext import xlrd
+import xlrd
 
 
 if len(sys.argv) != 3:
@@ -43,7 +43,7 @@ elif totalRows1 < totalRows2:
     extraRows = (totalRows2 - totalRows1)
     minRows = totalRows1
 else:
-    minRows = totalRows1 # doesnt matter which
+    minRows = totalRows1  # doesnt matter which
 
 for i in range(minRows):
     rowvalues1 = sheet1.row_values(i)
@@ -61,12 +61,12 @@ for i in range(minRows):
         extraCells = (totalCells2 - totalCells1)
         minCells = totalCells1
     else:
-        minCells = totalCells1 # doesnt matter which
+        minCells = totalCells1  # doesnt matter which
     for j in range(minCells):
         if rowvalues1[j] != rowvalues2[j]:
             print("%3d,%2s--%34s : %34s" % (i + 1,xlrd.colname(j),
-                                               (rowvalues1[j]).encode('utf-8')[:34],
-                                               (rowvalues2[j]).encode('utf-8')[:34]))
+                                            (rowvalues1[j]).encode('utf-8')[:34],
+                                            (rowvalues2[j]).encode('utf-8')[:34]))
     if extraCells > 0:
         print("%3d extra cells in row %3d in" % (extraCells, i + 1), end='')
         if longrow == 1:

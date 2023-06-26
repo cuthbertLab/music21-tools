@@ -30,27 +30,25 @@ def ex01(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         sStream = keywords['op133']
     else:
-        sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        sStream = corpus.parse('opus133.xml')  # load a MusicXML file
 
     v2Part = sStream.parts[1].getElementsByClass('Measure')
     # get all measures from the second violin
     if show:
-        v2Part[48].show() # render the 48th measure as notation
+        v2Part[48].show()  # render the 48th measure as notation
 
     # create a list of pitch classes in this measure
     pcGroup = [n.pitchClass for n in v2Part[48].pitches]
 
     if show:
-        print(pcGroup) # display the collected pitch classes as a list
+        print(pcGroup)  # display the collected pitch classes as a list
     # extract from the third pitch until just before the end
     pnGroup = [n.nameWithOctave for n in v2Part[48].pitches[2:-1]]
-    qChord = chord.Chord(pnGroup) # create a chord from these pitches
+    qChord = chord.Chord(pnGroup)  # create a chord from these pitches
 
     if show:
-        qChord.show() # render this chord as notation
-        print(qChord.isDominantSeventh()) # find if this chord is a dominant
-
-
+        qChord.show()  # render this chord as notation
+        print(qChord.isDominantSeventh())  # find if this chord is a dominant
 
 
 def ex02(show=True, *arguments, **keywords):
@@ -62,10 +60,10 @@ def ex02(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         sStream = keywords['op133']
     else:
-        sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        sStream = corpus.parse('opus133.xml')  # load a MusicXML file
 
+    # get all measures from the second violin
     v2Part = sStream.parts[1].getElementsByClass('Measure')
-        # get all measures from the second violin
 
     # First, collect all non-redundant adjacent pitch classes, and
     # store these pitch classes in a list.
@@ -96,7 +94,7 @@ def ex03(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         sStream = keywords['op133']
     else:
-        sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        sStream = corpus.parse('opus133.xml')  # load a MusicXML file
 
     # Create a graph of pitch class for the first and second part
     for part in [sStream[0], sStream[1]]:
@@ -118,7 +116,7 @@ def ex04(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         sStream = keywords['op133']
     else:
-        sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        sStream = corpus.parse('opus133.xml')  # load a MusicXML file
 
     # note: measure numbers are not being shown correctly
     # need to investigate
@@ -140,12 +138,12 @@ def ex01Alt(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         sStream = keywords['op133']
     else:
-        sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        sStream = corpus.parse('opus133.xml')  # load a MusicXML file
+    # get all measures from the second violin
     v2Part = sStream.parts[1].getElementsByClass('Measure')
-        # get all measures from the second violin
 
     if show:
-        v2Part[45].show() # render the 48th measure as notation
+        v2Part[45].show()  # render the 48th measure as notation
 
 
 
@@ -155,7 +153,7 @@ def findHighestNotes(show=True, *arguments, **keywords):
     score = corpus.parse('bach/bwv366.xml')
     ts = score.flatten().getElementsByClass(meter.TimeSignature)[0]
     # use default partitioning
-    #ts.beatSequence.partition(3)
+    # ts.beatSequence.partition(3)
 
     found = stream.Stream()
     for part in score.getElementsByClass(stream.Part):
@@ -165,7 +163,7 @@ def findHighestNotes(show=True, *arguments, **keywords):
             for n in m.notes:
                 if n.pitch.midi > highestNoteNum:
                     highestNoteNum = n.pitch.midi
-                    highestNote = copy.deepcopy(n) # optional
+                    highestNote = copy.deepcopy(n)  # optional
 
                     # These two lines will keep the look of the original
                     # note values but make each note 1 4/4 measure long:
@@ -184,17 +182,17 @@ def ex1_revised(show=True, *arguments, **keywords):
     if 'op133' in keywords.keys():
         beethovenScore = keywords['op133']
     else:
-        beethovenScore = corpus.parse('opus133.xml') # load a MusicXML file
+        beethovenScore = corpus.parse('opus133.xml')  # load a MusicXML file
 
     violin2 = beethovenScore[1]      # most programming languages start counting from 0,
     #  so part 0 = violin 1, part 1 = violin 2, etc.
-    display = stream.Stream() # an empty container for filling with found notes
+    display = stream.Stream()  # an empty container for filling with found notes
     for thisMeasure in violin2.getElementsByClass('Measure'):
         notes = thisMeasure.findConsecutiveNotes(skipUnisons=True,
                                                  skipChords=True,
                                                  skipOctaves=True,
                                                  skipRests=True,
-                                                 noNone=True )
+                                                 noNone=True)
         pitches = [n.pitch for n in notes]
         for i in range(len(pitches) - 3):
             testChord = chord.Chord(pitches[i:i + 4])
@@ -226,14 +224,14 @@ def findPotentialPassingTones(show=True):
     gcn[-1].lyric = ""
     for i in range(1, len(gcn) - 1):
         prev = gcn[i - 1]
-        cur  = gcn[i]
+        cur = gcn[i]
         nextN = gcn[i + 1]
 
         cur.lyric = ""
 
-        if ("Rest" in prev.classes or
-            "Rest" in cur.classes or
-            "Rest" in nextN.classes):
+        if ("Rest" in prev.classes
+                or "Rest" in cur.classes
+                or "Rest" in nextN.classes):
             continue
 
         int1 = interval.notesToInterval(prev, cur)
@@ -246,13 +244,12 @@ def findPotentialPassingTones(show=True):
 
         cma = cur.beatStrength
         if (cma < 1 and
-            cma <= prev.beatStrength and
-            cma <= nextN.beatStrength):
-
+                cma <= prev.beatStrength and
+                cma <= nextN.beatStrength):
             if int1.direction == int2.direction:
-                cur.lyric = 'pt' # neighbor tone
+                cur.lyric = 'pt'  # neighbor tone
             else:
-                cur.lyric = 'nt' # passing tone
+                cur.lyric = 'nt'  # passing tone
     if show:
         g.parts['cantus'].show()
 
@@ -289,7 +286,7 @@ def corpusMelodicIntervalSearch(show=True):
             intervalDict = mid.countMelodicIntervals(s, found=intervalDict)
 
         for key in sorted(intervalDict.keys()):
-            intervalCount += intervalDict[key][1] # second value is count
+            intervalCount += intervalDict[key][1]  # second value is count
             if key in ['m7', 'M7']:
                 seventhCount += intervalDict[key][1]
 
@@ -301,8 +298,8 @@ def corpusMelodicIntervalSearch(show=True):
 #             print intervalDict[key]
 
     for sub in msg:
-        if show == True:
-            print (sub)
+        if show:
+            print(sub)
 
 
 
@@ -331,16 +328,16 @@ def corpusMelodicIntervalSearchBrief(show=False):
             intervalDict = melodicIntervalDiversity.countMelodicIntervals(
                 score, found=intervalDict)
         for key in intervalDict.keys():
-            intervalCount += intervalDict[key][1] # second value is count
+            intervalCount += intervalDict[key][1]  # second value is count
             if key in ['m7', 'M7']:
                 seventhCount += intervalDict[key][1]
         pcentSevenths = round((seventhCount / float(intervalCount) * 100), 4)
         message.append(
             'locale: %s: found %s percent melodic sevenths, out of %s intervals in %s works' % (
                         region, pcentSevenths, intervalCount, workCount))
-    if show == True:
+    if show:
         for sub in message:
-            print (sub)
+            print(sub)
 
 
 def corpusFindMelodicSevenths(show=True):
@@ -374,11 +371,11 @@ def corpusFindMelodicSevenths(show=True):
                 nNext = None
 
             if nNext is not None:
-                #environLocal.printDebug(['creating interval from notes:', n, nNext, i])
+                # environLocal.printDebug(['creating interval from notes:', n, nNext, i])
                 i = interval.notesToInterval(n, nNext)
                 environLocal.printDebug(['got interval', i.name])
                 if i.name in ['m7', 'M7']:
-                    #n.addLyric(s.metadata.title)
+                    # n.addLyric(s.metadata.title)
                     junk, fn = os.path.split(fp)
                     n.addLyric('%s: %s' % (fn, num))
 
@@ -386,14 +383,14 @@ def corpusFindMelodicSevenths(show=True):
                     m.makeAccidentals()
                     m.timeSignature = m.bestTimeSignature()
                     results.append(m)
-    if show == True:
+    if show:
         results.show()
 
 def chordifyAnalysis():
 
     o = corpus.parse('josquin/milleRegrets')
     sSrc = o.mergeScores()
-    #sSrc = corpus.parse('bwv1080', 1)
+    # sSrc = corpus.parse('bwv1080', 1)
 
     sExcerpt = sSrc.measures(0, 20)
 
@@ -412,7 +409,7 @@ def chordifyAnalysis():
 
 
 def chordifyAnalysisHandel():
-    sExcerpt = corpus.parse('hwv56', '3-03')
+    sExcerpt = corpus.parse('hwv56/3-03')
     sExcerpt = sExcerpt.measures(0, 10)
     display = stream.Score()
     for p in sExcerpt.parts:
@@ -428,11 +425,11 @@ def chordifyAnalysisHandel():
 
 
 def chordifyAnalysisBrief():
-    #sSrc = corpus.parse('josquin/milleRegrets').mergeScores()
-    #sExcerpt = corpus.parse('bwv1080', 8).measures(10, 12)
+    # sSrc = corpus.parse('josquin/milleRegrets').mergeScores()
+    # sExcerpt = corpus.parse('bwv1080', 8).measures(10, 12)
 
     # 128, 134
-    #o = corpus.parse('josquin/milleRegrets')
+    # o = corpus.parse('josquin/milleRegrets')
     # remove number
     o = corpus.parse('josquin/laDeplorationDeLaMorteDeJohannesOckeghem')
     excerpt = o.mergeScores().measures(126, 134)
@@ -458,13 +455,13 @@ class Test(unittest.TestCase):
         '''
         # beethoven examples are commented out for time
         # findPassingTones too
-        #sStream = corpus.parse('opus133.xml') # load a MusicXML file
+        # sStream = corpus.parse('opus133.xml')  # load a MusicXML file
         # ex03, ex01, ex02, ex04, ex01Alt, findHighestNotes,ex1_revised
-        #for func in [findPotentialPassingTones]:
+        # for func in [findPotentialPassingTones]:
         for func in [findHighestNotes, demoJesse,
                      corpusMelodicIntervalSearchBrief, findPotentialPassingTones]:
 
-            #func(show=False, op133=sStream)
+            # func(show=False, op133=sStream)
             func(show=False)
 
 
@@ -473,24 +470,24 @@ if __name__ == "__main__":
     import music21
     import sys
 
-    if len(sys.argv) == 1: # normal conditions
+    if len(sys.argv) == 1:  # normal conditions
         chordifyAnalysisBrief()
         music21.mainTest(Test)
 
     elif len(sys.argv) > 1:
         t = Test()
 
-        #corpusSearch()
-        #corpusMelodicIntervalSearch()
-        #chordifyAnalysis()
-        #chordifyAnalysisHandel()
-        #corpusFindMelodicSevenths()
+        # corpusSearch()
+        # corpusMelodicIntervalSearch()
+        # chordifyAnalysis()
+        # chordifyAnalysisHandel()
+        # corpusFindMelodicSevenths()
 
-        #ex04()
+        # ex04()
 
-        #chordifyAnalysisHandel()
-        #chordifyAnalysisBrief()
-        #corpusMelodicIntervalSearchBrief()
+        # chordifyAnalysisHandel()
+        # chordifyAnalysisBrief()
+        # corpusMelodicIntervalSearchBrief()
         chordifyAnalysisBrief()
 
 # -----------------------------------------------------------------------------

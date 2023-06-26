@@ -108,7 +108,7 @@ def findRaisedSevenths(show=True):
     score = corpus.parse('bach/bwv366.xml')
     ts = score.flatten().getElementsByClass(
         meter.TimeSignature)[0]
-    #ts.beatSequence.partition(3)
+    # ts.beatSequence.partition(3)
 
     found = stream.Stream()
     count = 0
@@ -143,7 +143,7 @@ def oldAccent(show=True):
         for n in m.notes:
             beat, progress = ts.getBeatProgress(n.offset)
             if beat != lastBeat and progress == 0:
-                if n.tie != None and n.tie.type == 'stop':
+                if n.tie is not None and n.tie.type == 'stop':
                     continue
                 if ts.getAccentWeight(n.offset) == 1:
                     mark = articulations.StrongAccent()
@@ -167,7 +167,7 @@ class Test(unittest.TestCase):
         for func in [bergEx01, showDots, findRaisedSevenths, oldAccent]:
             func(show=False)
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass
@@ -182,7 +182,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    #bergEx01()
+    # bergEx01()
     music21.mainTest(Test)
 
 # -----------------------------------------------------------------------------

@@ -16,9 +16,6 @@ from music21 import corpus, converter, stream, chord, graph, meter, pitch
 import music21.analysis.metrical
 
 
-
-import os
-
 # ------------------------------------------------------------------------------
 def newDots(show=True):
 
@@ -37,7 +34,7 @@ def newDots(show=True):
 
     # display measure 0 (pickup) to measure 6 in the default viewer
     # (here Finale Reader 2009)
-    if (show is True):
+    if show:
         bass.measures(0, 6).show()
 
 
@@ -48,7 +45,7 @@ def altDots(show=True):
     bass = bwv30_6.getElementById('Bass')
     excerpt = bass.measures(1, 10)
     music21.analysis.metrical.labelBeatDepth(excerpt)
-    if (show is True):
+    if show:
         excerpt.show()
 
 
@@ -56,7 +53,7 @@ def altDots(show=True):
     alto = bwv11_6.getElementById('Alto')
     excerpt = alto.measures(13, 20)
     music21.analysis.metrical.labelBeatDepth(excerpt)
-    if (show is True):
+    if show:
         excerpt.show()
 
     # 13-20
@@ -72,9 +69,8 @@ def newDomSev(show=True):
 
         # get a list of consecutive notes, skipping unisons, octaves,
         # and rests (and putting nothing in their places)
-        notes = thisMeasure.findConsecutiveNotes(
-                                                 skipUnisons = True, skipOctaves = True,
-                                                 skipRests = True, noNone = True )
+        notes = thisMeasure.findConsecutiveNotes(skipUnisons=True, skipOctaves=True,
+                                                 skipRests=True, noNone=True)
 
         pitches = stream.Stream(notes).pitches
 
@@ -104,7 +100,7 @@ def newDomSev(show=True):
                 display.append(chordMeasure)
                 display.append(thisMeasure)
 
-    if (show is True):
+    if show:
         display.show()
 
 def melodicChordExpression(show=True):
@@ -113,8 +109,8 @@ def melodicChordExpression(show=True):
     complete string quarter for a seventh chord expressed melodically,
     but creates new notation to display the results with analytical markup.
     '''
-    #from music21 import *
-    #from music21 import corpus, stream, chord
+    # from music21 import *
+    # from music21 import corpus, stream, chord
     beethovenScore = corpus.parse('beethoven/opus133.xml')
     # parts are given IDs by the MusicXML part name
     violin2 = beethovenScore.getElementById(
@@ -155,10 +151,8 @@ def melodicChordExpression(show=True):
 
 
 
-def  pitchDensity(show=True):
-
-    #from music21 import corpus, graph
-
+def pitchDensity(show=True):
+    # from music21 import corpus, graph
     beethovenScore = corpus.parse('beethoven/opus133.xml')
     celloPart = beethovenScore.getElementById('Cello')
 
@@ -167,8 +161,10 @@ def  pitchDensity(show=True):
     # we combine tied notes into single notes with summed durations.
 
     notes = celloPart.flatten().stripTies()
-    g = graph.plot.ScatterPitchClassOffset(notes,
-        title='Beethoven Opus 133, Cello', alpha=.2)
+    g = graph.plot.ScatterPitchClassOffset(
+        notes,
+        title='Beethoven Opus 133, Cello',
+        alpha=.2)
     g.run()
 
 
@@ -176,29 +172,32 @@ def  pitchDensity(show=True):
 
 
 def pitchQuarterLengthUsageWeightedScatter(show=True):
-
-    #from music21 import converter, graph
+    # from music21 import converter, graph
     from music21.musicxml import testFiles as xml
     from music21.humdrum import testFiles as kern
 
-    mozartStream = converter.parse(xml.mozartTrioK581Excerpt) # @UndefinedVariable
+    mozartStream = converter.parse(xml.mozartTrioK581Excerpt)
     notes = mozartStream.flatten().stripTies()
-    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
+    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(
+        notes,
         title='Mozart Trio K. 581 Excerpt')
     g.run()
 
-    g = graph.plot.ScatterWeightedPitchClassQuarterLength(notes,
+    g = graph.plot.ScatterWeightedPitchClassQuarterLength(
+        notes,
         title='Mozart Trio K. 581 Excerpt')
     g.run()
 
 
     chopinStream = converter.parse(kern.mazurka6)
     notes = chopinStream.flatten().stripTies()
-    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
+    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(
+        notes,
         title='Chopin Mazurka 6 Excerpt')
     g.run()
 
-    g = graph.plot.ScatterWeightedPitchClassQuarterLength(notes,
+    g = graph.plot.ScatterWeightedPitchClassQuarterLength(
+        notes,
         title='Chopin Mazurka 6 Excerpt')
     g.run()
 
@@ -207,8 +206,7 @@ def pitchQuarterLengthUsage3D(show=True):
     from music21.musicxml import testFiles as xml
     from music21.humdrum import testFiles as kern
 
-    mozartStream = converter.parse(
-        xml.mozartTrioK581Excerpt) # @UndefinedVariable
+    mozartStream = converter.parse(xml.mozartTrioK581Excerpt)
     g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(
         mozartStream.flatten().stripTies(), colors=['r'])
     g.run()
@@ -225,14 +223,16 @@ def pitchQuarterLengthUsage3D(show=True):
 def messiaen(show=True):
     mall = converter.parse('/Users/cuthbert/desktop/messiaen_valeurs_2012.xml')
     messiaenP = mall[1]
-    #messiaen.show()
+    # messiaen.show()
     notes = messiaenP.flatten().stripTies()
-    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
-        title='Messiaen, Mode de Valeurs', xLog=False)
+    g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(
+        notes,
+        title='Messiaen, Mode de Valeurs',
+        xLog=False
+    )
 
-    if (show is True):
+    if show:
         g.run()
-
 
 
 def schumann(show=True):
@@ -289,31 +289,25 @@ def schumann(show=True):
 
 
 def demoGettingWorks():
-
-
     # Can obtain works from an integrated corpus
-    unused_s1 = corpus.parse('bach/bwv103.6') # @UnusedVariable
-    unused_s2 = corpus.parse('bach/bwv18.5-lz') # @UnusedVariable
+    _s1 = corpus.parse('bach/bwv103.6')
+    _s2 = corpus.parse('bach/bwv18.5-lz')
 
     # Can parse data stored in MusicXML files locally or online:
-    unused_s = converter.parse(
-        'http://www.musicxml.org/xml/elite.xml') # @UnusedVariable
+    _s = converter.parse('http://www.musicxml.org/xml/elite.xml')
 
     # Can parse data stored in MIDI files locally or online:
-    unused_s = converter.parse(
-        'http://www.jsbchorales.net/down/midi/010306b_.mid') # @UnusedVariable
-
+    _s = converter.parse('http://www.jsbchorales.net/down/midi/010306b_.mid')
 
 
 def demoBasic():
-
     # A score can be represented as a Stream of Parts and Metadata
     s1 = corpus.parse('bach/bwv103.6')
 
     # We can show() a Stream in a variety of forms
-    #s1.show()
-    #s1.show('midi') # has errors!
-    #s1.show('text') # too long here
+    # s1.show()
+    # s1.show('midi')  # has errors!
+    # s1.show('text')  # too long here
 
     # Can get the number of Elements as a length, and iterate over Elements
     len(s1)
@@ -325,13 +319,13 @@ def demoBasic():
 
 
     # Can employ the same show() method on any Stream or Stream subclass
-    #soprano.show()
-    #soprano.show('midi') # problem is here: offset is delayed
+    # soprano.show()
+    # soprano.show('midi')  # problem is here: offset is delayed
 
     # A Part might contain numerous Measure Streams
     len(soprano.getElementsByClass('Measure'))
-    unused_mRange = soprano.measures(14, 16) # @UnusedVariable
-    #mRange.show()
+    _mRange = soprano.measures(14, 16)
+    # mRange.show()
     # mRange.sorted.show('text') # here we can see this
 
 
@@ -342,9 +336,7 @@ def demoBasic():
     ts2 = meter.TimeSignature('5/8')
     sNew.insert(0, ts1)
     sNew.insert(3, ts2)
-
-    #sNew.show()
-
+    # sNew.show()
 
     sNew.augmentOrDiminish(2, inPlace=True)
     for n in sNew.notesAndRests:
@@ -354,23 +346,22 @@ def demoBasic():
 
     # Any stream can be flattened to remove all hierarchical levels
     # All notes of a part can be gathered into a single Stream
-#     sNotes = soprano.flatten().notesAndRests
-#
-#     # Can add notation elements or other objects by appending to a Stream
-#     sNotes.insert(0, meter.TimeSignature('3/4'))
-#
-#     # Can create a new, transformed Stream by looking for Fermatas and extending them
-#     sExtended = stream.Stream()
-#     sExtended.insert(0, meter.TimeSignature('6/4'))
-#     for n in sNotes.notesAndRests:
-#         #if isinstance(n.expressions[0], expressions.Fermata):
-#         if len(n.expressions) > 0:
-#             n.duration.quarterLength = 4
-#             sExtended.append(n)
-#         else:
-#             sExtended.append(n)
-#     #sExtended.show()
-#
+    # sNotes = soprano.flatten().notesAndRests
+    #
+    # # Can add notation elements or other objects by appending to a Stream
+    # sNotes.insert(0, meter.TimeSignature('3/4'))
+    #
+    # # Can create a new, transformed Stream by looking for Fermatas and extending them
+    # sExtended = stream.Stream()
+    # sExtended.insert(0, meter.TimeSignature('6/4'))
+    # for n in sNotes.notesAndRests:
+    #     # if isinstance(n.expressions[0], expressions.Fermata):
+    #     if len(n.expressions) > 0:
+    #         n.duration.quarterLength = 4
+    #         sExtended.append(n)
+    #     else:
+    #         sExtended.append(n)
+    # # sExtended.show()
 
 
 def beethovenSearch():
@@ -383,11 +374,11 @@ def beethovenSearch():
     for m in violin2.getElementsByClass('Measure'):
         notes = m.findConsecutiveNotes(
                                        skipUnisons=True, skipOctaves=True,
-                                       skipRests=True, noNone=True )
+                                       skipRests=True, noNone=True)
 
         pitches = stream.Stream(notes).pitches
         for i in range(len(pitches) - 3):
-        # makes every set of 4 notes into a whole-note chord
+            # makes every set of 4 notes into a whole-note chord
             testChord = chord.Chord(pitches[i:i + 4])
             testChord.duration.type = "whole"
 
@@ -406,7 +397,7 @@ def beethovenSearch():
 def demoGraphMessiaen():
     # use Messiaen, ciconia, bach
 
-    #fp = '/Volumes/xdisc/_sync/_x/libMusicXML/messiaen/messiaen_valeurs_part2.xml'
+    # fp = '/Volumes/xdisc/_sync/_x/libMusicXML/messiaen/messiaen_valeurs_part2.xml'
     fp = '/Users/cuthbert/desktop/messiaen_valeurs_2012.xml'
     dpi = 300
     part = 2
@@ -439,13 +430,10 @@ def demoGraphMessiaenBrief():
     fp = '/Volumes/xdisc/_sync/_x/libMusicXML/messiaen/messiaen_valeurs_part2.xml'
     dpi = 600
 
-    #pieceTitle = 'Messiaen, Mode de valeurs..., Part 2'
+    # pieceTitle = 'Messiaen, Mode de valeurs..., Part 2'
 
     s = converter.parse(fp).stripTies()
-
-
-    #s.plot('scatter', values=['pitchclass', 'offset'], dpi=dpi)
-
+    # s.plot('scatter', values=['pitchclass', 'offset'], dpi=dpi)
     s.plot('scatterweighted', title='', colorGrid=None,
            values=['pitch', 'quarterlength'], dpi=dpi, xLog=False)
 
@@ -470,7 +458,7 @@ def demoGraphMozartChopin():
 
     dpi = 300
 
-    mozartStream = converter.parse(xmlTest.mozartTrioK581Excerpt) # @UndefinedVariable
+    mozartStream = converter.parse(xmlTest.mozartTrioK581Excerpt)
     g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(mozartStream.stripTies(),
                                                      dpi=dpi,
                                                      title='Mozart Trio K. 581, Excerpt',
@@ -491,11 +479,13 @@ def demoBeethoven133():
 
     dpi = 300
 
-    sStream = corpus.parse('opus133.xml') # load a MusicXML file
+    sStream = corpus.parse('opus133.xml')  # load a MusicXML file
     part = sStream['cello'].stripTies()
 
-    part.plot('scatter', values=['pitchclass', 'offset'],
-                 title='Beethoven, Opus 133, Cello', dpi=dpi)
+    part.plot('scatter',
+              values=['pitchclass', 'offset'],
+              title='Beethoven, Opus 133, Cello',
+              dpi=dpi)
 
 
 
@@ -506,32 +496,29 @@ def demoCombineTransform():
     s2 = corpus.parse('bach/bwv18.5-lz')
 
     keyPitch1 = s1.analyze('key')[0]
-    unused_gap1 = interval.Interval(keyPitch1, pitch.Pitch('C'))
+    _gap1 = interval.Interval(keyPitch1, pitch.Pitch('C'))
 
     keyPitch2 = s2.analyze('key')[0]
-    unused_gap2 = interval.Interval(keyPitch2, pitch.Pitch('C'))
+    _gap2 = interval.Interval(keyPitch2, pitch.Pitch('C'))
 
     sCompare = stream.Stream()
     sCompare.insert(0, s1.parts['bass'])
     sCompare.insert(0, s2.parts['bass'])
 
     sCompare.show()
-
     # attach interval name to lyric
     # attach pitch class
 
 def demoBachSearch():
 
     import random
-    from music21 import key
-
     fpList = list(corpus.search('bach').search('.xml'))
     
     random.shuffle(fpList)
     results = stream.Stream()
 
     for fp in fpList[:40]:
-        print (fp.sourcePath)
+        print(fp.sourcePath)
         s = fp.parse()
         # get key, mode
         key = s.analyze('key')
@@ -564,7 +551,7 @@ def demoBachSearch():
             m = stream.Measure()
             m.keySignature = s.flatten().getElementsByClass('KeySignature')[0]
 
-            print ('got', m.keySignature)
+            print('got', m.keySignature)
 
             m.append(cFirst)
             m.append(cLast)
@@ -576,7 +563,7 @@ def demoBachSearch():
 def demoBachSearchBrief():
     results = stream.Stream()
     for chorale in corpus.chorales.Iterator():
-        print (chorale.metadata.title)
+        print(chorale.metadata.title)
         key = chorale.analyze('key')
         if key.mode == 'minor':
             lastChordPitches = []
@@ -612,11 +599,11 @@ def demoBachSearchBrief():
 
 
 # -----------------------------------------------------------------------------
-funcList = [newDots, altDots ] #pitchDensity, newDots, pitchDensity]
+funcList = [newDots, altDots]  # ,pitchDensity, newDots, pitchDensity]
 
 slow = [newDomSev, melodicChordExpression, pitchDensity]
 
-dependent = [messiaen ]
+dependent = [messiaen]
 
 
 class Test(unittest.TestCase):
@@ -632,7 +619,7 @@ class Test(unittest.TestCase):
         for func in funcList:
             func(show=False)
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass
@@ -644,38 +631,30 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     pass
-    #newDots()
-    #altDots()
-    #pitchDensity()
-    #pitchQuarterLengthUsage()
-    #messiaen()
-    #pitchQuarterLengthUsage3D()
+    # newDots()
+    # altDots()
+    # pitchDensity()
+    # pitchQuarterLengthUsage()
+    # messiaen()
+    # pitchQuarterLengthUsage3D()
 
+    # demoSearch()
 
-    #demoSearch()
+    # demoBasic()
+    # demoCombineTransform()
 
-    #demoBasic()
-    #demoCombineTransform()
+    # demoSearch()
 
-    #demoSearch()
+    # demoGraphMessiaen()
+    # demoGraphBach()
+    # demoGraphMozartChopin()
+    # demoBeethoven133()
 
-    #demoGraphMessiaen()
-
-    #demoGraphBach()
-
-
-
-    #demoGraphMozartChopin()
-
-
-    #demoBeethoven133()
-
-    #beethovenSearch()
-
-    #demoBachSearchBrief()
+    # beethovenSearch()
+    # demoBachSearchBrief()
     demoBachSearch()
-    #demoGraphMessiaenBrief()
-    #demoGraphMessiaen()
+    # demoGraphMessiaenBrief()
+    # demoGraphMessiaen()
 
 # -----------------------------------------------------------------------------
 # eof

@@ -12,7 +12,7 @@
 import sys
 import copy
 import unittest
-#import random
+# import random
 
 from music21 import chord
 from music21 import clef
@@ -24,7 +24,7 @@ from music21 import pitch
 from music21 import scale
 from music21 import tempo
 from music21 import stream
-# DOENST WORK from music21 import *
+# Doesn't work: from music21 import *
 
 def pitchedPhase(cycles=None, show=False):
     '''
@@ -50,7 +50,7 @@ def pitchedPhase(cycles=None, show=False):
 
     durationToShift = duration.Duration('64th')
     increment = durationToShift.quarterLength
-    if cycles == None:
+    if cycles is None:
         cycles = int(round(1 / increment)) + 1
 
     for i in range(cycles):
@@ -67,20 +67,20 @@ def pitchedPhase(cycles=None, show=False):
     if show:
         sPost.show('midi')
         sPost.show()
-    else: # get musicxml
+    else:  # get musicxml
         pass
 
 
 
 
-def pendulumMusic(show = True,
-                  loopLength = 160.0,
-                  totalLoops = 1,
-                  maxNotesPerLoop = 40,
-                  totalParts = 16,
-                  scaleStepSize = 3,
-                  scaleType = scale.OctatonicScale,
-                  startingPitch = 'C1'
+def pendulumMusic(show=True,
+                  loopLength=160.0,
+                  totalLoops=1,
+                  maxNotesPerLoop=40,
+                  totalParts=16,
+                  scaleStepSize=3,
+                  scaleType=scale.OctatonicScale,
+                  startingPitch='C1'
                   ):
     totalLoops = totalLoops * 1.01
     jMax = loopLength * totalLoops
@@ -125,8 +125,8 @@ def pendulumMusic(show = True,
                 c.append(p)
 
             j += loopLength/(maxNotesPerLoop - totalParts + i)
-            #j += (8+(8-i))/8.0
-        p = octo.next(p, stepSize = scaleStepSize)
+            # j += (8+(8-i))/8.0
+        p = octo.next(p, stepSize=scaleStepSize)
 
 
     parts[0].insert(0, tempo.MetronomeMark(number=120, referent=duration.Duration(2.0)))
@@ -136,8 +136,8 @@ def pendulumMusic(show = True,
         parts[i] = parts[i].makeNotation()
         s.insert(0, parts[i])
 
-    if show == True:
-        #s.show('text')
+    if show:
+        # s.show('text')
         s.show('midi')
         s.show()
 
@@ -153,7 +153,7 @@ class Test(unittest.TestCase):
         # run a reduced version
         pitchedPhase(cycles=cycles, show=show)
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass
@@ -190,7 +190,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 _DOC_ORDER = [pitchedPhase]
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1: # normal conditions
+    if len(sys.argv) == 1:  # normal conditions
         import music21
         music21.mainTest(TestExternal)
 

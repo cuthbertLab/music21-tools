@@ -8,9 +8,9 @@
 # Copyright:    Copyright © 2010 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
+import copy
 
 from music21 import note, stream, corpus, converter, voiceLeading, pitch, chord
-import copy
 
 def annotateWithGerman():
     '''
@@ -58,7 +58,7 @@ def bachParallels():
                                                    offsetEnd=offsetNext.offset,
                                                    mustBeginInSpan=False)[0]
                     if n1pj is n2pj:
-                        continue # no oblique motion
+                        continue  # no oblique motion
                     if n1pi.isRest or n2pi.isRest or n1pj.isRest or n2pj.isRest:
                         continue
                     if n1pi.isChord or n2pi.isChord or n1pj.isChord or n2pj.isChord:
@@ -116,7 +116,7 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
         evenPitches = descendingPitches
 
     for i in range(1, numParts + 1):
-        baseQuarterLength = 2**(i-2) # .5, 1, 2, 4, etc.
+        baseQuarterLength = 2**(i - 2)  # 0.5, 1, 2, 4, etc.
         firstNote = note.Note("E5")
         firstNote.quarterLength = baseQuarterLength
 
@@ -125,9 +125,9 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
         else:
             pitchCycle = copy.deepcopy(oddPitches)
 
-        if transpose == True and i != 1:
-            for pe in pitchCycle: # take down P4s
-                pe.transpose(-5 * ( i -1), inPlace=True)
+        if transpose and i != 1:
+            for pe in pitchCycle:  # take down P4s
+                pe.transpose(-5 * (i - 1), inPlace=True)
             firstNote.transpose(-5 * (i - 1), inPlace=True)
 
 
@@ -145,8 +145,8 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
             n = note.Note()
             n.duration.quarterLength = baseQuarterLength * 2
             n.pitch = pitchCycle[pc]
-            if j == maxNumber - 1: # last note
-                n.duration.quarterLength = (baseQuarterLength) + 3.0
+            if j == maxNumber - 1:  # last note
+                n.duration.quarterLength = baseQuarterLength + 3.0
             p.append(n)
 
         finalRest = note.Rest()
@@ -155,7 +155,7 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
 
         sc.insert(0, p)
 
-    if show == True:
+    if show:
         sc.show()
 
 def pcsFromHumdrum(show=False):
@@ -171,19 +171,17 @@ def pcsFromHumdrum(show=False):
     output = ""
     for thisChord in onePartScore.flatten().getElementsByClass(chord.Chord):
         output = output + thisChord.forteName + "\n"
-    if show == True:
-        print (output)
+    if show:
+        print(output)
 
 
 
 # ------------------------------------------------------------------------------
-if (__name__ == "__main__"):
-#    richardBreedGetWell()
-#    annotateWithGerman()
-#    countCs()
+if __name__ == "__main__":
+    # richardBreedGetWell()
+    # annotateWithGerman()
+    # countCs()
     bachParallels()
-#    towersOfHanoi(show=False, transpose=False, numParts=8)
-#    pcsFromHumdrum(show=True)
-# -----------------------------------------------------------------------------
-# eof
+    # towersOfHanoi(show=False, transpose=False, numParts=8)
+    # pcsFromHumdrum(show=True)
 

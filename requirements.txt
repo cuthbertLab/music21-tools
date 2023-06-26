@@ -1,2 +1,3 @@
 wheel
 music21
+xlrd

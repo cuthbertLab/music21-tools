@@ -24,7 +24,7 @@ def rhythmLine(baseNote=None, minLength=8.0, maxProbability=0.5):
 
         x = random.random()
         while x < currentProbability:
-#            print(x, currentProbability)
+            # print(x, currentProbability)
             newNote.duration = alterRhythm(newNote.duration)
             currentProbability *= 0.75
             x = random.random()
@@ -37,7 +37,7 @@ def rhythmLine(baseNote=None, minLength=8.0, maxProbability=0.5):
         else:
             direction = -1
         while y < currentProbability:
-#            print(x, currentProbability)
+            # print(x, currentProbability)
             newNote.pitch.ps += direction
             currentProbability *= 0.75
             y = random.random()
@@ -45,7 +45,7 @@ def rhythmLine(baseNote=None, minLength=8.0, maxProbability=0.5):
 
         newNote.articulations.append(articulations.Staccatissimo())
         newStream.append(newNote)
-        #newStream.getNoteTimeInfo()
+        # newStream.getNoteTimeInfo()
 
     return newStream
 
@@ -105,9 +105,10 @@ def addPart(minLength=80, maxProbability=0.7, instrument=None):
 def test():
     from music21 import instrument as j
     sc1 = stream.Score()
-#    instruments = [Piccolo(), Glockenspiel(), 72, 69, 41, 27, 47, 1, 1, 1, 1, 34]
+    # instruments = [Piccolo(), Glockenspiel(), 72, 69, 41, 27, 47, 1, 1, 1, 1, 34]
     instrument = [j.Piccolo(), j.Xylophone(), j.Clarinet(), j.Oboe(), j.Violin(),
-                  j.ElectricGuitar(), j.Harp(), j.Piano(), j.Piano(), j.Piano(), j.Piano(), j.ElectricBass()]
+                  j.ElectricGuitar(), j.Harp(), j.Piano(), j.Piano(), j.Piano(),
+                  j.Piano(), j.ElectricBass()]
     instrumentOctave = [3, 2, 2, 2, 1, 1, 1, 2, 1, 0, -1, -2]
 
     for i in range(12):
@@ -122,7 +123,7 @@ def test():
         sc1.insert(0, part)
     sc1.show()
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
     test()
 
 # -----------------------------------------------------------------------------

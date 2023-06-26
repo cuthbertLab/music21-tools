@@ -23,8 +23,8 @@ def partPari(show=True):
     cminor = key.Key('c')
     # real Pärt
     main = converter.parse('tinynotation: 4/4 E-1 C D E- F G F E- D C D E- G A- F G E- F G F E- '
-                            + 'D F G c B- c G A- B- c B- A- B- G c e- d c d c B- A- G F E- F G c '
-                            + 'E- F G E- D E- F E- D C E- G F E- C F E- D C E- D C D C~ C')
+                           + 'D F G c B- c G A- B- c B- A- B- G c e- d c d c B- A- G F E- F G c '
+                           + 'E- F G E- D E- F E- D C E- G F E- C F E- D C E- D C D C~ C')
 
     # fake Pärt
     # main = converter.parse("E-1 F G A- G F c d e- G A- F E- D d e- c B- A- c d A- G F G "
@@ -40,7 +40,7 @@ def partPari(show=True):
         else:
             n.accidental = cminor.accidentalByStep(n.step)
         if n.offset == (2 - 1) * 4 or n.offset == (74 - 1) * 4:
-            n.pitch = pitch.Pitch("C3") # exceptions to rule
+            n.pitch = pitch.Pitch("C3")  # exceptions to rule
         elif n.offset == (73 - 1) * 4:
             n.tie = None
             n.pitch = pitch.Pitch("C3")

@@ -19,29 +19,24 @@ import unittest
 import re
 import copy
 
-from music21 import common
+import xlrd
+
 from music21 import duration
 from music21 import expressions
 from music21 import metadata
 from music21 import stream
 
-from music21.ext import xlrd
 from . import trecentoCadence
 from . import polyphonicSnippet
 
 class TrecentoSheet:
     '''
-    A TrecentoSheet represents a single worksheet of an excel spreadsheet
+    A TrecentoSheet represents a single worksheet of an Excel spreadsheet
     that contains data about particular pieces of trecento music.
-
 
     Users can iterate over the rows to get TrecentoCadenceWork objects for each row.
 
-
-
     See the specialized subclasses below, esp. BallataSheet for more details.
-
-
 
     >>> kyrieSheet = TrecentoSheet(sheetname='kyrie')
     >>> for thisKyrie in kyrieSheet:
@@ -51,12 +46,12 @@ class TrecentoSheet:
     Kyrie rondello
     '''
 
-    filename  = "cadences.xls"
+    filename = "cadences.xls"
     sheetname = "fischer_caccia"
 
     def __init__(self, **keywords):
         self.iterIndex = 2
-        if ("filename" in keywords):
+        if "filename" in keywords:
             self.filename = keywords["filename"]
         if self.filename:
             try:
@@ -65,7 +60,7 @@ class TrecentoSheet:
                 xbook = xlrd.open_workbook('trecento/' + self.filename)
 
 
-            if ("sheetname" in keywords):
+            if "sheetname" in keywords:
                 self.sheetname = keywords["sheetname"]
 
             self.sheet = xbook.sheet_by_name(self.sheetname)
@@ -74,7 +69,7 @@ class TrecentoSheet:
 
 
     def __iter__(self):
-        self.iterIndex = 2 ## row 1 is a header
+        self.iterIndex = 2  # row 1 is a header
         return self
 
     def next(self):
@@ -91,7 +86,7 @@ class TrecentoSheet:
         if isinstance(key, int):
             return self.makeWork(key)
 
-        elif isinstance(key, slice): # get a slice of index values
+        elif isinstance(key, slice):  # get a slice of index values
             found = []
             start = key.start
             if start is None:
@@ -272,10 +267,8 @@ class TrecentoCadenceWork:
     '''
     A class representing a work that takes one line in the Trecento Cadence excel workbook
 
-
-    Takes in two lists: one containing a value for each column in the excel spreadsheet
-    and another containing a description for each column (generally, the excel header row)
-
+    Takes in two lists: one containing a value for each column in the Excel spreadsheet
+    and another containing a description for each column (generally, the Excel header row)
 
     contains the following attributes::
 
@@ -294,10 +287,10 @@ class TrecentoCadenceWork:
 
     attributes shared with all members of the class::
 
-        beginSnippetPositions -- a list of the excel
+        beginSnippetPositions -- a list of the Excel
             spreadsheet columns in which an incipit of some section can be found. (default = [8])
-        endSnippetPositions   -- a list of the excel
-            spreadsheet columns in which an cadence of some section can be found. (default = [])
+        endSnippetPositions   -- a list of the Excel
+            spreadsheet columns in which a cadence of some section can be found. (default = [])
 
     OMIT_FROM_DOCS
 
@@ -319,15 +312,15 @@ class TrecentoCadenceWork:
                                "Incipit Ct", "Incipit Type", "Notes"]
         self.rowvalues = rowvalues
         self.rowDescriptions = rowDescriptions
-        self.fischerNum    = rowvalues[0]
-        self.title         = rowvalues[1]
-        self.composer      = rowvalues[2]
+        self.fischerNum = rowvalues[0]
+        self.title = rowvalues[1]
+        self.composer = rowvalues[2]
         self.encodedVoices = rowvalues[3]
-        self.pmfcVol       = rowvalues[4]
+        self.pmfcVol = rowvalues[4]
         self.pmfcPageStart = rowvalues[5]
-        self.pmfcPageEnd   = rowvalues[6]
-        self.timeSigBegin  = rowvalues[7]
-        self.entryNotes    = rowvalues[-1]
+        self.pmfcPageEnd = rowvalues[6]
+        self.timeSigBegin = rowvalues[7]
+        self.entryNotes = rowvalues[-1]
 
         self.snippets = []
         self.snippets.append(self.incipit)
@@ -335,7 +328,7 @@ class TrecentoCadenceWork:
             otherS = self.getOtherSnippets()
             if otherS is not None:
                 self.snippets += otherS
-        except IndexError: # no rowvalues, etc. probably from documentation building...
+        except IndexError:  # no rowvalues, etc. probably from documentation building...
             pass
 
         if isinstance(self.fischerNum, float):
@@ -351,7 +344,7 @@ class TrecentoCadenceWork:
             self.pmfcPageEnd = int(self.pmfcPageEnd)
             self.totalPmfcPages = ((self.pmfcPageEnd - self.pmfcPageStart) + 1)
         else:
-            self.totalPmfcPage  = None
+            self.totalPmfcPage = None
 
         if self.composer == ".":
             self.isAnonymous = True
@@ -510,7 +503,7 @@ class TrecentoCadenceWork:
         '''
         rowBlock = self.rowvalues[8:12]
         rowBlock.append(self.rowvalues[7])
-        if (rowBlock[0] == "" or self.timeSigBegin == ""):
+        if rowBlock[0] == "" or self.timeSigBegin == "":
             return None
         else:
             blockOut = self.convertBlockToStreams(rowBlock)
@@ -533,8 +526,8 @@ class TrecentoCadenceWork:
 
         '''
         beginSnippetPositions = self.beginSnippetPositions
-        endSnippetPositions = self.endSnippetPositions ## overridden in class Ballata
-        if endSnippetPositions == []:
+        endSnippetPositions = self.endSnippetPositions  # overridden in class Ballata
+        if not endSnippetPositions:
             endSnippetPositions = range(12, len(self.rowvalues)-1, 5)
         returnSnips = []
         for i in beginSnippetPositions:
@@ -571,7 +564,7 @@ class TrecentoCadenceWork:
             thisBlock = self.rowvalues[snippetPosition:snippetPosition + 5]
             if thisBlock[4].strip() == "":
                 if self.timeSigBegin == "":
-                    return None  ## need a timesig
+                    return None  # need a timesig
                 thisBlock[4] = self.timeSigBegin
             blockOut = self.convertBlockToStreams(thisBlock)
             if snippetType == 'begin':
@@ -618,7 +611,7 @@ class TrecentoCadenceWork:
         for i in range(3):
             thisVoice = thisBlock[i]
             thisVoice = thisVoice.strip()
-            if (thisVoice):
+            if thisVoice:
                 try:
                     returnBlock[i] = trecentoCadence.CadenceConverter(currentTimeSig + " " +
                                                                       thisVoice).parse().stream
@@ -717,7 +710,7 @@ class TrecentoCadenceWork:
         'pp. 2-4'
         '''
 
-        if (self.pmfcPageStart != self.pmfcPageEnd):
+        if self.pmfcPageStart != self.pmfcPageEnd:
             return str("pp. " + str(self.pmfcPageStart) + "-" + str(self.pmfcPageEnd))
         else:
             return str("p. " + str(self.pmfcPageStart))
@@ -747,32 +740,15 @@ class Test(unittest.TestCase):
     def runTest(self):
         pass
 
-    def testCopyAndDeepcopy(self):
-        '''Test copying all objects defined in this module
-        '''
-        import sys
-        for part in sys.modules[self.__module__].__dict__:
-            if part.startswith('_') or part.startswith('__'):
-                continue
-            elif part in ['Test', 'TestExternal']:
-                continue
-            elif callable(part):
-                #environLocal.printDebug(['testing copying on', part])
-                obj = getattr(self.__module__, part)()
-                a = copy.copy(obj)
-                b = copy.deepcopy(obj)
-                self.assertNotEqual(a, obj)
-                self.assertNotEqual(b, obj)
-
     def testTrecentoCadenceWorkCopying(self):
         w = TrecentoCadenceWork()
-        unused_w1 = copy.copy(w)
-        unused_w2 = copy.deepcopy(w)
+        _w1 = copy.copy(w)
+        _w2 = copy.deepcopy(w)
 
     def testTrecentoCadenceWorkFromSheetCopying(self):
         w = BallataSheet().makeWork(331)
-        unused_w1 = copy.copy(w)
-        unused_w2 = copy.deepcopy(w)
+        _w1 = copy.copy(w)
+        _w2 = copy.deepcopy(w)
 
 
     def testGetSnippets(self):
@@ -790,7 +766,7 @@ class Test(unittest.TestCase):
 
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
@@ -799,19 +775,19 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         testing a Credo in and Lilypond out
         '''
 
-        cs1 = CredoSheet() #filename = r'd:\docs\trecento\fischer\cadences.xls')
-    #    cs1 = BallataSheet()
+        cs1 = CredoSheet()  # filename = r'd:\docs\trecento\fischer\cadences.xls')
+        # cs1 = BallataSheet()
         credo1 = cs1.makeWork(2)
         opusCredo1 = credo1.asOpus()
         opusCredo1.show('lily.png')
-        #conv.showPNG()
+        # conv.showPNG()
 
     def testBallata(self):
         '''
         testing a Ballata in and Lilypond out
         '''
 
-        cs1 = BallataSheet() #filename = r'd:\docs\trecento\fischer\cadences.xls')
+        cs1 = BallataSheet()  # filename = r'd:\docs\trecento\fischer\cadences.xls')
         ballata1 = cs1.makeWork(58)
         opusBallata1 = ballata1.asOpus()
         opusBallata1.show('lily.svg')
@@ -825,8 +801,8 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         bs = BallataSheet()
         dummyPiece = bs.makeWork(2)
         block2 = dummyPiece.convertBlockToStreams(block1)
-        unused_fpc1 = polyphonicSnippet.FrontPaddedSnippet(block2, dummyPiece)
-#        fpc1.show()
+        _fpc1 = polyphonicSnippet.FrontPaddedSnippet(block2, dummyPiece)
+        # fpc1.show()
 
     def xtestVirelais(self):
         '''
@@ -860,8 +836,8 @@ class TestExternal(unittest.TestCase): # pragma: no cover
     def xtestAsScore(self):
         deduto = BallataSheet().workByTitle('deduto')
         self.assertEqual(deduto.title, 'Deduto sey a quel')
-#        for s in deduto.snippets:
-#            s.show('text')
+        # for s in deduto.snippets:
+        #     s.show('text')
         dedutoScore = deduto.asScore()
         dedutoScore.show()
         pass
@@ -869,7 +845,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == "__main__":
     import music21
-    music21.mainTest(Test, 'importPlusRelative') #, TestExternal)
+    music21.mainTest(Test, 'importPlusRelative')  # , TestExternal)
 
 
 # -----------------------------------------------------------------------------

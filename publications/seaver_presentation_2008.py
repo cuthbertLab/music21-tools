@@ -39,8 +39,8 @@ def createOrphee():
     tempo = moderato, timeSig = cut time
     random = randomly generated melody from rolling dice.
     '''
-    #random = " g4 b-8 b-16 b- b-32 b- b-64 e- r32 r8 r4"
-    #random2 = " g4 a-8 a-8 d'-16 b16 a-16 c'16 c'4 c'8 g8 e-8 f8 f4 a-4"
+    # random = " g4 b-8 b-16 b- b-32 b- b-64 e- r32 r8 r4"
+    # random2 = " g4 a-8 a-8 d'-16 b16 a-16 c'16 c'4 c'8 g8 e-8 f8 f4 a-4"
     random3 = " f4 g4. a8 a4. d'8 b4 a4 c'4 r4 c'4. c'8 g8 e-8 f4 f4 a-2."
 
     section = "g4 g2 c'4 c'2 b4 b8 c' c'2. g4 a-2 g4 "
@@ -80,33 +80,39 @@ def major3rd():
     s1.show('lily.png')
     s1.show('midi')
 
-#def redoLandini():
+# def redoLandini():
 #    bs = cadencebook.BallataSheet()
 #    w1 = bs.makeWork(260)
 #    lilyAll = lily.lilyString.LilyString(r'''
 #    \score {
-#<< \time 3/4
-#  \new Staff {     \set Staff.midiInstrument = "oboe" \clef "treble" g'2. d'4 \times 2/3 {e'8 d'8 c'8} d'8 e'8 c'8 d'8 c'8 bes8 bes8 a8 g4 r4 f4  }
-#  \new Staff { \set Staff.midiInstrument = "clarinet" \clef "bass" g2.~ g2. c4 ees4 f4 r4 g4 a4  }
-#>>
-# \header {
-# piece = "D'amor mi biasmo -- A section cadence  "
-#}
-#    \layout {}
-#    \midi { \context { \Score tempoWholesPerMinute = #(ly:make-moment 88 4) } }
-#}
+#        << \time 3/4
+#            \new Staff {
+#                \set Staff.midiInstrument = "oboe"
+#                \clef "treble" g'2. d'4
+#                \times 2/3 {e'8 d'8 c'8} d'8 e'8 c'8 d'8 c'8 bes8 bes8 a8 g4 r4 f4  }
+#             \new Staff {
+#                \set Staff.midiInstrument = "clarinet"
+#                \clef "bass" g2.~ g2. c4 ees4 f4 r4 g4 a4  }
+#        >>
+#        \header {
+#            piece = "D'amor mi biasmo -- A section cadence  "
+#        }
+#        \layout {}
+#        \midi {
+#            \context {
+#                \Score tempoWholesPerMinute = #(ly:make-moment 88 4)
+#            }
+#        }
+#    }
 #    ''')
 #    lilyAll.showPNGandPlayMIDI()
 
 
-if (__name__ == "__main__"):
-#    redoLandini()
+if __name__ == "__main__":
+    # redoLandini()
     major3rd()
     capuaReg3()
     createOrphee()
     createEasyScale()
     badMeter()
-
-# -----------------------------------------------------------------------------
-# eof
 

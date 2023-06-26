@@ -3,12 +3,12 @@
 Module to determine how often we would expect to have Francesco\'s cadences happen by chance
 '''
 from collections import defaultdict
-#import random
+# import random
 
 from . import cadencebook
 
-#def getRandomIncipitNote(p):
-#    probabilities = []
+# def getRandomIncipitNote(p):
+#     probabilities = []
 
 
 def getLandiniRandomStart(i):
@@ -55,7 +55,7 @@ def countCadencePercentages():
 
     for thisWork in ballatas:
         incipit = thisWork.incipit
-        cadenceB = thisWork.cadenceA #BClos or thisWork.cadenceBOuvert
+        cadenceB = thisWork.cadenceA  # BClos or thisWork.cadenceBOuvert
 
 #        if thisWork.composer != 'A. Zacara' and thisWork.composer != 'Zacharias':
 #            continue
@@ -69,7 +69,7 @@ def countCadencePercentages():
             continue
 
         firstNotes = incipitTenor.flat.getElementsByClass('Note')
-        lastNotes  = cadenceBTenor.flat.getElementsByClass('Note')
+        lastNotes = cadenceBTenor.flat.getElementsByClass('Note')
 
         if len(firstNotes) == 0 or len(lastNotes) == 0:
             continue
@@ -82,15 +82,15 @@ def countCadencePercentages():
         firstNoteTotal[firstNote.name] += 1
         lastNoteTotal[lastNote.name] += 1
 
-    print ("First note distribution:")
+    print("First note distribution:")
 
     for thisName in firstNoteTotal:
-        print (thisName, firstNoteTotal[thisName]/totalPieces)
+        print(thisName, firstNoteTotal[thisName] / totalPieces)
 
-    print ("Last note distribution:")
+    print("Last note distribution:")
 
     for thisName in lastNoteTotal:
-        print (thisName, lastNoteTotal[thisName]/totalPieces)
+        print(thisName, lastNoteTotal[thisName] / totalPieces)
 
 if __name__ == "__main__":
     countCadencePercentages()

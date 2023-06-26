@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
-
 '''
 Search for Vatican 1790 missing piece: find all ballatas in triple time
 
 Mostly works, but needs some better snippet training...
 '''
-
 from music21 import stream
 from . import cadencebook
 
@@ -18,9 +14,9 @@ def find():
     for ballata in ballatas:
         if i > 10:
             break
-        if (ballata.timeSigBegin == "6/8" or ballata.timeSigBegin == "9/8"):
+        if ballata.timeSigBegin == "6/8" or ballata.timeSigBegin == "9/8":
             incipit = ballata.incipit
-            if incipit != None:
+            if incipit is not None:
                 i += 1
                 opus.insert(0, incipit)
     opus.show('lily.pdf')

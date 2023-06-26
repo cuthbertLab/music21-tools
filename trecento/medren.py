@@ -30,6 +30,7 @@ from music21 import stream
 from music21 import tempo
 
 from music21 import environment
+from music21.duration import Duration
 
 from . import notation
 
@@ -96,7 +97,7 @@ class MensuralClef(clef.Clef):
             self.sign = sign
             self._line = 3
         else:
-            raise MedRenException('A %s-clef is not a recognized mensural clef'  % sign)
+            raise MedRenException('A %s-clef is not a recognized mensural clef' % sign)
 
     def _getLine(self):
         return self._line
@@ -105,7 +106,7 @@ class MensuralClef(clef.Clef):
         self._line = line
 
     line = property(_getLine, _setLine,
-                    doc = '''The staff line the clef resides on''')
+                    doc='''The staff line the clef resides on''')
 
     @property
     def fontString(self):
@@ -185,16 +186,16 @@ class Mensuration(meter.TimeSignature):
         self._minimaPerBrevis = mPM
 
     minimaPerBrevis = property(_getMinimaPerMeasure, _setMinimaPerMeasure,
-                                doc = '''Used to get or set the number of minima in a
-                                'measure' under the given mensuration.
+                               doc='''Used to get or set the number of minima in a
+                                      'measure' under the given mensuration.
 
-                                >>> c = Mensuration('imperfect', 'minor')
-                                >>> c.minimaPerBrevis
-                                4
-                                >>> c.minimaPerBrevis = 8
-                                >>> c.minimaPerBrevis
-                                8
-                                ''')
+                                      >>> c = Mensuration('imperfect', 'minor')
+                                      >>> c.minimaPerBrevis
+                                      4
+                                      >>> c.minimaPerBrevis = 8
+                                      >>> c.minimaPerBrevis
+                                      8
+                                      ''')
 
     @property
     def fontString(self):
@@ -239,7 +240,7 @@ class GeneralMensuralNote(base.Music21Object):
     are present in the same context, and have the same offset within that context.
     '''
     def __init__(self, mensuralTypeOrAbbr='brevis'):
-        base.Music21Object.__init__(self) # do not use super here...
+        base.Music21Object.__init__(self)  # do not use super here...
         self._gettingDuration = False
         self._duration = None
         if mensuralTypeOrAbbr in _validMensuralTypes:
@@ -305,20 +306,20 @@ class GeneralMensuralNote(base.Music21Object):
                                   mensuralTypeOrAbbr)
 
     mensuralType = property(_getMensuralType, _setMensuralType,
-                        doc = '''Name of the mensural length of the general mensural note
-                        (brevis, longa, etc.):
+                            doc='''Name of the mensural length of the general mensural note
+                                   (brevis, longa, etc.):
 
-                        >>> gmn = GeneralMensuralNote('maxima')
-                        >>> gmn.mensuralType
-                        'maxima'
-                        >>> gmn_1 = GeneralMensuralNote('SB')
-                        >>> gmn_1.mensuralType
-                        'semibrevis'
-                        >>> gmn_2 = GeneralMensuralNote('blah')
-                        Traceback (most recent call last):
-                        MedRenException: blah is not a valid
-                            mensural type or abbreviation
-                        ''')
+                                   >>> gmn = GeneralMensuralNote('maxima')
+                                   >>> gmn.mensuralType
+                                   'maxima'
+                                   >>> gmn_1 = GeneralMensuralNote('SB')
+                                   >>> gmn_1.mensuralType
+                                   'semibrevis'
+                                   >>> gmn_2 = GeneralMensuralNote('blah')
+                                   Traceback (most recent call last):
+                                   MedRenException: blah is not a valid
+                                   mensural type or abbreviation
+                                   ''')
 
     def updateDurationFromMensuration(self, mensuration=None, surroundingStream=None):
         '''
@@ -390,8 +391,8 @@ class GeneralMensuralNote(base.Music21Object):
             else:
                 mDur = 0.25
             mLen = self.lenList[index]
-        #print("MDUR! " + str(mDur) + "MLEN " + str(mLen) + "index " + str(index) +
-        # " MEASURE " + str(self._getSurroundingMeasure()[0]))
+        # print("MDUR! " + str(mDur) + "MLEN " + str(mLen) + "index " + str(index) +
+        #       " MEASURE " + str(self._getSurroundingMeasure()[0]))
             self.duration = duration.Duration(mLen * mDur)
         else:
             self.duration = duration.Duration(0.0)
@@ -416,8 +417,8 @@ class GeneralMensuralNote(base.Music21Object):
         self._gettingDuration = False
         return index
 
-    #Using Music21Object.getContextByClass makes _getDuration go into
-    #an infinite loop. Thus, the alternative method.
+    # Using Music21Object.getContextByClass makes _getDuration go into
+    # an infinite loop. Thus, the alternative method.
     def _determineMensurationOrDivisione(self):
         '''
         If the general mensural notes has context which contains a mensuration
@@ -446,8 +447,7 @@ class GeneralMensuralNote(base.Music21Object):
         >>> gmn._determineMensurationOrDivisione()
         <notation.Divisione .q.>
         '''
-
-        #mOrD = _getTargetBeforeOrAtObj(self,
+        # mOrD = _getTargetBeforeOrAtObj(self,
         #        [Mensuration, trecento.notation.Divisione])
         searchClasses = (Mensuration, notation.Divisione)
         mOrD = self.getContextByClass(searchClasses)
@@ -576,7 +576,7 @@ class MensuralRest(GeneralMensuralNote, note.Rest):
 
     # scaling?
     def __init__(self, *arguments, **keywords):
-        note.Rest.__init__(self, *arguments, **keywords) # do not replace with super
+        note.Rest.__init__(self, *arguments, **keywords)  # do not replace with super
         GeneralMensuralNote.__init__(self)  # due to different keywords...
         self._gettingDuration = False
         self._mensuralType = 'brevis'
@@ -660,11 +660,11 @@ class MensuralNote(GeneralMensuralNote, note.Note):
     # scaling?
     def __init__(self, *arguments, **keywords):
         if arguments:
-            note.Note.__init__(self, arguments[0], **keywords) # do not replace with super
+            note.Note.__init__(self, arguments[0], **keywords)  # do not replace with super
         else:
-            note.Note.__init__(self, **keywords) # do not replace with super
+            note.Note.__init__(self, **keywords)  # do not replace with super
             
-        GeneralMensuralNote.__init__(self) # due to different arguments, keywords
+        GeneralMensuralNote.__init__(self)  # due to different arguments, keywords
         self._gettingDuration = False
         self._mensuralType = 'brevis'
 
@@ -713,13 +713,13 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         False
         '''
         eq = GeneralMensuralNote.__eq__(self, other)
-        eq  = eq and hasattr(other, 'pitch')
+        eq = eq and hasattr(other, 'pitch')
         if eq:
             eq = eq and (self.pitch == other.pitch)
         eq = eq and hasattr(other, 'articulations')
         if eq:
             eq = eq and (sorted(list(set(self.articulations))) ==
-                                        sorted(list(set(other.articulations))) )
+                         sorted(list(set(other.articulations))))
         return eq
 
     @property
@@ -792,7 +792,7 @@ class MensuralNote(GeneralMensuralNote, note.Note):
                 else:
                     self._fontString = '0x59'
 
-        if self.style.color ==  'red':
+        if self.style.color == 'red':
             if self._fontString in ['41', '61']:
                 self._fontString = ''
             else:
@@ -814,14 +814,14 @@ class MensuralNote(GeneralMensuralNote, note.Note):
             self.flags['up'] = 'right'
 
     mensuralType = property(GeneralMensuralNote._getMensuralType, _setMensuralType,
-                          doc = ''' See documentation in `music21.GeneralMensuralType`''')
+                            doc=''' See documentation in `music21.GeneralMensuralType`''')
 
 
     def getNumDots(self):
         '''
         Used for French notation. Not yet implemented
         '''
-        return 0 #TODO: figure out how dots work
+        return 0  # TODO: figure out how dots work
 
     def getStems(self):
         '''
@@ -865,8 +865,8 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         >>> r_3.getStems()
         ['up']
         '''
-        #NOTE: This method makes it possible to have a semibrevis with a sidestem and a
-        # downstem. This doesn't mean anything so far as I can tell.
+        # NOTE: This method makes it possible to have a semibrevis with a sidestem and a
+        #     downstem. This doesn't mean anything so far as I can tell.
 
         if direction in [None, 'none', 'None']:
             if self.mensuralType in ['minima', 'semiminima']:
@@ -890,7 +890,7 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         elif direction in ['side', 'Side']:
             direction = 'side'
             if ((self.mensuralType not in ['semibrevis', 'minima']) or
-                self.getNumDots() > 0):
+                    self.getNumDots() > 0):
                 raise MedRenException('This note may not have a stem of direction %s' %
                                       direction)
             elif len(self.stems) > 1:
@@ -1092,7 +1092,7 @@ class Ligature(base.Music21Object):
         self.reversedNotes = dict([(ind, False) for ind in range(self._ligatureLength())])
 
     pitches = property(_getPitches, _setPitches,
-                       doc = '''A list of pitches comprising the ligature''')
+                       doc='''A list of pitches comprising the ligature''')
 
     @property
     def notes(self):
@@ -1127,15 +1127,15 @@ class Ligature(base.Music21Object):
         >>> print([n.mensuralType for n in l.notes])
         ['longa', 'brevis', 'longa', 'brevis', 'semibrevis', 'semibrevis', 'maxima']
         '''
-        if self._notes == []:
+        if not self._notes:
             self._notes = self._expandLigature()
         return self._notes
 
     def _ligatureLength(self):
         return len(self.pitches)
 
-    #def _getDuration(self):
-        #return sum[n.duration for n in self.notes]
+    # def _getDuration(self):
+    #     return sum[n.duration for n in self.notes]
 
     def isCumProprietate(self):
         '''
@@ -1173,7 +1173,7 @@ class Ligature(base.Music21Object):
         '''
         if index == 'None' or index == 'none':
             index = None
-        if index != None:
+        if index is not None:
             if index < self._ligatureLength():
                 return self.notes[index].style.color
             else:
@@ -1199,7 +1199,7 @@ class Ligature(base.Music21Object):
         tempColor = self.getColor()
         if index == 'None' or index == 'none':
             index = None
-        if index != None:
+        if index is not None:
             if index < self._ligatureLength():
                 if value != tempColor:
                     self.style.color = 'mixed'
@@ -1224,9 +1224,9 @@ class Ligature(base.Music21Object):
         '''
         if index == 'None' or index == 'none':
             index = None
-        if index != None:
+        if index is not None:
             if index < self._ligatureLength():
-                return self.notes[index]._getNoteheadFill()
+                return self.notes[index].noteheadFill
             else:
                 raise MedRenException('no note exists at index %d' % index)
         else:
@@ -1252,11 +1252,11 @@ class Ligature(base.Music21Object):
         tempFillStatus = self.getFillStatus()
         if index == 'None' or index == 'none':
             index = None
-        if index != None:
+        if index is not None:
             if index < self._ligatureLength():
                 if value != tempFillStatus:
                     self.filled = 'mixed'
-                    self.notes[index]._setNoteheadFill(value)
+                    self.notes[index].noteheadFill = value
             else:
                 raise MedRenException('no note exists at index %d' % index)
         else:
@@ -1264,12 +1264,12 @@ class Ligature(base.Music21Object):
                 value = 'yes'
                 self.filled = value
                 for n in self.notes:
-                    n._setNoteheadFill(value)
+                    n.noteheadFill = value
             elif value in ['no', 'empty']:
                 value = 'no'
                 self.filled = value
                 for n in self.notes:
-                    n._setNoteheadFill(value)
+                    n.noteheadFill = value
             else:
                 raise MedRenException('fillStatus %s not supported for ligatures' % value)
 
@@ -1314,8 +1314,8 @@ class Ligature(base.Music21Object):
         if startIndex < self._ligatureLength() - 1:
             currentShape = self.noteheadShape[startIndex]
             nextShape = self.noteheadShape[startIndex + 1]
-            if  ((currentShape == ('oblique', 'end') or nextShape == ('oblique', 'start')) or
-                 (self.isMaxima(startIndex) or self.isMaxima(startIndex + 1))):
+            if ((currentShape == ('oblique', 'end') or nextShape == ('oblique', 'start')) or
+                    (self.isMaxima(startIndex) or self.isMaxima(startIndex + 1))):
                 raise MedRenException('cannot start oblique notehead at index %d' % startIndex)
 
             else:
@@ -1350,7 +1350,7 @@ class Ligature(base.Music21Object):
                 else:
                     self.noteheadShape[index - 1] = ('square',)
             else:
-                pass #Already square
+                pass  # Already square
         else:
             raise MedRenException('no note exists at index %d' % index)
         self._notes = []
@@ -1470,7 +1470,7 @@ class Ligature(base.Music21Object):
             direction = None
         if orientation == 'None' or direction == 'none':
             index = None
-        if index >= self._ligatureLength():
+        if index is not None and index >= self._ligatureLength():
             raise MedRenException('no note exists at index %d' % index)
 
         if self.isMaxima(index):
@@ -1588,7 +1588,7 @@ class Ligature(base.Music21Object):
                                 and (tempPitchCurrent > tempPitchPrev)):
                             self.reversedNotes[endIndex] = True
                         else:
-                            #environLocal.warn([tempPitchCurrent, tempPitchPrev])
+                            # environLocal.warn([tempPitchCurrent, tempPitchPrev])
                             raise MedRenException(
                                 'the note at index %d cannot be given reverse value %s' %
                                 (endIndex, value))
@@ -1765,7 +1765,7 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
     if mOrD is not None:
         mOrDInAsNone = False
 
-    inpStream_copy = copy.deepcopy(inpStream) #Preserve your input
+    inpStream_copy = copy.deepcopy(inpStream)  # Preserve your input
     newStream = inpStream.__class__()
 
     def isHigherInhierarchy(l, u):
@@ -1804,15 +1804,16 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
 
                 newStream.append(item)
                 if ('Mensuration' in item.classes) or ('Divisione' in item.classes):
-                    if mOrDInAsNone: #If first case or changed mOrD
+                    if mOrDInAsNone:  # If first case or changed mOrD
                         mOrD = item
                     elif mOrD.standardSymbol != item.standardSymbol:
-                        #If higher, different mOrD found
+                        # If higher, different mOrD found
                         raise MedRenException(
                             'Mensuration or divisione %s not consistent within hierarchy' % item)
 
-            tempStream_1_1, tempStream_1_2 = tempStream_1.splitByClass(None,
-                                                lambda x: isHigherInhierarchy(x, tempStream_1))
+            tempStream_1_1, tempStream_1_2 = tempStream_1.splitByClass(
+                None,
+                lambda x: isHigherInhierarchy(x, tempStream_1))
             if tempStream_1_1:
                 raise MedRenException('Hierarchy of %s violated by %s' %
                                       (tempStream_1.__class__, tempStream_1_1[0].__class__))
@@ -1834,10 +1835,10 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
             if 'MensuralClef' in e.classes:
                 newStream.append(e)
             elif ('Mensuration' in e.classes) or ('Divisione' in e.classes):
-                if mOrDInAsNone: #If first case or changed mOrD
+                if mOrDInAsNone:  # If first case or changed mOrD
                     mOrD = e
                     newStream.append(e)
-                elif mOrD.standardSymbol != e.standardSymbol: #If higher, different mOrD found
+                elif mOrD.standardSymbol != e.standardSymbol:  # If higher, different mOrD found
                     raise MedRenException(
                         'Mensuration or divisione %s not consistent within hierarchy' % e)
             elif 'Ligature' in e.classes:
@@ -1907,9 +1908,9 @@ def scaleDurations(score, scalingNum=1, *, inPlace=False, scaleUnlinked=True):
             el.value = el.value * scalingNum
         elif isinstance(el, meter.TimeSignature):
             newNum = el.numerator
-            newDem = el.denominator / (1.0 * scalingNum) # float division
+            newDem = el.denominator / (1.0 * scalingNum)  # float division
             iterationNum = 0
-            while (newDem != int(newDem)):
+            while newDem != int(newDem):
                 newNum = newNum * 2
                 newDem = newDem * 2
                 iterationNum += 1
@@ -1949,21 +1950,21 @@ def transferTies(score, *, inPlace=False):
             tiedQL = tieBeneficiary.duration.quarterLength
             for tiedEl in tiedNotes:
                 tiedQL += tiedEl.duration.quarterLength
-            tempDuration = duration.Duration(tiedQL)
-            if (tempDuration.type != 'complex' and not tempDuration.tuplets):
+            tempDuration: Duration = duration.Duration(tiedQL)
+            if tempDuration.type != 'complex' and not tempDuration.tuplets:
                 # successfully can combine these notes into one unit
                 ratioDecimal = tiedQL / float(tieBeneficiary.duration.quarterLength)
                 (tupAct, tupNorm) = common.decimalToTuplet(ratioDecimal)
-                if (tupAct != 0): # error...
+                if tupAct != 0:  # error...
                     tempTuplet = duration.Tuplet(tupAct, tupNorm,
                                                  copy.deepcopy(tempDuration.components[0]))
                     tempTuplet.tupletActualShow = "none"
                     tempTuplet.bracket = False
                     tieBeneficiary.duration = tempDuration
                     tieBeneficiary.duration.tuplets = (tempTuplet,)
-                    tieBeneficiary.tie = None #.style = 'hidden'
+                    tieBeneficiary.tie = None  # .style = 'hidden'
                     for tiedEl in tiedNotes:
-                        tiedEl.tie = None #.style = 'hidden'
+                        tiedEl.tie = None  # .style = 'hidden'
                         tiedEl.style.hideObjectOnPrint = True
             tiedNotes = []
 
@@ -2015,11 +2016,11 @@ def convertHouseStyle(score, durationScale=2, barlineStyle='tick',
 
     if inPlace is False:
         score = copy.deepcopy(score)
-    if durationScale != False:
+    if durationScale is not False:
         scaleDurations(score, durationScale, inPlace=True)
-    if barlineStyle != False:
+    if barlineStyle is not False:
         setBarlineStyle(score, barlineStyle, inPlace=True)
-    if tieTransfer != False:
+    if tieTransfer is not False:
         transferTies(score, inPlace=True)
 
     return score
@@ -2037,7 +2038,7 @@ def cummingSchubertStrettoFuga(score):
         thisGeneric = thisInt.generic.directed
         for strettoType in [8, -8, 5, -5, 4, -4]:
             strettoAllowed = [x[0] for x in allowableStrettoIntervals[strettoType]]
-            #inefficent but who cares
+            # inefficent but who cares
             repeatAllowed = [x[1] for x in allowableStrettoIntervals[strettoType]]
             for j in range(len(strettoAllowed)):
                 thisStrettoAllowed = strettoAllowed[j]
@@ -2064,7 +2065,7 @@ class Test(unittest.TestCase):
     def runTest(self):
         pass
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
@@ -2107,7 +2108,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
                 n.pitch.microtone = 20
             elif n.step != 'B' and n.accidental is not None and n.accidental.name == 'flat':
                 n.pitch.microtone = -20
-        unused_mts = midi.translate.streamHierarchyToMidiTracks(p)
+        _mts = midi.translate.streamHierarchyToMidiTracks(p)
 
         p.show('midi')
 
@@ -2119,8 +2120,8 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 def testStretto():
     from music21 import converter
-    salve = converter.parse("A4 A G A D A G F E F G F E D", '4/4') # salveRegina liber 276 (pdf 400)
-    adTe = converter.parse("D4 F A G G F A E G F E D G C D E D G F E D", '4/4') # ad te clamamus
+    salve = converter.parse("A4 A G A D A G F E F G F E D", '4/4')  # salveRegina liber p. 276
+    adTe = converter.parse("D4 F A G G F A E G F E D G C D E D G F E D", '4/4')  # ad te clamamus
     etJesum = converter.parse("D4 AA C D D D E E D D C G F E D G F E D C D", '4/4')
     salve.title = "Salve Regina (opening)LU p. 276"
     adTe.title = "...ad te clamamus"
@@ -2130,9 +2131,9 @@ def testStretto():
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, 'importPlusRelative') #TestExternal)
-    #music21.testConvertMensuralMeasure()
-#    almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') #liber 277 (pdf401)
-#    puer = converter.parse('G4 d d d e d c c d c e d d', '4/4') # puer natus est 408 (pdf 554)
-#    almaRedemptoris.title = "Alma Redemptoris Mater LU p. 277"
-#    puer.title = "Puer Natus Est Nobis"
+    music21.mainTest(Test, 'importPlusRelative')  # TestExternal)
+    # music21.testConvertMensuralMeasure()
+    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') #liber 277 (pdf401)
+    # puer = converter.parse('G4 d d d e d c c d c e d d', '4/4') # puer natus est 408 (pdf 554)
+    # almaRedemptoris.title = "Alma Redemptoris Mater LU p. 277"
+    # puer.title = "Puer Natus Est Nobis"
