@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         featureExtractoMRJOB.py
 # Purpose:      sample mrjob for use for feature extraction on entire corpus
 #
 # Authors:      Beth Hadley
 #
-# Copyright:    Copyright © 2011 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 '''
 A Sample mrjob. This mrjob is designed to extract all 91 features (jsymbolic and native)

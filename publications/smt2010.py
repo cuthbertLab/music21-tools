@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         smt2010.py
 # Purpose:      Demonstrations for the SMT 2010 poster session
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-10, 2014 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-14 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 
 import unittest
@@ -125,7 +125,7 @@ def ex04(show=True, *arguments, **keywords):
     part = sStream.parts[3]
 
 
-    g = graph.plot.ScatterPitchClassOffset(part.flat, title=part.partName)
+    g = graph.plot.ScatterPitchClassOffset(part.flatten(), title=part.partName)
     if show:
         g.run()
 
@@ -133,7 +133,7 @@ def ex04(show=True, *arguments, **keywords):
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def ex01Alt(show=True, *arguments, **keywords):
     # measure here is a good test of dynamics positioning:
@@ -153,13 +153,13 @@ def findHighestNotes(show=True, *arguments, **keywords):
     import copy
 
     score = corpus.parse('bach/bwv366.xml')
-    ts = score.flat.getElementsByClass(meter.TimeSignature)[0]
+    ts = score.flatten().getElementsByClass(meter.TimeSignature)[0]
     # use default partitioning
     #ts.beatSequence.partition(3)
 
     found = stream.Stream()
     for part in score.getElementsByClass(stream.Part):
-        found.append(part.flat.getElementsByClass('Clef')[0])
+        found.append(part.flatten().getElementsByClass('Clef')[0])
         highestNoteNum = 0
         for m in part.getElementsByClass('Measure'):
             for n in m.notes:
@@ -220,7 +220,7 @@ def ex1_revised(show=True, *arguments, **keywords):
 
 def findPotentialPassingTones(show=True):
     g = corpus.parse('gloria')
-    gcn = g.parts['cantus'].measures(1, 126).flat.notesAndRests
+    gcn = g.parts['cantus'].measures(1, 126).flatten().notesAndRests
 
     gcn[0].lyric = ""
     gcn[-1].lyric = ""
@@ -259,13 +259,13 @@ def findPotentialPassingTones(show=True):
 
 def demoJesse(show=True):
     luca = corpus.parse('luca/gloria')
-    for n in luca.measures(2, 20).flat.notesAndRests:
+    for n in luca.measures(2, 20).flatten().notesAndRests:
         if n.isRest is False:
             n.lyric = n.pitch.german
     if show:
         luca.show()
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # new examples
 
 
@@ -366,7 +366,7 @@ def corpusFindMelodicSevenths(show=True):
     for fp, num, s in found:
         environLocal.printDebug(['working with found', fp, num])
         # this assumes these are all monophonic
-        noteStream = s.flat.getElementsByClass('Note')
+        noteStream = s.flatten().getElementsByClass('Note')
         for i, n in enumerate(noteStream):
             if i <= len(noteStream) - 2:
                 nNext = noteStream[i + 1]
@@ -403,7 +403,7 @@ def chordifyAnalysis():
         display.insert(0, p)
 
     reduction = sExcerpt.chordify()
-    for c in reduction.flat.getElementsByClass('Chord'):
+    for c in reduction.flatten().getElementsByClass('Chord'):
         c.annotateIntervals()
         c.closedPosition(forceOctave=4, inPlace=True)
         c.removeRedundantPitches(inPlace=True)
@@ -418,7 +418,7 @@ def chordifyAnalysisHandel():
     for p in sExcerpt.parts:
         display.insert(0, p)
     reduction = sExcerpt.chordify()
-    for c in reduction.flat.getElementsByClass('Chord'):
+    for c in reduction.flatten().getElementsByClass('Chord'):
         c.annotateIntervals()
         c.closedPosition(forceOctave=4, inPlace=True)
         c.removeRedundantPitches(inPlace=True)
@@ -438,7 +438,7 @@ def chordifyAnalysisBrief():
     excerpt = o.mergeScores().measures(126, 134)
 
     reduction = excerpt.chordify()
-    for c in reduction.flat.getElementsByClass('Chord'):
+    for c in reduction.flatten().getElementsByClass('Chord'):
         c.closedPosition(forceOctave=4, inPlace=True)
         c.removeRedundantPitches(inPlace=True)
         c.annotateIntervals()
@@ -446,7 +446,7 @@ def chordifyAnalysisBrief():
     excerpt.show()
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
 
     def runTest(self):
@@ -493,6 +493,6 @@ if __name__ == "__main__":
         #corpusMelodicIntervalSearchBrief()
         chordifyAnalysisBrief()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

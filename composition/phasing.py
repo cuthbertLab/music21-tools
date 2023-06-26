@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         phasing.py
 # Purpose:      Modeling musical phasing structures in MusicXML
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2010-2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2010-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 import sys
 import copy
 import unittest
@@ -142,7 +142,7 @@ def pendulumMusic(show = True,
         s.show()
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
 
     def runTest(self):
@@ -185,7 +185,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 #                  )
 #
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # define presented order in documentation
 _DOC_ORDER = [pitchedPhase]
 
@@ -201,6 +201,6 @@ if __name__ == "__main__":
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

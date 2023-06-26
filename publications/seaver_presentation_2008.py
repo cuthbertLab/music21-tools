@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         demos/seaver_presentation_2008.py
 # Purpose:      Demonstrations for the Seaver 2008 demo
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2008 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2008 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 This script was used to create the musical examples used in the presentation given by MSC to the
 Seaver Institute in October 2008 which resulted in the original funding for music21.  It
@@ -107,6 +107,6 @@ if (__name__ == "__main__"):
     createEasyScale()
     badMeter()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

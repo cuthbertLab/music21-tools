@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         theoryAnalyzer.py
 # Purpose:      Framework for analyzing music theory aspects of a score
 #
 # Authors:      Beth Hadley
 #               Lars Johnson
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-2015 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-15 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 Module Introduction
 ===========================================
@@ -50,7 +50,7 @@ You can then iterate through these objects and access the attributes directly. H
 of this that will analyze the root motion in a score:
 
 
-    >>> p = corpus.parse('leadsheet').flat.getElementsByClass('Harmony').stream()
+    >>> p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony').stream()
     >>> p = harmony.realizeChordSymbolDurations(p)
     >>> averageMotion = 0
 
@@ -237,7 +237,7 @@ class Analyzer:
 
 
 
-    #---------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------
     # Methods to split the score up into little pieces for analysis
     # The little pieces are all from voiceLeading.py, such as
     # Vertical Slices, VoiceLeadingQuartet, ThreeNoteLinearSegment, and VerticalityNTuplet
@@ -314,25 +314,25 @@ class Analyzer:
 
         chordifiedSc = score.chordify()
 
-        for c in chordifiedSc.flat.getElementsByClass('Chord'):
+        for c in chordifiedSc.flatten().getElementsByClass('Chord'):
             contentDict = defaultdict(list)
             partNum = 0
 
             if len(score.parts) > 1:
                 for part in score.parts:
-                    elementStream = part.flat.getElementsByOffset(c.offset,
+                    elementStream = part.flatten().getElementsByOffset(c.offset,
                                                                   mustBeginInSpan=False,
                                                                   classList=classFilterList)
-                    #el = part.flat.getElementAtOrBefore(c.offset,classList=[
-                    #            'Note', 'Rest', 'Chord', 'Harmony'])
+                    # el = part.flatten().getElementAtOrBefore(c.offset,classList=[
+                    #             'Note', 'Rest', 'Chord', 'Harmony'])
                     for el in elementStream.elements:
                         contentDict[partNum].append(el)
                     partNum +=1
             else:
-                elementStream = score.flat.getElementsByOffset(c.offset,
+                elementStream = score.flatten().getElementsByOffset(c.offset,
                                                                mustBeginInSpan=False,
                                                                classList=classFilterList)
-                #el = part.flat.getElementAtOrBefore(c.offset,
+                # el = part.flatten().getElementAtOrBefore(c.offset,
                 #            classList=['Note', 'Rest', 'Chord', 'Harmony'])
                 for el in elementStream.elements:
                     contentDict[partNum].append(el)
@@ -592,7 +592,7 @@ class Analyzer:
         return verticalityNTuplets
 
 
-    #---------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------
     # Method to split the score up into very very small pieces
     #(just notes, just harmonic intervals, or just melodic intervals)
     # TODO: consider deleting getNotes method and consider refactoring getHarmonicIntervals()
@@ -658,7 +658,7 @@ class Analyzer:
         'P4'
         '''
         mInvList = []
-        noteList = score.parts[partNum].flat.getElementsByClass(['Note', 'Rest'])
+        noteList = score.parts[partNum].flatten().getElementsByClass(['Note', 'Rest'])
         for (i,n1) in enumerate(noteList[:-1]):
             n2 = noteList[i + 1]
 
@@ -688,7 +688,7 @@ class Analyzer:
 
         '''
         noteList = []
-        noteOrRestList = score.parts[partNum].flat.getElementsByClass(['Note', 'Rest'])
+        noteOrRestList = score.parts[partNum].flatten().getElementsByClass(['Note', 'Rest'])
         for nr in noteOrRestList:
             if 'Note' in nr.classes:
                 n = nr
@@ -699,7 +699,7 @@ class Analyzer:
 
         return noteList
 
-    #---------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------
     # Helper for identifying across all parts - used for recursion in identify functions
 
     def getAllPartNumPairs(self, score):
@@ -744,7 +744,7 @@ class Analyzer:
             self.store[sid]['ResultDict'][dictKey] = [tr]
         else:
             self.store[sid]['ResultDict'][dictKey].append(tr)
-    #---------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------
     # Analysis of the score occurs based on the little segments that the score
     # can be divided up into. Each little segment has its own template from which the methods
     # can be tested. Each identify method accepts a long list of parameters, as indicated here:
@@ -937,11 +937,11 @@ class Analyzer:
                         tr.color(color)
                     self._updateScoreResultDict(score, dictKey, tr)
 
-    #---------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------
     # Here are the public-interface methods that users call directly on the theory analyzer score
     # these methods call the identify template methods above based
 
-    #-------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Theory Errors using VLQ template
 
     def identifyParallelFifths(self, score, partNum1=None, partNum2=None, color=None,
@@ -1602,7 +1602,7 @@ class Analyzer:
 
         >>> ads = Analyzer()
         >>> ads.removePassingTones(sc)
-        >>> for x in sc.flat.notes:
+        >>> for x in sc.flatten().notes:
         ...   print(x)
         <music21.note.Note A>
         <music21.note.Note A>
@@ -1646,7 +1646,7 @@ class Analyzer:
 
         >>> ads = Analyzer()
         >>> ads.removeNeighborTones(sc)
-        >>> for x in sc.flat.notes:
+        >>> for x in sc.flatten().notes:
         ...   print(x)
         <music21.note.Note E->
         <music21.note.Note C>
@@ -1886,7 +1886,7 @@ class Analyzer:
         self._identifyBasedOnMelodicInterval(score, partNum, color, dictKey,
                                              testFunction, textFunction)
 
-    #-------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Other Theory Properties to Identify (not specifically checking errors
     # in a counterpoint assignment)
 
@@ -2233,7 +2233,7 @@ class Analyzer:
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
-    #-------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Combo method that wraps many identify methods into one
 
     def identifyCommonPracticeErrors(self, score, partNum1=None, partNum2=None,
@@ -2262,7 +2262,7 @@ class Analyzer:
         self.identifyClosesIncorrectly(score, partNum1, partNum2, 'gray', dictKey)
 
 
-    #-------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Output methods for reading out information from theoryAnalyzerResult objects
 
     def getResultsString(self, score, typeList=None):

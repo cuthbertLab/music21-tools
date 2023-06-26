@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         icmc2010.py
 # Purpose:      icmc2010.py
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-10 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-10 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 
 import unittest
@@ -16,7 +16,7 @@ import unittest
 from copy import deepcopy
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # not being used
 
 def bergEx01(show=True):
@@ -61,11 +61,11 @@ def bergEx01(show=True):
     if show:
         score.show()
 
-    ts = score.flat.getElementsByClass(meter.TimeSignature)[0]
+    ts = score.flatten().getElementsByClass(meter.TimeSignature)[0]
 
 # TODO: what is the best way to do this now that
 # this raises a TupletException for being frozen?
-#     for thisNote in score.flat.notes:
+#     for thisNote in score.flatten().notes:
 #         thisNote.duration.tuplets[0].setRatio(12, 8)
 
     for thisMeasure in score.getElementsByClass(stream.Measure):
@@ -81,7 +81,7 @@ def showDots(show=True):
     from music21 import corpus, meter
     score = corpus.parse('bach/bwv281.xml')
     partBass = score.getElementById('Bass')
-    ts = partBass.flat.getElementsByClass(
+    ts = partBass.flatten().getElementsByClass(
          meter.TimeSignature)[0]
 
     ts.beatSequence.partition(1)
@@ -106,7 +106,7 @@ def findRaisedSevenths(show=True):
     from music21 import corpus, meter, stream, clef
 
     score = corpus.parse('bach/bwv366.xml')
-    ts = score.flat.getElementsByClass(
+    ts = score.flatten().getElementsByClass(
         meter.TimeSignature)[0]
     #ts.beatSequence.partition(3)
 
@@ -114,7 +114,7 @@ def findRaisedSevenths(show=True):
     count = 0
     for part in score.iter.getElementsByClass(stream.Part):
         found.insert(count,
-                     part.flat.iter.getElementsByClass(clef.Clef)[0])
+                     part.flatten().iter.getElementsByClass(clef.Clef)[0])
         for i, m in enumerate(part.iter.getElementsByClass('Measure')):
             for n in m.iter.notes:
                 if n.name == 'C#':
@@ -133,7 +133,7 @@ def oldAccent(show=True):
     score = corpus.parse('bach/bwv366.xml')
     partBass = score.getElementById('Bass')
 
-    ts = partBass.flat.getElementsByClass(meter.TimeSignature)[0]
+    ts = partBass.flatten().getElementsByClass(meter.TimeSignature)[0]
     ts.beatSequence.partition(['3/8', '3/8'])
     ts.accentSequence.partition(['3/8', '3/8'])
     ts.setAccentWeight([1, .5])
@@ -185,6 +185,6 @@ if __name__ == "__main__":
     #bergEx01()
     music21.mainTest(Test)
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

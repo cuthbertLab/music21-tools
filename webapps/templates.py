@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         alpha.webapps.commands.py
 # Purpose:      music21 functions for implementing web interfaces
 #
 # Authors:      Lars Johnson
 #
-# Copyright:    (c) 2012 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2012 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 Webapps is a module designed for using music21 with a webserver.
 
@@ -166,9 +166,9 @@ function setup() {
     htmlData = htmlData.safe_substitute(musicxml=musicxmlString)
     return (htmlData.encode('utf-8'), 'text/html; charset=utf-8')
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Tests
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 class Test(unittest.TestCase):
 
@@ -179,5 +179,5 @@ if __name__ == '__main__':
     import music21
     music21.mainTest(Test)
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof

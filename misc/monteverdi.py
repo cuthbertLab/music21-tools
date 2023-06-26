@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         demos/monteverdi.py
 # Purpose:      Bellairs Workshop on Monteverdi Madrigals, Barbados, Feb 2011
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2011 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 The project was to see how well (or not) Monteverdi's 5-voice madrigals in Books
 3, 4, and 5 follow the principles of common-practice, tonal harmony.  Organized

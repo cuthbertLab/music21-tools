@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         wwnortonMGTA.py
 # Purpose:      interface for using theoryAnalyzer on W.W.Norton exercises
 #
 # Authors:      Lars Johnson and Beth Hadley
 #
-# Copyright:    (c) 2009-2012 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
@@ -61,7 +61,7 @@ class wwnortonExercise:
         self.addAuxillaryParts()
 
     def loadStudentExercise(self,sc):
-        for n in sc.flat.getElementsByClass('Note'):
+        for n in sc.flatten().getElementsByClass('Note'):
             n.color = 'black'
         self.studentExercise = sc
 
@@ -139,9 +139,9 @@ class wwnortonExercise:
                     m.insert(oldNotRest.offset, markerNote)
         inst.instrumentName = newPartTitle
         newPart.insert(0, inst)
-        for ks in newPart.flat.getElementsByClass('KeySignature'):
+        for ks in newPart.flatten().getElementsByClass('KeySignature'):
             ks.sharps = 0
-        for c in newPart.flat.getElementsByClass('Clef'):
+        for c in newPart.flatten().getElementsByClass('Clef'):
             c.sign = "C"
             c.line = 3
         self._updatepn(partNum,direction=direction)
@@ -163,7 +163,7 @@ class wwnortonExercise:
         for resultObj in self.ads.store[score.id]['ResultDict'][taKey]:
             offset = offsetFunc(resultObj)
             correctLyric = lyricFunc(resultObj)
-            markerNote = markerPart.flat.getElementAtOrBefore(offset, classList=['Note'])
+            markerNote = markerPart.flatten().getElementAtOrBefore(offset, classList=['Note'])
             if markerNote is None or markerNote.offset != offset:
                 print("No Marker")
                 continue
@@ -177,7 +177,7 @@ class wwnortonExercise:
     def show(self):
         self.modifiedExercise.show()
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Workbook Assignments
 
 class ex11_1_I(wwnortonExercise):

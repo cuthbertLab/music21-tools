@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         ismir2010.py
 # Purpose:      Examples for ISMIR 2010 paper
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-10 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-10 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import unittest
 
@@ -19,7 +19,7 @@ import music21.analysis.metrical
 
 import os
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 def newDots(show=True):
 
     # alternative chorales:
@@ -166,7 +166,7 @@ def  pitchDensity(show=True):
     # nested containers such as Measures. Second,
     # we combine tied notes into single notes with summed durations.
 
-    notes = celloPart.flat.stripTies()
+    notes = celloPart.flatten().stripTies()
     g = graph.plot.ScatterPitchClassOffset(notes,
         title='Beethoven Opus 133, Cello', alpha=.2)
     g.run()
@@ -182,7 +182,7 @@ def pitchQuarterLengthUsageWeightedScatter(show=True):
     from music21.humdrum import testFiles as kern
 
     mozartStream = converter.parse(xml.mozartTrioK581Excerpt) # @UndefinedVariable
-    notes = mozartStream.flat.stripTies()
+    notes = mozartStream.flatten().stripTies()
     g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
         title='Mozart Trio K. 581 Excerpt')
     g.run()
@@ -193,7 +193,7 @@ def pitchQuarterLengthUsageWeightedScatter(show=True):
 
 
     chopinStream = converter.parse(kern.mazurka6)
-    notes = chopinStream.flat.stripTies()
+    notes = chopinStream.flatten().stripTies()
     g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
         title='Chopin Mazurka 6 Excerpt')
     g.run()
@@ -210,12 +210,12 @@ def pitchQuarterLengthUsage3D(show=True):
     mozartStream = converter.parse(
         xml.mozartTrioK581Excerpt) # @UndefinedVariable
     g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(
-        mozartStream.flat.stripTies(), colors=['r'])
+        mozartStream.flatten().stripTies(), colors=['r'])
     g.run()
 
     chopinStream = converter.parse(kern.mazurka6)
     g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(
-        chopinStream.flat.stripTies(), colors=['b'])
+        chopinStream.flatten().stripTies(), colors=['b'])
     g.run()
 
 
@@ -226,7 +226,7 @@ def messiaen(show=True):
     mall = converter.parse('/Users/cuthbert/desktop/messiaen_valeurs_2012.xml')
     messiaenP = mall[1]
     #messiaen.show()
-    notes = messiaenP.flat.stripTies()
+    notes = messiaenP.flatten().stripTies()
     g = graph.plot.ScatterWeightedPitchSpaceQuarterLength(notes,
         title='Messiaen, Mode de Valeurs', xLog=False)
 
@@ -263,7 +263,7 @@ def schumann(show=True):
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 
@@ -336,7 +336,7 @@ def demoBasic():
 
 
 
-    sNew = soprano.measures(14, 16).flat.notesAndRests.transpose('p-5')
+    sNew = soprano.measures(14, 16).flatten().notesAndRests.transpose('p-5')
     sNew.makeAccidentals(overrideStatus=True)
     ts1 = meter.TimeSignature('3/4')
     ts2 = meter.TimeSignature('5/8')
@@ -354,7 +354,7 @@ def demoBasic():
 
     # Any stream can be flattened to remove all hierarchical levels
     # All notes of a part can be gathered into a single Stream
-#     sNotes = soprano.flat.notesAndRests
+#     sNotes = soprano.flatten().notesAndRests
 #
 #     # Can add notation elements or other objects by appending to a Stream
 #     sNotes.insert(0, meter.TimeSignature('3/4'))
@@ -542,8 +542,8 @@ def demoBachSearch():
 
             for pStream in s.parts:
                 # clear accidental display status
-                pFirst.append(pStream.flat.getElementsByClass('Note')[0].pitch)
-                pLast.append(pStream.flat.getElementsByClass('Note')[-1].pitch)
+                pFirst.append(pStream.flatten().getElementsByClass('Note')[0].pitch)
+                pLast.append(pStream.flatten().getElementsByClass('Note')[-1].pitch)
 
             cFirst = chord.Chord(pFirst)
             cFirst.quarterLength = 2
@@ -562,7 +562,7 @@ def demoBachSearch():
                 cLast.addLyric('?')
 
             m = stream.Measure()
-            m.keySignature = s.flat.getElementsByClass('KeySignature')[0]
+            m.keySignature = s.flatten().getElementsByClass('KeySignature')[0]
 
             print ('got', m.keySignature)
 
@@ -581,7 +581,7 @@ def demoBachSearchBrief():
         if key.mode == 'minor':
             lastChordPitches = []
             for part in chorale.parts:
-                lastChordPitches.append(part.flat.pitches[-1])
+                lastChordPitches.append(part.flatten().pitches[-1])
             lastChord = chord.Chord(lastChordPitches)
             lastChord.duration.type = "whole"
             lastChord.transpose("P8", inPlace=True)
@@ -589,7 +589,7 @@ def demoBachSearchBrief():
                 continue
             lastChord.lyric = chorale.metadata.title
             m = stream.Measure()
-            m.keySignature = chorale.flat.getElementsByClass(
+            m.keySignature = chorale.flatten().getElementsByClass(
               'KeySignature')[0]
             m.append(lastChord)
             results.append(m.makeAccidentals(inPlace=True))
@@ -611,7 +611,7 @@ def demoBachSearchBrief():
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 funcList = [newDots, altDots ] #pitchDensity, newDots, pitchDensity]
 
 slow = [newDomSev, melodicChordExpression, pitchDensity]
@@ -677,6 +677,6 @@ if __name__ == "__main__":
     #demoGraphMessiaenBrief()
     #demoGraphMessiaen()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         webapps/__init__.py
 # Purpose:      music21 functions for implementing web interfaces
 #
 # Authors:      Lars Johnson
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
 # Copyright:    (c) 2012-14 The music21 Project
 # License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 '''
 Webapps is a module designed for using music21 with a webserver.
 
@@ -128,7 +128,7 @@ from music21.alpha.webapps import commands
 # TODO: REWRITE WITHOUT EVAL!
 # pylint: disable=eval-used
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Valid format types for data input to the server
 availableDataFormats = ['xml',
@@ -190,7 +190,7 @@ availableOutputTemplates = ['templates.noteflightEmbed',
                             'templates.vexflow',
                             'templates.braille']
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def ModWSGIApplication(environ, start_response):
     '''
@@ -256,7 +256,7 @@ def ModWSGIApplication(environ, start_response):
 
     return [responseData]
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def makeAgendaFromRequest(requestInput, environ, requestType=None):
     '''
@@ -392,7 +392,7 @@ def setupApplication(agenda, appName=None):
     apps.applicationInitializers[appName](agenda)
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 class Agenda(dict):
     '''
@@ -626,7 +626,7 @@ class Agenda(dict):
             self[key] = value
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 class CommandProcessor:
     '''
@@ -1264,9 +1264,9 @@ class CommandProcessor:
             (output, outputType) = eval(self.outputTemplate)(*argList)
         return (output, outputType)
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Tests
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 sampleFormDataSimple = ('------WebKitFormBoundarytO99C5T6SZEHKAIb\r\n' +
@@ -1369,5 +1369,5 @@ if __name__ == '__main__':
     import music21
     music21.mainTest(Test)
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof

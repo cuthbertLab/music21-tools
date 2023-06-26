@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         audioSearch.repetitionGame.py
 # Purpose:      Repetition game, human player vs human player
 #
 #
 # Authors:      Jordi Bartolome
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2011 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
@@ -87,5 +87,5 @@ if __name__ == "__main__":
     while good == True:
         good = rG.game()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof

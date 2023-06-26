@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         ismir2011.py
 # Purpose:      Examples for ISMIR 2011 papers
 #
 # Authors:      Christopher Ariza
 #               Jose Cabal-Ugaz
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #               Lisa D. Friedland
 #
-# Copyright:    Copyright © 2011 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 from music21 import corpus, features, converter, graph
 from music21 import figuredBass
 from music21 import expressions, stream
@@ -196,7 +196,7 @@ def prepareTrecentoCadences():
         if thisBallata.composer != 'Ciconia':
             thisBallata.composer = 'Zachara'
         s = thisBallata.asScore()
-        if len(s.flat.pitches) < 10:
+        if len(s.flatten().pitches) < 10:
             continue
         if i % 2 == 0:
             ds.addData(s, classValue = thisBallata.composer, id=str(i))
@@ -356,5 +356,5 @@ if __name__ == '__main__':
     #example2()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof

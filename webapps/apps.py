@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         alpha.webapps.apps.py
 # Purpose:      application-specific commands and templates.
 #
 # Authors:      Lars Johnson
 #
-# Copyright:    (c) 2012 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2012 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 Webapps is a module designed for using music21 with a webserver.
 
@@ -142,9 +142,9 @@ def setupCognitionApp(agenda):
 applicationInitializers = {'corpusParseApp':setupURLCorpusParseApp,
                            'converterApp':setupConverterApp}
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Tests
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 class Test(unittest.TestCase):
 

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Name:         notation.py
 # Purpose:      music21 classes for representing Trecento notation
 #
 # Authors:      Varun Ramaswamy
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2012-15 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#------------------------------------------------------------------------------
+# Copyright:    Copyright © 2012-15 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# -----------------------------------------------------------------------------
 '''
 Tools for creating Note, Ligature and Divisione objects unique to Trecento notation.
 
@@ -170,7 +170,7 @@ class LigatureReverseModifier(tinyNotation.Modifier):
     def postParse(self, n):
         n.activeLigature.state.reverseNums.append(n.numberInLigature)
         return n
-# #------------------------------------------------------------------------------
+# # -----------------------------------------------------------------------------
 # def breakString(string, startBreakChar, endBreakChar,
 #     func=lambda s: s.split()):
 #
@@ -415,7 +415,7 @@ class TrecentoNoteToken(tinyNotation.NoteToken):
             n.mensuralType = parent.stateDict['previousMensuralType']
         return n
 
-#-------------------------------------------------------------------
+# ------------------------------------------------------------------
 
 class Punctus(base.Music21Object):
     '''
@@ -1909,7 +1909,7 @@ def _removeRepeatedElements(listOrTup): #So I don't have to use set
 class TrecentoNotationException(exceptions21.Music21Exception):
     pass
 
-#--------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
 class TestExternal(unittest.TestCase): # pragma: no cover
 
     def testTinyTrecentoStream(self):

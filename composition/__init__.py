@@ -10,7 +10,7 @@ from music21.demos.composition import arvo
 from music21.demos.composition import phasing
 from music21.demos.composition import seeger
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 
 

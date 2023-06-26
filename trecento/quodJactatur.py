@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         quodJactatur.py
 # Purpose:      module for exploring the properties of QuodJactatur
 #
-# Author:       Michael Scott Cuthbert
+# Author:       Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2010 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2010 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 '''
 Johannes Ciconia (ca. 1370-1412) was born in Liege, emigrated to Padua, and
@@ -88,7 +88,7 @@ def reverse(self, *,
         returnObj = stream.Part()
 
 
-    sf = self.flat
+    sf = self.flatten()
     for myEl in sf:
         if isinstance(myEl, classesToMove):
             continue
@@ -112,7 +112,7 @@ def reverse(self, *,
     returnObj.insert(0, sf.getElementsByClass(key.KeySignature)[0])
     returnObj.insert(0, sf.getElementsByClass(meter.TimeSignature)[0])
     returnObj.insert(0, sf.getElementsByClass(instrument.Instrument)[0])
-    for thisP in returnObj.flat.pitches:
+    for thisP in returnObj.flatten().pitches:
         if thisP.accidental is not None:
             thisP.accidental.displayStatus = None
 
@@ -129,19 +129,19 @@ def prependBlankMeasures(myStream, measuresToAppend=1, *, inPlace=False):
     >>> qj = getQJ()
     >>> qj.duration.quarterLength
     70.0
-    >>> qj.flat.notesAndRests[0]
+    >>> qj.flatten().notesAndRests[0]
     <music21.note.Note C>
     >>> len(qj.getElementsByClass(stream.Measure))
     35
     >>> qj2 = prependBlankMeasures(qj, 10, inPlace=False)
     >>> qj2.duration.quarterLength
     90.0
-    >>> qj2.flat.notesAndRests[0]
+    >>> qj2.flatten().notesAndRests[0]
     <music21.note.Rest rest>
     >>> len(qj2.getElementsByClass(stream.Measure))
     45
     '''
-    measureDuration = myStream.flat.getElementsByClass(meter.TimeSignature
+    measureDuration = myStream.flatten().getElementsByClass(meter.TimeSignature
                                         )[0].barDuration.quarterLength
 
     if inPlace:
@@ -494,6 +494,6 @@ if __name__ == "__main__":
 #    possibleSolution()
 #    findRetrogradeVoices()
     pass
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

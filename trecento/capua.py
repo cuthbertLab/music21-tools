@@ -3,10 +3,9 @@
 # Name:         capua.py
 # Purpose:      The regolae of Nicolaus de Capua for Musica Ficta
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2008-2012, 2015, 2019
-#               Michael Scott Cuthbert and the music21 Project
+# Copyright:    Copyright © 2008-19 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # -------------------------------------------------------------------------------
 

@@ -19,11 +19,11 @@ def simple1():
         score = corpus.parse(work, movementNumber) #, extList=['xml'])
 
         for part in score:
-            instrumentName = part.flat.getElementsByClass(
+            instrumentName = part.flatten().getElementsByClass(
                 instrument.Instrument)[0].bestName()
             title='%s, Movement %s, %s' % (work, movementNumber, instrumentName)
 
-            g = graph.plot.ScatterPitchSpaceQuarterLength(part.flat.sorted,
+            g = graph.plot.ScatterPitchSpaceQuarterLength(part.flatten().sorted,
                 title=title)
             g.run()
 
@@ -51,7 +51,7 @@ def simple3():
     for thisMeasure in measureStream:
         if thisMeasure.duration.quarterLength != 3.0:
             continue
-        notes = thisMeasure.flat.notesAndRests  # n.b. won't work any more because of voices...
+        notes = thisMeasure.flatten().notesAndRests  # n.b. won't work any more because of voices...
         if len(notes) == 0:
             continue
         rhythmicStream = stream.Measure()
@@ -77,7 +77,7 @@ def simple3():
             for thisNote in rhythmicStream:
                 thisNote.style.color = "blue"
             rhythmicHash[offsetString].append(rhythmicStream)
-        # thisMeasure.flat.notesAndRests[0].editorial.measureNumber = str(thisMeasure.number)
+        # thisMeasure.flatten().notesAndRests[0].editorial.measureNumber = str(thisMeasure.number)
         rhythmicHash[offsetString].append(thisMeasure)
 
     s = stream.Part()
@@ -103,7 +103,7 @@ def displayChopinRhythms():
     for thisMeasure in measureStream:
         if thisMeasure.duration.quarterLength == 3.0:
             continue
-        notes = thisMeasure.flat.notesAndRests  # n.b. won't work any more because of voices...
+        notes = thisMeasure.flatten().notesAndRests  # n.b. won't work any more because of voices...
         if len(notes) == 0:
             continue  # should not happen...
         rhythmicStream = stream.Measure()
@@ -129,7 +129,7 @@ def displayChopinRhythms():
             for thisNote in rhythmicStream:
                 thisNote.style.color = "blue"
             rhythmicHash[offsetString].append(rhythmicStream)
-        # thisMeasure.flat.notesAndRests[0].editorial.measureNumber = str(thisMeasure.number)
+        # thisMeasure.flatten().notesAndRests[0].editorial.measureNumber = str(thisMeasure.number)
         rhythmicHash[offsetString].append(thisMeasure)
 
     s = stream.Part()
@@ -172,7 +172,7 @@ def simple4a(show=True):
         else:
             doneAction = 'write'
 
-        p = graph.plot.ScatterWeightedPitchSpaceDynamicSymbol(s.parts[0].flat,
+        p = graph.plot.ScatterWeightedPitchSpaceDynamicSymbol(s.parts[0].flatten(),
              doneAction=doneAction, title=titleStr)
         p.run()
 
@@ -194,7 +194,7 @@ def simple4b(show=True):
     countDiminuendo = 0
     for part in s.getElementsByClass(stream.Part):
         map = [] # create a l @ReservedAssignment
-        wedgeStream = part.flat.getElementsByClass(dynamics.DynamicWedge)
+        wedgeStream = part.flatten().getElementsByClass(dynamics.DynamicWedge)
         for wedge in wedgeStream:
             if wedge.type == 'crescendo':
                 countCrescendo += 1
@@ -246,7 +246,7 @@ def simple4e(show=True):
     maxMeasure = 0
     for part in beethovenQuartet.parts:
         partStripped = part.stripTies()
-        for n in partStripped.flat.notesAndRests:
+        for n in partStripped.flatten().notesAndRests:
             if n.quarterLength > qLenMax and n.isRest is False:
                 qLenMax = n.quarterLength
                 maxMeasure = n.measureNumber
@@ -264,7 +264,7 @@ def simple4f(show=True):
     foundSets = []
     candidateSet = []
     for part in s.getElementsByClass(stream.Part):
-        eventStream = part.flat.notesAndRests
+        eventStream = part.flatten().notesAndRests
         for i in range(len(eventStream)):
             e = eventStream[i]
             if isinstance(e, note.Rest) or i == len(eventStream) - 1:
@@ -291,7 +291,7 @@ def simple4g():
     s = converter.parse(movements[movementNumber - 1])
     count = 0
     for part in s:
-        noteStream = part.flat.getElementsByClass(note.Note)
+        noteStream = part.flatten().getElementsByClass(note.Note)
         for i in range(len(noteStream) - 1):
             # assuming spelling does not count
             if noteStream[i].midi == noteStream[i + 1].midi:
@@ -316,7 +316,7 @@ def threeDimMozart():
     streamObject = converter.parse(mozartTrioK581Excerpt) #
 #    stream2 = streamObject.stripTies() # adds one outlier that makes the graph difficult to read
 
-    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(streamObject.flat)
+    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(streamObject.flatten())
     g.run()
 
 
@@ -326,11 +326,11 @@ def threeDimBoth():
     from music21.humdrum import testFiles as kernTest
 
     mozartStream = converter.parse(mozartTrioK581Excerpt)
-    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(mozartStream.flat)
+    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(mozartStream.flatten())
     g.run()
 
     chopinStream = converter.parse(kernTest.mazurka6)
-    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(chopinStream.flat)
+    g = graph.plot.Plot3DBarsPitchSpaceQuarterLength(chopinStream.flatten())
     g.run()
 
 
@@ -345,7 +345,7 @@ def januaryThankYou():
             print(workName, str(partNum))
             thisPart = beethovenScore[partNum]
             display = stream.Stream()
-            notes = thisPart.flat.findConsecutiveNotes(skipUnisons=True, skipChords=True,
+            notes = thisPart.flatten().findConsecutiveNotes(skipUnisons=True, skipChords=True,
                        skipOctaves=True, skipRests=True, noNone=True )
             for i in range(len(notes) - 4):
                 if notes[i].name == 'E-' and notes[i + 1].name == 'E' and notes[i + 2].name == 'A':
@@ -369,7 +369,7 @@ def januaryThankYou():
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 
@@ -485,7 +485,7 @@ def js_q5():
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 tests = [simple4a, simple4b, simple4c, simple4e, simple4f]
 
 class TestExternal(unittest.TestCase): # pragma: no cover
@@ -526,6 +526,6 @@ if __name__ == "__main__":
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

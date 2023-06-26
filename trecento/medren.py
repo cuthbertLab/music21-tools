@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         medren.py
 # Purpose:      classes for dealing with medieval and Renaissance Music
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2011-2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 Tools for working with medieval and Renaissance music -- see also the
 trecento directory which works particularly on 14th-century Italian
@@ -72,7 +72,7 @@ _validMensuralTypes = [None,'maxima', 'longa', 'brevis', 'semibrevis', 'minima',
 _validMensuralAbbr = [None, 'Mx', 'L', 'B', 'SB', 'M', 'SM']
 
 
-#---------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 class MensuralClef(clef.Clef):
     '''
     An object representing a mensural clef found in medieval and Renaissance music.
@@ -1675,7 +1675,7 @@ class Ligature(base.Music21Object):
 
         return notes
 
-#-------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=False):
     '''
     Takes a stream as an argument. Takes a mensuration or divisione object as an optional argument.
@@ -1860,7 +1860,7 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
 
     return newStream
 
-#------------------------------------------------------------
+# -----------------------------------------------------------
 def setBarlineStyle(score, newStyle, oldStyle='regular', *, inPlace=False):
     '''
     Converts any right barlines in the previous style (oldStyle; default='regular')

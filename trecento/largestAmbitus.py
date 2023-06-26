@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         demos/trecento/largestAmbitus.py
 # Purpose:      find Trecento/ars nova pieces with large ambitus
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2012 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 On September 11, 2012, Camilla Cavicchi reported to me the finding of
 a new fragment in the Ferrara archives.  One unknown piece has an extraordinary
@@ -38,7 +38,7 @@ def main():
             else:
                 pass
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # define presented order in documentation
 _DOC_ORDER = []
 
@@ -46,6 +46,6 @@ _DOC_ORDER = []
 if __name__ == "__main__":
     main()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

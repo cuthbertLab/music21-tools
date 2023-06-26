@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         trecento/polyphonicSnippet.py
 # Purpose:      subclasses for the trecento cadences from a MS Excel spreadsheet
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009, 2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import copy
 import unittest
@@ -402,6 +402,6 @@ if __name__ == "__main__":
     import music21
     music21.mainTest(Test, TestExternal, 'importPlusRelative')
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

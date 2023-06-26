@@ -1,13 +1,13 @@
 # -*- coding:utf-8 -*-
-#--------------------------------------------------------
+# -------------------------------------------------------
 # Name:         gatherAccidentals.py
 # Purpose:      Demo for music21 documentation
 #
 # Authors:      Hugh Zabriskie
 #
-# Copyright:    Copyright © 2015, 2018 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#--------------------------------------------------------
+# Copyright:    Copyright © 2015-18 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# -------------------------------------------------------
 '''
 Have you ever wondered whether Bach uses more sharps than flats in the Chorales? With just a
 few lines of code, music21 allows you to quickly answer this question.
@@ -70,7 +70,7 @@ import unittest
 
 
 
-#--------------------------------------------------------
+# -------------------------------------------------------
 
 def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
     '''
@@ -127,7 +127,7 @@ def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
             tally[accidental.name] += 1
     return _deleteZeros(tally, excludeZeros)
 
-#--------------------------------------------------------
+# -------------------------------------------------------
 
 def getAccidentalCountSum(scores, includeNonAccidentals=False, excludeZeros=True):
     '''
@@ -160,7 +160,7 @@ def getAccidentalCountSum(scores, includeNonAccidentals=False, excludeZeros=True
     return _deleteZeros(tally, excludeZeros)
 
 
-#--------------------------------------------------------
+# -------------------------------------------------------
 # HELPER METHODS
 
 def _initializeTally():
@@ -208,12 +208,12 @@ def _deleteZeros(tally, excludeZeros):
                 del tally[k]
     return tally
 
-#--------------------------------------------------------
+# -------------------------------------------------------
 
 class GatherAccidentalsException(exceptions21.Music21Exception):
     pass
 
-#--------------------------------------------------------
+# -------------------------------------------------------
 
 class Test(unittest.TestCase):
 

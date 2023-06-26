@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         awsutility.py
 # Purpose:      methods for use by mrjob to deploy on amazon web services
 #
 # Authors:      Beth Hadley
 #
-# Copyright:    Copyright © 2011 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import pathlib
 import unittest

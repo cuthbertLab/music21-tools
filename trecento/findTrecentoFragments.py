@@ -21,7 +21,7 @@ class IntervalSearcher:
         self.intervalLength = len(intervalList)
 
     def compareToStream(self, cmpStream):
-        streamLength = len(cmpStream.flat.notesAndRests)
+        streamLength = len(cmpStream.flatten().notesAndRests)
         if self.intervalLength > streamLength:
             return False
         stIntervalList = cmpStream.melodicIntervals(skipRests=True)
@@ -280,6 +280,6 @@ if __name__ == "__main__":
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

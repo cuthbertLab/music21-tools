@@ -2,7 +2,7 @@
 
 Demonstrations for `music21`
 
-Copyright 2004-2018 Michael Scott Cuthbert and cuthbertLab, released under a BSD (3-clause) license.
+Copyright © 2004-2023 Michael Scott Asato Cuthbert, released under a BSD (3-clause) license.
 
 Many of these Demonstrations were formerly in the `music21` package.  
 They may require external packages to make them work, and some may require editing to make them work with the latest version

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         misc2010.py
 # Purpose:      demos from 2010
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2010 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2010 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 from music21 import note, stream, corpus, converter, voiceLeading, pitch, chord
 import copy
@@ -17,7 +17,7 @@ def annotateWithGerman():
     annotates a score with the German notes for each note
     '''
     bwv295 = corpus.parse('bach/bwv295')
-    for thisNote in bwv295.flat.notes:
+    for thisNote in bwv295.flatten().notes:
         thisNote.addLyric(thisNote.pitch.german)
     bwv295.show()
 
@@ -38,14 +38,14 @@ def bachParallels():
             iName = c.parts[i].id
             if iName.lower() not in ['soprano', 'alto', 'tenor', 'bass']:
                 continue
-            ifn = c.parts[i].flat.notesAndRests.stream()
+            ifn = c.parts[i].flatten().notesAndRests.stream()
             omi = ifn.offsetMap()
             for j in range(i + 1, len(c.parts)):
                 jName = c.parts[j].id
                 if jName.lower() not in ['soprano', 'alto', 'tenor', 'bass']:
                     continue
 
-                jfn = c.parts[j].flat.notesAndRests.stream()
+                jfn = c.parts[j].flatten().notesAndRests.stream()
                 for k in range(len(omi) - 1):
                     offsetThis = omi[k]
                     offsetNext = omi[k + 1]
@@ -169,14 +169,14 @@ def pcsFromHumdrum(show=False):
     myScore = converter.parse(testFiles.mazurka6)
     onePartScore = myScore.chordify()
     output = ""
-    for thisChord in onePartScore.flat.getElementsByClass(chord.Chord):
+    for thisChord in onePartScore.flatten().getElementsByClass(chord.Chord):
         output = output + thisChord.forteName + "\n"
     if show == True:
         print (output)
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 if (__name__ == "__main__"):
 #    richardBreedGetWell()
 #    annotateWithGerman()
@@ -184,6 +184,6 @@ if (__name__ == "__main__"):
     bachParallels()
 #    towersOfHanoi(show=False, transpose=False, numParts=8)
 #    pcsFromHumdrum(show=True)
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

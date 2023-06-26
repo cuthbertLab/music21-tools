@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         chant.py
 # Purpose:      Classes and Tools for converting Music21 Streams to Gregorio .gabc
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-2012, 15 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-15 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 '''
 ``ALPHA MODULE``: Not directly supported by cuthbertLab.
 
@@ -570,7 +570,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # define presented order in documentation
 _DOC_ORDER = []
 
@@ -579,5 +579,5 @@ if __name__ == "__main__":
     import music21
     music21.mainTest(Test, 'moduleRelative')
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         trecento/findSevs.py
 # Purpose:      methods for finding all sevenths (which might be coding errors) in
 #               the cadence books
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2007, 2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2007-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
@@ -55,6 +55,6 @@ def findInWork(work, searchInterval=7):
 if __name__ == "__main__":
     find(2, 459, )
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

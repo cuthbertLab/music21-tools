@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         harmonyRealizer.py
 #
 # Purpose:      Demonstration of using music21 (especially fbRealizer, harmony,
@@ -9,9 +9,9 @@
 # Authors:      Beth Hadley
 #               fbRealizer: Jose Cabal-Ugaz
 #
-# Copyright:    (c) 2011 The music21 Project
-# License:      LGPL or BSD
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 #    TODO:
 #    1.
@@ -172,7 +172,7 @@ def mergeLeadSheetAndBassLine(leadsheet, bassLine):
     s.insert(0, pianoBass)
 
     return s
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
 
     def runTest(self):

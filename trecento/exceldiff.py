@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-
 import sys
 
 from music21.ext import xlrd
@@ -10,19 +8,19 @@ from music21.ext import xlrd
 if len(sys.argv) != 3:
     raise Exception("Need two arguments to diff!")
 
-if (sys.argv[1].count(':') == 1):
+if sys.argv[1].count(':') == 1:
     (book1name, sheetname1) = sys.argv[1].split(':')
-    if (book1name.count('.xls') == 0):
+    if book1name.count('.xls') == 0:
         book1name += ".xls"
 else:
-    raise ("First name must be in form filename:sheetname")
+    raise Exception("First name must be in form filename:sheetname")
 
-if (sys.argv[2].count(':') == 1):
+if sys.argv[2].count(':') == 1:
     (book2name, sheetname2) = sys.argv[2].split(':')
 else:
     (book2name, sheetname2) = (sys.argv[2], sheetname1)
 
-if (book2name.count('.xls') == 0):
+if book2name.count('.xls') == 0:
     book2name += ".xls"
 
 book1 = xlrd.open_workbook(book1name)
@@ -36,11 +34,11 @@ totalRows2 = sheet2.nrows
 extraRows = 0
 longsheet = 0
 
-if (totalRows1 > totalRows2):
+if totalRows1 > totalRows2:
     longsheet = 1
     extraRows = (totalRows1 - totalRows2)
     minRows = totalRows2
-elif (totalRows1 < totalRows2):
+elif totalRows1 < totalRows2:
     longsheet = 2
     extraRows = (totalRows2 - totalRows1)
     minRows = totalRows1
@@ -54,41 +52,41 @@ for i in range(minRows):
     totalCells1 = len(rowvalues1)
     totalCells2 = len(rowvalues2)
     extraCells = 0
-    if (totalCells1 > totalCells2):
+    if totalCells1 > totalCells2:
         longrow = 1
         extraCells = (totalCells1 - totalCells2)
         minCells = totalCells2
-    elif (totalCells1 > totalCells2):
+    elif totalCells1 > totalCells2:
         longrow = 2
         extraCells = (totalCells2 - totalCells1)
         minCells = totalCells1
     else:
         minCells = totalCells1 # doesnt matter which
     for j in range(minCells):
-        if (rowvalues1[j] != rowvalues2[j]):
+        if rowvalues1[j] != rowvalues2[j]:
             print("%3d,%2s--%34s : %34s" % (i + 1,xlrd.colname(j),
                                                (rowvalues1[j]).encode('utf-8')[:34],
                                                (rowvalues2[j]).encode('utf-8')[:34]))
-    if (extraCells > 0):
+    if extraCells > 0:
         print("%3d extra cells in row %3d in" % (extraCells, i + 1), end='')
-        if (longrow == 1):
+        if longrow == 1:
             print(book1name + ":" + sheetname1)
-        elif (longrow == 2):
+        elif longrow == 2:
             print(book2name + ":" + sheetname2)
         else:
             raise Exception("What?  longrow was not set!")
 
-if (extraRows > 0):
+if extraRows > 0:
     print("%3d extra rows in" % extraRows,)
-    if (longsheet == 1):
+    if longsheet == 1:
         print(book1name + ":" + sheetname1)
-    elif (longsheet == 2):
+    elif longsheet == 2:
         print(book2name + ":" + sheetname2)
     else:
         raise Exception("What?  longsheet was not set!")
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

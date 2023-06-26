@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         smt2011.py
 # Purpose:      Demonstrations for the SMT 2011 demo
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2011 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import copy
 
@@ -19,14 +19,14 @@ environLocal = environment.Environment(_MOD)
 
 def ex01():
     # beethoven
-    #s1 = corpus.parse('opus18no1/movement3.xml')
-    #s1.show()
+    # s1 = corpus.parse('opus18no1/movement3.xml')
+    # s1.show()
 
 
     # has lots of triplets toward end
     # viola not coming in as alto clef
-#     s2 = corpus.parse('haydn/opus17no1/movement3.zip')
-#     s2.show()
+    # s2 = corpus.parse('haydn/opus17no1/movement3.zip')
+    # s2.show()
 
     s2 = corpus.parse('haydn/opus17no2/movement3.zip')
     # works well; some triplets are missing but playback correctly
@@ -34,7 +34,7 @@ def ex01():
     s2Chordified.show()
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 def chordsToAnalysis(chordStream, manifest, scale):
     '''
     manifest is a list of tuples in the following form:
@@ -49,14 +49,14 @@ def chordsToAnalysis(chordStream, manifest, scale):
         # assuming we have measure numbers
 
     for (measureNumber, chordNumberOrNone, scaleDegree, octaveDisplay,
-        durationTypeDisplay, textDisplay) in manifest:
+         durationTypeDisplay, textDisplay) in manifest:
         # assume measures are in order; replace with different method
         m = chordMeasures[measureNumber-1]
         mPost = measureTemplate[measureNumber-1]
         if chordNumberOrNone is None:
             c = m.notes[0]
         else:
-            c = m.notes[chordNumberOrNone-1] # assume counting from 1
+            c = m.notes[chordNumberOrNone-1]  # assume counting from 1
 
         pTarget = scale.pitchFromDegree(scaleDegree)
         match = False
@@ -92,7 +92,7 @@ def exShenker():
     from music21 import stream, scale, bar
     # wtc no 1
     src = corpus.parse('bwv846')
-    #src.show()
+    # src.show()
 
     melodicSrc = src.parts[0]
     measureTemplate = copy.deepcopy(melodicSrc.getElementsByClass('Measure'))
@@ -101,17 +101,17 @@ def exShenker():
         m.number = i + 1
 
     # this stream has triple bar lines, clefs, etc
-    unused_chords = src.flat.makeChords(minimumWindowSize=2)
+    _chords = src.flatten().makeChords(minimumWindowSize=2)
 
     analysis = stream.Score()
     chordReduction = copy.deepcopy(measureTemplate)
     for i, m in enumerate(chordReduction.getElementsByClass('Measure')):
-        mNotes = src.flat.getElementsByOffset(
+        mNotes = src.flatten().getElementsByOffset(
             m.offset,
             m.offset + m.barDuration.quarterLength,
             includeEndBoundary=False)
         mNotes.makeChords(minimumWindowSize=4, inPlace=True)
-        c = mNotes.flat.notes[0]
+        c = mNotes.flatten().notes[0]
         c.duration.type = 'whole'
         m.append(c)
         m.rightBarline = bar.Barline('regular')
@@ -119,7 +119,7 @@ def exShenker():
 
     scaleCMajor = scale.MajorScale('c')
 
-    #measureNumber, chordNumberOrNone, scaleDegree, octaveDisplay,
+    # measureNumber, chordNumberOrNone, scaleDegree, octaveDisplay,
     #    durationTypeDisplay, textDisplay
     manifest = [(1, None, 3, 5, 'whole', '3'),
                 (24, None, 2, 5, 'whole', '2'),
@@ -131,8 +131,7 @@ def exShenker():
     manifest = [(1, None, 1, 4, 'whole', 'I'),
                 (24, None, 5, 3, 'whole', 'V'),
                 (31, None, 4, 4, 'quarter', '--7'),
-                (35, None, 1, 4, 'whole', 'I'),
-               ]
+                (35, None, 1, 4, 'whole', 'I'),]
     analysis2 = chordsToAnalysis(chordReduction, manifest, scaleCMajor)
 
 
@@ -143,7 +142,7 @@ def exShenker():
 
 def demoMakeChords():
     # wtc no 1
-    #src = corpus.parse('bwv65.2').measures(0, 5)
+    # src = corpus.parse('bwv65.2').measures(0, 5)
     src = corpus.parse('opus18no1/movement3.xml').measures(0, 10)
     c = src.flattenParts().makeChords(minimumWindowSize=3)
     print(c.write())
@@ -154,6 +153,6 @@ def demoMakeChords():
 
 
 if __name__ == '__main__':
-    #ex01()
-    #exShenker()
+    # ex01()
+    # exShenker()
     demoMakeChords()

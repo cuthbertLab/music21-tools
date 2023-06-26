@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         audioSearch.graphicalInterfaceSF.py
 # Purpose:      Graphical interface for the score follower
 #
-#
 # Authors:      Jordi Bartolome
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2011, 2015 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2011, 2015 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 from music21 import corpus
@@ -276,13 +275,13 @@ class SFApp():
             score = corpus.parse(self.nameRecordedSong).parts[0]
         self.scorePart = score
         self.pageMeasureNumbers = []
-        for e in score.flat:
+        for e in score.flatten():
             if 'PageLayout' in e.classes:
                 self.pageMeasureNumbers.append(e.measureNumber)
         lastMeasure = score.getElementsByClass('Measure')[-1].measureNumber
         self.pageMeasureNumbers.append(lastMeasure)
         self.totalPagesScore = len(self.pageMeasureNumbers) - 1
-        scNotes = score.flat.notesAndRests
+        scNotes = score.flatten().notesAndRests
         noteCounter = 1
         pageCounter = 0
         middlePagesCounter = 0
@@ -517,7 +516,7 @@ class SFApp():
         self.button2 = tkinter.Button(self.master, text="START SF", width=self.sizeButton,
                                       command=self.startScoreFollower, state='disable', bg='green')
         self.button2.grid(row=5, column=3)
-        scNotes = self.scorePart.flat.notesAndRests
+        scNotes = self.scorePart.flatten().notesAndRests
         ScF = scoreFollower.ScoreFollower(scoreStream=scNotes)
         ScF.show = False
         ScF.plot = False

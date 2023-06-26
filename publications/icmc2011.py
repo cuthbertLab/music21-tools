@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         icmc2011.py
 # Purpose:      Demonstrations for the ICMC 2011 poster session
 #
 # Authors:      Christopher Ariza
-#               Michael Scott Cuthbert
+#               Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009-11 Michael Scott Cuthbert and the music21 Project
-# License:      BSD or LGPL, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-11 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import unittest
 from music21 import alpha, note, stream, clef, metadata, spanner, environment
@@ -21,26 +21,25 @@ environLocal = environment.Environment(_MOD)
 
 
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
 
     def runTest(self):
         pass
 
 
-
     def testStreams01(self):
         '''
         Basic stream issues
         '''
-        #from music21 import note, stream, clef, metadata, spanner
+        # from music21 import note, stream, clef, metadata, spanner
 
 
-        #==== "fig-df02"
+        # ==== "fig-df02"
         # Storing, Ordering, and Timing Elements
 
-        n1 = note.Note('g3', type='half')
-        n2 = note.Note('d4', type='half')
+        n1 = note.Note('G3', type='half')
+        n2 = note.Note('D4', type='half')
         cf1 = clef.AltoClef()
 
         m1 = stream.Measure(number=1)
@@ -58,15 +57,15 @@ class Test(unittest.TestCase):
         # can find an element based on a given offset
         assert m1.getElementAtOrBefore(3) == n2
 
-        n3 = note.Note('g#3', quarterLength=0.5)
-        n4 = note.Note('d-4', quarterLength=3.5)
+        n3 = note.Note('G#3', quarterLength=0.5)
+        n4 = note.Note('D-4', quarterLength=3.5)
 
         m2 = stream.Measure(number=2)
         m2.append([n3, n4])
 
         # appended position is after n3
-        assert n4.offset == .5
-        assert m2.highestOffset == .5
+        assert n4.offset == 0.5
+        assert m2.highestOffset == 0.5
         # can access objects on elements
         assert m2[1].duration.quarterLength == 3.5
         # the Stream duration is the highest offset + duration
@@ -87,13 +86,12 @@ class Test(unittest.TestCase):
         md1 = metadata.Metadata(title='The music21 Stream')
         s1.insert(0, md1)
         # calling show by default renders musicxml output
-        #s1.show()
+        # s1.show()
 
-        #==== "fig-df02" end
+        # ==== "fig-df02" end
 
 
-
-        #==== "fig-df03"
+        # ==== "fig-df03"
         # Positioning the Same Element in Multiple Containers
         # show positioning the same element in multiple containers
         # do not yet use a flat representation
@@ -104,15 +102,15 @@ class Test(unittest.TestCase):
 
         # the offset attribute returns the last assigned
         assert n2.offset == 40
-        # we can provide a site to finde a location-specific offset
+        # we can provide a site to find a location-specific offset
         assert n2.getOffsetBySite(m1) == 2.0
         assert n2.getOffsetBySite(s2) == 10
         # the None site provides a default offset
-        assert set(n2.sites.get()) == set([None, m1, s2, s3])
+        assert set(n2.sites.get()) == {None, m1, s2, s3}
         # the same instance is found in all Streams
-        assert m1.hasElement(n2) == True
-        assert s2.hasElement(n2) == True
-        assert s3.hasElement(n2) == True
+        assert m1.hasElement(n2) is True
+        assert s2.hasElement(n2) is True
+        assert s3.hasElement(n2) is True
 
         # only offset is independent to each location
         n2.pitch.transpose('-M2', inPlace=True)
@@ -121,32 +119,32 @@ class Test(unittest.TestCase):
         assert m1[m1.index(n2)].nameWithOctave == 'C4'
 
         # the transposition is maintained in the original context
-        #s1.show()
+        # s1.show()
 
-        #==== "fig-df03" end
-
-
+        # ==== "fig-df03" end
 
 
-        #==== "fig-df04"
+        # ==== "fig-df04"
         # Simultaneous Access to Hierarchical and Flat Representations
-        #s1.flat.show('t')
+        # s1.flatten().show('t')
 
         # lengths show the number of elements; indices are sequential
-        s1Flat = s1.flat
+        s1Flat = s1.flatten()
         assert len(s1) == 2
         assert len(s1Flat) == 6
         assert s1Flat[4] == n3
         assert s1Flat[5] == n4
 
         # adding another Part to the Score results in a different flat representation
-        n5 = note.Note('a#1', quarterLength=2.5)
-        n6 = note.Note('b2', quarterLength=1.5)
+        n5 = note.Note('A#1', quarterLength=2.5)
+        n6 = note.Note('B2', quarterLength=1.5)
         m4 = stream.Measure(number=2)
         m4.append([n5, n6])
 
         r1 = note.Rest(type='whole')
-        cf2 = clef.bestClef(m4) # = BassClef
+        cf2 = clef.bestClef(m4)  # = BassClef
+        assert isinstance(cf2, clef.BassClef)
+
         m3 = stream.Measure(number=1)
         m3.append([cf2, r1])
 
@@ -154,12 +152,11 @@ class Test(unittest.TestCase):
         p2.append([m3, m4])
         s1.insert(0, p2)
 
-        assert 'BassClef' in cf2.classes
 
         # objects are sorted by offset
-        s1Flat = s1.flat
+        s1Flat = s1.flatten()
         assert len(s1) == 3
-        assert len(s1.flat) == 10
+        assert len(s1.flatten()) == 10
         assert s1Flat[6] == n3
         assert s1Flat[7] == n5
         assert s1Flat[8] == n4
@@ -172,87 +169,81 @@ class Test(unittest.TestCase):
         assert n6.getOffsetBySite(m4) == 2.5
         assert n6.getOffsetBySite(s1Flat) == 6.5
 
-        #s1.show()
+        # s1.show()
 
-        #==== "fig-df04" end
-
-
+        # ==== "fig-df04" end
 
 
-        #==== "fig-df05"
+        # ==== "fig-df05"
         # Iterating and Filtering Elements by Class
-
 
         # get the Clef object, and report its sign, from Measure 1
         assert m1.getElementsByClass('Clef').stream()[0].sign == 'C'
         # collect into a list the sign of all clefs in the flat Score
-        assert [cf.sign for cf in s1.flat.getElementsByClass('Clef')] == ['C', 'F']
+        assert [cf.sign for cf in s1.flatten().getElementsByClass('Clef')] == ['C', 'F']
 
         # collect the offsets Measures in the first part
         assert [e.offset for e in p1.elements] == [0.0, 4.0]
         # collect the offsets of Note in the first part flattened
-        assert [e.offset for e in p1.flat.notesAndRests] == [0.0, 2.0, 4.0, 4.5]
+        assert [e.offset for e in p1.flatten().notesAndRests] == [0.0, 2.0, 4.0, 4.5]
         # collect the offsets of Notes in all parts flattened
-        assert [e.offset for e in s1.flat.notesAndRests] == [0.0, 0.0, 2.0, 4.0, 4.0, 4.5, 6.5]
-
+        assert [e.offset for e in s1.flatten().notesAndRests] == [0.0, 0.0, 2.0, 4.0, 4.0, 4.5, 6.5]
 
         # get all pitch names
         match = []
-        for e in s1.flat.getElementsByClass('Note').stream():
+        for e in s1.flatten()[note.Note]:
             match.append(e.pitch.nameWithOctave)
         assert match == ['G3', 'C4', 'G#3', 'A#1', 'D-4', 'B2']
 
         # collect all Notes and transpose up a perfect fifth
-        for n in s1.flat.getElementsByClass('Note').stream():
+        for n in s1.flatten().getElementsByClass('Note').stream():
             n.transpose('P5', inPlace=True)
 
         # check that all pitches are correctly transposed
         match = []
-        for e in s1.flat.getElementsByClass('Note').stream():
+        for e in s1.flatten()[note.Note]:
             match.append(e.pitch.nameWithOctave)
-        assert match == ['D4', 'G4', 'D#4', 'E#2', 'A-4', 'F#3']
+        assert match == ['D4', 'G4', 'D#4', 'E#2', 'A-4', 'F#3'], match
+        # s1.show()
 
-        #s1.show()
-
-        #==== "fig-df05" end
-
+        # ==== "fig-df05" end
 
 
-
-
-        #==== "fig-df06"
+        # ==== "fig-df06"
         # Searching by Locations and Contexts
 
         # a Note can always find a Clef
-        self.assertIs(n4.getContextByClass('Clef'), cf1)
+        # Set context back to s1, not s1.flatten()
+        for _ in s1.recurse():
+            pass
+        # s1.show('text')
+        self.assertIs(n4.getContextByClass(clef.Clef), cf1)
         # must search oldest sites first
-        assert n6.getContextByClass('Clef', sortByCreationTime='reverse') == cf2
+        assert n6.getContextByClass(clef.Clef, sortByCreationTime='reverse') == cf2
 
 
-#        # a Note can find their Measure number from a flat Part
-#        match = []
-#        for e in p1.flat.getElementsByClass('Note'):
-#            match.append(e.getContextByClass('Measure').number)
-#        assert match == [1, 1, 2, 2]
+        # # a Note can find their Measure number from a flat Part
+        # match = []
+        # for e in p1.flatten().getElementsByClass('Note'):
+        #     match.append(e.getContextByClass('Measure').number)
+        # assert match == [1, 1, 2, 2]
 
         # all Notes can find their Measure number from a flat Score
         match = []
-        for e in s1.flat.notesAndRests:
-            match.append([e.name, e.getContextByClass('Measure').number])
+        for e in s1.flatten().notesAndRests:
+            match.append([e.name, e.getContextByClass(stream.Measure).number])
         assert match == [['D', 1], ['rest', 1], ['G', 1], ['D#', 2],
                          ['E#', 2], ['A-', 2], ['F#', 2]]
-        #==== "fig-df06" end
+        # ==== "fig-df06" end
 
 
-
-
-        #==== "fig-df06"
+        # ==== "fig-df06"
         # Non-Hierarchical Object Associations
-        #oldIds = []
-        #for idKey in n1.sites.siteDict:
-        #    print (idKey, n1.sites.siteDict[idKey].isDead)
-        #    oldIds.append(idKey)
-        #print("-------")
+        # oldIds = []
+        # for idKey in n1.sites.siteDict:
+        #     print (idKey, n1.sites.siteDict[idKey].isDead)
+        #     oldIds.append(idKey)
+        # print("-------")
 
         # Spanners can be positioned in Parts or Measures
         sp1 = spanner.Slur([n1, n4])
@@ -260,9 +251,9 @@ class Test(unittest.TestCase):
         sp2 = spanner.Slur([n5, n6])
         m4.insert(0, sp2)
 
-        #print(id(sp1), id(sp1.spannerStorage), n1.sites.siteDict[id(sp1.spannerStorage)].isDead)
-        #if id(sp1.spannerStorage) in oldIds:
-        #    print ("******!!!!!!!!!*******")
+        # print(id(sp1), id(sp1.spannerStorage), n1.sites.siteDict[id(sp1.spannerStorage)].isDead)
+        # if id(sp1.spannerStorage) in oldIds:
+        #     print ("******!!!!!!!!!*******")
 
         # Elements can report on what Spanner they belong to
         ss1 = n1.getSpannerSites()
@@ -271,42 +262,41 @@ class Test(unittest.TestCase):
         ss6 = n6.getSpannerSites()
         assert sp2 in ss6
 
-#         p1Flat = p1.flat
-#         assert sp1.getDurationSpanBySite(p1Flat) == [0.0, 8.0]
-#
-#         p2Flat = p2.flat
-#         assert sp2.getDurationSpanBySite(p2Flat) == [4.0, 8.0]
+        # p1Flat = p1.flatten()
+        # assert sp1.getDurationSpanBySite(p1Flat) == [0.0, 8.0]
+        #
+        # p2Flat = p2.flatten()
+        # assert sp2.getDurationSpanBySite(p2Flat) == [4.0, 8.0]
 
-        #s1.show()
-        #==== "fig-df06" end
+        # s1.show()
+        # ==== "fig-df06" end
 
 
         # additional tests
         self.assertEqual(m1.clef, cf1)
 
 
-
-
     def testStreams02(self):
 
         # based on Stream.testAddSlurByMelisma(self):
 
-        #from music21 import corpus, spanner
+        # from music21 import corpus, spanner
         nStart = None
         nEnd = None
 
-        ex = corpus.parse('luca/gloria').parts['cantus'].measures(1, 11)
-        exFlatNotes = ex.flat.notesAndRests.stream()
+        ex = corpus.parse('luca/gloria').parts['#cantus'].measures(1, 11)
+        exFlatNotes = ex.flatten().notesAndRests.stream()
         nLast = exFlatNotes[-1]
 
         for i, n in enumerate(exFlatNotes):
             if i < len(exFlatNotes) - 1:
                 nNext = exFlatNotes[i + 1]
-            else: continue
+            else:
+                continue
 
             if n.lyrics:
                 nStart = n
-            # if next is a begin, then this is an end
+            # if next is a 'begin', then this is an 'end'
             elif nStart is not None and nNext.lyrics and n.tie is None:
                 nEnd = n
             elif nNext is nLast:
@@ -318,11 +308,11 @@ class Test(unittest.TestCase):
                 nEnd = None
 
         for sp in ex.spanners.getElementsByClass('Slur'):
-            #environLocal.printDebug(['sp', n.nameWithOctave, sp])
-            n = sp.getFirst()
+            # environLocal.printDebug(['sp', n.nameWithOctave, sp])
+            _ = sp.getFirst()
 
 
-        #ex.show()
+        # ex.show()
 
 
 
@@ -332,15 +322,15 @@ class Test(unittest.TestCase):
         from music21 import pitch
 
 
-        #==== "fig-py01"
+        # ==== "fig-py01"
 
         # Providing a tonic makes this concrete
         sc1 = scale.MajorScale('g4')
         sc2 = scale.MajorScale('e-3')
 
         # Comparing Concrete and Abstract Scales
-        assert (sc1 == sc2) == False
-        assert (sc1.abstract == sc2.abstract) == True
+        assert (sc1 == sc2) is False
+        assert (sc1.abstract == sc2.abstract) is True
 
         # Without arguments, getPitches() returns a single span
         assert common.pitchList(sc1.getPitches()) == '[G4, A4, B4, C5, D5, E5, F#5, G5]'
@@ -362,7 +352,7 @@ class Test(unittest.TestCase):
         match = [pitch.Pitch('g2')]
         for direction in [1, 1, 1, -2, 4, -1, 1, 1, 1]:
             # Append the next pitch based on the last-added pitch
-            match.append(sc1.next(match[-1], direction))
+            match.append(sc1.nextPitch(match[-1], direction))
         assert common.pitchList(match), '[G2, A2, B2, C3, A2, E3, D3, E3, F#3, G3]'
 
         # Derive new scales based on a provided collection or degree
@@ -371,11 +361,11 @@ class Test(unittest.TestCase):
 
         # Methods unique to DiatonicScale subclasses
         assert str(sc2.getRelativeMinor()) == '<music21.scale.MinorScale C minor>'
-        #==== "fig-py01" end
+        # ==== "fig-py01" end
 
 
 
-        #==== "fig-py02"
+        # ==== "fig-py02"
         sc1 = scale.PhrygianScale('g4')
         assert common.pitchList(sc1.getPitches()) == '[G4, A-4, B-4, C5, D5, E-5, F5, G5]'
         assert str(sc1.getRelativeMajor()) == '<music21.scale.MajorScale E- major>'
@@ -386,19 +376,19 @@ class Test(unittest.TestCase):
         assert str(sc2.getRelativeMajor()) == '<music21.scale.MajorScale G major>'
         assert str(sc2.getTonic()), str(sc2.getDominant()) == ('A6', 'C7')
 
-        #==== "fig-py02" end
+        # ==== "fig-py02" end
 
 
 
-        #==== "fig-py06"
+        # ==== "fig-py06"
         # see below
-        #==== "fig-py06" end
+        # ==== "fig-py06" end
 
 
 
 
-        #==== "fig-py03"
-        #print('\n\nfig-py03')
+        # ==== "fig-py03"
+        # print('\n\n' + 'fig-py03')
 
         sc1 = scale.HarmonicMinorScale('a3')
         assert common.pitchList(sc1.getPitches()) == '[A3, B3, C4, D4, E4, F4, G#4, A4]'
@@ -409,37 +399,33 @@ class Test(unittest.TestCase):
             s.append(note.Note(
                 sc1.pitchFromDegree(d, equateTermini=False),
                 type='eighth'))
-        #s.show()
-        #==== "fig-py03" end
+        # s.show()
+        # ==== "fig-py03" end
 
-
-
-
-        #==== "fig-py04"
+        # ==== "fig-py04"
         import random
 
-
         sc1 = scale.MelodicMinorScale('c4')
-        assert common.pitchList(sc1.getPitches(direction='ascending')
+        assert common.pitchList(sc1.getPitches(direction=scale.Direction.ASCENDING)
                                 ) == '[C4, D4, E-4, F4, G4, A4, B4, C5]'
-        assert common.pitchList(sc1.getPitches('c3', 'c5', direction='descending')
+        assert common.pitchList(sc1.getPitches('c3', 'c5', direction=scale.Direction.DESCENDING)
                                 ) == ('[C5, B-4, A-4, G4, F4, E-4, D4, '
-                                        + 'C4, B-3, A-3, G3, F3, E-3, D3, C3]')
+                                      + 'C4, B-3, A-3, G3, F3, E-3, D3, C3]')
         assert str(sc1.getTonic()), str(sc1.getDominant()) == ('C4', 'G4')
 
         s = stream.Stream()
         p = None
-        for i in range(8): # was 16, but sometimes exceeded scale length.
+        for i in range(8):  # was 16, but sometimes exceeded scale length.
             direction = random.choice([-1, 1])
             for j in range(2):
-                p = sc1.next(p, direction)
+                p = sc1.nextPitch(p, direction)
                 s.append(note.Note(p, quarterLength=.25))
-        #s.show()
-        #==== "fig-py04" end
+        # s.show()
+        # ==== "fig-py04" end
 
 
 
-        #==== "fig-py05"
+        # ==== "fig-py05"
         sc1 = scale.OctatonicScale('e3', 'm2')
         assert common.pitchList(sc1.getPitches()) == '[E3, F3, G3, A-3, B-3, C-4, D-4, D4, E4]'
         sc2 = scale.OctatonicScale('e3', 'M2')
@@ -457,7 +443,7 @@ class Test(unittest.TestCase):
             i = 0
             for dur in durPart1:
                 part1.append(note.Note(sc2.pitchFromDegree(degrees[i]),
-                            quarterLength = dur))
+                             quarterLength=dur))
                 i += 1
             for dur in durPart2:
                 part2.append(note.Note(
@@ -467,17 +453,17 @@ class Test(unittest.TestCase):
         s = stream.Score()
         s.insert(0, part1)
         s.insert(0, part2)
-        #s.show()
+        # s.show()
 
         # add notation example; perhaps create tri-chords from scale-completing selections
-        #==== "fig-py05" end
+        # ==== "fig-py05" end
 
 
 
 
-        #sc = scale.SieveScale('c2', '(-3@2 & 4) | (-3@1 & 4@1) | (3@2 & 4@2) | (-3 & 4@3)')
+        # sc = scale.SieveScale('c2', '(-3@2 & 4) | (-3@1 & 4@1) | (3@2 & 4@2) | (-3 & 4@3)')
 
-        #==== "fig-py07"
+        # ==== "fig-py07"
         # add examples
         sc1 = scale.SieveScale('c4', '3@0|4@0')
         self.assertEqual(common.pitchList(sc1.getPitches()), '[C4, E-4, E4, F#4, G#4, A4, C5]')
@@ -487,133 +473,116 @@ class Test(unittest.TestCase):
                          '[C4, F4, G4, B-4, D5, E-5, G#5, A5, C#6, E6, F#6, B6]')
 
         s = stream.Stream()
-        pColection = sc2.getPitches('c3', 'c7')
-        random.shuffle(pColection)
-        for p in pColection:
+        pCollection = sc2.getPitches('c3', 'c7')
+        random.shuffle(pCollection)
+        for p in pCollection:
             s.append(note.Note(p, type='16th'))
-        #s.show()
-        #==== "fig-py07" end
+        # s.show()
+        # ==== "fig-py07" end
 
 
 
 
-        #==== "fig-py08"
+        # ==== "fig-py08"
 
         sc1 = scale.RagAsawari('g3')
-        self.assertEqual(common.pitchList(sc1.getPitches(direction='ascending')),
+        self.assertEqual(common.pitchList(sc1.getPitches(direction=scale.Direction.ASCENDING)),
                          '[G3, A3, C4, D4, E-4, G4]')
-        self.assertEqual(common.pitchList(sc1.getPitches(direction='descending')),
+        self.assertEqual(common.pitchList(sc1.getPitches(direction=scale.Direction.DESCENDING)),
                          '[G4, F4, E-4, D4, C4, B-3, A3, G3]')
 
 
         sc2 = scale.RagMarwa('g3')
-        assert common.pitchList(sc2.getPitches(direction='ascending')
+        assert common.pitchList(sc2.getPitches(direction=scale.Direction.ASCENDING)
                                 ) == '[G3, A-3, B3, C#4, E4, F#4, E4, G4, A-4]'
-        assert common.pitchList(sc2.getPitches(direction='descending')
+        assert common.pitchList(sc2.getPitches(direction=scale.Direction.DESCENDING)
                                 ) == '[A-4, G4, A-4, F#4, E4, C#4, B3, A-3, G3]'
 
 
         p1 = None
         s = stream.Stream()
         for direction in ([1]*10) + ([-1]*8) + ([1]*4) + ([-1]*3) + ([1]*4):
-            p1 = sc1.next(p1, direction)
+            p1 = sc1.nextPitch(p1, direction)
             s.append(note.Note(p1, quarterLength=.25))
-        #s.show()
+        # s.show()
 
         p1 = None
         s = stream.Stream()
         for direction in ([1]*10) + ([-1]*8) + ([1]*4) + ([-1]*3) + ([1]*4):
-            p1 = sc2.next(p1, direction)
+            p1 = sc2.nextPitch(p1, direction)
             s.append(note.Note(p1, quarterLength=.25))
-        #s.show()
+        # s.show()
 
-        #==== "fig-py08" end
+        # ==== "fig-py08" end
 
 
-        #==== "fig-py09"
-        #import random
+        # ==== "fig-py09"
+        # import random
         sc1 = scale.WeightedHexatonicBlues('c3')
         p = 'c3'
         s = stream.Stream()
         for n in range(32):
-            p = sc1.next(p, random.choice([-1, 1]))
+            p = sc1.nextPitch(p, random.choice([-1, 1]))
             n = note.Note(p, quarterLength=random.choice([.5,.25,.25]))
             s.append(n)
-        #s.show()
-        #==== "fig-py09" end
-
-
+        # s.show()
+        # ==== "fig-py09" end
 
 
     def testScalesPy06(self):
-        #from music21 import corpus, scale, note
-        #from music21 import analysis
+        # from music21 import corpus, scale, note
+        # from music21 import analysis
 
         scGMajor = scale.MajorScale('g4')
         scDMajor = scale.MajorScale('d4')
         s = corpus.parse('mozart/k80/movement1').measures(21, 25)
-        s.remove(s['cello'])
-        s.remove(s['viola'])
+        s.remove(s['#cello'])
+        s.remove(s['#viola'])
         for part in s.parts:
             for sc in [scGMajor, scDMajor]:
-                groups = alpha.analysis.search.findConsecutiveScale(part.flat, sc,
+                groups = alpha.analysis.search.findConsecutiveScale(part.flatten(), sc,
                                                                     degreesRequired=5,
                                                                     comparisonAttribute='name')
                 for group in groups:
                     for n in group['stream'].notesAndRests:
                         n.addLyric('%s^%s' % (sc.getTonic().name,
                                               sc.getScaleDegreeFromPitch(n.pitch)))
-        #s['violin i'].show()
+        # s['violin i'].show()
 
 
+    # def testScalesPy10(self):
+    #     # look through s = corpus.parse('bwv1080/06')
+    #     #part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
+    #     #part = corpus.parse('bwv1080/03').parts[0]
+    #
+    #     #from music21 import corpus, scale, note
+    #     from music21 import analysis
+    #
+    #     scDMelodicMinor = scale.MelodicMinorScale('d4')
+    #     scGMelodicMinor = scale.MelodicMinorScale('g4')
+    #     part = corpus.parse('bwv1080/03').parts[0].measures(46, 53)
+    #
+    #     for sc in [scDMelodicMinor, scGMelodicMinor]:
+    #         groups = alpha.analysis.search.findConsecutiveScale(part.flatten(), sc,
+    #                       degreesRequired=4, comparisonAttribute='name')
+    #         for group in groups:
+    #             for n in group['stream'].notes:
+    #                 n.addLyric('%s^%s' % (sc.getTonic().name.lower(),
+    #                                       sc.getScaleDegreeFromPitch(n.pitch,
+    #                                                                  group['direction'])))
+    #     # part.show()
 
-#     def testScalesPy10(self):
-#         # look through s = corpus.parse('bwv1080/06')
-#         #part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
-#         #part = corpus.parse('bwv1080/03').parts[0]
-#
-#         #from music21 import corpus, scale, note
-#         from music21 import analysis
-#
-#         scDMelodicMinor = scale.MelodicMinorScale('d4')
-#         scGMelodicMinor = scale.MelodicMinorScale('g4')
-#         part = corpus.parse('bwv1080/03').parts[0].measures(46, 53)
-#
-#         for sc in [scDMelodicMinor, scGMelodicMinor]:
-#             groups = alpha.analysis.search.findConsecutiveScale(part.flat, sc,
-#                           degreesRequired=4, comparisonAttribute='name')
-#             for group in groups:
-#                 for n in group['stream'].notes:
-#                     n.addLyric('%s^%s' % (sc.getTonic().name.lower(),
-#                                           sc.getScaleDegreeFromPitch(n.pitch,
-#                                                                      group['direction'])))
-#         #part.show()
-
-
-
-
-
-        # this is applied to all  parts
-#         s = corpus.parse('mozart/k80/movement1').measures(1, 28)
-#         for sc in [scGMajor, scDMajor, scAMajor]:
-#             for part in s.parts:
-#                 post = alpha.analysis.search.findConsecutiveScale(part.flat, sc,
-#                                                                   degreesRequired=5,
-#                                                                   comparisonAttribute='name')
-#                 for g, group in enumerate(post):
-#                     for n in group:
-#                         n.addLyric('%s%s' % (sc.getTonic().name, g + 1))
-#         s.show()
-
-
-
-
-
-
-
-
-
-
+    # # this is applied to all  parts
+    #     s = corpus.parse('mozart/k80/movement1').measures(1, 28)
+    #     for sc in [scGMajor, scDMajor, scAMajor]:
+    #         for part in s.parts:
+    #             post = alpha.analysis.search.findConsecutiveScale(part.flatten(), sc,
+    #                                                               degreesRequired=5,
+    #                                                               comparisonAttribute='name')
+    #             for g, group in enumerate(post):
+    #                 for n in group:
+    #                     n.addLyric('%s%s' % (sc.getTonic().name, g + 1))
+    #     s.show()
 
 
     def testEx01(self):
@@ -622,97 +591,86 @@ class Test(unittest.TestCase):
         sc1 = scale.MajorScale('a-')
 
         # get pitches from any range of this scale
-        #print(sc1.getPitches('g2', 'c4'))
+        # print(sc1.getPitches('g2', 'c4'))
         self.assertEqual(', '.join([p.nameWithOctave for p in sc1.getPitches('g2', 'c4')]),
-        'G2, A-2, B-2, C3, D-3, E-3, F3, G3, A-3, B-3, C4')
+                         'G2, A-2, B-2, C3, D-3, E-3, F3, G3, A-3, B-3, C4')
 
         # get a scale degree from a pitch
-        #print(sc1.getScaleDegreeFromPitch('b-'))
+        # print(sc1.getScaleDegreeFromPitch('b-'))
         self.assertEqual(sc1.getScaleDegreeFromPitch('b-'), 2)
 
         # what is the scale degree of the pitch in relative minor
-        #print(str(sc1.getRelativeMinor().getScaleDegreeFromPitch('b-')))
+        # print(str(sc1.getRelativeMinor().getScaleDegreeFromPitch('b-')))
         self.assertEqual(sc1.getRelativeMinor().getScaleDegreeFromPitch('b-'), 4)
 
         # given a pitch in this scale, what is the next pitch
-        #print(sc1.next('g2', 'ascending'))
-        self.assertEqual(str(sc1.next('g2', 'ascending')), 'A-2')
+        # print(sc1.nextPitch('g2', scale.Direction.ASCENDING))
+        self.assertEqual(str(sc1.nextPitch('g2', scale.Direction.ASCENDING)), 'A-2')
 
         # descending three scale steps
-        #print(sc1.next('g2', 'descending', 3))
-        self.assertEqual(str(sc1.next('g2', 'descending', 3)), 'D-2')
-
+        # print(sc1.nextPitch('g2', scale.Direction.DESCENDING, 3))
+        self.assertEqual(str(sc1.nextPitch('g2', scale.Direction.DESCENDING, 3)), 'D-2')
 
         # derive a new major scale based on a pitch for a scale degree
-        #print(sc1.deriveByDegree(7, 'f#4').pitches)
+        # print(sc1.deriveByDegree(7, 'f#4').pitches)
         self.assertEqual(common.pitchList(sc1.deriveByDegree(7, 'f#4').pitches),
-            '[G3, A3, B3, C4, D4, E4, F#4, G4]')
-
+                         '[G3, A3, B3, C4, D4, E4, F#4, G4]')
 
         # a whole tone scale
         sc2 = scale.WholeToneScale('f#')
 
         # get pitches from any range of this scale
-        #print str(sc2.getPitches('g2', 'c4'))
+        # print str(sc2.getPitches('g2', 'c4'))
         self.assertEqual(common.pitchList(sc2.getPitches('g2', 'c4')),
-        '[A-2, B-2, C3, D3, F-3, G-3, A-3, B-3, C4]')
+                         '[A-2, B-2, C3, D3, F-3, G-3, A-3, B-3, C4]')
 
-            # get a scale degree from a pitch
-        #print(str(sc2.getScaleDegreeFromPitch('e')))
+        # get a scale degree from a pitch
+        # print(str(sc2.getScaleDegreeFromPitch('e')))
         self.assertEqual(sc2.getScaleDegreeFromPitch('e'), 6)
 
         # given a pitch in this scale, what is the next pitch
-        #print(sc2.next('d4', 'ascending'))
-        self.assertEqual(str(sc2.next('d4', 'ascending')), 'E4')
-
+        # print(sc2.nextPitch('d4', scale.Direction.ASCENDING))
+        self.assertEqual(str(sc2.nextPitch('d4', scale.Direction.ASCENDING)), 'E4')
 
         # transpose the scale
-        #print(sc2.transpose('m2').pitches)
+        # print(sc2.transpose('m2').pitches)
         self.assertEqual(common.pitchList(sc2.transpose('m2').pitches),
-                        '[G4, A4, B4, C#5, D#5, E#5, G5]')
+                         '[G4, A4, B4, C#5, D#5, E#5, G5]')
 
         # get as a chord and get its forte class
         self.assertEqual(sc2.transpose('m2').chord.forteClass, '6-35')
 
-
-
-
-
-
-#     def testEx02(self):
-#         # Labeling a vocal part based on scale degrees derived
-#         # from key signature and from a specified target key.
-#
-#         s = corpus.parse('hwv56/movement3-03.md')#.measures(1, 7)
-#         basso = s.parts['basso']
-#         s.remove(basso)
-#
-#         ksScale = s.flat.getElementsByClass('KeySignature')[0].getScale()
-#         targetScale = scale.MajorScale('A')
-#         for n in basso.flat.getElementsByClass('Note'):
-#             # get the scale degree from this pitch
-#             n.addLyric(ksScale.getScaleDegreeFromPitch(n.pitch))
-#             n.addLyric(targetScale.getScaleDegreeFromPitch(n.pitch))
-#
-#         reduction = s.chordify()
-#         for c in reduction.flat.getElementsByClass('Chord'):
-#             c.closedPosition(forceOctave=4, inPlace=True)
-#             c.removeRedundantPitches(inPlace=True)
-#
-#
-#         display = stream.Score()
-#         display.insert(0, basso)
-#         display.insert(0, reduction)
-#         #display.show()
-
-
+    # def testEx02(self):
+    #     # Labeling a vocal part based on scale degrees derived
+    #     # from key signature and from a specified target key.
+    #
+    #     s = corpus.parse('hwv56/movement3-03.md')#.measures(1, 7)
+    #     basso = s.parts['basso']
+    #     s.remove(basso)
+    #
+    #     ksScale = s.flat.getElementsByClass('KeySignature')[0].getScale()
+    #     targetScale = scale.MajorScale('A')
+    #     for n in basso.flat.getElementsByClass('Note'):
+    #         # get the scale degree from this pitch
+    #         n.addLyric(ksScale.getScaleDegreeFromPitch(n.pitch))
+    #         n.addLyric(targetScale.getScaleDegreeFromPitch(n.pitch))
+    #
+    #     reduction = s.chordify()
+    #     for c in reduction.flat.getElementsByClass('Chord'):
+    #         c.closedPosition(forceOctave=4, inPlace=True)
+    #         c.removeRedundantPitches(inPlace=True)
+    #
+    #
+    #     display = stream.Score()
+    #     display.insert(0, basso)
+    #     display.insert(0, reduction)
+    #     # display.show()
 
 
     def testEx03(self):
-
         # What is the most common closing soprano scale degree by key signature
-        #s in the bach chorales?
-        #from music21 import graph
+        # s in the bach chorales?
+        # from music21 import graph
 
         results = {}
 
@@ -729,20 +687,19 @@ class Test(unittest.TestCase):
             stopCount -= 1
             if stopCount == 0:
                 break
-        #print(results)
+        # print(results)
 
         # Results for all Bach chorales
-        #{1: 307, 2: 3, 3: 11, 4: 31, 5: 34, 6: 5, 7: 2, None: 3}
+        # {1: 307, 2: 3, 3: 11, 4: 31, 5: 34, 6: 5, 7: 2, None: 3}
 
-        #g = graph.GraphHistogram()
-        #g.data = [(x, y) for x, y in sorted(results.items())]
-        #g.process()
+        # g = graph.GraphHistogram()
+        # g.data = [(x, y) for x, y in sorted(results.items())]
+        # g.process()
 
     def xtestEx04(self):
         # what
 
         scSrc = scale.MajorScale()
-
         niederlande = corpus.search('niederlande', field='locale')
 
         results = {}
@@ -767,38 +724,32 @@ class Test(unittest.TestCase):
                             results[degree] = 0
                         results[degree] += 1
 
-        print ('Of %s works, ' % workCount
-               + 'the following major scale degrees are not used the following number of times:')
-        print (results)
+        print('Of %s works, ' % workCount
+              + 'the following major scale degrees are not used the following number of times:')
+        print(results)
 
         # Of 104 works, the following major scale degrees are not
         # used the following number of times:
         # {4: 5, 5: 1, 6: 6, 7: 6}
 
 
-
 if __name__ == "__main__":
     import music21
     import sys
-    #sys.argv.append('hi')
+    # sys.argv.append('hi')
 
-    if len(sys.argv) == 1: # normal conditions
+    if len(sys.argv) == 1:  # normal conditions
         music21.mainTest(Test)
 
     elif len(sys.argv) > 1:
         t = Test()
-        #t.testEx02()
-        #t.testEx03()
-        #t.testEx04()
+        # t.testEx02()
+        # t.testEx03()
+        # t.testEx04()
 
         t.testStreams01()
-        #t.testStreams02()
+        # t.testStreams02()
 
-        #t.testScales01()
-        #t.testScalesPy06()
-
-
-#------------------------------------------------------------------------------
-# eof
-
+        # t.testScales01()
+        # t.testScalesPy06()
 

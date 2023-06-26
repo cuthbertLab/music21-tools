@@ -65,7 +65,7 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
 
     for i in range(len(pageMeasureNumbers) - 1):
         pages.append(scorePart.measures(pageMeasureNumbers[i],
-                                        pageMeasureNumbers[i + 1]).flat.notes.stream())
+                                        pageMeasureNumbers[i + 1]).flatten().notes.stream())
     #divide into 24 note groups, overlapping by 16 notes each...
 
     allStreams = []

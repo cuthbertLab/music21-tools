@@ -75,7 +75,7 @@ class Test(unittest.TestCase):
             elif part in ['Test', 'TestExternal']:
                 continue
             elif callable(part):
-                #environLocal.printDebug(['testing copying on', part])
+                # environLocal.printDebug(['testing copying on', part])
                 obj = getattr(self.__module__, part)()
                 a = copy.copy(obj)
                 b = copy.deepcopy(obj)
@@ -113,6 +113,6 @@ if __name__ == "__main__":
     import music21
     music21.mainTest(Test, 'importPlusRelative')
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 

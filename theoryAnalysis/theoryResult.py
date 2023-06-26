@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Name:         theoryResult.py
 # Purpose:      Result objects to store information gathered about a score
 #
 # Authors:      Lars Johnson and Beth Hadley
 #
-# Copyright:    (c) 2009-2012 The music21 Project
-# License:      LGPL or BSD, see license.txt
-#-------------------------------------------------------------------------------
+# Copyright:    Copyright © 2009-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
+# ------------------------------------------------------------------------------
 
 import unittest
 

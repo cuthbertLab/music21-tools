@@ -84,5 +84,5 @@ def lowerLines():
 
 if __name__ == '__main__':
     row = converter.parse('tinynotation: 2/2 d8 e f e- f# a a- g d- c')
-    rowNotes = row.flat.notes.stream()
+    rowNotes = row.flatten().notes.stream()
     lowerLines()

@@ -3,10 +3,10 @@
 # Name:         trecento/cadencebook.py
 # Purpose:      classes for reading in trecento cadences from a MS Excel spreadsheet
 #
-# Authors:      Michael Scott Cuthbert
+# Authors:      Michael Scott Asato Cuthbert
 #
-# Copyright:    Copyright © 2009, 2012 Michael Scott Cuthbert and the music21 Project
-# License:      LGPL or BSD, see license.txt
+# Copyright:    Copyright © 2009-12 Michael Scott Asato Cuthbert
+# License:      BSD, see license.txt
 # -------------------------------------------------------------------------------
 '''
 The file trecento/cadences.xls contains (in a modified TinyNotation format) incipits
@@ -442,7 +442,7 @@ class TrecentoCadenceWork:
 
         Changes made to a snippet are reflected in the asScore() score object:
 
-        >>> deduto.snippets[0].parts[0].flat.notes[0].name = "C###"
+        >>> deduto.snippets[0].parts[0].flatten().notes[0].name = "C###"
         >>> deduto.asScore().parts[0].flat.notes[0].name
         'C###'
         '''
@@ -872,6 +872,6 @@ if __name__ == "__main__":
     music21.mainTest(Test, 'importPlusRelative') #, TestExternal)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # eof
 
