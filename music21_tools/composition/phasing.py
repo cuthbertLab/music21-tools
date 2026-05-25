@@ -40,8 +40,8 @@ def pitchedPhase(cycles=None, show=False):
 
     '''
 
-    sSrc = converter.parse("""tinynotation: 12/16 E16 F# B c# d F# E c# B F# d c#
-                              E16 F# B c# d F# E c# B F# d c#""", makeNotation=False)
+    sSrc = converter.parse('''tinynotation: 12/16 E16 F# B c# d F# E c# B F# d c#
+                              E16 F# B c# d F# E c# B F# d c#''', makeNotation=False)
     sPost = stream.Score()
     sPost.title = 'phasing experiment'
     sPost.insert(0, stream.Part())
@@ -188,7 +188,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 # define presented order in documentation
 _DOC_ORDER = [pitchedPhase]
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) == 1:  # normal conditions
         import music21
         music21.mainTest(TestExternal)

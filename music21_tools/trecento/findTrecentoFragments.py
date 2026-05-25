@@ -48,7 +48,7 @@ class IntervalSearcher:
             else:
                 for colorNote in range(i, i + self.intervalLength):
                     # does not exactly work because of rests, oh well
-                    cmpStream.notesAndRests[colorNote].style.color = "blue"
+                    cmpStream.notesAndRests[colorNote].style.color = 'blue'
                 return True
         return False
 
@@ -74,7 +74,7 @@ class NoteSearcher:
                     break
             else:  # success!
                 for colorNote in range(i, self.noteLength):
-                    sN[colorNote].style.color = "blue"
+                    sN[colorNote].style.color = 'blue'
                 return True
         return False
 
@@ -90,7 +90,7 @@ def searchForNotes(notesStr):
     noteObjArr = []
     for tN in notesArr:
         tNName = tN[0]
-        if tNName.lower() != "r":
+        if tNName.lower() != 'r':
             tNObj = note.Note()
             tNObj.name = tN[0]
             tNObj.octave = int(tN[1])
@@ -112,19 +112,19 @@ def searchForNotes(notesStr):
 
 def colorFound(searcher1, thisCadence, streamOpus, thisWork, i):
     if searcher1.compareToStream(thisCadence.parts[i].flatten()) is True:
-        notesStr = ""
+        notesStr = ''
         for thisNote in thisCadence.parts[i].flatten().notesAndRests:
             # thisNote.style.color = "blue"
             if thisNote.isRest is False:
-                notesStr += thisNote.nameWithOctave + " "
+                notesStr += thisNote.nameWithOctave + ' '
             else:
-                notesStr += "r "
+                notesStr += 'r '
         streamOpus.insert(0, thisCadence)
         # streamLily += ("\\score {" +
         #         "<< \\time " + str(thisCadence.timeSig) +
         #         "\n \\new Staff {" + str(thisCadence.parts[i].lily) + "} >>" +
         #         thisCadence.header() + "\n}\n")
-        print("In piece %r found in stream %d: %s" % (thisWork.title, i, notesStr))
+        print('In piece %r found in stream %d: %s' % (thisWork.title, i, notesStr))
 
 def searchForIntervals(notesStr):
     '''
@@ -163,14 +163,14 @@ def searchForIntervals(notesStr):
         streamOpus.show('lily.png')
 
 def findRandomVerona():
-    searchForNotes("A4 F4 G4 E4 F4 G4")  # p. 4 cadence 1
-    searchForNotes("F4 G4 A4 G4 A4 F4 G4 A4")  # p. 4 incipit 2
+    searchForNotes('A4 F4 G4 E4 F4 G4')  # p. 4 cadence 1
+    searchForNotes('F4 G4 A4 G4 A4 F4 G4 A4')  # p. 4 incipit 2
 
 def findCasanatense522():
-    searchForIntervals("D4 E4 D4 C4 D4 E4 F4")
+    searchForIntervals('D4 E4 D4 C4 D4 E4 F4')
 
 def findRavi3ORegina():
-    searchForNotes("G16 G16 F8 E16")  # should be cadence A, cantus
+    searchForNotes('G16 G16 F8 E16')  # should be cadence A, cantus
 
 
 def searchForVat1969():
@@ -230,7 +230,7 @@ def audioVirelaiSearch():
     virelaiCantuses = []
     for i in range(2, 54):
         thisVirelai = virelaisSheet.makeWork(i)
-        if thisVirelai.title != "":
+        if thisVirelai.title != '':
             try:
                 vc = thisVirelai.incipit.getElementsByClass('Part')[0]
                 vc.insert(0, metadata.Metadata(title=thisVirelai.title))
@@ -263,7 +263,7 @@ def savedSearches():
     # searchForNotes("G3 D3 R D3 D3 E3 F3")  # Donna si to fallito TEST - last note = F#
     # searchForIntervals("F3 C3 C3 F3 G3")  # Bologna Archivio: Per seguirla TEST
     # searchForNotes("F3 E3 F3 G3 F3 E3")  # Mons archive fragment -- see FB Aetas Aurea post
-    searchForNotes("F4 G4 F4 B4 G4 A4 G4 F4 E4")  # or B-4.  Paris 25406 --
+    searchForNotes('F4 G4 F4 B4 G4 A4 G4 F4 E4')  # or B-4.  Paris 25406 --
     #   Dominique Gatte pen tests
 
     # searchForNotes("D4 D4 C4 D4")  # Fortuna Rira Seville 25 TEST! CANNOT FIND
@@ -287,7 +287,7 @@ def savedSearches():
     # -- possible contrafact -- no matches
     # searchForIntervals("F4 A4 F4 G4 F4 G4 A4") # Duke white notation manuscript
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     savedSearches()
     # audioVirelaiSearch()
 

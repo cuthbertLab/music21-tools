@@ -26,7 +26,7 @@ def countTimeSig():
     for trecentoWork in ballataObj:
         thisTime = trecentoWork.timeSigBegin
         thisTime = thisTime.strip() # remove leading and trailing whitespace
-        if (thisTime == ""):
+        if (thisTime == ''):
             pass
         else:
             totalPieces += 1
@@ -36,8 +36,8 @@ def countTimeSig():
                 timeSigCounter[thisTime] = 1
 
     for thisKey in sorted(timeSigCounter):
-        print(thisKey, ":", timeSigCounter[thisKey],
-              str(int(timeSigCounter[thisKey] * 100 / totalPieces)) + "%")
+        print(thisKey, ':', timeSigCounter[thisKey],
+              str(int(timeSigCounter[thisKey] * 100 / totalPieces)) + '%')
 
 def sortByPMFC(work):
     '''
@@ -120,7 +120,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
             if randomPiece.incipit:
                 retrievedPieces.append(randomPiece)
         except:
-            raise Exception("Ugg " + str(i))
+            raise Exception('Ugg ' + str(i))
 
 #    lilyString = ""
 #    retrievedPieces.sort(key=sortByPMFC)
@@ -163,7 +163,7 @@ def checkValidity():
         try:
             unused_incipitStreams = randomPiece.incipitStreams()
         except music21.tinyNotation.TinyNotationException as inst:
-            raise Exception(randomPiece.title + " had problem " + inst.args)
+            raise Exception(randomPiece.title + ' had problem ' + inst.args)
 
 
 # temporarily commenting out for adding standard test approach
@@ -181,7 +181,7 @@ class Test(unittest.TestCase):
     def testA(self):
         self.assertEqual(5, 5) ## something really wrong!??
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     #makePDFfromPiecesWithCapua()
     import music21
     music21.mainTest(Test, 'moduleRelative')

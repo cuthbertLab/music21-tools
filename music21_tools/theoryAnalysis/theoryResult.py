@@ -26,9 +26,9 @@ class TheoryResult:
     'currentColor': 'The color of the entire theory result object',
     }
     def __init__(self):
-        self.text = ""
-        self.value = ""
-        self.currentColor = ""
+        self.text = ''
+        self.value = ''
+        self.currentColor = ''
 
     def color(self,color):
         '''
@@ -294,7 +294,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative')
 

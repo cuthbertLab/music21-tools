@@ -48,13 +48,13 @@ class TrecentoSheet:
     Kyrie rondello
     '''
 
-    filename = "cadences.xls"
-    sheetname = "fischer_caccia"
+    filename = 'cadences.xls'
+    sheetname = 'fischer_caccia'
 
     def __init__(self, **keywords):
         self.iterIndex = 2
-        if "filename" in keywords:
-            self.filename = keywords["filename"]
+        if 'filename' in keywords:
+            self.filename = keywords['filename']
         if self.filename:
             try:
                 xbook = xlrd.open_workbook(str(self.filename))
@@ -62,8 +62,8 @@ class TrecentoSheet:
                 xbook = xlrd.open_workbook(os.path.join(_THIS_DIR, self.filename))
 
 
-            if "sheetname" in keywords:
-                self.sheetname = keywords["sheetname"]
+            if 'sheetname' in keywords:
+                self.sheetname = keywords['sheetname']
 
             self.sheet = xbook.sheet_by_name(self.sheetname)
             self.totalRows = self.sheet.nrows
@@ -171,7 +171,7 @@ class CacciaSheet(TrecentoSheet):
     >>> cacciaSheet = CacciaSheet()
     '''
 
-    sheetname = "fischer_caccia"
+    sheetname = 'fischer_caccia'
 
 class MadrigalSheet(TrecentoSheet):
     '''
@@ -183,7 +183,7 @@ class MadrigalSheet(TrecentoSheet):
 
     '''
 
-    sheetname = "fischer_madr"
+    sheetname = 'fischer_madr'
 
 class BallataSheet(TrecentoSheet):
     '''
@@ -194,14 +194,14 @@ class BallataSheet(TrecentoSheet):
 
     '''
 
-    sheetname = "fischer_ballata"
+    sheetname = 'fischer_ballata'
 
     def makeWork(self, rownumber=1):
         rowvalues = self.sheet.row_values(rownumber - 1)
         return Ballata(rowvalues, self.rowDescriptions)
 
 class KyrieSheet(TrecentoSheet):
-    sheetname = "kyrie"
+    sheetname = 'kyrie'
 
 
 class GloriaSheet(TrecentoSheet):
@@ -252,18 +252,18 @@ class GloriaSheet(TrecentoSheet):
 
     '''
 
-    sheetname = "gloria"
+    sheetname = 'gloria'
 
     def makeWork(self, rownumber=1):
         rowvalues = self.sheet.row_values(rownumber - 1)
         return Gloria(rowvalues, self.rowDescriptions)
 
 class CredoSheet(TrecentoSheet):
-    sheetname = "credo"
+    sheetname = 'credo'
 class SanctusSheet(TrecentoSheet):
-    sheetname = "sanctus"
+    sheetname = 'sanctus'
 class AgnusDeiSheet(TrecentoSheet):
-    sheetname = "agnus"
+    sheetname = 'agnus'
 
 class TrecentoCadenceWork:
     '''
@@ -306,12 +306,12 @@ class TrecentoCadenceWork:
 
     def __init__(self, rowvalues=None, rowDescriptions=None):
         if rowvalues is None:
-            rowvalues = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
+            rowvalues = ['', '', '', '', '', '', '', '', '', '', '', '', '']
         if rowDescriptions is None:
-            rowDescriptions = ["Catalog Number", "Title", "Composer", "EncodedVoices",
-                               "PMFC/CMM Vol.", "PMFC Page Start", "PMFC Page End",
-                               "Time Signature Beginning", "Incipit C", "Incipit T",
-                               "Incipit Ct", "Incipit Type", "Notes"]
+            rowDescriptions = ['Catalog Number', 'Title', 'Composer', 'EncodedVoices',
+                               'PMFC/CMM Vol.', 'PMFC Page Start', 'PMFC Page End',
+                               'Time Signature Beginning', 'Incipit C', 'Incipit T',
+                               'Incipit Ct', 'Incipit Type', 'Notes']
         self.rowvalues = rowvalues
         self.rowDescriptions = rowDescriptions
         self.fischerNum = rowvalues[0]
@@ -348,7 +348,7 @@ class TrecentoCadenceWork:
         else:
             self.totalPmfcPage = None
 
-        if self.composer == ".":
+        if self.composer == '.':
             self.isAnonymous = True
         else:
             self.isAnonymous = False
@@ -393,7 +393,7 @@ class TrecentoCadenceWork:
 
             for partNumber, snippetPart in enumerate(
                         thisSnippet.getElementsByClass('TrecentoCadenceStream')):
-                if thisSnippet.snippetName != "" and partNumber == self.totalVoices - 1:
+                if thisSnippet.snippetName != '' and partNumber == self.totalVoices - 1:
                     textEx = expressions.TextExpression(thisSnippet.snippetName)
                     textEx.style.absoluteY = 'below'
                     if 'FrontPaddedSnippet' in thisSnippet.classes:
@@ -458,7 +458,7 @@ class TrecentoCadenceWork:
                     thisSnippet.contratenor is None):
                 continue
             for partNumber, snippetPart in enumerate(thisSnippet.getElementsByClass('Stream')):
-                if thisSnippet.snippetName != "" and partNumber == self.totalVoices - 1:
+                if thisSnippet.snippetName != '' and partNumber == self.totalVoices - 1:
                     textEx = expressions.TextExpression(thisSnippet.snippetName)
                     textEx.style.absoluteY = 'below'
                     if 'FrontPaddedSnippet' in thisSnippet.classes:
@@ -505,7 +505,7 @@ class TrecentoCadenceWork:
         '''
         rowBlock = self.rowvalues[8:12]
         rowBlock.append(self.rowvalues[7])
-        if rowBlock[0] == "" or self.timeSigBegin == "":
+        if rowBlock[0] == '' or self.timeSigBegin == '':
             return None
         else:
             blockOut = self.convertBlockToStreams(rowBlock)
@@ -535,14 +535,14 @@ class TrecentoCadenceWork:
         for i in beginSnippetPositions:
             if i == beginSnippetPositions[0]:
                 continue
-            thisSnippet = self.getSnippetAtPosition(i, snippetType="begin")
+            thisSnippet = self.getSnippetAtPosition(i, snippetType='begin')
             if thisSnippet is not None:
                 thisSnippet.snippetName = self.rowDescriptions[i]
                 thisSnippet.snippetName = re.sub(r'cad\b', 'cadence', thisSnippet.snippetName)
                 thisSnippet.snippetName = re.sub(r'\s*C$', '', thisSnippet.snippetName)
                 returnSnips.append(thisSnippet)
         for i in endSnippetPositions:
-            thisSnippet = self.getSnippetAtPosition(i, snippetType="end")
+            thisSnippet = self.getSnippetAtPosition(i, snippetType='end')
             if thisSnippet is not None:
                 thisSnippet.snippetName = self.rowDescriptions[i]
                 thisSnippet.snippetName = re.sub('cad ', 'cadence ', thisSnippet.snippetName)
@@ -550,7 +550,7 @@ class TrecentoCadenceWork:
                 returnSnips.append(thisSnippet)
         return returnSnips
 
-    def getSnippetAtPosition(self, snippetPosition, snippetType="end"):
+    def getSnippetAtPosition(self, snippetPosition, snippetType='end'):
         '''
         gets a "snippet" which is a collection of up to 3 lines of music, a timeSignature
         and a description of the cadence.
@@ -562,10 +562,10 @@ class TrecentoCadenceWork:
         <trecento.polyphonicSnippet.FrontPaddedSnippet ...>
         '''
 
-        if self.rowvalues[snippetPosition].strip() != "":
+        if self.rowvalues[snippetPosition].strip() != '':
             thisBlock = self.rowvalues[snippetPosition:snippetPosition + 5]
-            if thisBlock[4].strip() == "":
-                if self.timeSigBegin == "":
+            if thisBlock[4].strip() == '':
+                if self.timeSigBegin == '':
                     return None  # need a timesig
                 thisBlock[4] = self.timeSigBegin
             blockOut = self.convertBlockToStreams(thisBlock)
@@ -615,10 +615,10 @@ class TrecentoCadenceWork:
             thisVoice = thisVoice.strip()
             if thisVoice:
                 try:
-                    returnBlock[i] = trecentoCadence.CadenceConverter(currentTimeSig + " " +
+                    returnBlock[i] = trecentoCadence.CadenceConverter(currentTimeSig + ' ' +
                                                                       thisVoice).parse().stream
                 except duration.DurationException as value:
-                    raise duration.DurationException("Problems in line %s: specifically %s" %
+                    raise duration.DurationException('Problems in line %s: specifically %s' %
                                                      (thisVoice,  value))
 #                except Exception, (value):
 #                    raise Exception("Unknown Problems in line %s: specifically %s" %
@@ -646,7 +646,7 @@ class TrecentoCadenceWork:
         except IndexError:
             return None
         if fc is not None:
-            fc.snippetName = "A section cadence"
+            fc.snippetName = 'A section cadence'
         return fc
 
     @property
@@ -660,7 +660,7 @@ class TrecentoCadenceWork:
         except IndexError:
             return None
         if fc is not None:
-            fc.snippetName = "B section cadence (1st or only ending)"
+            fc.snippetName = 'B section cadence (1st or only ending)'
         return fc
 
     @property
@@ -673,7 +673,7 @@ class TrecentoCadenceWork:
         except IndexError:
             return None
         if fc is not None:
-            fc.snippetName = "B section cadence (2nd ending)"
+            fc.snippetName = 'B section cadence (2nd ending)'
         return fc
 
     def getAllStreams(self):
@@ -713,9 +713,9 @@ class TrecentoCadenceWork:
         '''
 
         if self.pmfcPageStart != self.pmfcPageEnd:
-            return str("pp. " + str(self.pmfcPageStart) + "-" + str(self.pmfcPageEnd))
+            return str('pp. ' + str(self.pmfcPageStart) + '-' + str(self.pmfcPageEnd))
         else:
-            return str("p. " + str(self.pmfcPageStart))
+            return str('p. ' + str(self.pmfcPageStart))
 
 
 class Ballata(TrecentoCadenceWork):
@@ -812,7 +812,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         '''
         virelaisSheet = TrecentoSheet(sheetname='virelais')
         thisVirelai = virelaisSheet.makeWork(54)
-        if thisVirelai.title != "":
+        if thisVirelai.title != '':
             print(thisVirelai.title)
             thisVirelai.incipit.show('musicxml')
 
@@ -822,7 +822,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         '''
         rondeauxSheet = TrecentoSheet(sheetname='rondeaux')
         thisRondeaux = rondeauxSheet.makeWork(41)
-        if thisRondeaux.title != "":
+        if thisRondeaux.title != '':
             print(thisRondeaux.title)
             thisRondeaux.incipit.show('musicxml')
 
@@ -832,7 +832,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         '''
         gloriaS = GloriaSheet()
         thisGloria = gloriaS.makeWork(20)
-        if thisGloria.title != "":
+        if thisGloria.title != '':
             thisGloria.asScore().show()
 
     def xtestAsScore(self):
@@ -845,7 +845,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative')  # , TestExternal)
 

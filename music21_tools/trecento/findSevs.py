@@ -46,7 +46,7 @@ def findInWork(work, searchInterval=7):
                     # interval.note2.style.color = "blue"
     return containsInterval
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     find(2, 459, )
 
 # -----------------------------------------------------------------------------

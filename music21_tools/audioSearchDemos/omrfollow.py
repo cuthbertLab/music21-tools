@@ -16,7 +16,7 @@ from music21 import search
 from music21 import stream
 
 from music21 import environment
-_MOD = "audioSearch.omrfollow"
+_MOD = 'audioSearch.omrfollow'
 environLocal = environment.Environment(_MOD)
 
 # given an iterable of pairs return the key corresponding to the greatest value
@@ -74,7 +74,7 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
         for i in range(0, totalNotes, 8):
             startNote = thisPage[i]
             startMeasure = startNote.measureNumber
-            print("  " + str(startMeasure))
+            print('  ' + str(startMeasure))
             newStream = stream.Stream(thisPage[i:i + 24])
             newStream.pageNumber = pgMinus1 + 1
             newStream.startMeasure = startMeasure
@@ -82,7 +82,7 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
 
     for loopy in range(iterations):
         if loopy > 0:
-            print("\n\nstarting again in 3 seconds")
+            print('\n\nstarting again in 3 seconds')
             time.sleep(3)
         searchScore = audioSearch.transcriber.runTranscribe(show=False, plot=False,
                                                             seconds=15.0, saveFile=False)
@@ -94,21 +94,21 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
             scorePage = topStream.pageNumber - 1
             scores[scorePage] += (topStream.matchProbability / (i + 1.5))*10
 
-        print("\nBest guesses (pg#, starting measure, probability)")
+        print('\nBest guesses (pg#, starting measure, probability)')
         for i,st in enumerate(l):
             print(st.pageNumber, st.startMeasure, st.matchProbability)
             if i >= 7:
                 break
 
-        print("\nWeighed top scores (pg#, score):")
+        print('\nWeighed top scores (pg#, score):')
 
         indexOfMaxScore = argmax_index(scores)
         for i in range(len(pages)):
-            print( (i + 1, scores[i]), end="")
+            print( (i + 1, scores[i]), end='')
             if i == indexOfMaxScore:
-                print(" **** ")
+                print(' **** ')
             else:
-                print("")
+                print('')
 
 if __name__ == '__main__':
     recognizeLuca()

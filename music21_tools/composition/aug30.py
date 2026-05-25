@@ -93,9 +93,9 @@ def nextOrPreviousType(baseDuration):
 
 def addPart(minLength=80, maxProbability=0.7, instrument=None):
     s1 = rhythmLine(minLength=minLength, maxProbability=maxProbability)
-    ts1 = meter.TimeSignature("4/4")
+    ts1 = meter.TimeSignature('4/4')
     s1.insert(0, ts1)
-    s1.insert(0, tempo.MetronomeMark(number=180, text="very fast"))
+    s1.insert(0, tempo.MetronomeMark(number=180, text='very fast'))
     if instrument is not None:
         s1.insert(0, instrument)
     s1.makeAccidentals()
@@ -131,7 +131,7 @@ def test():
         sc1.insert(0, part)
     sc1.show()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     test()
 
 # -----------------------------------------------------------------------------

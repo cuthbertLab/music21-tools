@@ -67,11 +67,11 @@ def ch1_basic_I_B(show=True, *arguments, **keywords):
         n2 = note.Note(j)
         i1 = interval.notesToInterval(n1, n2)
         if i1.intervalClass == 1: # by interval class
-            unused_mark = "H"
+            unused_mark = 'H'
         elif i1.intervalClass == 2:
-            unused_mark = "W"
+            unused_mark = 'W'
         else:
-            unused_mark = "N"
+            unused_mark = 'N'
 
 # no keyboard diagram yet!
 #         k1 = keyboard.Diagram()
@@ -365,7 +365,7 @@ def ch1_writing_I_B_1(show=True, *arguments, **keywords):
     Transcribe these melodies into the clef specified without changing octaves.
     '''
     # camptown races
-    ex = converter.parse("tinynotation: 2/4 g8 g e g", makeNotation=False)
+    ex = converter.parse('tinynotation: 2/4 g8 g e g', makeNotation=False)
     ex.insert(0, clef.AltoClef()) # maintain clef
     if show:
         ex.show()
@@ -943,7 +943,7 @@ def ch2_writing_III_B_1(show=True, *arguments, **keywords):
 
     Renotate the following rhythms without ties.
     '''
-    ex = converter.parse("tinynotation: 3/8 c8~ c16 c16 c16 c16 c8~ c8 c c16 c~ c c c8 c4~ c8")
+    ex = converter.parse('tinynotation: 3/8 c8~ c16 c16 c16 c16 c8~ c8 c c16 c~ c c c8 c4~ c8')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -955,7 +955,7 @@ def ch2_writing_III_B_1(show=True, *arguments, **keywords):
 def ch2_writing_III_B_2(show=True, *arguments, **keywords):
     '''p. 17
     '''
-    ex = converter.parse("tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2")
+    ex = converter.parse('tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -967,7 +967,7 @@ def ch2_writing_III_B_2(show=True, *arguments, **keywords):
 def ch2_writing_III_B_3(show=True, *arguments, **keywords):
     '''p. 17
     '''
-    ex = converter.parse("tinynotation: 3/2 c2~ c4 c c~ c8 c c4 c~ c c c2 c2 c2~ c4 c c1~ c2")
+    ex = converter.parse('tinynotation: 3/2 c2~ c4 c c~ c8 c c4 c~ c c c2 c2 c2~ c4 c c1~ c2')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -1838,7 +1838,7 @@ class Test(unittest.TestCase):
 
 
 # ------------------------------------------------------------------------------
-if __name__ == "__main__":
+if __name__ == '__main__':
     #ch2_writing_III_A_1(show=True)
     if len(sys.argv) == 1:
         music21.mainTest(Test)

@@ -1,5 +1,5 @@
 
-__all__ = ["theoryAnalyzer", "theoryResult", "wwnortonMGTA"]
+__all__ = ['theoryAnalyzer', 'theoryResult', 'wwnortonMGTA']
 
 
 # -----------------------------------------------------------------------------

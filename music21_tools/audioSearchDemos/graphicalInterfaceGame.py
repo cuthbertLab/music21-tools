@@ -22,7 +22,7 @@ class SFApp():
         self.master = master
         self.frame = tkinter.Frame(master)
         #self.frame.pack()
-        self.master.wm_title("Repetition game")
+        self.master.wm_title('Repetition game')
 
         self.sizeButton = 11
         self.startScreen()
@@ -32,13 +32,13 @@ class SFApp():
         master = self.master
         self.textRules = tkinter.StringVar()
         self.boxRules = tkinter.Label(master, textvariable=self.textRules)
-        self.textRules.set("Welcome to the music21 game!\n Rules:\n " +
-                           "Two players: the first one plays a note.\n " +
-                           "The second one has to play the first note and a new one.\n " +
-                           "Continue doing the same until one fails.")
+        self.textRules.set('Welcome to the music21 game!\n Rules:\n ' +
+                           'Two players: the first one plays a note.\n ' +
+                           'The second one has to play the first note and a new one.\n ' +
+                           'Continue doing the same until one fails.')
         self.boxRules.grid(row=0, column=0, columnspan=4, rowspan=5, sticky=tkinter.W)
 
-        self.buttonAccept = tkinter.Button(master, text="Accept", width=self.sizeButton,
+        self.buttonAccept = tkinter.Button(master, text='Accept', width=self.sizeButton,
                                            command=self.callback, bg='white')
         self.buttonAccept.grid(row=8, column=1, columnspan=2)
 
@@ -89,7 +89,7 @@ class SFApp():
         self.canvas2.create_oval(1, 1, 40, 40, fill='red')
         self.canvas2.grid(row=1, column=2)
 
-        self.buttonStart = tkinter.Button(master, text="Start Recording", width=self.sizeButton,
+        self.buttonStart = tkinter.Button(master, text='Start Recording', width=self.sizeButton,
                                           command=self.startGame, bg='green')
         self.buttonStart.grid(row=3, column=0, columnspan=3)
 
@@ -153,7 +153,7 @@ class SFApp():
             self.textFinal.set('Another game?')
             self.boxName6.grid(row=4, column=0, columnspan=3)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     root = tkinter.Tk()
     sfapp = SFApp(root)
     root.mainloop()

@@ -32,7 +32,7 @@ from music21 import stream
 from music21 import tie
 from music21 import tinyNotation
 from music21 import environment
-_MOD = "trecento/notation.py"
+_MOD = 'trecento/notation.py'
 environLocal = environment.Environment(_MOD)
 
 from . import medren
@@ -375,7 +375,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
         'quad': tinyNotation.QuadrupletState,
         'lig': LigatureState
     }
-    def __init__(self, stringRep=""):
+    def __init__(self, stringRep=''):
         super().__init__(stringRep)
         self.tokenMap = [
                          (r'(\$[A-Z]\d?)', ClefToken),
@@ -2040,27 +2040,27 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         SePerDureca.append(upper)
         SePerDureca.append(lower)
 
-        upperString = (".p. $C1 g(B) g(M) f e g f e p g(SB) f(SM) e d e(M) f p " +
-                       "e(SB) e(SM) f e d(M) c p d(SB) r e p f(M) e d e d c p " +
-                       "d(SB) c(M) d c d p e(SB) r(M) g f e p g(SB) a(SM) g f e(M) " +
-                       "d p e(SB) f(SM) e d c(M) d e(L) a(SB) a p b(M) a g a g f p g " +
-                       "f e f e f p g(SB) g(SM) a g f e d p e(SB) r(M) f(SM) e d e(M) " +
-                       "p d(SB) r e(M) f p g(SB) d r(SM) e p f e d e d c p d(SB) d(M) " +
+        upperString = ('.p. $C1 g(B) g(M) f e g f e p g(SB) f(SM) e d e(M) f p ' +
+                       'e(SB) e(SM) f e d(M) c p d(SB) r e p f(M) e d e d c p ' +
+                       'd(SB) c(M) d c d p e(SB) r(M) g f e p g(SB) a(SM) g f e(M) ' +
+                       'd p e(SB) f(SM) e d c(M) d e(L) a(SB) a p b(M) a g a g f p g ' +
+                       'f e f e f p g(SB) g(SM) a g f e d p e(SB) r(M) f(SM) e d e(M) ' +
+                       'p d(SB) r e(M) f p g(SB) d r(SM) e p f e d e d c p d(SB) d(M) ' +
                        "e(SB) c(M) p d(SB) c(M) d c B c(L) c'(SB)[D] c' p c'(SM) b a " +
                        "b(M) c' b c' p b(SM) a g a(M) b a b p g(SB) g(SM) a g f e d p " +
-                       "e(SB) r e(M) f p g f e f e f p g(SB) r g(M) f p g(SB) f(SM) e " +
+                       'e(SB) r e(M) f p g f e f e f p g(SB) r g(M) f p g(SB) f(SM) e ' +
                        "d e(M) f e(L) a(M) b a b g(SB) p c'(M) b a c' b a p  b c' b a " +
                        "g a p b(SB) c'(SM) b a g(M) f p a(SB) a(M) g(SB) f(M) p e(SB) r " +
-                       "g(M) f p g f e f e d p c(SB) d r p a g(SM) a g f e d p e(SB) r " +
-                       "f(SM) e d e(SB) d(Mx)")
-        lowerString = (".p. $C3 c(L) G(B) A(SB) B c p d c r p A B c p d c B p " +
-                       "lig{A<o>[DL] G} A c B A(L) A(SB) A p  G A B p c c(M) B(SB) " +
-                       "A(M) p G(SB) G p A B c p d A r p G[D] A p B B(M) c(SB) c(M) " +
-                       "p d(SB) d(M) A(SB) A(M) p G(SB) A B C(L) c(SB)[D] c e(B) d c(SB) " +
-                       "c d p e d r p c c(M) d(SB) d(M) p c(SB) r r p c d c(M) d " +
-                       "e(L) d(SB)[D] e p c[D] d p e e(M) d(SB) c(M) p B(SB) A B(M) " +
-                       "c p d(SB) d(M) c(SB) d(M) p e(SB) d r p c c c(M) A(SB) B(M) p " +
-                       "c(SB) B B p A B[D] p A B c d(Mx)")
+                       'g(M) f p g f e f e d p c(SB) d r p a g(SM) a g f e d p e(SB) r ' +
+                       'f(SM) e d e(SB) d(Mx)')
+        lowerString = ('.p. $C3 c(L) G(B) A(SB) B c p d c r p A B c p d c B p ' +
+                       'lig{A<o>[DL] G} A c B A(L) A(SB) A p  G A B p c c(M) B(SB) ' +
+                       'A(M) p G(SB) G p A B c p d A r p G[D] A p B B(M) c(SB) c(M) ' +
+                       'p d(SB) d(M) A(SB) A(M) p G(SB) A B C(L) c(SB)[D] c e(B) d c(SB) ' +
+                       'c d p e d r p c c(M) d(SB) d(M) p c(SB) r r p c d c(M) d ' +
+                       'e(L) d(SB)[D] e p c[D] d p e e(M) d(SB) c(M) p B(SB) A B(M) ' +
+                       'c p d(SB) d(M) c(SB) d(M) p e(SB) d r p c c c(M) A(SB) B(M) p ' +
+                       'c(SB) B B p A B[D] p A B c d(Mx)')
 
         upperConverted = TrecentoTinyConverter(upperString).parse(
                                     ).stream.flatten().getElementsNotOfClass('Barline')

@@ -80,9 +80,9 @@ class ContourFinder:
         #self.metrics contains a dictionary mapping the name of a metric to a tuple (x,y)
         # where x=metric function and y=needsChordify
 
-        self._metrics = {"dissonance": (self.dissonanceMetric, True),
-                         "spacing": (self.spacingMetric, True),
-                        "tonality": (self.tonalDistanceMetric, False) }
+        self._metrics = {'dissonance': (self.dissonanceMetric, True),
+                         'spacing': (self.spacingMetric, True),
+                        'tonality': (self.tonalDistanceMetric, False) }
         self.isContourFinder = True
 
 
@@ -209,14 +209,14 @@ class ContourFinder:
             if cType in self._contours:
                 if window is not None or slide is not None:
                     raise OverwriteException(
-                        "Attempted to overwrite cached contour of type {0}".format(cType) +
-                        " but did not specify overwrite=True")
+                        'Attempted to overwrite cached contour of type {0}'.format(cType) +
+                        ' but did not specify overwrite=True')
                 else:
                     return self._contours[cType]
             elif cType in self._metrics:
                 if metric is not None:
                     raise OverwriteException("Attempted to overwrite '{0}' ".format(cType) +
-                                             "metric but did not specify overwrite=True")
+                                             'metric but did not specify overwrite=True')
                 else:
                     metric, needsChordify = self._metrics[cType]
             else:
@@ -226,7 +226,7 @@ class ContourFinder:
                 if cType in self._metrics:
                     metric, needsChordify = self._metrics[cType]
                 else:
-                    raise ContourException("Must provide your own metric for type: %s" % cType)
+                    raise ContourException('Must provide your own metric for type: %s' % cType)
 
 
         if slide is None:
@@ -770,7 +770,7 @@ def _runExperiment():
 
     for cType in ['spacing', 'tonality', 'dissonance']:
 
-        print("considering", cType, ": ")
+        print('considering', cType, ': ')
 
         cf = ContourFinder()
         totalSuccesses = 0
@@ -793,10 +793,10 @@ def _runExperiment():
                 #print "GREAT SUCCESS!"
             else:
                 totalFailures += 1
-                print("failure: chorale " + goodChorales[j])  #index ", str(i)
+                print('failure: chorale ' + goodChorales[j])  #index ", str(i)
 
-        print(cType, ": totalSuccesses =", str(totalSuccesses),
-              "totalFailures =", str(totalFailures))
+        print(cType, ': totalSuccesses =', str(totalSuccesses),
+              'totalFailures =', str(totalFailures))
 
 def _plotChoraleContours():
     BCI = corpus.chorales.Iterator(1, 75, returnType='filename')
@@ -821,7 +821,7 @@ class Test(unittest.TestCase):
     def runTest(self):
         pass
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative')
 

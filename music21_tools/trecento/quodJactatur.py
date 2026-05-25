@@ -193,9 +193,9 @@ def getQJ():
     <music21.note.Note C>
     '''
 
-    qj = corpus.parse("ciconia/quod_jactatur")
+    qj = corpus.parse('ciconia/quod_jactatur')
     qjPart = qj.getElementsByClass(stream.Part)[0]
-    qjPart.transpose("P-8", inPlace=True)
+    qjPart.transpose('P-8', inPlace=True)
     qjPart.replace(qjPart.flatten().getElementsByClass(clef.Clef)[0], clef.BassClef())
     cachedParts['1-0-False-False'] = copy.deepcopy(qjPart)
     return qjPart
@@ -256,20 +256,20 @@ def findRetrogradeVoices(show=True):
                 qj.show()
             else:
                 if invert:
-                    invStr = "Invert"
+                    invStr = 'Invert'
                 else:
-                    invStr = "      "
-                print(str(transpose) + " " + invStr + " " + str(finalScore))
+                    invStr = '      '
+                print(str(transpose) + ' ' + invStr + ' ' + str(finalScore))
 
 def prepareSolution(triplumTup, ctTup, tenorTup):
     qjSolved = stream.Score()
 
     for transpose, delay, invert, retro in [triplumTup, ctTup, tenorTup]:
-        idString = "%d-%d-%s-%s" % (transpose, delay, invert, retro)
+        idString = '%d-%d-%s-%s' % (transpose, delay, invert, retro)
         if idString in cachedParts:
             qjPart = copy.deepcopy(cachedParts[idString])
         else:
-            qjPart = copy.deepcopy(cachedParts["1-0-False-False"])
+            qjPart = copy.deepcopy(cachedParts['1-0-False-False'])
             if retro is True:
                 qjPart = reverse(qjPart, makeNotation = False)
             if invert is True:
@@ -466,13 +466,13 @@ def multipleSolve():
                                                                  lowestRetro,
                                                                  avgScore)
                                                     if avgScore > 0:
-                                                        print("")
+                                                        print('')
                                                         if avgScore > maxScore:
                                                             maxScore = avgScore
-                                                            print("***** ", end="")
+                                                            print('***** ', end='')
                                                         print(writeLine)
                                                     else:
-                                                        print(str(i) + " ", end="")
+                                                        print(str(i) + ' ', end='')
                                                     csvFile.writerow(writeLine)
 
 class QuodJactaturException(exceptions21.Music21Exception):
@@ -485,7 +485,7 @@ class Test(unittest.TestCase):
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest('importPlusRelative')
 #    bentWolfSolution()

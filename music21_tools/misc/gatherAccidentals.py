@@ -110,7 +110,7 @@ def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
     '''
     # check for non-streams
     if not score.isStream:
-        raise GatherAccidentalsException("Input score must be a music21.stream.Stream object")
+        raise GatherAccidentalsException('Input score must be a music21.stream.Stream object')
     notes = score.flatten().notes
     tally = _initializeTally()
     for obj in notes:
@@ -152,7 +152,7 @@ def getAccidentalCountSum(scores, includeNonAccidentals=False, excludeZeros=True
     tally = _initializeTally()
     for score in scores:
         if not score.isStream:
-            raise exceptions21.Music21Exception("score must be a stream object")
+            raise exceptions21.Music21Exception('score must be a stream object')
         scoreTally = getAccidentalCount(score, includeNonAccidentals, False)
         # dict.update() won't suffice; list() for Python v3
         for k in list(scoreTally.keys()):
@@ -227,13 +227,13 @@ class Test(unittest.TestCase):
 
     def testGetAccidentalCountIntermediate(self):
         s = stream.Stream()
-        s.append(note.Note("C4"))   # no accidental
-        s.append(note.Note("C#4"))  # sharp
-        s.append(note.Note("D-4"))  # flat
+        s.append(note.Note('C4'))   # no accidental
+        s.append(note.Note('C#4'))  # sharp
+        s.append(note.Note('D-4'))  # flat
         self.assertEqual(getAccidentalCount(s), {'flat': 1, 'sharp': 1})
         self.assertEqual(getAccidentalCount(s, True), {'flat': 1, 'sharp': 1, 'natural': 1})
 
-        note4 = note.Note("C4")
+        note4 = note.Note('C4')
         self.assertIsNone(note4.pitch.accidental)
         note4.pitch.accidental = pitch.Accidental('natural')  # add a natural accidental
         s.append(note4)
@@ -280,7 +280,7 @@ class TestSlow(unittest.TestCase):
                          {'double-sharp': 4, 'flat': 7886, 'natural': 79869, 'sharp': 14940})
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative') # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
 

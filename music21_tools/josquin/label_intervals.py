@@ -11,11 +11,11 @@
 from music21 import converter, interval
 
 def displayIntervals(file):
-    """
+    '''
     displayIntervals reads a music file and then displays it with an enumeration
     of the intervals above the lowest notes in the score at each sonority
     (after chordification).
-    """
+    '''
     sJosquinPiece = converter.parse(file)
     #dissonant_intervals = ['m2', 'M2', 'M7', 'd5', 'm7', 'A4', 'P4']
     rJosquinPiece = sJosquinPiece.chordify()
@@ -37,17 +37,17 @@ def displayIntervals(file):
 
 #####################################################################################
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import os
     import sys
 
-    basedir = "" # "/Users/Victoria/Desktop/"
-    filename = "1202a-Missa_Sine_nomine-Kyrie.xml" #argv[1]
+    basedir = '' # "/Users/Victoria/Desktop/"
+    filename = '1202a-Missa_Sine_nomine-Kyrie.xml' #argv[1]
     if os.path.isfile(filename):
         displayIntervals(filename)
     elif os.path.isfile(basedir + filename):
         displayIntervals(basedir + filename)
     else:
-        print("Cannot find file ", sys.argv[1])
-        print("Usage: " + sys.argv[0] + " filename")
+        print('Cannot find file ', sys.argv[1])
+        print('Usage: ' + sys.argv[0] + ' filename')
 

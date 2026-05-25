@@ -23,14 +23,14 @@ import xlrd
 
 def main(argv: list[str]) -> None:
     if len(argv) != 3:
-        raise SystemExit("Usage: exceldiff.py file1.xls:sheet1 file2.xls:sheet2")
+        raise SystemExit('Usage: exceldiff.py file1.xls:sheet1 file2.xls:sheet2')
 
     if argv[1].count(':') == 1:
         (book1name, sheetname1) = argv[1].split(':')
         if book1name.count('.xls') == 0:
-            book1name += ".xls"
+            book1name += '.xls'
     else:
-        raise SystemExit("First name must be in form filename:sheetname")
+        raise SystemExit('First name must be in form filename:sheetname')
 
     if argv[2].count(':') == 1:
         (book2name, sheetname2) = argv[2].split(':')
@@ -38,7 +38,7 @@ def main(argv: list[str]) -> None:
         (book2name, sheetname2) = (argv[2], sheetname1)
 
     if book2name.count('.xls') == 0:
-        book2name += ".xls"
+        book2name += '.xls'
 
     book1 = xlrd.open_workbook(book1name)
     book2 = xlrd.open_workbook(book2name)
@@ -81,26 +81,26 @@ def main(argv: list[str]) -> None:
             minCells = totalCells1  # doesnt matter which
         for j in range(minCells):
             if rowvalues1[j] != rowvalues2[j]:
-                print("%3d,%2s--%34s : %34s" % (i + 1, xlrd.colname(j),
+                print('%3d,%2s--%34s : %34s' % (i + 1, xlrd.colname(j),
                                                 (rowvalues1[j]).encode('utf-8')[:34],
                                                 (rowvalues2[j]).encode('utf-8')[:34]))
         if extraCells > 0:
-            print("%3d extra cells in row %3d in" % (extraCells, i + 1), end='')
+            print('%3d extra cells in row %3d in' % (extraCells, i + 1), end='')
             if longrow == 1:
-                print(book1name + ":" + sheetname1)
+                print(book1name + ':' + sheetname1)
             elif longrow == 2:
-                print(book2name + ":" + sheetname2)
+                print(book2name + ':' + sheetname2)
             else:
-                raise Exception("What?  longrow was not set!")
+                raise Exception('What?  longrow was not set!')
 
     if extraRows > 0:
-        print("%3d extra rows in" % extraRows,)
+        print('%3d extra rows in' % extraRows,)
         if longsheet == 1:
-            print(book1name + ":" + sheetname1)
+            print(book1name + ':' + sheetname1)
         elif longsheet == 2:
-            print(book2name + ":" + sheetname2)
+            print(book2name + ':' + sheetname2)
         else:
-            raise Exception("What?  longsheet was not set!")
+            raise Exception('What?  longsheet was not set!')
 
 
 if __name__ == '__main__':

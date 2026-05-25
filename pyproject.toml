@@ -52,7 +52,29 @@ Homepage = "https://github.com/cuthbertLab/music21-tools"
 default-groups = ["dev"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["music21_tools"]
+packages = ['music21_tools']
 
 [tool.pytest.ini_options]
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+doctest_optionflags = ['NORMALIZE_WHITESPACE', 'ELLIPSIS']
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# Flake8, pycodestyle, flake8-quotes + pyflakes (mirrors music21's house style)
+select = ['E', 'W', 'Q', 'F', 'B']
+dummy-variable-rgx = '^(_.*|unused.*|i|j|counter|junk|dummy)'
+ignore = [
+    'E227',  # space around | -- nice to omit in int|str
+    'E301',  # 0 blank lines
+    'E302',  # blank lines -- expected 2 blank lines
+    'E303',  # too many blank lines
+    'E731',  # assignment to lambda
+    'B904',  # raise-from
+    'B905',  # zip without strict=
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = 'single'
+multiline-quotes = 'single'
+docstring-quotes = 'single'

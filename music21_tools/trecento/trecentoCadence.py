@@ -58,7 +58,7 @@ class CadenceConverter(tinyNotation.Converter):
      <music21.stream.Measure 2 offset=3.0>,
      <music21.stream.Measure 3 offset=6.0>)
     '''
-    def __init__(self, stringRep=""):
+    def __init__(self, stringRep=''):
         super().__init__(stringRep)
         self.tokenMap = [
                     (r'(\d+\/\d+)', tinyNotation.TimeSignatureToken),
@@ -117,7 +117,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         self.assertAlmostEqual(st.duration.quarterLength, 6.0)
         st.show()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative')
 

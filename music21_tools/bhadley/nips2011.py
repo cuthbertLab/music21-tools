@@ -27,7 +27,7 @@ try:
     orngTree = orange.classification.tree
 except ImportError:
     if __name__ == '__main__':
-        print("Orange must be installed to run this.")
+        print('Orange must be installed to run this.')
         exit()
     orange = None
     orngTree = None
@@ -95,9 +95,9 @@ def nipsBuild(useOurExtractors=True, buildSet=1, evaluationMethod='coarse'):
             if evaluationMethod == 'coarse':
                 #coarse evaluation (only "old" or "new")
                 if year < 1961:
-                    cv = "old"
+                    cv = 'old'
                 else:
-                    cv = "new"
+                    cv = 'new'
             else:
                 # fine grained evaluations
                 cv = year  # if not using coarse but instead using the exact year as the class value
@@ -217,7 +217,7 @@ def getLeadsheetDatesFromBillboard():
                 words.pop(0)
                 for a in words:
                     a.strip()
-                    pretty = pretty +" "+ a
+                    pretty = pretty +' '+ a
                 if song == True:
                     try:
                         j = float(x)
@@ -241,11 +241,11 @@ def getLeadsheetDatesFromBillboard():
             groups = []
             for strong in trs:
                 x = strong.find(text=True)
-                if "&nbsp" in str(x):
+                if '&nbsp' in str(x):
                     x = x.strip('&nbsp;')
                 x =  x.strip()
                 if cnt < 100:
-                    retstring = ""
+                    retstring = ''
                     loops = 1
                     for letter in x:
                         if loops > 3:
@@ -304,7 +304,7 @@ def getLeadsheetDatesFromBillboard():
     matches = 0
     rank = 0
 
-    outputjson = '\'['
+    outputjson = "'["
 
 
     for i in indexValues:
@@ -333,7 +333,7 @@ def getLeadsheetDatesFromBillboard():
                 #print "Title:", piece.metadata.movementName, "  Composer:", piece.metadata.composer, "  Date:", date, "  Position on Billboard:", rank
                 #print "Title:", piece.metadata.movementName, "  Date:", date
                 matches = matches + 1
-                outputjson = outputjson + '{\"%s":[%s,%s]}, ' % (i, date, rank)
+                outputjson = outputjson + '{"%s":[%s,%s]}, ' % (i, date, rank)
         if (i % 500) == 0:
             j = ((i - 1000) / (11938.00)) * 100.00
             print ('%s %%' %round(j, 2))
@@ -342,9 +342,9 @@ def getLeadsheetDatesFromBillboard():
 
 
     foo = len(outputjson) - 2
-    outputjson = outputjson[0:foo] + ']\''
+    outputjson = outputjson[0:foo] + "]'"
     print (outputjson)
-    print ("FINISHED! Found this many matches: ", matches)
+    print ('FINISHED! Found this many matches: ', matches)
 
 def probabilityOfChance():
     '''

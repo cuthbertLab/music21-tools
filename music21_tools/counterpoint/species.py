@@ -32,7 +32,7 @@ from music21 import stream
 from music21 import voiceLeading
 
 from music21 import environment
-_MOD = "counterpoint/species.py"
+_MOD = 'counterpoint/species.py'
 environLocal = environment.Environment(_MOD)
 
 
@@ -88,10 +88,10 @@ class ModalCounterpoint:
             if (note2 is not None
                     and note1.editorial.harmonicInterval is not None
                     and note2.editorial.harmonicInterval is not None
-                    and note1.editorial.harmonicInterval.semiSimpleName == "P5"
-                    and note2.editorial.harmonicInterval.semiSimpleName == "P5"):
+                    and note1.editorial.harmonicInterval.semiSimpleName == 'P5'
+                    and note2.editorial.harmonicInterval.semiSimpleName == 'P5'):
                 numParallelFifths += 1
-                note2.editorial["parallelFifth"] = True
+                note2.editorial['parallelFifth'] = True
         return numParallelFifths
 
     def findHiddenFifths(self, stream1, stream2):
@@ -134,7 +134,7 @@ class ModalCounterpoint:
                 hidden = self.isHiddenFifth(note1, note2, note3, note4)
                 if hidden:
                     numHiddenFifths += 1
-                    note2.editorial["hiddenFifth"] = True
+                    note2.editorial['hiddenFifth'] = True
         return numHiddenFifths
 
     def isParallelFifth(self, note11, note12, note21, note22):
@@ -250,15 +250,15 @@ class ModalCounterpoint:
         for note1 in stream1:
             note2 = stream1.getElementAfterElement(note1, [Note])
             if note2 is not None:
-                if note1.editorial.harmonicInterval.semiSimpleName == "P8":
-                    if note2.editorial.harmonicInterval.semiSimpleName == "P8":
+                if note1.editorial.harmonicInterval.semiSimpleName == 'P8':
+                    if note2.editorial.harmonicInterval.semiSimpleName == 'P8':
                         numParallelOctaves += 1
                         note2.editorial.parallelOctave = True
         for note1 in stream2:
             note2 = stream2.getElementAfterElement(note1, [Note])
             if note2 is not None:
-                if note1.editorial.harmonicInterval.semiSimpleName == "P8":
-                    if note2.editorial.harmonicInterval.semiSimpleName == "P8":
+                if note1.editorial.harmonicInterval.semiSimpleName == 'P8':
+                    if note2.editorial.harmonicInterval.semiSimpleName == 'P8':
                         note2.editorial.parallelOctave = True
         return numParallelOctaves
 
@@ -422,15 +422,15 @@ class ModalCounterpoint:
         for note1 in stream1:
             note2 = stream1.getElementAfterElement(note1, [Note])
             if note2 is not None:
-                if note1.editorial.harmonicInterval.name == "P1":
-                    if note2.editorial.harmonicInterval.name == "P1":
+                if note1.editorial.harmonicInterval.name == 'P1':
+                    if note2.editorial.harmonicInterval.name == 'P1':
                         numParallelUnisons += 1
                         note2.editorial.parallelUnison = True
         for note1 in stream2:
             note2 = stream2.getElementAfterElement(note1, [Note])
             if note2 is not None:
-                if note1.editorial.harmonicInterval.name == "P1":
-                    if note2.editorial.harmonicInterval.name == "P1":
+                if note1.editorial.harmonicInterval.name == 'P1':
+                    if note2.editorial.harmonicInterval.name == 'P1':
                         note2.editorial.parallelUnison = True
         return numParallelUnisons
 
@@ -565,12 +565,12 @@ class ModalCounterpoint:
         for note2 in stream2.notes:
             if note2.editorial.harmonicInterval.semiSimpleName not in self.legalHarmonicIntervals:
                 return False
-        if stream1.notes[-1].editorial.harmonicInterval.specificName != "Perfect":
+        if stream1.notes[-1].editorial.harmonicInterval.specificName != 'Perfect':
             environLocal.printDebug([stream1.notes[-1].editorial.harmonicInterval.specificName +
-                                     " ending, yuk!"])
+                                     ' ending, yuk!'])
             return False
         if abs(stream1.notes[-1].editorial.harmonicInterval.generic.value) == 5:
-            environLocal.printDebug(["Ends on a fifth, yuk!"])
+            environLocal.printDebug(['Ends on a fifth, yuk!'])
             return False
         if (stream1.notes[-1].editorial.harmonicInterval.semiSimpleName == 'P8' and
                 stream1.notes[-2].editorial.harmonicInterval.simpleName == 'M6'):
@@ -618,9 +618,9 @@ class ModalCounterpoint:
             if (note2.editorial.harmonicInterval.semiSimpleName not in
                     self.legalMiddleHarmonicIntervals):
                 return False
-        if stream1.notes[-1].editorial.harmonicInterval.specificName != "Perfect":
+        if stream1.notes[-1].editorial.harmonicInterval.specificName != 'Perfect':
             environLocal.printDebug([stream1.notes[-1].editorial.harmonicInterval.specificName +
-                                     " ending, yuk!"])
+                                     ' ending, yuk!'])
             return False
         return True
 
@@ -1001,11 +1001,11 @@ class ModalCounterpoint:
                 note2 = s1notes[i + 1]
                 note3 = s1notes[i + 2]
                 if (note2.name == seventh and note3.name == tonic):
-                    note1 = note1.transpose("A1")
+                    note1 = note1.transpose('A1')
             elif (note1.name == seventh and i < maxNote - 1):
                 note2 = s1notes[i + 1]
                 if note2.name == tonic:
-                    note1 = note1.transpose("A1")
+                    note1 = note1.transpose('A1')
 
             stream2.append(copy.deepcopy(note1))
         return stream2
@@ -1043,17 +1043,17 @@ class ModalCounterpoint:
                 environLocal.printDebug([note1.name + str(note1.octave) for
                                             note1 in cantusFirmus.notes])
                 if not goodHarmony:
-                    environLocal.printDebug(["bad harmony"])
+                    environLocal.printDebug(['bad harmony'])
                 else:
-                    environLocal.printDebug(["harmony good"])
+                    environLocal.printDebug(['harmony good'])
                 if not goodMelody:
-                    environLocal.printDebug(["bad melody"])
+                    environLocal.printDebug(['bad melody'])
                 else:
-                    environLocal.printDebug(["melody good"])
+                    environLocal.printDebug(['melody good'])
                 if not thirdsGood:
-                    environLocal.printDebug(["too many thirds"])
+                    environLocal.printDebug(['too many thirds'])
                 if not sixthsGood:
-                    environLocal.printDebug(["too many sixths"])
+                    environLocal.printDebug(['too many sixths'])
             except ModalCounterpointException:
                 pass
 
@@ -1078,8 +1078,8 @@ class ModalCounterpoint:
 #                   interval.transposeNote(firstNote, "P5"),
 #                   interval.transposeNote(firstNote, "P8")]
         choices = [copy.deepcopy(firstNote),
-                   firstNote.transpose("P5"),
-                   firstNote.transpose("P8")]
+                   firstNote.transpose('P5'),
+                   firstNote.transpose('P8')]
         if choice == 'random':
             note1 = random.choice(choices)
         elif choice == 'first':
@@ -1096,7 +1096,7 @@ class ModalCounterpoint:
             choices = self.generateValidNotes(prevFirmus, currFirmus, prevNote,
                                               afterLeap, minorScale)
             if not choices:
-                raise ModalCounterpointException("Sorry, please try again")
+                raise ModalCounterpointException('Sorry, please try again')
             if choice == 'random':
                 newNote = random.choice(choices)
             elif choice == 'first':
@@ -1129,27 +1129,27 @@ class ModalCounterpoint:
 
         possibleNotes = []
 
-        n1 = interval.transposeNote(prevNote, "m2")
-        n2 = interval.transposeNote(prevNote, "M2")
-        n3 = interval.transposeNote(prevNote, "m3")
-        n4 = interval.transposeNote(prevNote, "M3")
+        n1 = interval.transposeNote(prevNote, 'm2')
+        n2 = interval.transposeNote(prevNote, 'M2')
+        n3 = interval.transposeNote(prevNote, 'm3')
+        n4 = interval.transposeNote(prevNote, 'M3')
 
         if afterLeap:
             goingUp = [n1, n2, n3, n4]
         else:
-            n5 = interval.transposeNote(prevNote, "P4")
-            n6 = interval.transposeNote(prevNote, "P5")
+            n5 = interval.transposeNote(prevNote, 'P4')
+            n6 = interval.transposeNote(prevNote, 'P5')
             goingUp = [n1, n2, n3, n4, n5, n6]
 
-        n7 = interval.transposeNote(prevNote, "m-2")
-        n8 = interval.transposeNote(prevNote, "M-2")
-        n9 = interval.transposeNote(prevNote, "m-3")
-        n10 = interval.transposeNote(prevNote, "M-3")
+        n7 = interval.transposeNote(prevNote, 'm-2')
+        n8 = interval.transposeNote(prevNote, 'M-2')
+        n9 = interval.transposeNote(prevNote, 'm-3')
+        n10 = interval.transposeNote(prevNote, 'M-3')
         if afterLeap:
             goingDown = [n7, n8, n9, n10]
         else:
-            n11 = interval.transposeNote(prevNote, "P-4")
-            n12 = interval.transposeNote(prevNote, "P-5")
+            n11 = interval.transposeNote(prevNote, 'P-4')
+            n12 = interval.transposeNote(prevNote, 'P-5')
             goingDown = [n7, n8, n9, n10, n11, n12]
 
         possibleNotes.extend(goingUp)
@@ -1159,7 +1159,7 @@ class ModalCounterpoint:
             possibleNotes.extend(goingUp)
         else:
             possibleNotes.extend(goingDown)
-        environLocal.printDebug(["possible: ", [note1.name for note1 in possibleNotes]])
+        environLocal.printDebug(['possible: ', [note1.name for note1 in possibleNotes]])
 
         goodNotes = minorScale.getPitches('C2', 'C6')
         goodNames = [note2.name for note2 in goodNotes]
@@ -1187,7 +1187,7 @@ class ModalCounterpoint:
                 continue
             if interval.Interval(currFirmus, note1).generic.value > 10:
                 continue
-            environLocal.printDebug(["adding: ", note1.name, note1.octave])
+            environLocal.printDebug(['adding: ', note1.name, note1.octave])
             valid.append(note1)
         return valid
 
@@ -1206,30 +1206,30 @@ class ModalCounterpoint:
 
         possibleNotes = []
 
-        n1 = interval.transposeNote(prevNote, "m2")
-        n2 = interval.transposeNote(prevNote, "M2")
+        n1 = interval.transposeNote(prevNote, 'm2')
+        n2 = interval.transposeNote(prevNote, 'M2')
         if not topVoice:
-            n3 = interval.transposeNote(prevNote, "m3")
-            n4 = interval.transposeNote(prevNote, "M3")
+            n3 = interval.transposeNote(prevNote, 'm3')
+            n4 = interval.transposeNote(prevNote, 'M3')
             if afterLeap:
                 goingUp = [n1, n2, n3, n4]
             else:
-                n5 = interval.transposeNote(prevNote, "P4")
-                n6 = interval.transposeNote(prevNote, "P5")
+                n5 = interval.transposeNote(prevNote, 'P4')
+                n6 = interval.transposeNote(prevNote, 'P5')
                 goingUp = [n1, n2, n3, n4, n5, n6]
         else:
             goingUp = [n1, n2]
 
-        n7 = interval.transposeNote(prevNote, "m-2")
-        n8 = interval.transposeNote(prevNote, "M-2")
+        n7 = interval.transposeNote(prevNote, 'm-2')
+        n8 = interval.transposeNote(prevNote, 'M-2')
         if not topVoice:
-            n9 = interval.transposeNote(prevNote, "m-3")
-            n10 = interval.transposeNote(prevNote, "M-3")
+            n9 = interval.transposeNote(prevNote, 'm-3')
+            n10 = interval.transposeNote(prevNote, 'M-3')
             if afterLeap:
                 goingDown = [n7, n8, n9, n10]
             else:
-                n11 = interval.transposeNote(prevNote, "P-4")
-                n12 = interval.transposeNote(prevNote, "P-5")
+                n11 = interval.transposeNote(prevNote, 'P-4')
+                n12 = interval.transposeNote(prevNote, 'P-5')
                 goingDown = [n7, n8, n9, n10, n11, n12]
         else:
             goingDown = [n7, n8]
@@ -1241,7 +1241,7 @@ class ModalCounterpoint:
             possibleNotes.extend(goingUp)
         else:
             possibleNotes.extend(goingDown)
-        environLocal.printDebug(["possible: ", [note1.name for note1 in possibleNotes]])
+        environLocal.printDebug(['possible: ', [note1.name for note1 in possibleNotes]])
 
         goodNotes = minorScale.ascending()
         goodNames = [note2.name for note2 in goodNotes]
@@ -1272,7 +1272,7 @@ class ModalCounterpoint:
 
             if (interval.Interval(currFirmus, note1).simpleName == 1 or
                     interval.Interval(currFirmus, note1).simpleName == 5):
-                environLocal.printDebug(["adding: ", note1.name, note1.octave])
+                environLocal.printDebug(['adding: ', note1.name, note1.octave])
                 valid.append(note1)
         return valid
 
@@ -1695,7 +1695,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
         cf = cantusFirmi[0]# getRandomCF()
         environLocal.printDebug(['Using: ', cf['notes']])
-        cantusFirmus = stream.Part(converter.parse(cf['notes'], "4/4").notes)
+        cantusFirmus = stream.Part(converter.parse(cf['notes'], '4/4').notes)
 
         baseNote = Note(cf['mode'])
         thisScale = scale.MinorScale(baseNote)
@@ -1715,7 +1715,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative')
 

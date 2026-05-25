@@ -68,7 +68,7 @@ class PolyphonicSnippet(stream.Score):
     >>> dummy2.elements
     ()
     '''
-    snippetName = ""
+    snippetName = ''
 
     def __init__(self, fiveExcelCells=None, parentPiece=None):
         super().__init__()
@@ -76,7 +76,7 @@ class PolyphonicSnippet(stream.Score):
             fiveExcelCells = []
         if fiveExcelCells != []:
             if len(fiveExcelCells) != 5:
-                raise Exception("Need five Excel Cells to make a PolyphonicSnippet object")
+                raise Exception('Need five Excel Cells to make a PolyphonicSnippet object')
 
             self.cadenceType = fiveExcelCells[3]
             self.timeSig = meter.TimeSignature(fiveExcelCells[4])
@@ -87,16 +87,16 @@ class PolyphonicSnippet(stream.Score):
 
             self.longestLineLength = 0
 
-            if self.contratenor == "" or self.contratenor is None:
+            if self.contratenor == '' or self.contratenor is None:
                 self.contratenor = None
             else:
                 self.contratenor.id = 'Ct'
-            if self.tenor == "" or self.tenor is None:
+            if self.tenor == '' or self.tenor is None:
                 self.tenor = None
             else:
                 self.tenor.id = 'T'
 
-            if self.cantus == "" or self.cantus is None:
+            if self.cantus == '' or self.cantus is None:
                 self.cantus = None
             else:
                 self.cantus.id = 'C'
@@ -136,23 +136,23 @@ class PolyphonicSnippet(stream.Score):
 
     def header(self):
         '''returns a string that prints an appropriate header for this cadence'''
-        if self.snippetName == "":
+        if self.snippetName == '':
             if (self.parentPiece is not None):
-                headOut = ""
+                headOut = ''
                 parentPiece = self.parentPiece
                 if (parentPiece.fischerNum):
-                    headOut += str(parentPiece.fischerNum) + ". "
+                    headOut += str(parentPiece.fischerNum) + '. '
                 if parentPiece.title:
                     headOut += parentPiece.title
                 if (parentPiece.pmfcVol and parentPiece.pmfcPageRange()):
-                    headOut += " PMFC " + str(parentPiece.pmfcVol) + " "
+                    headOut += ' PMFC ' + str(parentPiece.pmfcVol) + ' '
                     headOut += parentPiece.pmfcPageRange()
                 return headOut
             else:
-                return ""
+                return ''
         else:
             if (self.parentPiece is not None):
-                headOut = self.parentPiece.title + " -- " + self.snippetName
+                headOut = self.parentPiece.title + ' -- ' + self.snippetName
             else:
                 return self.snippetName
 
@@ -210,7 +210,7 @@ class PolyphonicSnippet(stream.Score):
 
 
 class Incipit(PolyphonicSnippet):
-    snippetName = ""
+    snippetName = ''
 
     def backPadLine(self, thisStream):
         '''
@@ -277,7 +277,7 @@ class Incipit(PolyphonicSnippet):
 
 
 class FrontPaddedSnippet(PolyphonicSnippet):
-    snippetName = ""
+    snippetName = ''
 
     def frontPadLine(self, thisStream):
         '''Pads a line with a bunch of rests at the
@@ -392,12 +392,12 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         from . import trecentoCadence, cadencebook
         cantus = trecentoCadence.CadenceConverter(
                             "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
-        tenor = trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
-        ps = PolyphonicSnippet([cantus, tenor, None, "8-8", "6/8"],
+        tenor = trecentoCadence.CadenceConverter('6/8 F1. f2. e4. d').parse().stream
+        ps = PolyphonicSnippet([cantus, tenor, None, '8-8', '6/8'],
                                parentPiece=cadencebook.BallataSheet().makeWork(3))
         ps.show('musicxml.png')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, TestExternal, 'importPlusRelative')
 

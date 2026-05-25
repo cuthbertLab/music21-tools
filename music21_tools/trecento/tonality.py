@@ -74,17 +74,17 @@ class TonalityCounter:
     <BLANKLINE>
     '''
 
-    def __init__(self, worksList, streamName="T", cadenceName="A"):
+    def __init__(self, worksList, streamName='T', cadenceName='A'):
         self.worksList = worksList
         self.streamName = streamName
         self.cadenceName = cadenceName
-        self.output = ""
+        self.output = ''
         self.displayStream = None
         self.storedDict = None
 
     def run(self):
         from music21 import stream
-        output = ""
+        output = ''
         streamName = self.streamName
         allScores = stream.Opus()
 
@@ -95,9 +95,9 @@ class TonalityCounter:
         for thisWork in self.worksList:
             incip = thisWork.incipit
 
-            if self.cadenceName == "A":
+            if self.cadenceName == 'A':
                 cadence = thisWork.cadenceA
-            elif self.cadenceName == "B":
+            elif self.cadenceName == 'B':
                 cadence = thisWork.cadenceBclos
                 try:
                     if (cadence is None or cadence.parts[streamName] is None):
@@ -110,7 +110,7 @@ class TonalityCounter:
                 except IndexError:
                     continue
             else:
-                raise Exception("Cannot deal with cadence type %s" % self.cadenceName)
+                raise Exception('Cannot deal with cadence type %s' % self.cadenceName)
 
             if incip is None or cadence is None:
                 continue
@@ -124,14 +124,14 @@ class TonalityCounter:
                 firstNote = incipSN.pitches[0]
                 cadenceNote  = cadenceSN.pitches[-1]
             except IndexError:
-                output += thisWork.title + "\n"
+                output += thisWork.title + '\n'
                 continue
 
             myDict[firstNote.step][cadenceNote.step] += 1
             if firstNote.step == cadenceNote.step:
                 allScores.insert(0, incip)
                 allScores.insert(0, cadence)
-            output += "%30s %4s %4s\n" % (thisWork.title[0:30], firstNote.name, cadenceNote.name)
+            output += '%30s %4s %4s\n' % (thisWork.title[0:30], firstNote.name, cadenceNote.name)
 
         bigTotalSame = 0
         bigTotalDiff = 0
@@ -139,17 +139,17 @@ class TonalityCounter:
             outKeyDiffTotal = 0
             for inKey in sorted(myDict[outKey]):
                 if outKey == inKey:
-                    output += "**** "
+                    output += '**** '
                     bigTotalSame += myDict[outKey][inKey]
                 else:
-                    output += "     "
+                    output += '     '
                     outKeyDiffTotal += myDict[outKey][inKey]
                     bigTotalDiff    += myDict[outKey][inKey]
-                output += "%4s %4s %4d\n" % (outKey, inKey, myDict[outKey][inKey])
-            output += "     %4s diff %4d\n" % (outKey, outKeyDiffTotal)
-        output += "Total Same %4d %3.1f%%\n" % (bigTotalSame,
+                output += '%4s %4s %4d\n' % (outKey, inKey, myDict[outKey][inKey])
+            output += '     %4s diff %4d\n' % (outKey, outKeyDiffTotal)
+        output += 'Total Same %4d %3.1f%%\n' % (bigTotalSame,
             (bigTotalSame * 100.0) / (bigTotalSame + bigTotalDiff))
-        output += "Total Diff %4d %3.1f%%\n" % (bigTotalDiff,
+        output += 'Total Diff %4d %3.1f%%\n' % (bigTotalDiff,
             (bigTotalDiff * 100.0) / (bigTotalSame + bigTotalDiff))
         self.storedDict = myDict
         self.displayStream = allScores
@@ -166,9 +166,9 @@ def landiniTonality(show=True):
     ballataObj  = cadencebook.BallataSheet()
     worksList = []
     for thisWork in ballataObj:
-        if thisWork.composer == "Landini":
+        if thisWork.composer == 'Landini':
             worksList.append(thisWork)
-    tCounter = TonalityCounter(worksList, streamName = "T", cadenceName = "A")
+    tCounter = TonalityCounter(worksList, streamName = 'T', cadenceName = 'A')
     tCounter.run()
     if show is True:
         print(tCounter.output)
@@ -271,9 +271,9 @@ def nonLandiniTonality(show=True):
     for thisWork in ballataObj:
         if show:
             print(thisWork.title)
-        if thisWork.composer != "Landini" and thisWork.composer != ".":
+        if thisWork.composer != 'Landini' and thisWork.composer != '.':
             worksList.append(thisWork)
-    tCounter = TonalityCounter(worksList, streamName = "T", cadenceName = "A")
+    tCounter = TonalityCounter(worksList, streamName = 'T', cadenceName = 'A')
     tCounter.run()
     if show is True:
         print(tCounter.output)
@@ -289,15 +289,15 @@ def anonBallataTonality(show=True):
     ballataObj  = cadencebook.BallataSheet()
     worksList = []
     for thisWork in ballataObj:
-        if thisWork.composer == ".":
+        if thisWork.composer == '.':
             worksList.append(thisWork)
-    tCounter = TonalityCounter(worksList, streamName = "T", cadenceName = "A")
+    tCounter = TonalityCounter(worksList, streamName = 'T', cadenceName = 'A')
     tCounter.run()
     if show is True:
         print(tCounter.output)
-        print("Generating Lilypond PNG of all pieces where the first note of " +
-              "the tenor is the same pitchclass as the last note of Cadence A")
-        print("It might take a while, esp. on the first Lilypond run...")
+        print('Generating Lilypond PNG of all pieces where the first note of ' +
+              'the tenor is the same pitchclass as the last note of Cadence A')
+        print('It might take a while, esp. on the first Lilypond run...')
         tCounter.displayStream.show('lily.png')
 
 def sacredTonality(show=True):
@@ -321,7 +321,7 @@ def sacredTonality(show=True):
                  sanctusObj.makeWork(2),
                  agnusObj.makeWork(2) ]
 
-    tCounter = TonalityCounter(worksList, streamName = "T", cadenceName = -1)
+    tCounter = TonalityCounter(worksList, streamName = 'T', cadenceName = -1)
     tCounter.run()
     if show is True:
         print(tCounter.output)
@@ -346,7 +346,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
     def runTest(self):
         testAll(show=True, fast=False)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative') #External)
 

@@ -48,7 +48,7 @@ def runOne(c, cName):
             mns = m.measureNumberWithSuffix()
             ts = m.timeSignature or m.getContextByClass('TimeSignature')
             if ts is None:
-                print("No time signature context!", cName, part.id, mns)
+                print('No time signature context!', cName, part.id, mns)
                 continue
             barQl = ts.barDuration.quarterLength
             mQl = m.duration.quarterLength
@@ -90,7 +90,7 @@ def runOne(c, cName):
                 m.number = 0
                 measureNumberShift += 1
             elif truncated and priorMeasureWasIncomplete and priorMeasureDuration == short:
-                print("Truncated measure following pickup...", cName, part.id, mn)
+                print('Truncated measure following pickup...', cName, part.id, mn)
                 priorMeasure.paddingRight = priorMeasure.paddingLeft
                 priorMeasure.paddingLeft = 0
                 measureNumberShift += 1
@@ -111,7 +111,7 @@ def runOne(c, cName):
                 m.number = mn - measureNumberShift
                 partNumSuffix.append((mn - measureNumberShift, ms))
             elif pickup and not priorMeasureWasIncomplete:
-                print("Pickup following complete prior measure", cName, part.id, mn)
+                print('Pickup following complete prior measure', cName, part.id, mn)
                 priorMeasureWasIncomplete = True
                 m.paddingLeft = short
                 priorMeasure = m
@@ -133,7 +133,7 @@ def runOne(c, cName):
                 m.numberSuffix = ms
                 partNumSuffix.append((mn - measureNumberShift, ms))
             elif pickup and priorMeasureWasIncomplete and ts is not priorMeasure.timeSignature:
-                print("Changing TS Pickup", cName, part.id, mn)
+                print('Changing TS Pickup', cName, part.id, mn)
                 priorMeasureWasIncomplete = True
                 m.paddingLeft = short
                 priorMeasure = m
@@ -147,7 +147,7 @@ def runOne(c, cName):
         
         
     if len(allSuffixesByPart) != 1:
-        print("Multiple conflicting measures!", cName)
+        print('Multiple conflicting measures!', cName)
         print(cName, allSuffixesByPart)
 
     try:
@@ -156,14 +156,14 @@ def runOne(c, cName):
         sKOrig = str(kOrig)
         sKNew = str(kNew)
         if kOrig.sharps != kNew.sharps:
-            print("Key changed from", kOrig, kNew)
+            print('Key changed from', kOrig, kNew)
         
         if sKNew != sKOrig:
             kNew.activeSite.replace(kNew, kOrig)
             analysisKey = newScore.analyze('key')
             print('Mode would have been changed from ', sKOrig, sKNew)
             if str(analysisKey) != sKOrig:
-                print("Key mismatch: ", sKOrig, sKNew, str(analysisKey))
+                print('Key mismatch: ', sKOrig, sKNew, str(analysisKey))
             
     except IndexError:
         print('no key in ', cName)

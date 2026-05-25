@@ -52,16 +52,16 @@ def partPari(show=True):
         else:
             n.accidental = cminor.accidentalByStep(n.step)
         if n.offset == (2 - 1) * 4 or n.offset == (74 - 1) * 4:
-            n.pitch = pitch.Pitch("C3")  # exceptions to rule
+            n.pitch = pitch.Pitch('C3')  # exceptions to rule
         elif n.offset == (73 - 1) * 4:
             n.tie = None
-            n.pitch = pitch.Pitch("C3")
+            n.pitch = pitch.Pitch('C3')
     top = copy.deepcopy(main.flatten())
     main.insert(0, clef.Treble8vbClef())
     middle = copy.deepcopy(main.flatten())
 
 
-    cMinorArpeg = scale.ConcreteScale(pitches=["C2", "E-2", "G2"])
+    cMinorArpeg = scale.ConcreteScale(pitches=['C2', 'E-2', 'G2'])
     # # dummy test on other data
     # myA = pitch.Pitch("A2")
     # myA.microtone = -15

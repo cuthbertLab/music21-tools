@@ -975,15 +975,15 @@ class Analyzer:
         'Parallel fifth in measure 1: Part 1 moves from D to E while part 2 moves from G to A'
         '''
         testFunction = lambda vlq: vlq.parallelFifth()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel fifth in measure "
+        textFunction = lambda vlq, pn1, pn2: ('Parallel fifth in measure '
                                               + str(vlq.v1n1.measureNumber)
-                                              + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name + " "
-                                              + "while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+                                              + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name + ' '
+                                              + 'while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1066,14 +1066,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.parallelOctave()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel octave in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel octave in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1153,14 +1153,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.parallelUnison()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel unison in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel unison in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1200,14 +1200,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.hiddenFifth()
-        textFunction = lambda vlq, pn1, pn2: ("Hidden fifth in measure "
-                                              + str(vlq.v1n1.measureNumber) +": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Hidden fifth in measure '
+                                              + str(vlq.v1n1.measureNumber) +': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1247,14 +1247,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.hiddenOctave()
-        textFunction = lambda vlq, pn1, pn2: ("Hidden octave in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Hidden octave in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1295,14 +1295,14 @@ class Analyzer:
             editorialMarkList = []
         #TODO: incorporate Jose's resolution rules into this method (italian6, etc.)
         testFunction = lambda vlq: not vlq.isProperResolution()
-        textFunction = lambda vlq, pn1, pn2: ("Improper resolution of " +
+        textFunction = lambda vlq, pn1, pn2: ('Improper resolution of ' +
                                               vlq.vIntervals[0].simpleNiceName +
-                                              " in measure " + str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
+                                              ' in measure ' + str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
                                               vlq.v1n1.name +
-                                              " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name + " to " + vlq.v2n2.name)
+                                              ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction,
                             textFunction, color, editorialDictKey='isImproperResolution',
                             editorialValue=True, editorialMarkList=editorialMarkList)
@@ -1344,14 +1344,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.leapNotSetWithStep()
-        textFunction = lambda vlq, pn1, pn2: ("Leap not set with step in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Leap not set with step in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1387,7 +1387,7 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.opensIncorrectly()
-        textFunction = lambda vlq, pn1, pn2: "Opening harmony is not in style"
+        textFunction = lambda vlq, pn1, pn2: 'Opening harmony is not in style'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction,
                             textFunction, color, startIndex = 0, endIndex = 1)
 
@@ -1425,7 +1425,7 @@ class Analyzer:
 
         '''
         testFunction = lambda vlq: vlq.closesIncorrectly()
-        textFunction = lambda vlq, pn1, pn2: "Closing harmony is not in style"
+        textFunction = lambda vlq, pn1, pn2: 'Closing harmony is not in style'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction, textFunction,
                             color, startIndex=-1)
 
@@ -1740,13 +1740,13 @@ class Analyzer:
             from F to B between part 1 and part 2'
         '''
         testFunction = lambda hIntv: hIntv is not None and not hIntv.isConsonant()
-        textFunction = lambda hIntv, pn1, pn2: ("Dissonant harmonic interval in measure "
-                                                + str(hIntv.noteStart.measureNumber) + ": "
-                                                + str(hIntv.simpleNiceName) + " from "
-                                                + str(hIntv.noteStart.name) + " to "
+        textFunction = lambda hIntv, pn1, pn2: ('Dissonant harmonic interval in measure '
+                                                + str(hIntv.noteStart.measureNumber) + ': '
+                                                + str(hIntv.simpleNiceName) + ' from '
+                                                + str(hIntv.noteStart.name) + ' to '
                                                 + str(hIntv.noteEnd.name)
-                                                + " between part " + str(pn1 + 1)
-                                                + " and part " + str(pn2 + 1))
+                                                + ' between part ' + str(pn1 + 1)
+                                                + ' and part ' + str(pn2 + 1))
         self._identifyBasedOnHarmonicInterval(score, partNum1, partNum2, color,
                                               dictKey, testFunction,
                                          textFunction)
@@ -1813,12 +1813,12 @@ class Analyzer:
                         intv = resultTheoryObject.intv
                         tr = theoryResult.IntervalTheoryResult(intv)
                         #tr.value = valueFunction(hIntv)
-                        tr.text = ("Improper dissonant harmonic interval in measure " +
-                                   str(intv.noteStart.measureNumber) +": " +
-                                   str(intv.niceName) + " from " + str(intv.noteStart.name) +
-                                   " to " + str(intv.noteEnd.name) +
-                                   " between part " + str(partNum1 + 1) +
-                                   " and part " + str(partNum2 + 1))
+                        tr.text = ('Improper dissonant harmonic interval in measure ' +
+                                   str(intv.noteStart.measureNumber) +': ' +
+                                   str(intv.niceName) + ' from ' + str(intv.noteStart.name) +
+                                   ' to ' + str(intv.noteEnd.name) +
+                                   ' between part ' + str(partNum1 + 1) +
+                                   ' and part ' + str(partNum2 + 1))
                         if color is not None:
                             tr.color(color)
                         self._updateScoreResultDict(score, dictKey, tr)
@@ -1861,11 +1861,11 @@ class Analyzer:
 
         '''
         testFunction = lambda mIntv: mIntv is not None and mIntv.simpleName in [
-                                                    "A2", "A4", "d5", "m7", "M7"]
-        textFunction = lambda mIntv, pn: ("Dissonant melodic interval in part " + str(pn + 1) +
-                                          " measure " + str(mIntv.noteStart.measureNumber) +": " +
-                                          str(mIntv.simpleNiceName) + " from " +
-                                          str(mIntv.noteStart.name) + " to " +
+                                                    'A2', 'A4', 'd5', 'm7', 'M7']
+        textFunction = lambda mIntv, pn: ('Dissonant melodic interval in part ' + str(pn + 1) +
+                                          ' measure ' + str(mIntv.noteStart.measureNumber) +': ' +
+                                          str(mIntv.simpleNiceName) + ' from ' +
+                                          str(mIntv.noteStart.name) + ' to ' +
                                           str(mIntv.noteEnd.name))
         self._identifyBasedOnMelodicInterval(score, partNum, color, dictKey,
                                              testFunction, textFunction)
@@ -1879,85 +1879,85 @@ class Analyzer:
     def identifyObliqueMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'obliqueMotion'
         testFunction = lambda vlq: vlq.obliqueMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Oblique motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Oblique motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) +': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifySimilarMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'similarMotion'
         testFunction = lambda vlq: vlq.similarMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Similar motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Similar motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) +': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyParallelMotion(self, score, partNum1=None, partNum2=None, color= None):
         dictKey = 'parallelMotion'
         testFunction = lambda vlq: vlq.parallelMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) +': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'contraryMotion'
         testFunction = lambda vlq: vlq.contraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyOutwardContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'outwardContraryMotion'
         testFunction = lambda vlq: vlq.outwardContraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Outward contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " +
-                                              vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Outward contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' +
+                                              vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyInwardContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'inwardContraryMotion'
         testFunction = lambda vlq: vlq.inwardContraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Inward contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Inward contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, color, dictKey,
                                  testFunction, textFunction)
 
     def identifyAntiParallelMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'antiParallelMotion'
         testFunction = lambda vlq: vlq.antiParallelMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Anti-parallel motion in measure " +
-                                            str(vlq.v1n1.measureNumber) +": " +
-                                            "Part " + str(pn1 + 1) + " moves from " +
-                                            vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                            "while part " + str(pn2 + 1) + " moves from " +
-                                            vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Anti-parallel motion in measure ' +
+                                            str(vlq.v1n1.measureNumber) +': ' +
+                                            'Part ' + str(pn1 + 1) + ' moves from ' +
+                                            vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                            'while part ' + str(pn2 + 1) + ' moves from ' +
+                                            vlq.v2n1.name+ ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -2020,7 +2020,7 @@ class Analyzer:
             for n in vs.getObjectsByClass('Note'):
                 notes += n.name + ','
             notes = notes[:-1]
-            return "Roman Numeral of " + notes + ' is ' + rn
+            return 'Roman Numeral of ' + notes + ' is ' + rn
 
         self._identifyBasedOnVerticality(score, color, dictKey, testFunction, textFunction,
                                     responseOffsetMap=responseOffsetMap)
@@ -2108,7 +2108,7 @@ class Analyzer:
 
         '''
         testFunction = lambda hIntv: hIntv.generic.undirected if hIntv is not None else False
-        textFunction = lambda hIntv, pn1, pn2: ("harmonic interval between "
+        textFunction = lambda hIntv, pn1, pn2: ('harmonic interval between '
                             + hIntv.noteStart.name
                             + ' and ' + hIntv.noteEnd.name + ' between parts ' + str(pn1 + 1)
                             + ' and ' + str(pn2 + 1) + ' is a ' + str(hIntv.niceName))
@@ -2160,7 +2160,7 @@ class Analyzer:
         testFunction = lambda sc, n: (str(self.getKeyAtMeasure(sc,
                                             n.measureNumber).getScale().getScaleDegreeFromPitch(
                                                 n.pitch)) ) if n is not None else False
-        textFunction = lambda n, pn, scaleDegree: ("scale degree of " + n.name + ' in part ' +
+        textFunction = lambda n, pn, scaleDegree: ('scale degree of ' + n.name + ' in part ' +
                                                    str(pn + 1) + ' is ' + str(scaleDegree))
         self._identifyBasedOnNote(score, partNum, color, dictKey, testFunction, textFunction)
 
@@ -2208,12 +2208,12 @@ class Analyzer:
 
         testFunction = lambda vlq: vlq.motionType().value
         textFunction = lambda vlq, pn1, pn2: (vlq.motionType().value + ' Motion in measure '+
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name) if (
-                                                vlq.motionType() != "No Motion") else 'No motion'
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name+ ' to ' + vlq.v2n2.name) if (
+                                                vlq.motionType() != 'No Motion') else 'No motion'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -2281,16 +2281,16 @@ class Analyzer:
         Hidden fifth in measure 1: Part 1 moves from C to D while part 2 moves from C to G
         Closing harmony is not in style
         '''
-        resultStr = ""
+        resultStr = ''
         sid = score.id
 
         self.addAnalysisData(score)
         for resultType in self.store[sid]['ResultDict']:
             if typeList is None or resultType in typeList:
-                resultStr += resultType + ": \n"
+                resultStr += resultType + ': \n'
                 for result in self.store[sid]['ResultDict'][resultType]:
                     resultStr += result.text
-                    resultStr += "\n"
+                    resultStr += '\n'
         resultStr = resultStr[0:-1] #remove final new line character
         return resultStr
 
@@ -2299,18 +2299,18 @@ class Analyzer:
         returns string of all results found by calling all
         identify methods on the TheoryAnalyzer score
         '''
-        resultStr = ""
+        resultStr = ''
         sid = score.id
 
         self.addAnalysisData(score)
         for resultType in self.store[sid]['ResultDict']:
             if typeList is None or resultType in typeList:
-                resultStr += "<b>" + resultType + "</B>: <br /><ul>"
+                resultStr += '<b>' + resultType + '</B>: <br /><ul>'
                 for result in self.store[sid]['ResultDict'][resultType]:
                     resultStr += ("<li style='color:" + result.currentColor + "'><b>" +
                                   result.text.sub(':',"</b>:<span style='color:black'>") +
-                                  "</span></li>")
-                resultStr += "</ul><br />"
+                                  '</span></li>')
+                resultStr += '</ul><br />'
 
         return resultStr
 
@@ -2519,6 +2519,6 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         ads.removeNeighborTones(p)
         p.show()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative') #, runTest='testFastVerticalityCheck')

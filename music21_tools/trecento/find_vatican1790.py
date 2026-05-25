@@ -22,14 +22,14 @@ def find():
     for ballata in ballatas:
         if i > 10:
             break
-        if ballata.timeSigBegin == "6/8" or ballata.timeSigBegin == "9/8":
+        if ballata.timeSigBegin == '6/8' or ballata.timeSigBegin == '9/8':
             incipit = ballata.incipit
             if incipit is not None:
                 i += 1
                 opus.insert(0, incipit)
     opus.show('lily.pdf')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     find()
 
 # -----------------------------------------------------------------------------

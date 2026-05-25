@@ -1783,9 +1783,9 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
 
 
         if uclass0 is None:
-            raise MedRenException("Cannot find class in our hierarchy of streams: %s" % (u))
+            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (u))
         if lclass0 is None:
-            raise MedRenException("Cannot find class in our hierarchy of streams: %s" % (l))
+            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (l))
 
         if hierarchy.index(uclass0) == 0:
             return False
@@ -1957,7 +1957,7 @@ def transferTies(score, *, inPlace=False):
                 if tupAct != 0:  # error...
                     tempTuplet = duration.Tuplet(tupAct, tupNorm,
                                                  copy.deepcopy(tempDuration.components[0]))
-                    tempTuplet.tupletActualShow = "none"
+                    tempTuplet.tupletActualShow = 'none'
                     tempTuplet.bracket = False
                     tieBeneficiary.duration = tempDuration
                     tieBeneficiary.duration.tuplets = (tempTuplet,)
@@ -2051,10 +2051,10 @@ def cummingSchubertStrettoFuga(score):
     if score.title:
         print(score.title)
 
-    print("intv.\tcount\tpercent")
+    print('intv.\tcount\tpercent')
     for l in sorted(strettoKeys):
-        print("%2d\t%3d\t%2d%%" % (l, strettoKeys[l], strettoKeys[l] * 100 / len(sn) - 1))
-    print("\n")
+        print('%2d\t%3d\t%2d%%' % (l, strettoKeys[l], strettoKeys[l] * 100 / len(sn) - 1))
+    print('\n')
 
 class MedRenException(exceptions21.Music21Exception):
     pass
@@ -2119,12 +2119,12 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 def testStretto():
     from music21 import converter
-    salve = converter.parse("A4 A G A D A G F E F G F E D", '4/4')  # salveRegina liber p. 276
-    adTe = converter.parse("D4 F A G G F A E G F E D G C D E D G F E D", '4/4')  # ad te clamamus
-    etJesum = converter.parse("D4 AA C D D D E E D D C G F E D G F E D C D", '4/4')
-    salve.title = "Salve Regina (opening)LU p. 276"
-    adTe.title = "...ad te clamamus"
-    etJesum.title = "...et Jesum"
+    salve = converter.parse('A4 A G A D A G F E F G F E D', '4/4')  # salveRegina liber p. 276
+    adTe = converter.parse('D4 F A G G F A E G F E D G C D E D G F E D', '4/4')  # ad te clamamus
+    etJesum = converter.parse('D4 AA C D D D E E D D C G F E D G F E D C D', '4/4')
+    salve.title = 'Salve Regina (opening)LU p. 276'
+    adTe.title = '...ad te clamamus'
+    etJesum.title = '...et Jesum'
     for piece in [salve, adTe, etJesum]:
         cummingSchubertStrettoFuga(piece)
 

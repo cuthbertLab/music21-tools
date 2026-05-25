@@ -34,7 +34,7 @@ class MusicaFictaFeature(features.FeatureExtractor):
         allPitches = self.data['flat.pitches']
         fictaPitches = 0
         for p in allPitches:
-            if p.name == "B-":
+            if p.name == 'B-':
                 continue
             elif p.accidental is not None and p.accidental.name != 'natural':
                 fictaPitches += 1
@@ -300,8 +300,8 @@ def tinyNotationBass():
     fbLine1.showAllRealizations()
 
 def figuredBassScale():
-    fbScale1 = figuredBass.realizerScale.FiguredBassScale("D", "major")
-    print (fbScale1.getSamplePitches("E3", "6"))
+    fbScale1 = figuredBass.realizerScale.FiguredBassScale('D', 'major')
+    print (fbScale1.getSamplePitches('E3', '6'))
 
 
 def exampleD():
