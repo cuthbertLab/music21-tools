@@ -522,7 +522,7 @@ wheels = [
 
 [[package]]
 name = "music21-tools"
-version = "0.1.0"
+version = "10.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "music21" },

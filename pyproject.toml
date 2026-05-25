@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "music21-tools"
-version = "0.1.0"
+version = "10.1.2"
 description = "Demonstrations and tools for music21."
 readme = "README.md"
 license = "BSD-3-Clause"

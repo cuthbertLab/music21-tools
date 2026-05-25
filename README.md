@@ -1,10 +1,10 @@
-# music21-demos
+# music21-tools
 
-Demonstrations for `music21` created by Cuthbert has his lab (cuthbertLab)
+Tools and demonstrations for `music21` created by Cuthbert and his lab (cuthbertLab)
 
 Copyright © 2004-2026 Michael Scott Asato Cuthbert, released under a BSD (3-clause) license.
 
-Many of these Demonstrations were formerly in the `music21` package.  
+Many of these tools and demonstrations were formerly in the `music21` package.  
 They may require external packages to make them work, and some may 
 require editing to make them work with the latest version
 of `music21`.  I will attempt to update them with each new major release of `music21`, but there 
@@ -57,6 +57,19 @@ To test a single module:
 
 ```sh
 uv run pytest --doctest-modules music21_tools/theoryAnalysis/theoryAnalyzer.py
+```
+
+
+## Releasing new versions
+
+Bump the version in `pyproject.toml` to the new version and then:
+
+```sh
+trash dist
+uv build
+uv run --with twine twine upload dist/*
+git tag vXX.X
+git push --tags
 ```
 
 ## Contact
