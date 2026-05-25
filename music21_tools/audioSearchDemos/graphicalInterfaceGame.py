@@ -72,7 +72,7 @@ class SFApp():
         self.boxName4.grid(row=2, column=2)
 
         self.textRound = tkinter.StringVar()
-        self.boxName5 = tkinter.Label(master, width=2*self.sizeButton, textvariable=self.textRound)
+        self.boxName5 = tkinter.Label(master, width=2 * self.sizeButton, textvariable=self.textRound)
         self.textRound.set('Round')
         self.boxName5.grid(row=2, column=1)
 

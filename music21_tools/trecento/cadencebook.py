@@ -530,7 +530,7 @@ class TrecentoCadenceWork:
         beginSnippetPositions = self.beginSnippetPositions
         endSnippetPositions = self.endSnippetPositions  # overridden in class Ballata
         if not endSnippetPositions:
-            endSnippetPositions = range(12, len(self.rowvalues)-1, 5)
+            endSnippetPositions = range(12, len(self.rowvalues) - 1, 5)
         returnSnips = []
         for i in beginSnippetPositions:
             if i == beginSnippetPositions[0]:

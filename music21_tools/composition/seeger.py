@@ -76,7 +76,7 @@ def lowerLines():
     # retrograde
     totalNotes = len(myRow)
     for i in range(2, totalNotes + 1):  # skip last note
-        el = myRow[totalNotes-i]
+        el = myRow[totalNotes - i]
         if 'Note' in el.classes:
             elNote = el.transpose('A1')
             elNote.pitch.simplifyEnharmonic(inPlace=True)

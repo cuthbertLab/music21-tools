@@ -246,7 +246,7 @@ def findRetrogradeVoices(show=True):
                 totIntervals += 1
                 n.lyric = str(thisScore)
 
-            finalScore = int(100*(consScore + 0.0)/totIntervals)
+            finalScore = int(100 * (consScore + 0.0) / totIntervals)
             qj.insert(0, qjChords.flatten())
             qj2.flatten().notesAndRests[0].addLyric('Trans: ' + str(transpose))
             qj2.flatten().notesAndRests[0].addLyric('Invert: ' + str(invert))
@@ -309,7 +309,7 @@ def prepareSolution(triplumTup, ctTup, tenorTup):
         totIntervals += 1
         n.lyric = str(thisScore)
 
-    return (qjChords, (consScore/(totIntervals + 0.0)), qjSolved)
+    return (qjChords, (consScore / (totIntervals + 0.0)), qjSolved)
 
 def getStrengthForNote(n):
     '''

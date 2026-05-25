@@ -88,10 +88,10 @@ class TonalityCounter:
         streamName = self.streamName
         allScores = stream.Opus()
 
-        myDict = {'A': defaultdict(lambda:False), 'B': defaultdict(lambda:False),
-                  'C': defaultdict(lambda:False), 'D': defaultdict(lambda:False),
-                  'E': defaultdict(lambda:False), 'F': defaultdict(lambda:False),
-                  'G': defaultdict(lambda:False)}
+        myDict = {'A': defaultdict(lambda: False), 'B': defaultdict(lambda: False),
+                  'C': defaultdict(lambda: False), 'D': defaultdict(lambda: False),
+                  'E': defaultdict(lambda: False), 'F': defaultdict(lambda: False),
+                  'G': defaultdict(lambda: False)}
         for thisWork in self.worksList:
             incip = thisWork.incipit
 

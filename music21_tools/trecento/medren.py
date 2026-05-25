@@ -68,7 +68,7 @@ allowableStrettoIntervals = {
              (4, False)],
     }
 
-_validMensuralTypes = [None,'maxima', 'longa', 'brevis', 'semibrevis', 'minima', 'semiminima']
+_validMensuralTypes = [None, 'maxima', 'longa', 'brevis', 'semibrevis', 'minima', 'semiminima']
 _validMensuralAbbr = [None, 'Mx', 'L', 'B', 'SB', 'M', 'SM']
 
 
@@ -1479,11 +1479,11 @@ class Ligature(base.Music21Object):
             self.stems[index] = (direction, orientation)
         elif orientation in ['left', 'right']:
             if index == 0:
-                prevStem = (None,None)
+                prevStem = (None, None)
                 nextStem = self.getStem(1)
             elif index == self._ligatureLength() - 1:
                 prevStem = self.getStem(self._ligatureLength() - 2)
-                nextStem = (None,None)
+                nextStem = (None, None)
             else:
                 prevStem = self.getStem(index - 1)
                 nextStem = self.getStem(index + 1)
@@ -1514,11 +1514,11 @@ class Ligature(base.Music21Object):
             else:
                 raise MedRenException(
                     'a stem with orientation "%s" not permitted at index %d' %
-                    (orientation,index))
+                    (orientation, index))
         else:
             raise MedRenException(
                 'direction "%s" and orientation "%s" not supported for ligatures' %
-                (direction,orientation))
+                (direction, orientation))
         self._notes = []
 
     def isReversed(self, index):

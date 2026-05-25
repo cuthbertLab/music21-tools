@@ -62,7 +62,7 @@ def ch1_basic_I_B(show=True, *arguments, **keywords):
     '''
     pitches = [('a#', 'b'), ('b-', 'c#'), ('g-', 'a'), ('d-', 'c##'),
                ('f', 'e'), ('f#', 'e')]
-    for i,j in pitches:
+    for i, j in pitches:
         n1 = note.Note(i)
         n2 = note.Note(j)
         i1 = interval.notesToInterval(n1, n2)
@@ -550,10 +550,10 @@ def ch2_basic_I_A_1(show=True, *arguments, **keywords):
     ex = stream.Stream()
     ex.insert(key.KeySignature(1))
 
-    data = [[('d6',1.5)],
-            [('d6',1.5)],
-            [('d6',.5),('c6',.5),('b5',.5)],
-            [('rest',.5),('b5',.25),('c6',.25),('d6',.5)],
+    data = [[('d6', 1.5)],
+            [('d6', 1.5)],
+            [('d6', .5), ('c6', .5), ('b5', .5)],
+            [('rest', .5), ('b5', .25), ('c6', .25), ('d6', .5)],
            ]
 
     for mData in data:
@@ -924,7 +924,7 @@ def ch2_writing_III_B(src):
                 group.append(n)
             else: # end of tied notes
                 group.append(n)
-                ql= sum([x.quarterLength for x in group])
+                ql = sum([x.quarterLength for x in group])
                 for i in range(len(group)):
                     if i == 0: # keep first, extend dur
                         group[i].quarterLength = ql
@@ -1589,12 +1589,12 @@ def ch5_writing_IV_A(show=True, *arguments, **keywords):
     ex.insert(meter.TimeSignature('6/4'))
     ex.insert(key.KeySignature(3))
 
-    for p, d in [(None,1), ('f#3',1),('g#3',1),('a3',4),
-                 ('g#3',.5),('a#3',.5),('b3',2),
-                 ('a#3',.5),('g#3',.5),('a#3',.5),('b#3',.5),
-                 ('c#4',1.5),('b3',.5),('a3',.5),('c#4',.5),('b3',.5),('a3',.5),
-                 ('g#3',2),('f#3',3), (None,.5), ('c#4',.5),('c#4',.5),
-                 ('b3',.5),('b3',.5),('a#3',.5)]:
+    for p, d in [(None, 1), ('f#3', 1), ('g#3', 1), ('a3', 4),
+                 ('g#3', .5), ('a#3', .5), ('b3', 2),
+                 ('a#3', .5), ('g#3', .5), ('a#3', .5), ('b#3', .5),
+                 ('c#4', 1.5), ('b3', .5), ('a3', .5), ('c#4', .5), ('b3', .5), ('a3', .5),
+                 ('g#3', 2), ('f#3', 3), (None, .5), ('c#4', .5), ('c#4', .5),
+                 ('b3', .5), ('b3', .5), ('a#3', .5)]:
         if p == None:
             n = note.Rest()
         else:

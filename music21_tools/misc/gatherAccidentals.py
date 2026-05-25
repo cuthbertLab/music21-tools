@@ -122,7 +122,7 @@ def getAccidentalCount(score, includeNonAccidentals=False, excludeZeros=True):
             accidental = p.accidental
             if accidental is None:
                 if includeNonAccidentals:
-                    tally['natural'] +=1
+                    tally['natural'] += 1
                 continue
             tally[accidental.name] += 1
     return _deleteZeros(tally, excludeZeros)

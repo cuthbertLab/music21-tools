@@ -112,7 +112,7 @@ def pendulumMusic(show=True,
             elif ps < 36:
                 active = 3
 
-            jQuant = round(j*8)/8.0
+            jQuant = round(j * 8) / 8.0
 
             establishedChords = parts[active].getElementsByOffset(jQuant)
             if len(establishedChords) == 0:
@@ -123,7 +123,7 @@ def pendulumMusic(show=True,
                 c = establishedChords[0]
                 c.append(p)
 
-            j += loopLength/(maxNotesPerLoop - totalParts + i)
+            j += loopLength / (maxNotesPerLoop - totalParts + i)
             # j += (8+(8-i))/8.0
         p = octo.next(p, stepSize=scaleStepSize)
 

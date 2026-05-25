@@ -204,7 +204,7 @@ class PolyphonicSnippet(stream.Score):
         timeSigLength = self.timeSig.barDuration.quarterLength
         thisStreamLength = thisStream.duration.quarterLength
         shortness = self.findLongestCadence() - thisStreamLength
-        shortmeasures = shortness/timeSigLength
+        shortmeasures = shortness / timeSigLength
         return shortmeasures
 
 

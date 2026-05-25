@@ -21,9 +21,9 @@ from music21 import *
 def smooth01(steps):
     # f(x) = arcsin(2x-1)/pi+1/2
     out = []
-    for i in range(1, steps+1):
-        frac = i/steps
-        out.append(math.asin(2*frac-1)/math.pi + 1/2)
+    for i in range(1, steps + 1):
+        frac = i / steps
+        out.append(math.asin(2 * frac - 1) / math.pi + 1 / 2)
     return out
 
     # return [0] + [math.asin(2*(i/steps)+1)/math.pi + 1/2 for i in range(1, steps-1)] + [1]
@@ -78,16 +78,16 @@ def fade_note(
 ):
     reps = end_rep - start_rep
     smooths = smooth01(reps)
-    positions = [(1-s) * pos_offset_at_zero for s in smooths]
+    positions = [(1 - s) * pos_offset_at_zero for s in smooths]
     if fade_out:
-        smooths = [1-s for s in smooths]
+        smooths = [1 - s for s in smooths]
 
     m: stream.Measure
     for i, m in enumerate(part.getElementsByClass('Measure')):
         if i < start_rep:
             continue
         found = m.getElementsByClass(note.Note).getElementsByGroup(group_name)
-        index_in_smooths = i-start_rep if i < end_rep else end_rep-1-start_rep
+        index_in_smooths = i - start_rep if i < end_rep else end_rep - 1 - start_rep
         # print(index_in_smooths, smooths)
         for n in found:
             n.volume.velocityScalar = smooths[index_in_smooths]

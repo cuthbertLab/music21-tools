@@ -222,7 +222,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
             for myPitch in myPitches:
                 myInverse.append(11 - myPitch)
             myInverseMin = min(myInverse)
-            for i,p in enumerate(myInverse):
+            for i, p in enumerate(myInverse):
                 myInverse[i] = p - myInverseMin
             myInverse = sorted(myInverse)
             myInverseString = ''.join([str(p) for p in myInverse])

@@ -273,7 +273,7 @@ class ContourFinder:
         myKeys.sort()
         numKeys = len(myKeys)
 
-        spacing = (maxKey)/(numKeys-1.0)
+        spacing = (maxKey) / (numKeys - 1.0)
         res = {}
         i = 0.0
 
@@ -363,14 +363,14 @@ class ContourFinder:
         '''
 
         score = 0
-        n=0
+        n = 0
 
         for measure in inpStream:
             if 'Measure' in measure.classes:
                 for chord in measure:
                     if 'Chord' in chord.classes:
                         dur = chord.duration.quarterLength
-                        score += chordMetric(chord)*dur
+                        score += chordMetric(chord) * dur
                         n += dur
 
         if n != 0:
@@ -395,7 +395,7 @@ class ContourFinder:
         True
         '''
 
-        return self._calcGenericMetric(inpStream, lambda x: 1-x.isConsonant() )
+        return self._calcGenericMetric(inpStream, lambda x: 1 - x.isConsonant() )
 
     def spacingMetric(self, inpStream):
         '''
@@ -416,8 +416,8 @@ class ContourFinder:
                 return (pitches[1] - pitches[0])
             else:
                 res += (pitches[1] - pitches[0]) ** (0.7)
-                for i in range(1, len(pitches)-1):
-                    res += (pitches[i + 1]-pitches[i]) ** (1.5)
+                for i in range(1, len(pitches) - 1):
+                    res += (pitches[i + 1] - pitches[i]) ** (1.5)
             return res
 
         return self._calcGenericMetric(inpStream, spacingForChord)
@@ -733,7 +733,7 @@ def _runExperiment():
 
         print(currentNum)
 
-        currentNum +=1
+        currentNum += 1
 
 #         '''
 #         if chorale == 'bach/bwv277':
@@ -759,7 +759,7 @@ def _runExperiment():
 #             print("too long")
 #             continue
 #         '''
-        cf= ContourFinder(chorale)
+        cf = ContourFinder(chorale)
         ac.addPieceToContour(cf, 'dissonance')
         ac.addPieceToContour(cf, 'tonality')
         ac.addPieceToContour(cf, 'spacing')

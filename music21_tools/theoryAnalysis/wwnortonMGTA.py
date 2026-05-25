@@ -55,12 +55,12 @@ class wwnortonExercise:
         self.modifiedExercise = copy.deepcopy(self.originalExercise)
         self.addAuxillaryParts()
 
-    def manuallyLoadOriginalExercise(self,sc):
+    def manuallyLoadOriginalExercise(self, sc):
         self.originalExercise = sc
         self.modifiedExercise = copy.deepcopy(self.originalExercise)
         self.addAuxillaryParts()
 
-    def loadStudentExercise(self,sc):
+    def loadStudentExercise(self, sc):
         for n in sc.flatten().getElementsByClass('Note'):
             n.color = 'black'
         self.studentExercise = sc
@@ -69,12 +69,12 @@ class wwnortonExercise:
         return self.blankExercise
 
     def _partOffsetsToPartIndecies(self):
-        for (i,el) in enumerate(self.modifiedExercise.elements):
+        for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = i
         #self.modifiedExercise.show('text')
 
     def _partOffsetsToZero(self):
-        for (i,el) in enumerate(self.modifiedExercise.elements):
+        for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = 0
         #self.modifiedExercise.show('text')
 
@@ -83,7 +83,7 @@ class wwnortonExercise:
             existingPartNum = self.pn[partName]
             if existingPartNum > newPartNum:
                 shiftedPartNum = existingPartNum + 1
-            elif existingPartNum == newPartNum and direction =='above':
+            elif existingPartNum == newPartNum and direction == 'above':
                 shiftedPartNum = existingPartNum + 1
             else:
                 shiftedPartNum = existingPartNum
@@ -144,14 +144,14 @@ class wwnortonExercise:
         for c in newPart.flatten().getElementsByClass('Clef'):
             c.sign = 'C'
             c.line = 3
-        self._updatepn(partNum,direction=direction)
+        self._updatepn(partNum, direction=direction)
         if direction == 'above':
             insertLoc = existingPartOffset - 0.5
             self.pn[newPartName] = partNum
         elif direction == 'below' or direction is None:
             insertLoc = existingPartOffset + 0.5
             self.pn[newPartName] = partNum + 1
-        self.modifiedExercise.insert(insertLoc,newPart)
+        self.modifiedExercise.insert(insertLoc, newPart)
         #self.modifiedExercise.show('text')
         # Somehow needed for sorting...
         self.modifiedExercise._reprText()
@@ -208,13 +208,13 @@ class ex11_1_I(wwnortonExercise):
                                        direction='below')
 
     def checkExercise(self):
-        self.ads.setKeyMeasureMap(self.studentExercise,{0:'F'})
+        self.ads.setKeyMeasureMap(self.studentExercise, {0: 'F'})
         self.ads.identifyMotionType(self.studentExercise, self.pn['part1'],
-                                          self.pn['part2'],dictKey='motionType')
+                                          self.pn['part2'], dictKey='motionType')
         self.ads.identifyScaleDegrees(self.studentExercise, self.pn['part1'],
                                             dictKey='p1ScaleDegrees')
         self.ads.identifyHarmonicIntervals(self.studentExercise, self.pn['part1'],
-                                                 self.pn['part2'],dictKey='harmIntervals')
+                                                 self.pn['part2'], dictKey='harmIntervals')
 
         scaleDegreeOffsetFunc = lambda resultObj: resultObj.n.offset
         scaleDegreeLyricTextFunc = lambda resultObj: resultObj.value
@@ -262,7 +262,7 @@ class ex11_3_A(wwnortonExercise):
                                        direction = 'below')
 
     def checkExercise(self):
-        self.ads.setKeyMeasureMap(self.studentExercise, {0:'G', 5:'D', 8:'F'})
+        self.ads.setKeyMeasureMap(self.studentExercise, {0: 'G', 5: 'D', 8: 'F'})
         self.ads.identifyHarmonicIntervals(self.studentExercise, self.pn['part1'],
                                                  self.pn['part2'], dictKey='harmIntervals')
         self.ads.identifyCommonPracticeErrors(self.studentExercise, self.pn['part1'],

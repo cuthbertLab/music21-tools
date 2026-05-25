@@ -174,7 +174,7 @@ def xtestChinaEuropeSimpler():
             knnWrong += 1
 
     total = float(len(testData))
-    print (majWrong/total, knnWrong/total)
+    print (majWrong / total, knnWrong / total)
 
 
 def prepareTrecentoCadences():
@@ -232,7 +232,7 @@ def testTrecentoSimpler():
             knnWrong += 1
 
     total = float(len(testData))
-    print (majWrong/total, knnWrong/total)
+    print (majWrong / total, knnWrong / total)
 
 def wekaCommands():
     '''

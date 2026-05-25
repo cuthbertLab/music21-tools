@@ -58,11 +58,11 @@ def analyzeBooks(books=(3,), start=1, end=20, show=False, strict=False):
             filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, i)
             if strict == True:
                 analysis = corpus.parse(filename)
-                print(book,i)
+                print(book, i)
             else:
                 try:
                     analysis = corpus.parse(filename)
-                    print(book,i)
+                    print(book, i)
                 except Exception:
                     print('Cannot parse %s, maybe it does not exist...' % (filename))
                     continue
@@ -193,11 +193,11 @@ def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
             filename = 'monteverdi/madrigal.%s.%s.xml' % (book, i)
             if strict == True:
                 c = corpus.parse(filename)
-                print (book,i)
+                print (book, i)
             else:
                 try:
                     c = corpus.parse(filename)
-                    print (book,i)
+                    print (book, i)
                 except:
                     print ('Cannot parse %s, maybe it does not exist...' % (filename))
                     continue

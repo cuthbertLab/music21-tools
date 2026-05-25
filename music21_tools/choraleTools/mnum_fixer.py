@@ -58,7 +58,7 @@ def runOne(c, cName):
             truncated = True if not perfect and short < (barQl / 2) else False
             half = True if not perfect and short == (barQl / 2) else False
 
-            if half and priorMeasureWasIncomplete==False:
+            if half and priorMeasureWasIncomplete == False:
                 priorMeasureWasIncomplete = True
                 priorMeasureDuration = mQl
                 priorMeasure = m

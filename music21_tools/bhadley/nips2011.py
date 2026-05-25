@@ -203,7 +203,7 @@ def getLeadsheetDatesFromBillboard():
     UPPERLIMIT = 2011
     dates = range(LOWERLIMIT, UPPERLIMIT)
     for i in dates:
-        if i !=2008 and i != 2009:
+        if i != 2008 and i != 2009:
             address = 'http://www.jamrockentertainment.com/billboard-music-top-100-songs-listed-by-year/top-100-songs-%s.html' % i
             url = urlopen(address)
             html = url.read()
@@ -217,7 +217,7 @@ def getLeadsheetDatesFromBillboard():
                 words.pop(0)
                 for a in words:
                     a.strip()
-                    pretty = pretty +' '+ a
+                    pretty = pretty + ' ' + a
                 if song == True:
                     try:
                         j = float(x)
@@ -336,7 +336,7 @@ def getLeadsheetDatesFromBillboard():
                 outputjson = outputjson + '{"%s":[%s,%s]}, ' % (i, date, rank)
         if (i % 500) == 0:
             j = ((i - 1000) / (11938.00)) * 100.00
-            print ('%s %%' %round(j, 2))
+            print ('%s %%' % round(j, 2))
             print (outputjson)
 
 
@@ -410,33 +410,33 @@ def probabilityOfChance():
                 elif len(guessesNew) > NUM_NEW_PIECES:
                     guess = old
                 if answer == guess:
-                    numCorrect +=1
+                    numCorrect += 1
             avg += numCorrect / TOTAL_TRIALS
 
         p = avg / 10000.0
         return p
 
-    def BinomialCoefficient(n,k):
+    def BinomialCoefficient(n, k):
         if n > k:
-            b = factorial(n) / (factorial(k)*factorial(n-k))
+            b = factorial(n) / (factorial(k) * factorial(n - k))
             return b
 
-    def BinomialProbability(n,k,p,q):
-        nchoosek = BinomialCoefficient(n,k)
-        ptothek = pow(p,k)
-        qtothenminusk = pow(q, (n-k) )
+    def BinomialProbability(n, k, p, q):
+        nchoosek = BinomialCoefficient(n, k)
+        ptothek = pow(p, k)
+        qtothenminusk = pow(q, (n - k) )
         return nchoosek * ptothek * qtothenminusk
 
     k = 148 #number of times music21 found correct date (successes)
     n = TOTAL_TRIALS #total number of trials
     p = getPFromExperiment()
     print ('The probability of a successful guess, as calculated by previous experiment', p)
-    q = 1-p
+    q = 1 - p
     prob = 0.0
     #Probability of getting 148 or more correct (sum
     #the probabilty as k increses from 148 to 214)
-    for k in range(k,TOTAL_TRIALS):
-        prob = prob + BinomialProbability(n,k,p,q)
+    for k in range(k, TOTAL_TRIALS):
+        prob = prob + BinomialProbability(n, k, p, q)
 
     print ('The probability that the computer would guess correctly 69% or more of the time', prob)
 

@@ -58,8 +58,8 @@ def getLandiniRandomStart(i):
 def countCadencePercentages():
     ballatas = cadencebook.BallataSheet()
     totalPieces = 0.0
-    firstNoteTotal = defaultdict(lambda:0)
-    lastNoteTotal = defaultdict(lambda:0)
+    firstNoteTotal = defaultdict(lambda: 0)
+    lastNoteTotal = defaultdict(lambda: 0)
 
     for thisWork in ballatas:
         incipit = thisWork.incipit

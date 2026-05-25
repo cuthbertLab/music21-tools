@@ -125,7 +125,7 @@ class ModalCounterpoint:
         2
         '''
         numHiddenFifths = 0
-        for i in range(len(stream1.notes)-1):
+        for i in range(len(stream1.notes) - 1):
             note1 = stream1.notes[i]
             note2 = stream1.getElementAfterElement(note1, [Note])
             note3 = stream2.playingWhenAttacked(note1)
@@ -300,7 +300,7 @@ class ModalCounterpoint:
 
         '''
         numHiddenOctaves = 0
-        for i in range(len(stream1.notes)-1):
+        for i in range(len(stream1.notes) - 1):
             note1 = stream1.notes[i]
             note2 = stream1.getElementAfterElement(note1, [Note])
             note3 = stream2.playingWhenAttacked(note1)
@@ -750,7 +750,7 @@ class ModalCounterpoint:
         '''
         numBadSteps = 0
         sn = stream1.notes
-        for i in range(len(sn)-1):
+        for i in range(len(sn) - 1):
             note1 = sn[i]
             note2 = sn[i + 1]
             if note2 is not None:

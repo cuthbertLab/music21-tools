@@ -30,7 +30,7 @@ class TheoryResult:
         self.value = ''
         self.currentColor = ''
 
-    def color(self,color):
+    def color(self, color):
         '''
         Bass-class method to color the individual elements in the theory result object.
         Polymorphically colors the theory result objects based on the type of object.
@@ -260,7 +260,7 @@ class VerticalityNTupletTheoryResult(TheoryResult):
                   self.vsnt.tnlsDict.keys())
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[partNum].color(color)
-        elif self.partNumIdentified !=None:
+        elif self.partNumIdentified != None:
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[self.partNumIdentified].color(color, [2] )
 
@@ -273,7 +273,7 @@ class VerticalityNTupletTheoryResult(TheoryResult):
         Default editorialMarkDict = {2:[1]}
         '''
         if editorialMarkDict is None:
-            editorialMarkDict = {2:[1]}
+            editorialMarkDict = {2: [1]}
         for vsNum, partNumList in editorialMarkDict.items():
             for unused_counter_partNum in partNumList:
                 self.vsnt.verticalities[vsNum].getObjectsByPart(0,

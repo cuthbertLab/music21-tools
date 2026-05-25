@@ -170,7 +170,7 @@ class SFApp():
         topCut = 0
         bottomCut = 0
         rightCut = 0
-        numberPixels = int(math.sqrt(len(data)/3000000)*4)
+        numberPixels = int(math.sqrt(len(data) / 3000000) * 4)
 
         #Find top
         for i in range(0, len(data), numberPixels + int(resX / 10)):

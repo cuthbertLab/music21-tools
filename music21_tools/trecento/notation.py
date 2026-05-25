@@ -118,8 +118,8 @@ class MensuralTypeModifier(tinyNotation.Modifier):
 
 class FlagsModifier(tinyNotation.Modifier):
     def postParse(self, m21Obj):
-        direction = {'': None, 'S': 'side', 'D': 'down', 'U':'up'}
-        orientation = {'': None,'L': 'left', 'R': 'right'}
+        direction = {'': None, 'S': 'side', 'D': 'down', 'U': 'up'}
+        orientation = {'': None, 'L': 'left', 'R': 'right'}
         for flag in self.modifierData.split('/'):
             if len(flag) > 1 and (flag[0] in direction) and (flag[1] in orientation):
                 m21Obj.setFlag(direction[flag[0]], orientation[flag[1]])
@@ -129,7 +129,7 @@ class FlagsModifier(tinyNotation.Modifier):
 
 class StemsModifier(tinyNotation.Modifier):
     def postParse(self, m21Obj):
-        direction = {'': None, 'S': 'side', 'D': 'down', 'U':'up'}
+        direction = {'': None, 'S': 'side', 'D': 'down', 'U': 'up'}
         orientation = {'L': 'left', 'R': 'right'}
         if '/' in self.modifierData or len(self.modifierData) == 1:
             for stem in self.modifierData.split('/'):
@@ -680,7 +680,7 @@ def convertBrevisLength(brevisLength, convertedStream, inpDiv=None, measureNumOf
         m.append(startNote)
         measureList.append(m)
 
-        for dummy in range(int(lenList[0]/div.minimaPerBrevis) - 2):
+        for dummy in range(int(lenList[0] / div.minimaPerBrevis) - 2):
             measureNumOffset += 1
 
             tempMeasure = stream.Measure(number=brevisLength.number + measureNumOffset)
@@ -705,7 +705,7 @@ def convertBrevisLength(brevisLength, convertedStream, inpDiv=None, measureNumOf
             elif 'MensuralNote' in mList[i].classes:
                 n = note.Note(mList[i].pitch)
 
-            dur = lenList[i]*mDur
+            dur = lenList[i] * mDur
 
             if (rem - dur) > -0.0001: #Fits w/i measure up to rounding error
                 n.duration = duration.Duration(dur)
@@ -764,11 +764,11 @@ class BrevisLengthTranslator:
         self.brevisLength = BL
 
         self.unchangeableNoteLengthsList = []
-        self.unknownLengthsDict = {'semibrevis':[],
-                                   'semibrevis_downstem':[],
-                                   'semiminima_right_flag':[],
-                                   'seminima_left_flag':[],
-                                   'semiminima_rest':[]
+        self.unknownLengthsDict = {'semibrevis': [],
+                                   'semibrevis_downstem': [],
+                                   'semiminima_right_flag': [],
+                                   'seminima_left_flag': [],
+                                   'semiminima_rest': []
                                    }
         self.knownLengthsList = []
 
@@ -817,7 +817,7 @@ class BrevisLengthTranslator:
         '''
         div = self.div
         BL = self.brevisLength
-        typeStrength = {'semibrevis': 1.0, 'minima': 0.5, 'semiminima':0.25}
+        typeStrength = {'semibrevis': 1.0, 'minima': 0.5, 'semiminima': 0.25}
 
         beatStrength = 0
         strength = 0
@@ -830,9 +830,9 @@ class BrevisLengthTranslator:
                 if math.isclose(curBeat % 3, 0):
                     beatStrength = 1.0
                 elif curBeat % 3 - 1 or i % 3 == 2:
-                    beatStrength = 1/3
+                    beatStrength = 1 / 3
                 else:
-                    beatStrength = 1/9
+                    beatStrength = 1 / 9
             elif div.standardSymbol in ['.q.', '.o.', '.d.']:
                 if curBeat % 4 == 0:
                     beatStrength = 1.0
@@ -1095,11 +1095,11 @@ class BrevisLengthTranslator:
                 if 'MensuralRest' in obj.classes:
                     semiminima_rest_list.append(i)
 
-        retDict = {'semibrevis':semibrevis_list,
-                   'semibrevis_downstem':semibrevis_downstem,
-                   'semiminima_right_flag':semiminima_right_flag_list,
-                   'semiminima_left_flag':semiminima_left_flag_list,
-                   'semiminima_rest':semiminima_rest_list,
+        retDict = {'semibrevis': semibrevis_list,
+                   'semibrevis_downstem': semibrevis_downstem,
+                   'semiminima_right_flag': semiminima_right_flag_list,
+                   'semiminima_left_flag': semiminima_left_flag_list,
+                   'semiminima_rest': semiminima_rest_list,
                    }
 
         self.numberOfSemibreves = len(retDict['semibrevis'])
@@ -1188,13 +1188,13 @@ class BrevisLengthTranslator:
         knownLengthsList = unchangeableNoteLengthsList[:]
 
         if self.numberOfSemibreves > 0:
-            avgSBLength = minRem/self.numberOfSemibreves
+            avgSBLength = minRem / self.numberOfSemibreves
             for ind in semibrevis_list:
                 if avgSBLength == 2:
                     knownLengthsList[ind] = 2.0
                     minRem -= 2.0
                 elif (2 < avgSBLength) and (avgSBLength < 3):
-                    if (ind < (len(self.brevisLength)-1) and
+                    if (ind < (len(self.brevisLength) - 1) and
                             self.brevisLength[ind + 1].mensuralType == 'minima'):
                         knownLengthsList[ind] = 2.0
                         minRem -= 2.0
@@ -1316,7 +1316,7 @@ class BrevisLengthTranslator:
                     knownLengthsList[semibrevis_list[-1]] = max(minRem, 3.0)
                     minRem -= knownLengthsList[-1]
 
-                    extend_num = min(knownLengthsList[-1]- 3, len(extend_list))
+                    extend_num = min(knownLengthsList[-1] - 3, len(extend_list))
                     shrink_tup += -1,
 
                 elif self.numberOfSemibreves > 0: #SBs, but no last SB
@@ -1468,7 +1468,7 @@ class BrevisLengthTranslator:
             diff_tup = ()
             shrink_tup = ()
 
-            lengths = [(0.5, 0.5), (2/3, 0.5), (0.5, 2/3), (2/3, 2/3)]
+            lengths = [(0.5, 0.5), (2 / 3, 0.5), (0.5, 2 / 3), (2 / 3, 2 / 3)]
 
             for (left_length, right_length) in lengths:
                 for ind in semiminima_left_flag_list:
@@ -1556,7 +1556,7 @@ class BrevisLengthTranslator:
 
                         knownLengthsList_changeable[semibrevis_downstem_index] = max(
                                                                         minRem_changeable, 2.0)
-                        extend_num = min(6*minRem_changeable - 15.0, len(extend_list))
+                        extend_num = min(6 * minRem_changeable - 15.0, len(extend_list))
                         minRem_changeable -= knownLengthsList_changeable[semibrevis_downstem_index]
 
                         shrink_tup += (semibrevis_downstem_index,)
@@ -1566,7 +1566,7 @@ class BrevisLengthTranslator:
 
                             knownLengthsList_changeable[semibrevis_list[-1]] = max(
                                                                     minRem_changeable, 2.0)
-                            extend_num = min(6*minRem_changeable - 12.0, len(extend_list))
+                            extend_num = min(6 * minRem_changeable - 12.0, len(extend_list))
                             minRem_changeable -= max(minRem_changeable, 2.0)
 
                             shrink_tup += -1,
@@ -1578,7 +1578,7 @@ class BrevisLengthTranslator:
 
                     change_tup += (extend_list,)
                     num_tup += (extend_num,)
-                    diff_tup += (1/6,)
+                    diff_tup += (1 / 6,)
 
                     if minRem_changeable > -0.0001:
                         knownLengthsList_changeable, minRem_changeable = (
@@ -1731,7 +1731,7 @@ class BrevisLengthTranslator:
 
         else:
 
-            lengths = [(0.5, 0.5), (2/3, 0.5), (0.5, 2/3), (2/3, 2/3)]
+            lengths = [(0.5, 0.5), (2 / 3, 0.5), (0.5, 2 / 3), (2 / 3, 2 / 3)]
             strength = 0
 
             for (left_length, right_length) in lengths:
@@ -1845,7 +1845,7 @@ class BrevisLengthTranslator:
 
                 change_tup += extend_list_1, extend_list_2
                 num_tup += extend_num_1, extend_num_2
-                diff_tup += (2.0, 1/6)
+                diff_tup += (2.0, 1 / 6)
 
                 if minRem_changeable > -0.0001:
                     knownLengthsList_changeable, minRem_changeable = (
@@ -1887,7 +1887,7 @@ def _allCombinations(combinationList, num):
     if num > 0:
         for i in range(len(combinationList)):
             comb = [combinationList[i]]
-            for c in _allCombinations(combinationList[(i + 1):], num-1):
+            for c in _allCombinations(combinationList[(i + 1):], num - 1):
                 combs.append(comb + c)
     combs.reverse()
     combs.insert(0, [])

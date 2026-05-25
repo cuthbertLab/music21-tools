@@ -158,7 +158,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
 def checkValidity():
     ballataObj = cadencebook.BallataSheet()
 
-    for i in range(1,378):
+    for i in range(1, 378):
         randomPiece = ballataObj.makeWork(i) #random.randint(231, 312)
         try:
             unused_incipitStreams = randomPiece.incipitStreams()

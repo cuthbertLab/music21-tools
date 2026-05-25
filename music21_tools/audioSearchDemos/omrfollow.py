@@ -92,10 +92,10 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
         for i in range(8): # top 8 searches
             topStream = l[i]
             scorePage = topStream.pageNumber - 1
-            scores[scorePage] += (topStream.matchProbability / (i + 1.5))*10
+            scores[scorePage] += (topStream.matchProbability / (i + 1.5)) * 10
 
         print('\nBest guesses (pg#, starting measure, probability)')
-        for i,st in enumerate(l):
+        for i, st in enumerate(l):
             print(st.pageNumber, st.startMeasure, st.matchProbability)
             if i >= 7:
                 break
