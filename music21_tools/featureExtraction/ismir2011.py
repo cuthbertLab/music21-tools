@@ -124,7 +124,8 @@ def prepareChinaEurope2():
     ds2.write('d:/desktop/folkTest.tab')
 
 def testChinaEuropeFull():
-    import orange, orngTree
+    import orange
+    import orngTree
     data1 = orange.ExampleTable('d:/desktop/1.tab')
     data2 = orange.ExampleTable('d:/desktop/2.tab')
 
@@ -152,7 +153,7 @@ def testChinaEuropeFull():
 
 # this test requires orange and related files
 def xtestChinaEuropeSimpler():
-    import orange, orngTree # @UnusedImport @UnresolvedImport
+    import orange
 
     trainData = orange.ExampleTable('ismir2011_fb_folkTrain.tab')
     testData  = orange.ExampleTable('ismir2011_fb_folkTest.tab')
@@ -210,7 +211,7 @@ def prepareTrecentoCadences():
 
 
 def testTrecentoSimpler():
-    import orange, orngTree # @UnusedImport @UnresolvedImport
+    import orange
 
     trainData = orange.ExampleTable('d:/desktop/trecento2.tab')
     testData  = orange.ExampleTable('d:/desktop/trecento1.tab')

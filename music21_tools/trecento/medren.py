@@ -662,7 +662,7 @@ class MensuralNote(GeneralMensuralNote, note.Note):
             note.Note.__init__(self, arguments[0], **keywords)  # do not replace with super
         else:
             note.Note.__init__(self, **keywords)  # do not replace with super
-            
+
         GeneralMensuralNote.__init__(self)  # due to different arguments, keywords
         self._gettingDuration = False
         self._mensuralType = 'brevis'

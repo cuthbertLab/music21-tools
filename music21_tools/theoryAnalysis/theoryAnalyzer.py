@@ -161,10 +161,10 @@ from music21 import chord
 from music21 import corpus
 from music21 import duration
 from music21 import exceptions21
-from music21 import harmony
+from music21 import harmony  # used in doctests
 from music21 import interval
 from music21 import key
-from music21 import meter
+from music21 import meter  # used in doctests
 from music21 import note
 from music21 import roman
 from music21 import stream
@@ -2006,7 +2006,7 @@ class Analyzer:
 
         def testFunction(vs, score):
             noteList = vs.getObjectsByClass('Note')
-            if not None in noteList:
+            if None not in noteList:
                 inChord = chord.Chord(noteList)
                 inKey = self.getKeyAtMeasure(score, noteList[0].measureNumber)
                 chordBass = noteList[-1]
@@ -2471,7 +2471,6 @@ class Test(unittest.TestCase):
 #         self.assertEqual(averageMotion, 4)
 #
     def testFastVerticalityCheck(self):
-        from music21 import stream
         sc = stream.Score()
         part0 = stream.Part()
         p0measure1 = stream.Measure(number=1)

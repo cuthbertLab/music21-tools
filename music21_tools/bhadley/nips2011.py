@@ -58,7 +58,7 @@ def nipsBuild(useOurExtractors=True, buildSet=1, evaluationMethod='coarse'):
 
     entryDict = {}
     for d in entries:
-        sid = d.keys()[0];
+        sid = d.keys()[0]
         entryDict[int(sid)] = d[sid]
 
 

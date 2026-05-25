@@ -204,7 +204,7 @@ def _deleteZeros(tally, excludeZeros):
     '''
     if excludeZeros:
         for k in list(tally.keys()):
-            if tally[k] is 0:
+            if tally[k] == 0:
                 del tally[k]
     return tally
 

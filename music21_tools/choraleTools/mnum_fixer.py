@@ -14,7 +14,7 @@ from music21 import *
 p = Path('/Users/Cuthbert/Desktop/Norman_Schmidt_Chorales')
 pOut = p.parent / 'Out_Chorales'
 
-def run():    
+def run():
     files = list(p.iterdir())
     filenames = [fp.name for fp in files]
     pos = 0
@@ -29,7 +29,7 @@ def run():
             continue
         pos += 1
         runOne(c, cName)
-        
+
 def runOne(c, cName):
     pName = p / cName
     newScore = converter.parse(pName)
@@ -77,7 +77,7 @@ def runOne(c, cName):
                 m.number = mn - measureNumberShift
                 m.numberSuffix = ms
                 partNumSuffix.append((mn - measureNumberShift, ms))
-                
+
             elif perfect:
                 priorMeasureWasIncomplete = False
                 priorMeasureDuration = mQl
@@ -102,7 +102,7 @@ def runOne(c, cName):
                     ms = ms + 'x'
                 m.number = mn - measureNumberShift
                 m.numberSuffix = ms
-                partNumSuffix.append((mn - measureNumberShift, ms))                
+                partNumSuffix.append((mn - measureNumberShift, ms))
             elif truncated:
                 priorMeasureWasIncomplete = True
                 m.paddingRight = short
@@ -141,11 +141,11 @@ def runOne(c, cName):
                 measureNumberShift += 1
                 m.number = mn - measureNumberShift
                 partNumSuffix.append((mn - measureNumberShift, ms))
-        
+
         partSuffixesTuple = tuple(partNumSuffix)
         allSuffixesByPart.add(partSuffixesTuple)
-        
-        
+
+
     if len(allSuffixesByPart) != 1:
         print('Multiple conflicting measures!', cName)
         print(cName, allSuffixesByPart)
@@ -157,14 +157,14 @@ def runOne(c, cName):
         sKNew = str(kNew)
         if kOrig.sharps != kNew.sharps:
             print('Key changed from', kOrig, kNew)
-        
+
         if sKNew != sKOrig:
             kNew.activeSite.replace(kNew, kOrig)
             analysisKey = newScore.analyze('key')
             print('Mode would have been changed from ', sKOrig, sKNew)
             if str(analysisKey) != sKOrig:
                 print('Key mismatch: ', sKOrig, sKNew, str(analysisKey))
-            
+
     except IndexError:
         print('no key in ', cName)
 
@@ -177,10 +177,10 @@ def runOne(c, cName):
 #         if not expander.isExpandable():
 #             #print('incoherent repeats', cName)
 #             try:
-#                 pOrig = expander.process()       
+#                 pOrig = expander.process()
 #             except Exception:
 #                 pass
-# 
+#
 #         pNew = newScore.parts[i]
 #         expander = repeat.Expander(pNew)
 #         if not expander.isExpandable():
@@ -189,7 +189,7 @@ def runOne(c, cName):
 #                 pNew = expander.process()
 #             except Exception:
 #                 pass
-# 
+#
 #         origPitches = tuple([p.nameWithOctave for p in pOrig.pitches])
 #         newPitches = tuple([p.nameWithOctave for p in pNew.pitches])
 #         if origPitches != newPitches:
@@ -202,7 +202,7 @@ def runOne(c, cName):
 #                     continue
 #                 if thisP != newP:
 #                     print(i, thisP, newP)
-            
+
 
 if __name__ == '__main__':
     run()

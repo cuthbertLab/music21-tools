@@ -866,7 +866,7 @@ class BrevisLengthTranslator:
 
         for i, item in enumerate(self.brevisLength):
             if (isinstance(item, medren.MensuralNote) and
-                    (not 'down' in item.getStems()) and
+                    ('down' not in item.getStems()) and
                     (lengths[i] > lastSBLen)):
                 strength = 0
 
