@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/trecento/trecentoCadence.py
-# Purpose:      
+# Purpose:      TinyNotation extensions for representing trecento cadences
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

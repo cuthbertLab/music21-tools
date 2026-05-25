@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/trecento/findTrecentoFragments.py
-# Purpose:      
+# Purpose:      Search the trecento database for matches to unidentified fragments
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

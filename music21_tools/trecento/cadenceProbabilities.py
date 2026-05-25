@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/trecento/cadenceProbabilities.py
-# Purpose:      
+# Purpose:      Estimate how often Francesco's cadences would occur by chance
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

@@ -39,3 +39,27 @@ under `webapps/`. The project is described in:
 > Humanities Conference*, Hamburg, Germany, July 2012.
 
 [PDF available at trecento.com](https://www.trecento.com/research/Cuthbert_Hadley_Johnson_Reyes_Music21_SOA.pdf).
+
+## Running the tests
+
+This project uses [`uv`](https://docs.astral.sh/uv/) and `pytest`. From the
+repository root:
+
+```sh
+# install (creates .venv/ with music21 >= 10 and dev dependencies)
+uv sync
+
+# run the full test + doctest suite
+uv run pytest --doctest-modules music21_tools/
+```
+
+To test a single module:
+
+```sh
+uv run pytest --doctest-modules music21_tools/theoryAnalysis/theoryAnalyzer.py
+```
+
+## Contact
+
+Michael Scott Asato Cuthbert — <michael.asato.cuthbert@gmail.com> —
+[trecento.com](https://www.trecento.com) — GitHub: [@mscuthbert](https://github.com/mscuthbert) / [cuthbertLab](https://github.com/cuthbertLab).

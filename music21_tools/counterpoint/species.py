@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/counterpoint/species.py
-# Purpose:      
+# Purpose:      Tools for working with Species Counterpoint
 #
 # Authors:      Jackie Rogoff
 #               Michael Scott Asato Cuthbert

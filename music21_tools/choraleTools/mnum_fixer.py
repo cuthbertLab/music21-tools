@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/choraleTools/mnum_fixer.py
-# Purpose:      
+# Purpose:      Reconcile Norman Schmidt's Bach chorale numbering with music21's corpus
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

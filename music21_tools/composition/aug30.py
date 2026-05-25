@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/composition/aug30.py
-# Purpose:      
+# Purpose:      Short algorithmic composition demo (originally written 2008-08-30)
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/composition/fadeChord1.py
-# Purpose:      
+# Purpose:      Experiment in fading from one chord to another
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

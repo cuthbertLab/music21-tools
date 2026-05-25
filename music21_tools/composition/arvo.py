@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/composition/arvo.py
-# Purpose:      
+# Purpose:      Demonstrate Arvo Pärt Tintinabulation compositions algorithmically
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

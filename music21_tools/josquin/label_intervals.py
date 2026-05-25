@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/josquin/label_intervals.py
-# Purpose:      
+# Purpose:      Label vertical intervals above the bass at each sonority in a score
 #
 # Authors:      Christopher Ariza
 #               Michael Scott Asato Cuthbert

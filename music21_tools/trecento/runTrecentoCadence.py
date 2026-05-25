@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/trecento/runTrecentoCadence.py
-# Purpose:      
+# Purpose:      Compute statistics about the trecento cadences
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

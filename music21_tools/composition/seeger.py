@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/composition/seeger.py
-# Purpose:      
+# Purpose:      Dynamically generate Ruth Crawford Seeger's String Quartet 1931, mvt. 4
 #
 # Authors:      Michael Scott Asato Cuthbert
 #

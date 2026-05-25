@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Name:         music21_tools/trecento/find_vatican1790.py
-# Purpose:      
+# Purpose:      Search for the Vatican 1790 missing piece among triple-time ballatas
 #
 # Authors:      Michael Scott Asato Cuthbert
 #
