@@ -1322,7 +1322,7 @@ class BrevisLengthTranslator:
                     shrink_tup += -1,
 
                 elif self.numberOfSemibreves > 0:  # SBs, but no last SB
-                    if self.brevisLength[semibrevis_list[-1] + 1].mensuralType == 'minima'
+                    if self.brevisLength[semibrevis_list[-1] + 1].mensuralType == 'minima':
                         knownLengthsList[semibrevis_list[-1]] = 2.0
                         minRem -= 2.0
                         extend_list.append(semibrevis_list[-1])

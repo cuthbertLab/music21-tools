@@ -429,7 +429,7 @@ def multipleSolve():
                                                         continue
                                                         # same as lowestInvert == True and
                                                         #    middleInvert == False
-                                                    if transLowest == 1 and transMiddle == 1
+                                                    if transLowest == 1 and transMiddle == 1:
                                                         continue
                                                         # if transHighest == 4 then it's the same
                                                         # as (-4, -4, 1) except for a few tritones

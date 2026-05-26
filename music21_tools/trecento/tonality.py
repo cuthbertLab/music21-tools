@@ -100,7 +100,7 @@ class TonalityCounter:
             elif self.cadenceName == 'B':
                 cadence = thisWork.cadenceBclos
                 try:
-                    if cadence is None or cadence.parts[streamName] is None
+                    if cadence is None or cadence.parts[streamName] is None:
                         cadence = thisWork.cadenceB
                 except KeyError:
                     cadence = thisWork.cadenceB

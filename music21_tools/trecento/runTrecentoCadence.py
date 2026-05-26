@@ -30,7 +30,7 @@ def countTimeSig():
             pass
         else:
             totalPieces += 1
-            if thisTime in timeSigCounter
+            if thisTime in timeSigCounter:
                 timeSigCounter[thisTime] += 1
             else:
                 timeSigCounter[thisTime] = 1
