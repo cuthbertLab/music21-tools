@@ -39,13 +39,9 @@ try out different solutions, moving notes over a measure or two, etc.
 without any problems.  Working on this problem also gave a great test
 of music21's ability to manipulate diatonic Streams.
 '''
-
 import copy
-import unittest
-
 
 from music21 import clef
-# from music21 import common
 from music21 import corpus
 from music21 import exceptions21
 from music21 import instrument
@@ -476,18 +472,4 @@ def multipleSolve():
                                                     csvFile.writerow(writeLine)
 
 class QuodJactaturException(exceptions21.Music21Exception):
-    pass
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
-if __name__ == '__main__':
-    import music21
-    music21.mainTest('importPlusRelative')
-    # bentWolfSolution()
-    # possibleSolution()
-    # findRetrogradeVoices()
     pass

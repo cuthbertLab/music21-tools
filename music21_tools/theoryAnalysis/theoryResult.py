@@ -9,8 +9,6 @@
 # Copyright:    Copyright © 2009-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-import unittest
-
 class TheoryResult:
     '''
     A TheoryResult object is used to store information about the results
@@ -278,25 +276,3 @@ class VerticalityNTupletTheoryResult(TheoryResult):
             for unused_counter_partNum in partNumList:
                 self.vsnt.verticalities[vsNum].getObjectsByPart(0,
                     classFilterList=['Note']).editorial[editorialDictKey] = editorialValue
-
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
-    def demo(self):
-        pass
-
-
-if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-
-    # te = TestExternal()
-    # te.demo()

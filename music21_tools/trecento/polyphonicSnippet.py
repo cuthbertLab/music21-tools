@@ -352,11 +352,6 @@ class FrontPaddedSnippet(PolyphonicSnippet):
 
 
 class Test(unittest.TestCase):
-    pass
-
-    def runTest(self):
-        pass
-
     def testCopyAndDeepcopy(self):
         '''
         Test copying all objects defined in this module
@@ -377,11 +372,6 @@ class Test(unittest.TestCase):
 
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    pass
-
-    def runTest(self):
-        pass
-
     def testLily(self):
         from . import trecentoCadence, cadencebook
         cantus = trecentoCadence.CadenceConverter(

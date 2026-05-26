@@ -143,21 +143,11 @@ def pendulumMusic(show=True,
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def testBasic(self, cycles=4, show=False):
         # run a reduced version
         pitchedPhase(cycles=cycles, show=show)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
-
     def testBasic(self, cycles=8, show=True):
         # run a reduced version
         pitchedPhase(cycles=cycles, show=show)

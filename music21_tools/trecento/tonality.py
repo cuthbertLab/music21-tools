@@ -331,14 +331,10 @@ def testAll(show=True, fast=False):
         landiniTonality(show)
 
 class Test(unittest.TestCase):
-    pass
-
     def runTest(self):
         testAll(show=False, fast=True)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    pass
-
     def runTest(self):
         testAll(show=True, fast=False)
 

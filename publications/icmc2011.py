@@ -22,11 +22,6 @@ environLocal = environment.Environment(_MOD)
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def testStreams01(self):
         '''
         Basic stream issues

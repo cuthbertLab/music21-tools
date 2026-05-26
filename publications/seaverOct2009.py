@@ -492,10 +492,6 @@ def js_q5():
 tests = [simple4a, simple4b, simple4c, simple4e, simple4f]
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''Test showing functions
         '''
@@ -509,17 +505,11 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def xtestBasic(self):
         '''seaverOct2009: Test non-showing functions
         '''
         for func in tests:
             func(show=False)
-
 
 if __name__ == "__main__":
     # js_q1()

@@ -262,11 +262,11 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     :meth:`music21.medren.MensuralNote.setStem()`.
 
     >>> tTNN = TrecentoTinyConverter(
-    ...     'a(SB)[S]').parse().stream.recurse().notes.first
+    ...     'a(SB)[S]').parse().stream.recurse().notes.first()
     >>> tTNN.getStems()
     ['side']
 
-    >>> tTNN = TrecentoTinyConverter('a(M)[D]').parse().stream.recurse().notes.first
+    >>> tTNN = TrecentoTinyConverter('a(M)[D]').parse().stream.recurse().notes.first()
     >>> tTNN.getStems()
     ['up', 'down']
 
@@ -278,7 +278,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     follow the rules outlined in :meth:`music21.medren.MensuralNote.setFlag()`.
 
     >>> tTNN = TrecentoTinyConverter(
-    ...     'a(SM)_UL').parse().stream.recurse().notes.first
+    ...     'a(SM)_UL').parse().stream.recurse().notes.first()
     >>> tTNN.getStems()
     ['up']
 
@@ -292,7 +292,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     direction-orientation pairs, as shown in the following complex example:
 
     >>> tTNN = TrecentoTinyConverter(
-    ...     'a(SM)[D]_UL/DR').parse().stream.recurse().notes.first
+    ...     'a(SM)[D]_UL/DR').parse().stream.recurse().notes.first()
     >>> tTNN.pitch
     <music21.pitch.Pitch A4>
     >>> tTNN.getStems()
@@ -318,7 +318,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
         {0.0} <music21.meter.TimeSignature 4/4>
         {0.0} <music21_tools.trecento.medren.Ligature object at 0x...>
         {0.0} <music21.bar.Barline type=final>
-    >>> tTNN = ts[Ligature].first
+    >>> tTNN = ts[Ligature].first()
     >>> tTNN
     <music21_tools.trecento.medren.Ligature...>
     >>> [str(p) for p in tTNN.pitches]
@@ -337,7 +337,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
     Examples:
 
     >>> ts = TrecentoTinyConverter(r'lig{f a[DL]=R}').parse().stream
-    >>> tTNN = ts[Ligature].first
+    >>> tTNN = ts[Ligature].first()
     >>> tTNN.getStem(1)
     ('down', 'left')
 
@@ -346,7 +346,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
 
 
     >>> tTNN = TrecentoTinyConverter(
-    ...     'lig{f<o> g a[UR] g f(Mx)}').parse().stream[Ligature].first
+    ...     'lig{f<o> g a[UR] g f(Mx)}').parse().stream[Ligature].first()
     >>> print([n.mensuralType for n in tTNN.notes])
     ['longa', 'brevis', 'semibrevis', 'semibrevis', 'maxima']
 
@@ -650,8 +650,11 @@ def convertBrevisLength(brevisLength, convertedStream, inpDiv=None, measureNumOf
 
     # .recurse() does not include the host stream (skipSelf default flipped
     # to True in music21 v5.5), so a `[1:]` here would silently drop a real
-    # element (typically the first note). Take the recurse output as-is.
-    mList = list(brevisLength.recurse())
+    # element (typically the first note). Pull only mensural objects — the
+    # surrounding Clef/Divisione/Punctus ride along inside the Measure but
+    # contribute no note-length and would confuse BrevisLengthTranslator.
+    mList = [el for el in brevisLength.recurse()
+             if isinstance(el, medren.GeneralMensuralNote)]
 
     # Resolve the Divisione for this measure. Only one source is allowed:
     # either the enclosing context (inpDiv) OR an in-measure Divisione, not both.
@@ -1008,20 +1011,24 @@ class BrevisLengthTranslator:
         unchangeableNoteLengthsList = []
         for obj in self.brevisLength:
             minimaLength = None
-            # If its duration is set, doesn't need to be determined
+            # Non-mensural items (Clef, Divisione, Punctus, …) can legitimately
+            # sit inside the Measure but contribute no note-length.  Skip them
+            # by entering None to keep the list aligned with self.brevisLength.
+            mensuralType = getattr(obj, 'mensuralType', None)
 
             # Gets rid of everything known
-            if obj.mensuralType == 'maxima':
+            if mensuralType == 'maxima':
                 minimaLength = 4.0 * self.div.minimaPerBrevis
-            elif obj.mensuralType == 'longa':
+            elif mensuralType == 'longa':
                 minimaLength = 2.0 * self.div.minimaPerBrevis
-            elif obj.mensuralType == 'brevis':
+            elif mensuralType == 'brevis':
                 minimaLength = float(self.div.minimaPerBrevis)
             else:
                 if not isinstance(obj, medren.GeneralMensuralNote):
+                    unchangeableNoteLengthsList.append(None)
                     continue
                 # Dep on div
-                if obj.mensuralType == 'semibrevis':
+                if mensuralType == 'semibrevis':
                     if isinstance(obj, medren.MensuralRest):
                         if self.div.standardSymbol in ['.q.', '.i.']:
                             minimaLength = self.div.minimaPerBrevis / 2.0
@@ -1034,14 +1041,14 @@ class BrevisLengthTranslator:
                             minimaLength = 3.0
                         else:  # Who the heck knows a semibreve's length!!! :-)
                             pass
-                elif obj.mensuralType == 'minima':
+                elif mensuralType == 'minima':
                     if isinstance(obj, medren.MensuralNote) and 'down' in obj.stems:
                         raise TrecentoNotationException('Dragmas currently not supported')
                     elif isinstance(obj, medren.MensuralNote) and 'side' in obj.stems:
                         minimaLength = 1.5
                     else:
                         minimaLength = 1.0
-                elif obj.mensuralType == 'semiminima':
+                elif mensuralType == 'semiminima':
                     pass
             unchangeableNoteLengthsList.append(minimaLength)
         return unchangeableNoteLengthsList
@@ -1090,6 +1097,10 @@ class BrevisLengthTranslator:
             obj = self.brevisLength[i]
             knownLength = unchangeableNoteLengths[i]
             if knownLength is not None:
+                continue
+            # Skip non-mensural items (Clef, Divisione, Punctus, ...) that
+            # ride along inside the Measure.
+            if not isinstance(obj, medren.GeneralMensuralNote):
                 continue
 
             if obj.mensuralType == 'semibrevis':
@@ -2106,14 +2117,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
                 else:
                     print('norm only: %s' % SePerDureca[i + 1][j])
                     print('')
-
         # TinySePerDureca.show('text')
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, TestExternal, 'importPlusRelative')
+    music21.mainTest(TestExternal, 'importPlusRelative')

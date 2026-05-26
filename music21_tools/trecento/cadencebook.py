@@ -730,9 +730,6 @@ class Gloria(TrecentoCadenceWork):
 
 
 class Test(unittest.TestCase):
-    def runTest(self):
-        pass
-
     def testTrecentoCadenceWorkCopying(self):
         w = TrecentoCadenceWork()
         _w1 = copy.copy(w)
@@ -760,14 +757,10 @@ class Test(unittest.TestCase):
 
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
-
     def testCredo(self):
         '''
         testing a Credo in and Lilypond out
         '''
-
         cs1 = CredoSheet()  # filename = r'd:\docs\trecento\fischer\cadences.xls')
         # cs1 = BallataSheet()
         credo1 = cs1.makeWork(2)

@@ -8,15 +8,11 @@
 # Copyright:    Copyright © 2009-14 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-
-
 import unittest
 from music21 import corpus, converter, note, chord, stream, environment, graph, interval, meter
 
 _MOD = 'demo/smt2010.py'
 environLocal = environment.Environment(_MOD)
-
-
 
 def ex01(show=True, *arguments, **keywords):
     '''
@@ -444,10 +440,6 @@ def chordifyAnalysisBrief():
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''
         smt2010: Test non-showing functions
@@ -459,7 +451,6 @@ class Test(unittest.TestCase):
         # for func in [findPotentialPassingTones]:
         for func in [findHighestNotes, demoJesse,
                      corpusMelodicIntervalSearchBrief, findPotentialPassingTones]:
-
             # func(show=False, op133=sStream)
             func(show=False)
 

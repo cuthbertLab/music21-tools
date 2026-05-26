@@ -1818,18 +1818,12 @@ FUNCTIONS = [ch1_basic_I_A,
             ]
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
-
     def testBasic(self):
         for func in FUNCTIONS:
             func(show=True, play=False)
 
 
 class Test(unittest.TestCase):
-    def runTest(self):
-        pass
-
     def testBasic(self):
         for func in FUNCTIONS:
             func(show=False, play=False)

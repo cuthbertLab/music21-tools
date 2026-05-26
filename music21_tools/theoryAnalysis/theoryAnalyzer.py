@@ -2532,9 +2532,6 @@ class Test(unittest.TestCase):
 
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
-
     def demo(self):
         from music21 import converter
         sc = converter.parse(

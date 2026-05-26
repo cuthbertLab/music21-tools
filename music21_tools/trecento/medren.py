@@ -1729,43 +1729,46 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
         Hierarchy of <class 'music21.stream.base.Part'>
         violated by <class 'music21.stream.base.Score'>
 
+    The normal case: a single flat ``Part`` carrying a Divisione at its head,
+    followed by mensural notes and Puncti.  The function returns a ``Part``
+    of ``Measure`` objects grouped by brevis-length, with the Divisione placed
+    as the first element of the first Measure.
+
     >>> p = stream.Part()
-    >>> m.append(MensuralNote('G', 'B'))
     >>> p.append(Divisione('.q.'))
-    >>> p.repeatAppend(MensuralNote('A', 'SB'),2)
+    >>> p.repeatAppend(MensuralNote('A', 'SB'), 2)
     >>> p.append(Punctus())
-    >>> p.repeatAppend(MensuralNote('B', 'M'),4)
+    >>> p.repeatAppend(MensuralNote('B', 'M'), 4)
     >>> p.append(Punctus())
     >>> p.append(MensuralNote('C', 'B'))
-    >>> s.append(Divisione('.p.'))
-    >>> s.append(p)
-    >>> s.append(m)
-    >>> breakMensuralStreamIntoBrevisLengths(s, printUpdates = True)
-    Traceback (most recent call last):
-    music21_tools.trecento.medren.MedRenException: Mensuration or divisione <...Divisione .q.> not consistent within hierarchy
-
-    >>> s = stream.Stream()
-    >>> s.append(Divisione('.q.'))
-    >>> s.append(p)
-    >>> s.append(m)
-    >>> t = breakMensuralStreamIntoBrevisLengths(s, printUpdates = True)
+    >>> t = breakMensuralStreamIntoBrevisLengths(p, printUpdates=True)
     Getting measure 0...
     ...
     >>> t.show('text')
-    {0.0} <...Divisione .q.>
-    {0.0} <music21.stream.Part...>
-        {0.0} <music21.stream.Measure...>
-            {0.0} <...MensuralNote semibrevis A>
-            {0.0} <...MensuralNote semibrevis A>
-        {0.0} <music21.stream.Measure...>
-            {0.0} <...MensuralNote minima B>
-            {0.0} <...MensuralNote minima B>
-            {0.0} <...MensuralNote minima B>
-            {0.0} <...MensuralNote minima B>
-        {0.0} <music21.stream.Measure...>
-            {0.0} <...MensuralNote brevis C>
-    {0.0} <music21.stream.Measure...>
-        {0.0} <...MensuralNote brevis G>
+    {0.0} <music21.stream.Measure 0 offset=0.0>
+        {0.0} <notation.Divisione .q.>
+        {0.0} <...MensuralNote semibrevis A>
+        {0.0} <...MensuralNote semibrevis A>
+    {0.0} <music21.stream.Measure 1 offset=0.0>
+        {0.0} <...MensuralNote minima B>
+        {0.0} <...MensuralNote minima B>
+        {0.0} <...MensuralNote minima B>
+        {0.0} <...MensuralNote minima B>
+    {0.0} <music21.stream.Measure 2 offset=0.0>
+        {0.0} <...MensuralNote brevis C>
+
+    >>> first = t.getElementsByClass(stream.Measure).first()
+    >>> isinstance(first[0], Divisione)
+    True
+
+    Now insert a second, conflicting Divisione mid-Part — the function refuses
+    because trecento divisione changes are only allowed at the highest stream
+    level, not within a single voice.
+
+    >>> p.insert(5, Divisione('.p.'))
+    >>> breakMensuralStreamIntoBrevisLengths(p)
+    Traceback (most recent call last):
+    music21_tools.trecento.medren.MedRenException: Mensuration or divisione <notation.Divisione .p.> not consistent within hierarchy
     '''
     mOrD = inpMOrD
     mOrDInAsNone = True
@@ -1835,18 +1838,27 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
     else:
         measureNum = 0
         mensuralMeasure = []
+        # Hold clef/divisione/mensuration until the first Measure is built, then
+        # prepend them inside it — that matches the natural music21 layout
+        # (TimeSignature/Clef live inside their first Measure, not as siblings
+        # of it).
+        pendingFirstMeasureItems = []
 
         for e in inpStream_copy:
 
             if isinstance(e, MensuralClef):
-                newStream.append(e)
+                pendingFirstMeasureItems.append(e)
             elif isinstance(e, (Mensuration, notation.Divisione)):
-                if mOrDInAsNone:  # If first case or changed mOrD
+                if mOrD is None:
                     mOrD = e
-                    newStream.append(e)
-                elif mOrD.standardSymbol != e.standardSymbol:  # If higher, different mOrD found
+                    pendingFirstMeasureItems.append(e)
+                elif mOrD.standardSymbol != e.standardSymbol:
+                    # A second, different divisione in the same flat stream —
+                    # not allowed (divisione changes must happen at a higher
+                    # hierarchy level).
                     raise MedRenException(
-                        'Mensuration or divisione %s not consistent within hierarchy' % e)
+                        f'Mensuration or divisione {e} not consistent within hierarchy')
+                # else: same divisione repeated, ignore silently
             elif isinstance(e, Ligature):
                 tempStream = stream.Stream()
                 for mn in e.notes:
@@ -1856,14 +1868,24 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
             elif (isinstance(e, GeneralMensuralNote)) and (e not in mensuralMeasure):
                 m = stream.Measure(number=measureNum)
                 if printUpdates is True:
-                    print('Getting measure %s...' % measureNum)
+                    print(f'Getting measure {measureNum}...')
                 mensuralMeasure = e._getSurroundingMeasure(mOrD, inpStream_copy)[0]
                 if printUpdates is True:
-                    print('mensuralMeasure %s' % mensuralMeasure)
+                    print(f'mensuralMeasure {mensuralMeasure}')
+                # Place clef/divisione (collected so far) at the front of the
+                # very first Measure; subsequent Measures get only their notes.
+                for item in pendingFirstMeasureItems:
+                    m.append(item)
+                pendingFirstMeasureItems = []
                 for item in mensuralMeasure:
                     m.append(item)
                 newStream.append(m)
                 measureNum += 1
+
+        # If the input was just metadata (clef/divisione) with no notes, place
+        # those items at the top of newStream so they aren't lost.
+        for item in pendingFirstMeasureItems:
+            newStream.append(item)
 
     return newStream
 
@@ -2064,14 +2086,7 @@ def cummingSchubertStrettoFuga(score):
 class MedRenException(exceptions21.Music21Exception):
     pass
 
-class Test(unittest.TestCase):
-    def runTest(self):
-        pass
-
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
-
     def xtestBarlineConvert(self):
         from music21 import corpus
         testPiece = corpus.parse('luca/gloria')
@@ -2133,12 +2148,3 @@ def testStretto():
     etJesum.title = '...et Jesum'
     for piece in [salve, adTe, etJesum]:
         cummingSchubertStrettoFuga(piece)
-
-if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test, 'importPlusRelative')  # TestExternal)
-    # music21.testConvertMensuralMeasure()
-    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4')  # Liber 277 (pdf 401)
-    # puer = converter.parse('G4 d d d e d c c d c e d d', '4/4')  # puer natus est 408 (pdf 554)
-    # almaRedemptoris.title = "Alma Redemptoris Mater LU p. 277"
-    # puer.title = "Puer Natus Est Nobis"

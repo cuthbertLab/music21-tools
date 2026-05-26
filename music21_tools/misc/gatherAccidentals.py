@@ -216,10 +216,6 @@ class GatherAccidentalsException(exceptions21.Music21Exception):
 # -------------------------------------------------------
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testGetAccidentalCountBasic(self):
         s = stream.Stream()
         self.assertEqual(len(s.flatten().notes), 0)  # the stream should be empty
@@ -269,10 +265,6 @@ class Test(unittest.TestCase):
 
 
 class TestSlow(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testAccidentalCountBachChorales(self):
         # the total number of accidentals in the Bach Chorales
         chorales = list( corpus.chorales.Iterator() )

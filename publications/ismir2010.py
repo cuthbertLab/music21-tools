@@ -606,10 +606,6 @@ dependent = [messiaen]
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''ismir2010: Test non-showing functions
 
@@ -619,10 +615,6 @@ class Test(unittest.TestCase):
             func(show=False)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         for func in funcList:
             func(show=True)

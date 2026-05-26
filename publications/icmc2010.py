@@ -156,10 +156,6 @@ def oldAccent(show=True):
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''icmc2010: Test non-showing functions
         '''
@@ -167,10 +163,6 @@ class Test(unittest.TestCase):
             func(show=False)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''Test showing functions
         '''

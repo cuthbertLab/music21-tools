@@ -68,10 +68,6 @@ class CadenceConverter(tinyNotation.Converter):
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testCopyAndDeepcopy(self):
         '''Test copying all objects defined in this module
         '''
@@ -89,7 +85,6 @@ class Test(unittest.TestCase):
                 self.assertNotEqual(a, obj)
                 self.assertNotEqual(b, obj)
 
-
     def testDotGroups(self):
         cn = CadenceConverter('c#2..')
         cn.parse()
@@ -105,9 +100,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
     '''
     These objects generate PNGs, etc.
     '''
-    def runTest(self):
-        pass
-
     def testTrecentoLine(self):
         '''
         should display a 6 beat long line with some triplets

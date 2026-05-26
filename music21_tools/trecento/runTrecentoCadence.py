@@ -10,7 +10,7 @@
 '''
 Python script to find out certain statistics about the trecento cadences
 '''
-import unittest
+import music21
 from . import cadencebook
 
 def countTimeSig():
@@ -163,24 +163,3 @@ def checkValidity():
             unused_incipitStreams = randomPiece.incipitStreams()
         except music21.tinyNotation.TinyNotationException as inst:
             raise Exception(randomPiece.title + ' had problem ' + inst.args)
-
-
-# temporarily commenting out for adding standard test approach
-# if __name__ == "__main__"
-#     # countTimeSig()
-#     makePDFfromPiecesWithCapua()
-
-
-# ------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-    def testA(self):
-        self.assertEqual(5, 5)  # something really wrong!??
-
-if __name__ == '__main__':
-    # makePDFfromPiecesWithCapua()
-    import music21
-    music21.mainTest(Test, 'moduleRelative')

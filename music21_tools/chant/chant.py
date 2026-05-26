@@ -513,20 +513,7 @@ SCOREGOESHERE
 class ChantException(exceptions21.Music21Exception):
     pass
 
-
-
-class Test(unittest.TestCase):
-    pass
-
-    def runTest(self):
-        pass
-
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    pass
-
-    def runTest(self):
-        pass
-
     def testSimpleFile(self):
         s = GregorianStream()
         s.append(clef.AltoClef())
@@ -566,12 +553,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         os.system('open %s' % pdffn)
 
 
-
 # ------------------------------------------------------------------------------
 # define presented order in documentation
 _DOC_ORDER = []
-
-
-if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test, 'moduleRelative')

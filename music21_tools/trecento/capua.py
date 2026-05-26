@@ -1042,10 +1042,6 @@ def ruleFrequency(startNumber=2, endNumber=459):
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testRunNonCrederDonna(self):
         pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
         ballataObj = cadencebook.BallataSheet()
@@ -1137,9 +1133,6 @@ class Test(unittest.TestCase):
 
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
-
     def testRunNonCrederDonna(self):
         t = Test()
         pObj = t.testRunNonCrederDonna()
@@ -1166,10 +1159,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 class TestSlow(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testCompare1(self):
         ballataObj = cadencebook.BallataSheet()
         totalDict = {

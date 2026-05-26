@@ -12,7 +12,6 @@
 This module defines the ContourFinder and AggregateContour objects.
 '''
 import random
-import unittest
 
 from music21 import base  # for _missingImport testing.
 from music21 import repeat
@@ -442,7 +441,7 @@ class ContourFinder:
         try:
             guessedKey = inpStream.analyze('key')
         except DiscreteAnalysisException:
-            # music21 raises exception when stream has no notes. 
+            # music21 raises exception when stream has no notes.
             return 0.5
 
         certainty = -2  # should be replaced by a value between -1 and 1
@@ -814,21 +813,9 @@ def _plotChoraleContours():
         print(chorale)
         # cf.plot('dissonance', fileName= chorale + 'dissonance', regression=False)
         try:
-            cf.plot('tonality', fileName= chorale + 'tonality', regression=False)
+            cf.plot('tonality', fileName=chorale + 'tonality', regression=False)
         except exceptions21.Music21Exception:
             print(chorale)
             s.show()
             break
     pass
-
-
-# ------------------------
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-

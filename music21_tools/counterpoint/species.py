@@ -1652,17 +1652,11 @@ def getRandomCF(mode=None):
 
 # ------------------------------------------------------------------------------
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
-
     def testGenerateFirstSpecies(self):
         '''
         A First Species Counterpoint Generator by Jackie Rogoff (MIT 2010) written as part of
         an UROP (Undergraduate Research Opportunities Program) project at M.I.T. 2008.
         '''
-
         counterpoint1 = ModalCounterpoint()
 
         cf = getRandomCF()

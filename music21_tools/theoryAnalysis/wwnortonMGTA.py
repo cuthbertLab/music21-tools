@@ -12,10 +12,6 @@
 _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 import copy
-import unittest
-
-import music21
-
 from music21 import converter
 from music21 import stream
 from music21 import instrument
@@ -279,33 +275,4 @@ class ex11_3_A(wwnortonExercise):
                                       markerPartName='harmIntervals',
                                       offsetFunc=harmonicIntervalOffsetFunc,
                                       lyricFunc=harmonicIntervalTextFunc)
-
-
-
-# ------------------------------------------------------------
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
-    def demo(self):
-        ex = ex11_1_I()
-        sc = converter.parse('C:/Users/bhadley/Dropbox/Music21Theory/TestFiles/' +
-                             'SampleStudentResponses/S11_1_IA_completed.xml')
-        ex.loadStudentExercise(sc)
-        ex.checkExercise()
-        ex.showStudentExercise()
-
-
-if __name__ == '__main__':
-    music21.mainTest(Test)
-
-    # te = TestExternal()
-    # te.demo()
 
