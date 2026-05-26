@@ -67,6 +67,7 @@ Bump the version in `pyproject.toml` to the new version and then:
 
 ```sh
 trash dist
+uv sync
 uv build
 uv run --with twine twine upload dist/*
 git tag vXX.X
