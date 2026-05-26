@@ -222,12 +222,12 @@ class Test(unittest.TestCase):
 
     def testGetAccidentalCountBasic(self):
         s = stream.Stream()
-        self.assertEqual(len(s.flatten().notes), 0) # the stream should be empty
+        self.assertEqual(len(s.flatten().notes), 0)  # the stream should be empty
         self.assertEqual(getAccidentalCount(s), {})
 
     def testGetAccidentalCountIntermediate(self):
         s = stream.Stream()
-        s.append(note.Note('C4'))   # no accidental
+        s.append(note.Note('C4'))  # no accidental
         s.append(note.Note('C#4'))  # sharp
         s.append(note.Note('D-4'))  # flat
         self.assertEqual(getAccidentalCount(s), {'flat': 1, 'sharp': 1})
@@ -282,5 +282,5 @@ class TestSlow(unittest.TestCase):
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, 'moduleRelative') # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
+    music21.mainTest(Test, 'moduleRelative')  # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
 

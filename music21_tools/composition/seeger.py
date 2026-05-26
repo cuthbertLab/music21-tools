@@ -40,7 +40,7 @@ def lowerLines():
                 appendNote = copy.deepcopy(rowNotes[currentNote % 10])
             else:  # second set of rotations is up a step:
                 appendNote = rowNotes[currentNote % 10].transpose(2)
-                # if phraseNumber == 8 and addNote == 9: # mistaken transpositions by RCS
+                # if phraseNumber == 8 and addNote == 9:  # mistaken transpositions by RCS
                 #     appendNote = appendNote.transpose(-1)
                 #     appendNote.lyrics.append(note.Lyric(text="*", number=3))
                 #

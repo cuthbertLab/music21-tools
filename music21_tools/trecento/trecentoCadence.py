@@ -94,14 +94,14 @@ class Test(unittest.TestCase):
         cn = CadenceConverter('c#2..')
         cn.parse()
 
-        a = cn.stream.flatten().notes[0] # returns the stored music21 note.
+        a = cn.stream.flatten().notes[0]  # returns the stored music21 note.
         self.assertEqual(a.name, 'C#')
         self.assertEqual(a.duration.type, 'half')
         self.assertEqual(a.duration.dotGroups, (1, 1))
         self.assertEqual(a.duration.quarterLength, 4.5)
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     '''
     These objects generate PNGs, etc.
     '''

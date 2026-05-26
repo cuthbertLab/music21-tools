@@ -226,7 +226,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
                 myInverse[i] = p - myInverseMin
             myInverse = sorted(myInverse)
             myInverseString = ''.join([str(p) for p in myInverse])
-            if myInverseString != myPitchString: # some are symmetric
+            if myInverseString != myPitchString:  # some are symmetric
                 ret += '\n[' + myInverseString + ']: '
                 for i in range(12):
                     notFound = False
@@ -318,7 +318,7 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
             if '(' not in trichordInfo:
                 noneMissing = False
                 break
-        if noneMissing == showMatching: # default True
+        if noneMissing == showMatching:  # default True
             allHeptachordList.append(thisHeptachordString)
 
     return allHeptachordList

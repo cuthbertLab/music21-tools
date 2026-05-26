@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         demos/seaver_presentation_2008.py
 # Purpose:      Demonstrations for the Seaver 2008 demo

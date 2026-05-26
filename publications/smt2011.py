@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         smt2011.py
 # Purpose:      Demonstrations for the SMT 2011 demo
@@ -147,7 +146,7 @@ def demoMakeChords():
     c = src.flattenParts().makeChords(minimumWindowSize=3)
     print(c.write())
     c.show()
-    
+
     src = corpus.parse('opus18no1/movement3.xml').measures(0, 10)
     src.chordify().show()
 

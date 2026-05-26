@@ -69,7 +69,7 @@ def main():
     mt = midi.MidiTrack(1)
 
     # duration, pitch, velocity
-    data = [] # one start note
+    data = []  # one start note
 
     beats_per_measure = 4
     measures = 16

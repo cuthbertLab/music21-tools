@@ -35,7 +35,7 @@ _MOD = 'audioSearch/graphicalInterfaceSF.py'
 environLocal = environment.Environment(_MOD)
 
 from music21.audioSearch import *
-#from music21.audioSearch import recording
+# from music21.audioSearch import recording
 from music21 import scale
 
 try:
@@ -67,9 +67,9 @@ class SFApp():
         #'scores/d luca gloria_Page_'
         self.format = 'tiff'#'jpg'
         self.nameRecordedSong = 'luca/gloria'
-        #'/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/saint-saens.xml'
-        #'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\saint-saens.xml'
-        self.pageMeasureNumbers = [] # get directly from score - the last one is the last note of the score
+        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/saint-saens.xml'
+        # 'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\saint-saens.xml'
+        self.pageMeasureNumbers = []  # get directly from score - the last one is the last note of the score
         self.totalPagesScore = 1
         self.currentLeftPage = 1
         self.pagesScore = []
@@ -83,13 +83,13 @@ class SFApp():
 
         self.sizeButton = 11
 
-        try: # for windows
+        try:  # for windows
             unused_user32 = ctypes.windll.user32 # test for error...
             self.screenResolution = [1024, 600]
             # self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
             environLocal.printDebug('screen resolution (windows) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
             self.resolution = True
-        except: # mac and linux
+        except:  # mac and linux
             try:
                 for screen in AppKit.NSScreen.screens():  # @UndefinedVariable
                     self.screenResolution = [int(screen.frame().size.width), int(screen.frame().size.height)]
@@ -101,8 +101,8 @@ class SFApp():
                 self.resolution = False
 
         self.y = int(self.screenResolution[1] / 1.25)
-        self.x = int(self.y / 1.29)# 1.29 = side relation of letter paper
-        if self.x > self.screenResolution[0] / 2.6: # 2.6 is a factor to scale canvas
+        self.x = int(self.y / 1.29)  # 1.29 = side relation of letter paper
+        if self.x > self.screenResolution[0] / 2.6:  # 2.6 is a factor to scale canvas
             self.x = int(self.screenResolution[0] / 2.6)
             self.y = int(self.x * 1.29)
             environLocal.printDebug('resized! too big')
@@ -152,12 +152,12 @@ class SFApp():
                                     str(i + 1).zfill(numberLength),
                                     self.format)
             self.listNamePages.append(namePage)
-            pilPage = PILImage.open(namePage) # @UndefinedVariable
+            pilPage = PILImage.open(namePage)
             if pilPage.mode != 'RGB':
                 pilPage = pilPage.convert('RGB')
             pilPage = self.cropBorder(pilPage)
-            self.pagesScore.append(pilPage.resize(self.newSize, PILImage.ANTIALIAS)) # @UndefinedVariable
-            self.phimage.append(PILImageTk.PhotoImage(self.pagesScore[i])) # @UndefinedVariable
+            self.pagesScore.append(pilPage.resize(self.newSize, PILImage.ANTIALIAS))
+            self.phimage.append(PILImageTk.PhotoImage(self.pagesScore[i]))
         environLocal.printDebug('initializeName finished')
 
 
@@ -248,7 +248,7 @@ class SFApp():
             else:
                 rightCut = rightCut - numberPixels
 
-        margin = int(resX * 0.03) # leave border 3% of the size
+        margin = int(resX * 0.03)  # leave border 3% of the size
 
         leftCut = leftCut - margin
         topCut = topCut - margin
@@ -578,7 +578,7 @@ class SFApp():
             self.rt = RecordThread(self.dummyQueue, self.sampleQueue, self.ScF)
             self.rt.daemon = True
             environLocal.printDebug('2nd thread about to start')
-            self.rt.start() # the 2nd thread starts here
+            self.rt.start()  # the 2nd thread starts here
             self.dummyQueue.put('Start')
             environLocal.printDebug('about to put analyzeRecording into master...')
             self.master.after(7000, self.analyzeRecording)
@@ -667,7 +667,7 @@ class SFApp():
 
 #
 #
-#class External():
+# class External():
 #
 #    def __init__(self, newcoords, positionxLeft, positionxRight, speed, positionyRight,
 #                    canvas,currentLeftPage,totalPagesScore,newcoords3rd,

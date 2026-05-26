@@ -61,7 +61,7 @@ def applyCapuaToCadencebookWork(thisWork):
 
     >>> import copy
 
-    >>> b = cadencebook.BallataSheet().makeWork(331) # Francesco, Non Creder Donna
+    >>> b = cadencebook.BallataSheet().makeWork(331)  # Francesco, Non Creder Donna
     >>> bOrig = copy.deepcopy(b)
     >>> applyCapuaToCadencebookWork(b)
     >>> bFN = b.asScore().flatten().notes
@@ -1144,7 +1144,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
     def testShowFourA(self):
         ballataObj = cadencebook.BallataSheet()
         showStream = stream.Opus()
-        for i in range(2, 45):  # 459): # all ballate
+        for i in range(2, 45):  # 459):  # all ballate
             pieceObj = ballataObj.makeWork(i)  # N.B. -- we now use Excel column numbers
             theseSnippets = pieceObj.snippets
             for thisSnippet in theseSnippets:

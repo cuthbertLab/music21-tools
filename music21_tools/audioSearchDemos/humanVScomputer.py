@@ -12,7 +12,7 @@ _DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 from music21 import scale, note
 from music21 import audioSearch as base
-#from music21.audioSearch import *
+# from music21.audioSearch import *
 import time
 import random
 

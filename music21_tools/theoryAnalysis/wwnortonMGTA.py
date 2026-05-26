@@ -107,9 +107,9 @@ class wwnortonExercise:
             previousNotRestContents = copy.deepcopy(m.getElementsByClass('NotRest'))
             measureDuration = m.duration.quarterLength
 
-            m.removeByClass(['GeneralNote']) # includes rests
+            m.removeByClass(['GeneralNote'])  # includes rests
             m.removeByClass(['Dynamic'])
-            m.removeByClass(['Stream']) # get voices or sub-streams
+            m.removeByClass(['Stream'])  # get voices or sub-streams
             m.removeByClass(['Dynamic'])
             m.removeByClass(['Expression'])
             m.removeByClass(['KeySignature'])
@@ -289,7 +289,7 @@ class Test(unittest.TestCase):
     def runTest(self):
         pass
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass

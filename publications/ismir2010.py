@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         ismir2010.py
 # Purpose:      Examples for ISMIR 2010 paper
@@ -326,7 +325,7 @@ def demoBasic():
     len(soprano.getElementsByClass('Measure'))
     _mRange = soprano.measures(14, 16)
     # mRange.show()
-    # mRange.sorted.show('text') # here we can see this
+    # mRange.sorted.show('text')  # here we can see this
 
 
 
@@ -655,7 +654,4 @@ if __name__ == "__main__":
     demoBachSearch()
     # demoGraphMessiaenBrief()
     # demoGraphMessiaen()
-
-# -----------------------------------------------------------------------------
-# eof
 

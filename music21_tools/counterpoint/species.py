@@ -350,9 +350,9 @@ class ModalCounterpoint:
         >>> m1 = note.Note('F4')
         >>> m2 = note.Note('B-4')
         >>> cp = ModalCounterpoint()
-        >>> cp.isHiddenOctave(n1, m1, n2, m2) # (n1, n2) and (m1, m2) are chords
+        >>> cp.isHiddenOctave(n1, m1, n2, m2)  # (n1, n2) and (m1, m2) are chords
         False
-        >>> cp.isHiddenOctave(n1, n2, m1, m2) # (n1, m1) and (n2, m2) are chords
+        >>> cp.isHiddenOctave(n1, n2, m1, m2)  # (n1, m1) and (n2, m2) are chords
         True
         >>> m1.octave = 5
         >>> m2.octave = 5
@@ -1083,7 +1083,7 @@ class ModalCounterpoint:
             elif choice == 'last':
                 newNote = choices[-1]
             else:
-                newNote = random.choice(choices) # if choice flag not recognized, go with random
+                newNote = random.choice(choices)  # if choice flag not recognized, go with random
             newNote.duration = currFirmus.duration
             stream2.append(newNote)
             int1 = interval.notesToInterval(prevNote, newNote)
@@ -1628,7 +1628,7 @@ def getRandomCF(mode=None):
 
 
 # ------------------------------------------------------------------------------
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass

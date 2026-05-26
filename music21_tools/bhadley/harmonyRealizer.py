@@ -173,7 +173,7 @@ class Test(unittest.TestCase):
     def runTest(self):
         pass
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     # test = HarmonyRealizer.TestExternal()
 
     # test.leadsheetEx1()
-    # sc = converter.parse('https://github.com/cuthbertLab/music21/raw/master/music21/corpus/leadSheet/fosterBrownHair.mxl') # Jeannie Light Brown Hair
+    # sc = converter.parse('https://github.com/cuthbertLab/music21/raw/master/music21/corpus/leadSheet/fosterBrownHair.mxl')  # Jeannie Light Brown Hair
 
 
 

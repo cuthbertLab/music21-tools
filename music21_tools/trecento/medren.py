@@ -2119,7 +2119,7 @@ if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative')  # TestExternal)
     # music21.testConvertMensuralMeasure()
-    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') # Liber 277 (pdf 401)
-    # puer = converter.parse('G4 d d d e d c c d c e d d', '4/4') # puer natus est 408 (pdf 554)
+    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4')  # Liber 277 (pdf 401)
+    # puer = converter.parse('G4 d d d e d c c d c e d d', '4/4')  # puer natus est 408 (pdf 554)
     # almaRedemptoris.title = "Alma Redemptoris Mater LU p. 277"
     # puer.title = "Puer Natus Est Nobis"

@@ -776,7 +776,7 @@ class Analyzer:
 
             for vlq in vlqList[startIndex:endIndex]:
 
-                if testFunction(vlq) is not False: # True or value
+                if testFunction(vlq) is not False:  # True or value
                     tr = theoryResult.VLQTheoryResult(vlq)
                     tr.value = testFunction(vlq)
                     if textFunction is None:
@@ -804,7 +804,7 @@ class Analyzer:
             hIntvList = self.getHarmonicIntervals(score, partNum1, partNum2)
 
             for hIntv in hIntvList:
-                if testFunction(hIntv) is not False: # True or value
+                if testFunction(hIntv) is not False:  # True or value
 
                     tr = theoryResult.IntervalTheoryResult(hIntv)
                     tr.value = valueFunction(hIntv)
@@ -825,7 +825,7 @@ class Analyzer:
             mIntvList = self.getMelodicIntervals(score, partNum)
 
             for mIntv in mIntvList:
-                if testFunction(mIntv) is not False: # True or value
+                if testFunction(mIntv) is not False:  # True or value
                     tr = theoryResult.IntervalTheoryResult(mIntv)
                     tr.value = testFunction(mIntv)
                     tr.text = textFunction(mIntv, partNum)
@@ -845,7 +845,7 @@ class Analyzer:
             nList = self.getNotes(score, partNum)
 
             for n in nList:
-                if testFunction(score, n) is not False: # True or value
+                if testFunction(score, n) is not False:  # True or value
                     tr = theoryResult.NoteTheoryResult(n)
                     tr.value = testFunction(score, n)
 

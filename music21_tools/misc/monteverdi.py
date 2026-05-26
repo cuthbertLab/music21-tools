@@ -251,8 +251,8 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
     for p in sc.parts:
         partNotes = p.flatten().stripTies(matchByPitch=True).notesAndRests
-        # thisPartPhraseScores = [] # keeps track of the likelihood that a phrase boundary is after note i
-        for i in range(2, len(partNotes) - 2): # start on the third note and stop searching on the third to last note...
+        # thisPartPhraseScores = []  # keeps track of the likelihood that a phrase boundary is after note i
+        for i in range(2, len(partNotes) - 2):  # start on the third note and stop searching on the third to last note...
             thisScore = 0
             twoNotesBack = partNotes[i - 2]
             previousNote = partNotes[i - 1]
@@ -275,7 +275,7 @@ def findPhraseBoundaries(book=4, madrigal=12):
             else:
                 intervalToNextNote = interval.notesToInterval(thisNote.pitches[0],
                                                               nextNote.pitches[0])
-                if intervalToNextNote.chromatic.undirected >= 6: # a tritone or bigger
+                if intervalToNextNote.chromatic.undirected >= 6:  # a tritone or bigger
                     thisScore = thisScore + 10
             if ((thisNote.quarterLength > previousNote.quarterLength)
                     and (thisNote.quarterLength > nextNote.quarterLength)):

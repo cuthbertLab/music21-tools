@@ -71,7 +71,7 @@ class Test(unittest.TestCase):
             if i == len(pitches1):
                 s.append(clef.BassClef())
 
-            p = pitch.Pitch(p) # convert string to obj
+            p = pitch.Pitch(p)  # convert string to obj
             iObj = interval.Interval(intervals[i])
             c = chord.Chord([p, p.transpose(iObj)], type='whole')
             s.append(c)
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     import music21
     import sys
 
-    if len(sys.argv) == 1: # normal conditions
+    if len(sys.argv) == 1:  # normal conditions
         music21.mainTest(Test)
 
     elif len(sys.argv) > 1:

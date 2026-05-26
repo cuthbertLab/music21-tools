@@ -89,7 +89,7 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
         matches = search.approximateNoteSearch(searchScore, allStreams)
 
         scores = [0 for j in range(len(pages))]
-        for i in range(8): # top 8 searches
+        for i in range(8):  # top 8 searches
             topStream = matches[i]
             scorePage = topStream.pageNumber - 1
             scores[scorePage] += (topStream.matchProbability / (i + 1.5)) * 10

@@ -340,7 +340,7 @@ class Test(unittest.TestCase):
     def runTest(self):
         testAll(show=False, fast=True)
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     pass
 
     def runTest(self):

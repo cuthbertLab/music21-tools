@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         icmc2011.py
 # Purpose:      Demonstrations for the ICMC 2011 poster session

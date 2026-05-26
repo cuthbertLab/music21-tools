@@ -377,6 +377,7 @@ class TrecentoTinyConverter(tinyNotation.Converter):
         'quad': tinyNotation.QuadrupletState,
         'lig': LigatureState
     }
+
     def __init__(self, stringRep=''):
         super().__init__(stringRep)
         self.tokenMap = [
@@ -390,12 +391,12 @@ class TrecentoTinyConverter(tinyNotation.Converter):
         self.modifierUnderscore = FlagsModifier
         self.modifierAngle = LigatureNoteheadModifier
         self.modifierParens = MensuralTypeModifier
-        self.modifierSquare = StemsModifier # or LigatureStemsModifier
-#         self.modifierMap = [
-#                         (r'\[([A-Z]?(\/[A-Z])*)\]', StemsModifier),
-#                         (r'\[([A-Z][A-Z])\]', LigatureStemsModifier),
-#                         (r'(\/R)', LigatureReverseModifier),
-#                         ]
+        self.modifierSquare = StemsModifier  # or LigatureStemsModifier
+        # self.modifierMap = [
+        #                 (r'\[([A-Z]?(\/[A-Z])*)\]', StemsModifier),
+        #                 (r'\[([A-Z][A-Z])\]', LigatureStemsModifier),
+        #                 (r'(\/R)', LigatureReverseModifier),
+        #                 ]
         self.stateDict['lastDuration'] = 0.0
         self.stateDict['previousMensuralType'] = None
 
@@ -405,6 +406,7 @@ class TrecentoRestToken(tinyNotation.RestToken):
         r = medren.MensuralRest()  # to-do -- affect..
         if parent:
             r.mensuralType = parent.stateDict['previousMensuralType']
+
 
 class TrecentoNoteToken(tinyNotation.NoteToken):
     '''
@@ -456,7 +458,6 @@ class Divisione(MedievalMeter):
     >>> d = Divisione('q')
     >>> d.standardSymbol
     '.q.'
-
     '''
     def __init__(self, nameOrSymbol='.p.'):
         self.name = None
@@ -584,7 +585,7 @@ def convertTrecentoStream(inpStream, inpDiv=None):
     offset = 0
     # hierarchy = ['measure', 'part', 'score']
 
-    convertedStream = None
+    convertedStream: stream.Stream
     if 'measure' in inpStream.classes:
         convertedStream = stream.Measure()
     elif 'part' in inpStream.classes:
@@ -747,16 +748,16 @@ class BrevisLengthTranslator:
     This acts a helper class to improve the efficiency of
     :class:`music21.convertBrevisLength`.
 
-#    >>> names = ['SM', 'SM', 'SM', 'SM', 'SB', 'SB', 'SB', 'SB', 'SB', 'SM', 'SM', 'SM']
-#    >>> BL = [medren.MensuralNote('A', n) for n in names]
-#    >>> BL[3] = medren.MensuralRest('SM')
-#    >>> for mn in BL[-3:]:
-#    ...    mn.setFlag('up', 'left')
-#    >>> for mn in BL[4:9]:
-#    ...    mn.setStem('down')
-#    >>> TBL = BrevisLengthTranslator(div, BL)
-#    >>> TBL.getKnownLengths()
-#    [0.5, 0.5, 0.5, 0.5, 4.0, 4.0, 4.0, 4.0, 4.0, 0.666..., 0.666..., 0.666...]
+    # >>> names = ['SM', 'SM', 'SM', 'SM', 'SB', 'SB', 'SB', 'SB', 'SB', 'SM', 'SM', 'SM']
+    # >>> BL = [medren.MensuralNote('A', n) for n in names]
+    # >>> BL[3] = medren.MensuralRest('SM')
+    # >>> for mn in BL[-3:]:
+    # ...    mn.setFlag('up', 'left')
+    # >>> for mn in BL[4:9]:
+    # ...    mn.setStem('down')
+    # >>> TBL = BrevisLengthTranslator(div, BL)
+    # >>> TBL.getKnownLengths()
+    # [0.5, 0.5, 0.5, 0.5, 4.0, 4.0, 4.0, 4.0, 4.0, 0.666..., 0.666..., 0.666...]
     '''
 
     def __init__(self, divisione=None, BL=None, pDS=False):
@@ -1010,12 +1011,12 @@ class BrevisLengthTranslator:
                             minimaLength = self.div.minimaPerBrevis / 2.0
                         elif self.div.standardSymbol in ['.p.', '.n.']:
                             minimaLength = self.div.minimaPerBrevis / 3.0
-                        else: # we don't know it...
+                        else:  # we don't know it...
                             pass
                     else:
-                        if 'side' in obj.getStems(): # oblique-stemmed semibreve
+                        if 'side' in obj.getStems():  # oblique-stemmed semibreve
                             minimaLength = 3.0
-                        else: # WHO THe heck knows a semibreve's length!!! :-)
+                        else:  # Who the heck knows a semibreve's length!!! :-)
                             pass
                 elif obj.mensuralType == 'minima':
                     if 'MensuralNote' in obj.classes and 'down' in obj.stems:
@@ -1079,7 +1080,7 @@ class BrevisLengthTranslator:
                         semibrevis_list.append(i)
                 else:
                     if 'side' in obj.getStems():
-                        pass # shouldnt happen since length is known...
+                        pass  # shouldnt happen since length is known...
                     elif 'down' in obj.getStems():
                         semibrevis_downstem.append(i)
                     else:
@@ -1146,8 +1147,8 @@ class BrevisLengthTranslator:
             newDiv = Divisione(self.div.standardSymbol)
             newDiv.minimaPerBrevis = 2 * self.div.minimaPerBrevis
             return self.brevisLength
-#             tempTBL = BrevisLengthTranslator(newDiv, self.brevisLength[:])
-#             knownLengthsList = tempTBL.getKnownLengths()
+            # tempTBL = BrevisLengthTranslator(newDiv, self.brevisLength[:])
+            # knownLengthsList = tempTBL.getKnownLengths()
 
         for i in range(len(knownLengthsList)):  # Float errors
             ml = knownLengthsList[i]
@@ -1255,7 +1256,6 @@ class BrevisLengthTranslator:
         >>> unkldict = TBL.classifyUnknownNotesByType(unchlist)
         >>> TBL.translateDivN(unchlist, unkldict, 8.0)
         [5.0, 1.0, 3.0]
-
         '''
 
         if unchangeableNoteLengthsList is None:
@@ -1289,7 +1289,7 @@ class BrevisLengthTranslator:
                     knownLengthsList[ind] = 2.0
                     minRem -= 2.0
                     extend_list.append(ind)
-                else: # if not followed by minima -- make 3.0
+                else:  # if not followed by minima -- make 3.0
                     knownLengthsList[ind] = 3.0
                     minRem -= 3.0
 
@@ -1404,7 +1404,6 @@ class BrevisLengthTranslator:
         >>> unkldict = TBL.classifyUnknownNotesByType(unchlist)
         >>> TBL.translateDivPQ(unchlist, unkldict, 6.0)
         [0.666..., 0.666..., 0.666..., 0.5, 0.5, 0.5, 0.5, 2.0]
-
         '''
 
         if unchangeableNoteLengthsList is None:
@@ -1825,7 +1824,7 @@ class BrevisLengthTranslator:
                             knownLengthsList_changeable[ind] = dSLengthList[i]
                         # Don't need shrink_tup. There is no room to extend anything.
 
-                elif self.numberOfSemibreves > 0: # no downstems
+                elif self.numberOfSemibreves > 0:  # no downstems
                     if self.hasLastSB:
                         maxVal = max(minRem_changeable, 2.0)
                         knownLengthsList_changeable[semibrevis_list[-1]] = maxVal
@@ -1882,9 +1881,7 @@ def _allCombinations(combinationList, num):
 
     >>> _allCombinations(['a', 'b', 'c'], 2)
     [[], ['c'], ['b', 'c'], ['b'], ['a', 'b'], ['a', 'c'], ['a']]
-
     '''
-
     combs = []
     if num > 0:
         for i in range(len(combinationList)):
@@ -1912,7 +1909,7 @@ class TrecentoNotationException(exceptions21.Music21Exception):
     pass
 
 # -------------------------------------------------------------------------------------
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def testTinyTrecentoStream(self):
         from music21 import text

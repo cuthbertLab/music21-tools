@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from music21 import stream
 from music21 import clef
 from music21 import converter, corpus, instrument, graph, note, meter, humdrum
@@ -526,10 +525,3 @@ if __name__ == "__main__":
     # js_q1()
     music21.mainTest(Test)
     # music21.mainTest(TestExternal)
-
-
-
-
-# -----------------------------------------------------------------------------
-# eof
-

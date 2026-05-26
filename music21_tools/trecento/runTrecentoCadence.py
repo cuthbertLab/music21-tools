@@ -25,8 +25,8 @@ def countTimeSig():
 
     for trecentoWork in ballataObj:
         thisTime = trecentoWork.timeSigBegin
-        thisTime = thisTime.strip() # remove leading and trailing whitespace
-        if (thisTime == ''):
+        thisTime = thisTime.strip()  # remove leading and trailing whitespace
+        if thisTime == '':
             pass
         else:
             totalPieces += 1

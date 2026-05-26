@@ -275,17 +275,17 @@ def savedSearches():
     # searchForIntervals("C4 B3 A3 A3 G3 G3 A3")  # London 29987 88v T
     # searchForNotes("G3 E3 F3 G3 F3 E3 D3 C3")  # probable French piece,
     # # Nuremberg 9, but worth a check
-    # searchForIntervals("A4 A4 G4 G4 F4 E4") # Nuremberg 9a, staff 6 probable French Piece
+    # searchForIntervals("A4 A4 G4 G4 F4 E4")  # Nuremberg 9a, staff 6 probable French Piece
     # findCasanatense522()
     # findRandomVerona()
     # findRavi3ORegina()
     # searchForIntervals("D4 B4 D4 C4 D4")  # cadence formula from 15th c. that
     # Lisa Colton was searching for in earlier sources -- none found
-    # searchForIntervals("G4 A4 G4 F4 E4 F4 G4 E4") # Prague XVII.J.17-14_1r piece 1
+    # searchForIntervals("G4 A4 G4 F4 E4 F4 G4 E4")  # Prague XVII.J.17-14_1r piece 1
     # -- possible contrafact -- no correct matches
-    # searchForIntervals("G4 A4 B4 G4 F4 G4 F4 E4") # Prague XVII.J.17-14_1r piece 2
+    # searchForIntervals("G4 A4 B4 G4 F4 G4 F4 E4")  # Prague XVII.J.17-14_1r piece 2
     # -- possible contrafact -- no matches
-    # searchForIntervals("F4 A4 F4 G4 F4 G4 A4") # Duke white notation manuscript
+    # searchForIntervals("F4 A4 F4 G4 F4 G4 A4")  # Duke white notation manuscript
 
 if __name__ == '__main__':
     savedSearches()

@@ -576,7 +576,7 @@ class AggregateContour:
     def plot(self, cType, showPoints=True, comparisonContour=None, regression=True, order=6):
         # TODO: maybe have an option of specifying a different
         #     color thing for each individual contour...
-        if cType not in self.aggContours: # ['dissonance', 'tonality', 'distance']:
+        if cType not in self.aggContours:  # ['dissonance', 'tonality', 'distance']:
             return None
         else:
             contour = self.getCombinedContour(cType)

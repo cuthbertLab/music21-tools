@@ -66,7 +66,7 @@ def ch1_basic_I_B(show=True, *arguments, **keywords):
         n1 = note.Note(i)
         n2 = note.Note(j)
         i1 = interval.notesToInterval(n1, n2)
-        if i1.intervalClass == 1: # by interval class
+        if i1.intervalClass == 1:  # by interval class
             unused_mark = 'H'
         elif i1.intervalClass == 2:
             unused_mark = 'W'
@@ -159,7 +159,7 @@ def ch1_basic_II_A_1(show=True, *arguments, **keywords):
 '''
     exercise = converter.parseData(humdata)
     # exercise = music21.parseData("ch1_basic_II_A_1.xml")
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     if show:
         exercise.show()
@@ -188,10 +188,10 @@ def ch1_basic_II_A_2(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.BassClef())
-    exercise = exercise.sorted # need sorted to get clef
+    exercise = exercise.sorted  # need sorted to get clef
     if show:
         exercise.show()
 
@@ -212,7 +212,7 @@ def ch1_basic_II_B_1(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.AltoClef())
     if show:
@@ -226,7 +226,7 @@ def ch1_basic_II_B_2(show=True, *arguments, **keywords):
     '''
     humdata = '**kern\n1F#1e-\n1B\n1D-\n1c\n*-'
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.TenorClef())
     if show:
@@ -245,7 +245,7 @@ def ch1_basic_II_C(data, intervalShift):
                 n1 = note.Note(e)
                 n1.quarterLength = 4
                 n2 = n1.transpose(intervalShift)
-                m.append(chord.Chord([n1, n2])) # chord to show both
+                m.append(chord.Chord([n1, n2]))  # chord to show both
             else:
                 m.append(e)
         m.timeSignature = m.bestTimeSignature()
@@ -331,7 +331,7 @@ def ch1_writing_I_A_1(show=True, *arguments, **keywords):
 '''
     ex = converter.parseData(humdata)
     ex = ex.transpose('p8')
-    ex.insert(0, clef.BassClef()) # maintain clef
+    ex.insert(0, clef.BassClef())  # maintain clef
     if show:
         ex.show()
 
@@ -354,7 +354,7 @@ def ch1_writing_I_A_2(show=True, *arguments, **keywords):
     # this notation excerpt is incomplete
     ex = converter.parseData(humdata)
     ex = ex.transpose('p8')
-    ex.insert(0, clef.TrebleClef()) # maintain clef
+    ex.insert(0, clef.TrebleClef())  # maintain clef
     if show:
         ex.show()
 
@@ -366,7 +366,7 @@ def ch1_writing_I_B_1(show=True, *arguments, **keywords):
     '''
     # camptown races
     ex = converter.parse('tinynotation: 2/4 g8 g e g', makeNotation=False)
-    ex.insert(0, clef.AltoClef()) # maintain clef
+    ex.insert(0, clef.AltoClef())  # maintain clef
     if show:
         ex.show()
 
@@ -456,7 +456,7 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
     import random
     from music21 import stream, expressions, pitch
 
-    dirWeight = [-1, 1] # start with an even distribution
+    dirWeight = [-1, 1]  # start with an even distribution
     s = stream.Stream()
 
     nStart = note.Note('g4')
@@ -471,7 +471,7 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
         if len(s) > 4 and n.pitch.pitchClass == nStart.pitch.pitchClass:
             n.expressions.append(expressions.Fermata())
             break
-        if len(s) > 30: # emergency break in case the piece is too long
+        if len(s) > 30:  # emergency break in case the piece is too long
             break
         direction = random.choice(dirWeight)
         if direction == 1:
@@ -484,9 +484,9 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
             break # end b/c our transposition have exceeded accidental range
 
         iSpread = interval.notesToInterval(nStart, n)
-        if iSpread.direction == -1: # we are below our target, favor upward
+        if iSpread.direction == -1:  # we are below our target, favor upward
             dirWeight = [-1, 1, 1]
-        if iSpread.direction == 1: # we are above our target, favor down
+        if iSpread.direction == 1:  # we are above our target, favor down
             dirWeight = [-1, -1, 1]
 
     if show:
@@ -711,7 +711,7 @@ def ch2_writing_I_A(tsStr, barGroups):
     for b in barGroups:
         summation = 0
         for ql in b:
-            if ql > 0: # quick encoding: negative values for rests
+            if ql > 0:  # quick encoding: negative values for rests
                 n = note.Note()
             else:
                 n = note.Rest()
@@ -922,16 +922,16 @@ def ch2_writing_III_B(src):
         if n.tie != None or len(group) > 0:
             if n.tie != None and n.tie.type != 'stop':
                 group.append(n)
-            else: # end of tied notes
+            else:  # end of tied notes
                 group.append(n)
                 ql = sum([x.quarterLength for x in group])
                 for i in range(len(group)):
-                    if i == 0: # keep first, extend dur
+                    if i == 0:  # keep first, extend dur
                         group[i].quarterLength = ql
                         group[i].tie = None # remove tie
-                    else: # remove from source
+                    else:  # remove from source
                         s2.remove(group[i])
-                group = [] # reset
+                group = []  # reset
 
     environLocal.printDebug(['post editing'])
 
@@ -1817,7 +1817,7 @@ FUNCTIONS = [ch1_basic_I_A,
 
             ]
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
