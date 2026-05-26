@@ -178,7 +178,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
         testFile1 = s.toScore()
         testFile = harmony.realizeChordSymbolDurations(testFile1)
-        smoothBassRN = generateSmoothBassLine(testFile.flatten().getElementsByClass(roman.RomanNumeral))
+        smoothBassRN = generateSmoothBassLine(
+            testFile.flatten().getElementsByClass(roman.RomanNumeral))
 
         output = generateContrapuntalBassLine(smoothBassRN, generateBaroqueRules())
         output.insert(metadata.Metadata())
@@ -194,7 +195,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         testFile1.insert(metadata.Metadata())
         testFile1.metadata.title = 'Jeanie With The Light Brown Hair'
         testFile = harmony.realizeChordSymbolDurations(testFile1)
-        smoothBassCS = generateSmoothBassLine(testFile.flatten().getElementsByClass(harmony.ChordSymbol))
+        smoothBassCS = generateSmoothBassLine(
+            testFile.flatten().getElementsByClass(harmony.ChordSymbol))
 
         output = generateContrapuntalBassLine(smoothBassCS, generatePopSongRules())
         mergeLeadSheetAndBassLine(testFile1, output).show()
@@ -206,7 +208,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
         '''
         testFile = harmony.realizeChordSymbolDurations(music21Stream)
-        smoothBassCS = generateSmoothBassLine(testFile.flatten().getElementsByClass(harmony.ChordSymbol))
+        smoothBassCS = generateSmoothBassLine(
+            testFile.flatten().getElementsByClass(harmony.ChordSymbol))
         output = generateContrapuntalBassLine(smoothBassCS, generatePopSongRules())
         mergeLeadSheetAndBassLine(music21Stream, output).show()
 
@@ -220,9 +223,7 @@ if __name__ == '__main__':
     # test = HarmonyRealizer.TestExternal()
 
     # test.leadsheetEx1()
-    # sc = converter.parse('https://github.com/cuthbertLab/music21/raw/master/music21/corpus/leadSheet/fosterBrownHair.mxl')  # Jeannie Light Brown Hair
-
-
+    # sc = corpus.parse('leadSheet/fosterBrownHair')  # Jeannie Light Brown Hair
 
     testfile1 = '''
 % Dylan - Blowin' in the Wind

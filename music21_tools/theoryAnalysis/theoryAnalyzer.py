@@ -562,9 +562,11 @@ class Analyzer:
         >>> ads = Analyzer()
         >>> len(ads.getVerticalityNTuplets(sc, 3))
         2
-        >>> ads.getVerticalityNTuplets(sc, 3)[1]
-        <music21.voiceLeading.VerticalityTriplet listOfVerticalities=[<music21.voiceLeading.Verticality...>,
-            <music21.voiceLeading.Verticality...>, <music21.voiceLeading.Verticality...>]>
+        >>> triplet = ads.getVerticalityNTuplets(sc, 3)[1]
+        >>> triplet.__class__.__name__
+        'VerticalityTriplet'
+        >>> len(triplet.verticalities)
+        3
         '''
         verticalityNTuplets = []
         sid = score.id
@@ -1809,7 +1811,8 @@ class Analyzer:
         >>> len(ads.store[sc.id]['ResultDict']['improperDissonantIntervals'])
         1
         >>> ads.store[sc.id]['ResultDict']['improperDissonantIntervals'][0].text
-        'Improper dissonant harmonic interval in measure 1: Perfect Fourth from B to E between part 1 and part 2'
+        'Improper dissonant harmonic interval in measure 1:
+            Perfect Fourth from B to E between part 1 and part 2'
 
         '''
         sid = score.id

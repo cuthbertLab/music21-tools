@@ -78,3 +78,10 @@ ignore = [
 inline-quotes = 'single'
 multiline-quotes = 'single'
 docstring-quotes = 'single'
+
+[tool.ruff.lint.per-file-ignores]
+# clercqTemperley example contains a real chord progression on a single line
+# (musical content; not wrappable).
+'music21_tools/bhadley/harmonyRealizer.py' = ['E501']
+# Gregorio .gabc → LaTeX template strings; line breaks would break the template.
+'music21_tools/chant/chant.py' = ['E501']

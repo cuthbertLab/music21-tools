@@ -967,7 +967,8 @@ def improvedHarmony(startPiece=2, endPiece=459):
             if len(thisSnippetParts) < 2:
                 continue
             srcStream1 = thisSnippetParts['C'].flatten().notesAndRests
-            srcStream2 = thisSnippetParts['T'].flatten().notesAndRests  # ignore 3rd voice for now...
+            # ignore 3rd voice for now...
+            srcStream2 = thisSnippetParts['T'].flatten().notesAndRests
             srcStream1.attachIntervalsBetweenStreams(srcStream2)
             # srcStream2.attachIntervalsBetweenStreams(srcStream1)
             applyCapuaToStream(srcStream1)

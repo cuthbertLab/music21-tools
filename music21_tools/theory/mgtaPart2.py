@@ -33,7 +33,8 @@ class Test(unittest.TestCase):
         '''p55
         Write a whole note on the specified generic interval. Do not add sharps or flats.
 
-        MSC: 2013 Oct -- No longer works now that convertGenericToSemitone() [buggy] has been removed.
+        MSC: 2013 Oct -- No longer works now that convertGenericToSemitone()
+        [buggy] has been removed.
         '''
         pass
 

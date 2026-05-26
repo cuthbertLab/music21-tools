@@ -200,7 +200,9 @@ def ch1_basic_II_A_2(show=True, *arguments, **keywords):
 def ch1_basic_II_B_1(show=True, *arguments, **keywords):
     '''
     p4.
-    For each of the five trebleclef pitches on the left, write the alto-clef equivalent on the right. Then label each pitch with the correct name and octave designation.
+    For each of the five trebleclef pitches on the left, write the alto-clef
+    equivalent on the right. Then label each pitch with the correct name and
+    octave designation.
     '''
     humdata = '''
 **kern
@@ -222,7 +224,9 @@ def ch1_basic_II_B_1(show=True, *arguments, **keywords):
 def ch1_basic_II_B_2(show=True, *arguments, **keywords):
     '''
     p4.
-    For each of the five bass clef pitches on the left, write the tenor-clef equivalent on the right. Then label each pitch with the correct name and octave designation.
+    For each of the five bass clef pitches on the left, write the tenor-clef
+    equivalent on the right. Then label each pitch with the correct name and
+    octave designation.
     '''
     humdata = '**kern\n1F#1e-\n1B\n1D-\n1c\n*-'
     exercise = converter.parseData(humdata)
@@ -608,13 +612,16 @@ def ch2_basic_I_B(show=True, *arguments, **keywords):
     (Given meter type and one of meter, beat unit,
     beat division, full bar divisions, provide the other data)
     '''
-    # a brute force way to do this might have a function in meter.py that returns a number of candidates for a given meter type and some other parameter (bar duration). then, these values can be tested for match.
+    # a brute force way to do this might have a function in meter.py that returns
+    # a number of candidates for a given meter type and some other parameter
+    # (bar duration). then, these values can be tested for match.
     pass
 
 
 def ch2_basic_I_C(show=True, *arguments, **keywords):
     '''p. 13
-    Complete the chart below. (For a given meter, provide meter type, beat unit, beat division, and beat subdivision.)
+    Complete the chart below. (For a given meter, provide meter type, beat unit,
+    beat division, and beat subdivision.)
     '''
     from music21 import meter, stream
 
@@ -729,7 +736,8 @@ def ch2_writing_I_A(tsStr, barGroups):
 def ch2_writing_I_A_1(show=True, *arguments, **keywords):
     '''p. 14
 
-    Complete the rhythms below by adding one note value that completes any measure with too few beats.
+    Complete the rhythms below by adding one note value that completes any
+    measure with too few beats.
     '''
     barGroups = ([.5], [.75, .25], [.5, .75], [.25, .25, .25, .25], [.5], [])
     ex = ch2_writing_I_A('3/8', barGroups)
@@ -742,7 +750,9 @@ def ch2_writing_I_A_1(show=True, *arguments, **keywords):
 def ch2_writing_I_A_2(show=True, *arguments, **keywords):
     '''p. 14
     '''
-    barGroups = ([.75, .25, .25, .25, .25, .25, 1.5], [.25, .25, .5, -.5, .5], [2, .25, .25, .25, .25, .25, .25], [3])
+    barGroups = ([.75, .25, .25, .25, .25, .25, 1.5],
+                 [.25, .25, .5, -.5, .5],
+                 [2, .25, .25, .25, .25, .25, .25], [3])
     ex = ch2_writing_I_A('4/4', barGroups)
     if show:
         ex.show()
@@ -752,7 +762,8 @@ def ch2_writing_I_A_2(show=True, *arguments, **keywords):
 def ch2_writing_I_A_3(show=True, *arguments, **keywords):
     '''p. 14
     '''
-    barGroups = ([2, 1.5, .5, .5, .5, .5], [-.5, .5, .5, .5, 1, 1, 1], [4, 1.5], [.5, .5, .5, .5, .5, 1, .5])
+    barGroups = ([2, 1.5, .5, .5, .5, .5], [-.5, .5, .5, .5, 1, 1, 1],
+                 [4, 1.5], [.5, .5, .5, .5, .5, 1, .5])
     ex = ch2_writing_I_A('3/2', barGroups)
     if show:
         ex.show()
@@ -815,7 +826,9 @@ def ch2_writing_I_B_5(show=True, *arguments, **keywords):
 def ch2_writing_II_A(show=True, *arguments, **keywords):
     '''p. 15
 
-    Each of these pieces begins with an anacrusis. What note value (or note value plus rest) could the composer use to fill the last measure of the compositions correctly.
+    Each of these pieces begins with an anacrusis. What note value (or note value
+    plus rest) could the composer use to fill the last measure of the compositions
+    correctly.
     '''
     pass
 
@@ -955,7 +968,8 @@ def ch2_writing_III_B_1(show=True, *arguments, **keywords):
 def ch2_writing_III_B_2(show=True, *arguments, **keywords):
     '''p. 17
     '''
-    ex = converter.parse('tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2')
+    ex = converter.parse(
+        'tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -993,7 +1007,9 @@ def ch2_writing_IV_A(show=True, *arguments, **keywords):
 def ch2_writing_IV_B(show=True, *arguments, **keywords):
     '''p. 18
     '''
-    ex = converter.parse("tinynotation: 2/4 c8. c16 e8 g c'4. r8 a8. a16 c'8 a g4. e16 f g8 g8 e16 e g16 g a8 g8 e4 d8 e16 f e d8 d16 c4.")
+    ex = converter.parse(
+        "tinynotation: 2/4 c8. c16 e8 g c'4. r8 a8. a16 c'8 a g4. e16 f g8 g8"
+        ' e16 e g16 g a8 g8 e4 d8 e16 f e d8 d16 c4.')
 
     ex = ex.makeMeasures()
     ex.makeBeams(inPlace=True)
@@ -1015,7 +1031,9 @@ def ch2_writing_V_A(show=True, *arguments, **keywords):
     from music21 import key
 
     # note: tiny is not encoding C#s for c'#4 properly (it seems)
-    ex = converter.parse("tinynotation: 3/2 g#1 f#4 g#4 a1 g#2 f#1 g#4. en8 g#2 f#4 r4 f#4 d#8 B8 e2 r4 e4 a4. a8 a2 g#4 g# b4. e8 a2~ a4 a4 d'n4. d'8 d'n2 c'#4 c'# c'# c'#")
+    ex = converter.parse(
+        'tinynotation: 3/2 g#1 f#4 g#4 a1 g#2 f#1 g#4. en8 g#2 f#4 r4 f#4 d#8 B8'
+        " e2 r4 e4 a4. a8 a2 g#4 g# b4. e8 a2~ a4 a4 d'n4. d'8 d'n2 c'#4 c'# c'# c'#")
 
     ex.insert(0, key.KeySignature(4))
     # presently, this only works if makeAccidentals is called before make measures
@@ -1295,7 +1313,9 @@ def ch3_analysis_II_B(show=True, *arguments, **keywords):
 def ch4_basic_I_A(show=True, *arguments, **keywords):
     '''p. 33
 
-    For each major key, write out the scale. Circle degree 6. Write out a new scale that begins ont he pitch class you circled. Write the name of this relative-minor scale on the line indicated.
+    For each major key, write out the scale. Circle degree 6. Write out a new
+    scale that begins ont he pitch class you circled. Write the name of this
+    relative-minor scale on the line indicated.
     '''
     pass
 

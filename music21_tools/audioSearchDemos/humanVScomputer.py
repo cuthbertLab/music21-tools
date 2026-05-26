@@ -48,8 +48,10 @@ def runGame():
         freqFromAQList = base.getFrequenciesFromMicrophone(length=seconds, storeWaveFilename=None)
         detectedPitchesFreq = base.detectPitchFrequencies(freqFromAQList, useScale)
         detectedPitchesFreq = base.smoothFrequencies(detectedPitchesFreq)
-        (detectedPitchObjects, unused_listplot) = base.pitchFrequenciesToObjects(detectedPitchesFreq, useScale)
-        (notesList, unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
+        (detectedPitchObjects,
+         unused_listplot) = base.pitchFrequenciesToObjects(detectedPitchesFreq, useScale)
+        (notesList,
+         unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
         j = 0
         i = 0
         while i < len(notesList) and j < len(gameNotes) and good:
@@ -59,7 +61,8 @@ def runGame():
                 i = i + 1
                 j = j + 1
             else:
-                print('Wrong note. You played', notesList[i].fullName, 'and it should have been', gameNotes[j].fullName)
+                print('Wrong note. You played', notesList[i].fullName,
+                      'and it should have been', gameNotes[j].fullName)
                 good = False
 
         if good and j != len(gameNotes):

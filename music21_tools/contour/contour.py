@@ -198,7 +198,8 @@ class ContourFinder:
 
         >>> mycontour = cf.getContour('spacing', metric = lambda x: 2, overwrite=False)
         Traceback (most recent call last):
-        music21_tools.contour.contour.OverwriteException: Attempted to overwrite 'spacing' metric but did not specify overwrite=True
+        music21_tools.contour.contour.OverwriteException: Attempted to overwrite
+        'spacing' metric but did not specify overwrite=True
 
         >>> mycontour = cf.getContour('spacing', slide=3, metric = lambda x: 2.0, overwrite=True)
         >>> [mycontour[x] for x in sorted(mycontour.keys())]

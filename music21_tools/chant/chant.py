@@ -431,7 +431,8 @@ class DefaultTeXWrapper:
 
 % If you use usual TeX fonts, here is a starting point:
 \\usepackage{times}
-% to change the font to something better, you can install the kpfonts package (if not already installed). To do so
+% to change the font to something better, you can install the kpfonts package
+    % (if not already installed). To do so
 % go open the "TeX Live Manager" in the Menu Start->All Programs->TeX Live 2010
 
 % here we begin the document

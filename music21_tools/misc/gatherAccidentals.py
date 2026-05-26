@@ -274,5 +274,6 @@ class TestSlow(unittest.TestCase):
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, 'moduleRelative')  # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
+    # replace 'Test' with 'TestSlow' to test it on all 371 Bach Chorales.
+    music21.mainTest(Test, 'moduleRelative')
 

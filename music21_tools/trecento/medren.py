@@ -842,7 +842,8 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         >>> r_1 = MensuralNote('A', 'brevis')
         >>> r_1.setStem('down')
         Traceback (most recent call last):
-        music21_tools.trecento.medren.MedRenException: A note of type brevis cannot be equipped with a stem
+        music21_tools.trecento.medren.MedRenException: A note of type brevis
+        cannot be equipped with a stem
 
         >>> r_2 = MensuralNote('A', 'semibrevis')
         >>> r_2.setStem('down')
@@ -856,7 +857,8 @@ class MensuralNote(GeneralMensuralNote, note.Note):
 
         >>> r_3.setStem('down')
         Traceback (most recent call last):
-        music21_tools.trecento.medren.MedRenException: This note already has the maximum number of stems
+        music21_tools.trecento.medren.MedRenException: This note already has
+        the maximum number of stems
 
         >>> r_3.setStem(None)
         >>> r_3.getStems()
@@ -944,7 +946,8 @@ class MensuralNote(GeneralMensuralNote, note.Note):
         >>> r_3.setStem('side')
         >>> r_3.setFlag('side', 'left')
         Traceback (most recent call last):
-        music21_tools.trecento.medren.MedRenException: a flag cannot be added to a stem with direction side
+        music21_tools.trecento.medren.MedRenException: a flag cannot be added
+        to a stem with direction side
         '''
         if stemDirection == 'up':
             if self.mensuralType != 'semiminima':
@@ -1460,7 +1463,8 @@ class Ligature(base.Music21Object):
 
         >>> l.setStem(2, 'down', 'right')
         Traceback (most recent call last):
-        music21_tools.trecento.medren.MedRenException: a stem with direction "down" not permitted at index 2
+        music21_tools.trecento.medren.MedRenException: a stem with direction
+        "down" not permitted at index 2
 
         >>> l.setMaxima(4, True)
         >>> l.setStem(4, 'up', 'left')
@@ -1469,7 +1473,8 @@ class Ligature(base.Music21Object):
 
         >>> l.setStem(3, 'up', 'left')
         Traceback (most recent call last):
-        music21_tools.trecento.medren.MedRenException: a stem with direction "up" not permitted at index 3
+        music21_tools.trecento.medren.MedRenException: a stem with direction
+        "up" not permitted at index 3
         '''
         if direction == 'None' or direction == 'none':
             direction = None

@@ -38,7 +38,8 @@ def spliceAnalysis(book=3, madrigal=1):
     # excerpt.show()
 
 def showAnalysis(book=3, madrigal= 3):
-    # analysis = converter.parse('d:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
+    # analysis = converter.parse(
+    #     'd:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
     filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, madrigal)
     analysis = corpus.parse(filename)
     # analysis.show()
@@ -251,8 +252,10 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
     for p in sc.parts:
         partNotes = p.flatten().stripTies(matchByPitch=True).notesAndRests
-        # thisPartPhraseScores = []  # keeps track of the likelihood that a phrase boundary is after note i
-        for i in range(2, len(partNotes) - 2):  # start on the third note and stop searching on the third to last note...
+        # thisPartPhraseScores = []  # keeps track of the likelihood that
+        # a phrase boundary is after note i
+        # start on the third note and stop searching on the third-to-last note
+        for i in range(2, len(partNotes) - 2):
             thisScore = 0
             twoNotesBack = partNotes[i - 2]
             previousNote = partNotes[i - 1]

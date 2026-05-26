@@ -103,7 +103,10 @@ def prepareChinaEurope1():
 
 
 def prepareChinaEurope2():
-    featureExtractors = features.extractorsById(['r31', 'r32', 'r33', 'r34', 'r35', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p19', 'p20', 'p21'])
+    featureExtractors = features.extractorsById(
+        ['r31', 'r32', 'r33', 'r34', 'r35',
+         'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10',
+         'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p19', 'p20', 'p21'])
 
     oChina2 = corpus.parse('essenFolksong/han2')
     oCEurope2 = corpus.parse('essenFolksong/boehme20')
@@ -148,7 +151,8 @@ def testChinaEuropeFull():
                 c = classifier(matchData[i])
                 if c != matchData[i].getclass():
                     mismatch += 1
-            print('%s %s: misclassified %s/%s of %s' % (cStr, cName, mismatch, len(matchData),  matchStr))
+            print('%s %s: misclassified %s/%s of %s'
+                  % (cStr, cName, mismatch, len(matchData), matchStr))
 
 
 # this test requires orange and related files

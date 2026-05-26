@@ -60,15 +60,19 @@ class SFApp():
         self.master.wm_title('Score follower - music21')
 
         self.scoreNameSong = 'scores/d luca gloria_Page_'
-        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/Saint-Saens-Clarinet-Sonata_Page_'
-        # C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
+        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/'
+        # 'Saint-Saens-Clarinet-Sonata_Page_'
+        # C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\
+        # Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
         #'scores/d luca gloria_Page_'
         #'scores/d luca gloria_Page_'
         self.format = 'tiff'#'jpg'
         self.nameRecordedSong = 'luca/gloria'
         # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/saint-saens.xml'
-        # 'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\saint-saens.xml'
-        self.pageMeasureNumbers = []  # get directly from score - the last one is the last note of the score
+        # 'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\
+        # Saint-Saens-Clarinet-Sonata\saint-saens.xml'
+        # get directly from score — the last entry is the last note
+        self.pageMeasureNumbers = []
         self.totalPagesScore = 1
         self.currentLeftPage = 1
         self.pagesScore = []
@@ -86,13 +90,16 @@ class SFApp():
             unused_user32 = ctypes.windll.user32 # test for error...
             self.screenResolution = [1024, 600]
             # self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-            environLocal.printDebug('screen resolution (windows) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
+            environLocal.printDebug('screen resolution (windows) %d x %d'
+                                    % (self.screenResolution[0], self.screenResolution[1]))
             self.resolution = True
         except Exception:  # mac and linux
             try:
                 for screen in AppKit.NSScreen.screens():  # @UndefinedVariable
-                    self.screenResolution = [int(screen.frame().size.width), int(screen.frame().size.height)]
-                environLocal.printDebug('screen resolution (MAC or linux) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
+                    self.screenResolution = [int(screen.frame().size.width),
+                                             int(screen.frame().size.height)]
+                environLocal.printDebug('screen resolution (MAC or linux) %d x %d'
+                                        % (self.screenResolution[0], self.screenResolution[1]))
                 self.resolution = True
             except Exception:
                 self.screenResolution = [1024, 600]
@@ -477,7 +484,8 @@ class SFApp():
 
             self.canvas1.grid(row=1, column=0, columnspan=3, rowspan=7)
             self.currentLeftPage -= 1
-        environLocal.printDebug('page Backward %d %d' % (self.currentLeftPage, self.totalPagesScore))
+        environLocal.printDebug('page Backward %d %d'
+                                % (self.currentLeftPage, self.totalPagesScore))
 
     def goTo1stPage(self):
         self.currentLeftPage = 1
