@@ -198,8 +198,8 @@ def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
                 try:
                     c = corpus.parse(filename)
                     print(book, i)
-                except:
-                    print('Cannot parse %s, maybe it does not exist...' % (filename))
+                except Exception:
+                    print(f'Cannot parse {filename}, maybe it does not exist...')
                     continue
             displayMe = False
             for i in range(len(c.parts) - 1):

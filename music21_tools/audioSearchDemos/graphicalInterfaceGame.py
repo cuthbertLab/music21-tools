@@ -8,12 +8,12 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
 import math
+import tkinter
+
 from . import repetitionGame
 
-import tkinter
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 class SFApp():
 

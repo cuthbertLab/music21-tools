@@ -253,12 +253,12 @@ class VerticalityNTupletTheoryResult(TheoryResult):
         '''
         if noteList is None:
             noteList = []
-        if partNum != None:
+        if partNum is not None:
             print('color...', partNum, self.partNumIdentified, self.vsnt.nTupletNum,
                   self.vsnt.tnlsDict.keys())
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[partNum].color(color)
-        elif self.partNumIdentified != None:
+        elif self.partNumIdentified is not None:
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[self.partNumIdentified].color(color, [2] )
 

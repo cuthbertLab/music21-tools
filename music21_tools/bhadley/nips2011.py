@@ -33,10 +33,9 @@ except ImportError:
     orngTree = None
 
 try:
-    import BeautifulSoup
-    from BeautifulSoup import *
+    from BeautifulSoup import BeautifulSoup
 except ImportError:
-    pass
+    BeautifulSoup = None
 
 from music21 import common
 from music21 import features
@@ -222,7 +221,7 @@ def getLeadsheetDatesFromBillboard():
                     try:
                         j = float(x)
                         continue
-                    except:
+                    except (ValueError, TypeError):
                         song = False
                         y = pretty
                         continue
@@ -281,7 +280,7 @@ def getLeadsheetDatesFromBillboard():
                 try:
                     j = float(x)
                     continue
-                except:
+                except (ValueError, TypeError):
                     if cnt < 100:
                         groups.append(str(x))
                     else:

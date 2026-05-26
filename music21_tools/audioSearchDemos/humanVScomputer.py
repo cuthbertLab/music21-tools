@@ -8,13 +8,14 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
+import time
+import random
 
 from music21 import scale, note
 from music21 import audioSearch as base
 # from music21.audioSearch import *
-import time
-import random
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
 

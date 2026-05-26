@@ -30,16 +30,17 @@ from music21 import metadata
 from music21 import meter
 from music21 import text
 
-from ._base import MedievalMeter
+from music21 import environment
 from music21 import note
 from music21 import stream
 from music21 import tie
 from music21 import tinyNotation
-from music21 import environment
-_MOD = 'trecento/notation.py'
-environLocal = environment.Environment(_MOD)
 
 from . import medren
+from ._base import MedievalMeter
+
+_MOD = 'trecento/notation.py'
+environLocal = environment.Environment(_MOD)
 
 _validDivisiones = {
     (None, None): 0,

@@ -303,7 +303,7 @@ class Analyzer:
         sid = score.id
         self.addAnalysisData(score)
         if ('Verticalities' in self.store[sid]
-                and self.store[sid]['Verticalities'] != None):
+                and self.store[sid]['Verticalities'] is not None):
             return self.store[sid]['Verticalities']
 
         # if elements exist at same offset, return both
@@ -524,7 +524,7 @@ class Analyzer:
     def _getTypeOfAllObjects(self, objectList):
         setList = []
         for obj in objectList:
-            if obj != None:
+            if obj is not None:
                 setList.append(set(obj.classes) )
 
         if setList:
@@ -794,7 +794,7 @@ class Analyzer:
                         tr.text = tr.value
                     else:
                         tr.text = textFunction(vlq, partNum1, partNum2)
-                    if editorialDictKey != None:
+                    if editorialDictKey is not None:
                         tr.markNoteEditorial(editorialDictKey, editorialValue, editorialMarkList)
                     if color is not None:
                         tr.color(color)
@@ -908,7 +908,7 @@ class Analyzer:
             for vsnt in self.getVerticalityNTuplets(score, nTupletNum):
                 if testFunction(vsnt, partNumToIdentify) is not False:
                     tr = theoryResult.VerticalityNTupletTheoryResult(vsnt, partNumToIdentify)
-                    if editorialDictKey != None:
+                    if editorialDictKey is not None:
                         tr.markNoteEditorial(editorialDictKey, editorialValue, editorialMarkDict)
                     if textFunction is not None:
                         tr.text = textFunction(vsnt, partNumToIdentify)

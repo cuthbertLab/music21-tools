@@ -8,16 +8,19 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
+import math
+import queue
+import threading
+import time
+import tkinter
 
 from music21 import corpus
 from music21 import converter
+from music21 import environment
 from music21 import exceptions21
-import threading
-import queue
-import tkinter
-import time
-import math
+from music21 import scale
+from music21.audioSearch import scoreFollower
+# from music21.audioSearch import recording
 
 _missingImport = []
 try:
@@ -30,21 +33,17 @@ except ImportError:
     except ImportError:
         _missingImport.append('PIL')
 
-from music21 import environment
-_MOD = 'audioSearch/graphicalInterfaceSF.py'
-environLocal = environment.Environment(_MOD)
-
-from music21.audioSearch import *
-# from music21.audioSearch import recording
-from music21 import scale
-
 try:
     import AppKit
 except ImportError:
     try:
         import ctypes
-    except:
+    except ImportError:
         pass
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
+_MOD = 'audioSearch/graphicalInterfaceSF.py'
+environLocal = environment.Environment(_MOD)
 
 
 # TO DO
@@ -89,13 +88,13 @@ class SFApp():
             # self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
             environLocal.printDebug('screen resolution (windows) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
             self.resolution = True
-        except:  # mac and linux
+        except Exception:  # mac and linux
             try:
                 for screen in AppKit.NSScreen.screens():  # @UndefinedVariable
                     self.screenResolution = [int(screen.frame().size.width), int(screen.frame().size.height)]
                 environLocal.printDebug('screen resolution (MAC or linux) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
                 self.resolution = True
-            except:
+            except Exception:
                 self.screenResolution = [1024, 600]
                 environLocal.printDebug('screen resolution not detected')
                 self.resolution = False

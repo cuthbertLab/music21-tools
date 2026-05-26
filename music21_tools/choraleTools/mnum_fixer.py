@@ -9,7 +9,7 @@
 # ------------------------------------------------------------------------------
 from pathlib import Path
 
-from music21 import *
+from music21 import converter, corpus, musicxml
 
 p = Path('/Users/Cuthbert/Desktop/Norman_Schmidt_Chorales')
 pOut = p.parent / 'Out_Chorales'

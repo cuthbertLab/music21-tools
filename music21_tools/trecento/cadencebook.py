@@ -21,8 +21,6 @@ import copy
 
 import xlrd
 
-_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-
 from music21 import duration
 from music21 import expressions
 from music21 import metadata
@@ -30,6 +28,8 @@ from music21 import stream
 
 from . import trecentoCadence
 from . import polyphonicSnippet
+
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class TrecentoSheet:
     '''

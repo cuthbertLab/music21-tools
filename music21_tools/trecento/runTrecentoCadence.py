@@ -118,8 +118,8 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
             randomPiece = ballataObj.makeWork( i ) #
             if randomPiece.incipit:
                 retrievedPieces.append(randomPiece)
-        except:
-            raise Exception('Could not retrieve random piece at index ' + str(i))
+        except Exception as exc:
+            raise Exception(f'Could not retrieve random piece at index {i}') from exc
 
 #    lilyString = ""
 #    retrievedPieces.sort(key=sortByPMFC)

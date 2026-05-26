@@ -15,7 +15,7 @@ from typing import cast
 
 import math
 
-from music21 import *
+from music21 import converter, note, stream
 
 
 def smooth01(steps):

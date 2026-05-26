@@ -8,11 +8,10 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
-
 from music21 import scale
 from music21 import audioSearch as base
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
 class repetitionGame():

@@ -9,14 +9,14 @@
 # Copyright:    Copyright © 2009-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
 import copy
 from music21 import converter
 from music21 import stream
 from music21 import instrument
 from music21 import note
 from . import theoryAnalyzer
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
 class wwnortonExercise:
