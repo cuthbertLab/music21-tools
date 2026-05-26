@@ -323,7 +323,7 @@ class Analyzer:
                                                                   classList=classFilterList)
                     # el = part.flatten().getElementAtOrBefore(c.offset,classList=[
                     #             'Note', 'Rest', 'Chord', 'Harmony'])
-                    for el in elementStream.elements:
+                    for el in elementStream:
                         contentDict[partNum].append(el)
                     partNum += 1
             else:
@@ -332,7 +332,7 @@ class Analyzer:
                                                                classList=classFilterList)
                 # el = part.flatten().getElementAtOrBefore(c.offset,
                 #            classList=['Note', 'Rest', 'Chord', 'Harmony'])
-                for el in elementStream.elements:
+                for el in elementStream:
                     contentDict[partNum].append(el)
                 partNum += 1
 
