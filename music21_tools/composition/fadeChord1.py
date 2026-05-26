@@ -36,7 +36,6 @@ def main():
     basis = cast(stream.Measure, converter.parse("tinynotation: 2/4 c16 d e f g a c' b")
                  .getElementsByClass('Measure').first())
     vols = [[1, 0, 1, 0, 1, 0, 1, 0] * reps]
-    smooths = smooth01(reps)
     for i, n in enumerate(basis.notes):
         n.volume.velocityScalar = vols[0][i]
     notes = basis[note.Note]
@@ -51,7 +50,7 @@ def main():
     notes[7].groups.append('B')
 
     part = stream.Part()
-    for rep_n in range(reps):
+    for _ in range(reps):
         new_measure = deepcopy(basis)
         part.append(new_measure)
 

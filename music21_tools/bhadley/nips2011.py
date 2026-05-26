@@ -314,7 +314,7 @@ def getLeadsheetDatesFromBillboard():
         if os.path.exists(dst):
             piece = converter.parse(dst)
             for year in DICT:
-                    for title, group in DICT[year]:
+                    for title, _group in DICT[year]:
                         if piece.metadata.movementName.lower() == str(title).lower():  # or piece.metadata.composer == str(a):
                             # print("Found by title! Name", piece.metadata.movementName, "Composer", piece.metadata.composer, str(year))
                             # print(dst)
@@ -433,8 +433,8 @@ def probabilityOfChance():
     prob = 0.0
     # Probability of getting 148 or more correct (sum
     # the probabilty as k increses from 148 to 214)
-    for k in range(k, TOTAL_TRIALS):
-        prob = prob + BinomialProbability(n, k, p, q)
+    for ki in range(k, TOTAL_TRIALS):
+        prob = prob + BinomialProbability(n, ki, p, q)
 
     print('The probability that the computer would guess correctly 69% or more of the time', prob)
 

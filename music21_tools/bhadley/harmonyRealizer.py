@@ -213,7 +213,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 if __name__ == '__main__':
     from music21 import base
-    base.mainTest(Test, TestExternal)
+    base.mainTest(TestExternal)
 
     # from music21 import corpus
     # from music21.demos.bhadley import HarmonyRealizer

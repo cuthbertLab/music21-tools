@@ -919,8 +919,8 @@ def ch2_writing_III_B(src):
     group = []
     for n in s2.notesAndRests:
         # environLocal.printDebug([n, n.tie])
-        if n.tie != None or len(group) > 0:
-            if n.tie != None and n.tie.type != 'stop':
+        if n.tie is not None or len(group) > 0:
+            if n.tie is not None and n.tie.type != 'stop':
                 group.append(n)
             else:  # end of tied notes
                 group.append(n)
@@ -1595,7 +1595,7 @@ def ch5_writing_IV_A(show=True, *arguments, **keywords):
                  ('c#4', 1.5), ('b3', .5), ('a3', .5), ('c#4', .5), ('b3', .5), ('a3', .5),
                  ('g#3', 2), ('f#3', 3), (None, .5), ('c#4', .5), ('c#4', .5),
                  ('b3', .5), ('b3', .5), ('a#3', .5)]:
-        if p == None:
+        if p is None:
             n = note.Rest()
         else:
             n = note.Note(p)

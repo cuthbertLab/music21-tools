@@ -22,9 +22,12 @@ import random
 eschbeg = '30ET47'
 
 def letterToNumber(letter):
-    if letter == 'E': number = 11
-    elif letter == 'T': number = 10
-    else: number = int(letter)
+    if letter == 'E':
+        number = 11
+    elif letter == 'T':
+        number = 10
+    else:
+        number = int(letter)
     return number
 
 def numberToLetter(number):

@@ -395,7 +395,7 @@ class SFApp():
                                       image=self.phimage[self.currentLeftPage + 1], tag='3rdImage')
 
             self.refreshTime = 40
-            if self.ScF != None:
+            if self.ScF is not None:
                 if self.ScF.scoreStream[self.ScF.lastNotePosition].measureNumber < (
                         self.pageMeasureNumbers[self.currentLeftPage + 1]
                             + self.pageMeasureNumbers[self.currentLeftPage]) / 2.0:
