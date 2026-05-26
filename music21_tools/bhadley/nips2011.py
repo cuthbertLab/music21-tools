@@ -218,7 +218,7 @@ def getLeadsheetDatesFromBillboard():
                 for a in words:
                     a.strip()
                     pretty = pretty + ' ' + a
-                if song == True:
+                if song:
                     try:
                         j = float(x)
                         continue
@@ -226,7 +226,7 @@ def getLeadsheetDatesFromBillboard():
                         song = False
                         y = pretty
                         continue
-                if song == False:
+                if not song:
                     t = y, pretty
                     tempList.append( t )
                     song = True

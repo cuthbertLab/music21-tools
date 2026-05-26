@@ -49,7 +49,7 @@ class repetitionGame():
          unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
         j = 0
         i = 0
-        while i < len(notesList) and j < len(self.gameNotes) and self.good == True:
+        while i < len(notesList) and j < len(self.gameNotes) and self.good:
             if notesList[i].name == 'rest':
                 i = i + 1
             elif notesList[i].name == self.gameNotes[j].name:
@@ -60,11 +60,11 @@ class repetitionGame():
                       'and should have been', self.gameNotes[j].fullName)
                 self.good = False
 
-        if self.good == True and j != len(self.gameNotes):
+        if self.good and j != len(self.gameNotes):
             self.good = False
             print('YOU ARE VERY SLOW!!! PLAY FASTER NEXT TIME!')
 
-        if self.good == False:
+        if not self.good:
             print('YOU LOSE!! HAHAHAHA')
 
         else:

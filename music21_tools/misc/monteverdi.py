@@ -56,7 +56,7 @@ def analyzeBooks(books=(3,), start=1, end=20, show=False, strict=False):
     for book in books:
         for i in range(start, end + 1):
             filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, i)
-            if strict == True:
+            if strict:
                 analysis = corpus.parse(filename)
                 print(book, i)
             else:
@@ -66,7 +66,7 @@ def analyzeBooks(books=(3,), start=1, end=20, show=False, strict=False):
                 except Exception:
                     print('Cannot parse %s, maybe it does not exist...' % (filename))
                     continue
-            if show == True:
+            if show:
                 analysis.show()
             (MF, mF) = iqChordsAndPercentage(analysis)
             (MSt, mSt) = iqSemitonesAndPercentage(analysis)
@@ -191,7 +191,7 @@ def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
     for book in books:
         for i in range(start, end + 1):
             filename = 'monteverdi/madrigal.%s.%s.xml' % (book, i)
-            if strict == True:
+            if strict:
                 c = corpus.parse(filename)
                 print(book, i)
             else:
@@ -267,10 +267,10 @@ def findPhraseBoundaries(book=4, madrigal=12):
                 phraseScoresByOffset[phraseOffset] = 0
                 existingScore = 0
 
-            if thisNote.isRest == True:
+            if thisNote.isRest:
                 continue
 
-            if nextNote.isRest == True:
+            if nextNote.isRest:
                 thisScore = thisScore + 10
             else:
                 intervalToNextNote = interval.notesToInterval(thisNote.pitches[0],

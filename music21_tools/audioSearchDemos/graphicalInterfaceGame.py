@@ -108,7 +108,7 @@ class SFApp():
         #master = self.master
 
 
-        if self.good == True:
+        if self.good:
             print('rounddddddddddddasdasdadsadad', self.rG.round)
             self.textRound.set('Round %d' % (self.rG.round + 1))
             self.counter = math.pow(-1, self.rG.round)

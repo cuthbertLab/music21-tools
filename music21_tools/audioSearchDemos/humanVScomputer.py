@@ -31,7 +31,7 @@ def runGame():
     time.sleep(2)
     print('3, 2, 1 GO!')
     nameNotes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    while(good == True):
+    while(good):
         randomNumber = random.randint(0, 6)
         octaveNumber = 4 # I can put a random number here...
         fullNameNote = '%s%d' % (nameNotes[randomNumber], octaveNumber)
@@ -51,7 +51,7 @@ def runGame():
         (notesList, unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
         j = 0
         i = 0
-        while i < len(notesList) and j < len(gameNotes) and good == True:
+        while i < len(notesList) and j < len(gameNotes) and good:
             if notesList[i].name == 'rest':
                 i = i + 1
             elif notesList[i].name == gameNotes[j].name:
@@ -61,11 +61,11 @@ def runGame():
                 print('WRONG NOTE! You played', notesList[i].fullName, 'and should have been', gameNotes[j].fullName)
                 good = False
 
-        if good == True and j != len(gameNotes):
+        if good and j != len(gameNotes):
             good = False
             print('YOU ARE VERY SLOW!!! PLAY FASTER NEXT TIME!')
 
-        if good == False:
+        if not good:
             print('GAME OVER! TOTAL ROUNDS: %d' % roundNumber)
 
 if __name__ == '__main__':

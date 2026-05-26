@@ -203,7 +203,7 @@ class SFApp():
                 break
 
         comprovation = False
-        while comprovation == False:
+        while not comprovation:
             bad = False
             for yPos in range(0, resY, int(resY / resY)):
                 pixelPosition = yPos * resX + leftCut - numberPixels
@@ -213,7 +213,7 @@ class SFApp():
                         or data[pixelPosition][1] not in colorRange
                         or data[pixelPosition][2] not in colorRange):
                     bad = True
-            if bad == False:
+            if not bad:
                 comprovation = True
             else:
                 leftCut = leftCut - numberPixels
@@ -233,7 +233,7 @@ class SFApp():
                 break
 
         comprovation = False
-        while comprovation == False:
+        while not comprovation:
             bad = False
             for yPos in range(0, resY, int(resY / resY)):
                 pixelPosition = yPos * resX + resX - (rightCut - numberPixels)
@@ -243,7 +243,7 @@ class SFApp():
                         and data[pixelPosition][1] not in colorRange
                         and data[pixelPosition][2] not in colorRange):
                     bad = True
-            if bad == False:
+            if not bad:
                 comprovation = True
             else:
                 rightCut = rightCut - numberPixels
@@ -343,7 +343,7 @@ class SFApp():
 
         self.textVar3.set('That is a good song! :)')
 
-        if self.firstTime == True:
+        if self.firstTime:
             self.button2 = tkinter.Button(master,
                                           text='START SF',
                                           width=self.sizeButton,
@@ -547,7 +547,7 @@ class SFApp():
         environLocal.printDebug('continueScoreFollower starting')
         self.ScF = self.scoreFollower
         self.timeStart = time.time()
-        if self.stop == False and (self.firstTimeSF == True or self.rt.resultInThread == False):
+        if not self.stop and (self.firstTimeSF or not self.rt.resultInThread):
             environLocal.printDebug('firstTimeSF == True or resultInThread')
 
             self.lastNoteString = 'Note: %d, Measure: %d, Countdown:%d, Page:%d' % (
@@ -555,7 +555,7 @@ class SFApp():
                                     self.ScF.scoreStream[self.ScF.lastNotePosition].measureNumber,
                                     self.ScF.countdown,
                                     self.currentLeftPage)
-            if self.firstTimeSF == False:
+            if not self.firstTimeSF:
                 self.textVarComments.set('1st meas: %d, last meas: %d' % (
                                     self.ScF.scoreStream[self.ScF.firstNotePage].measureNumber,
                                     self.ScF.scoreStream[self.ScF.lastNotePage].measureNumber))
@@ -608,7 +608,7 @@ class SFApp():
                 # case in which the musician plays a note of a not displayed page
                 pageNumber = 0
                 final = False
-                while final == False:
+                while not final:
                     if (pageNumber < self.totalPagesScore
                             and self.ScF.lastNotePosition >= self.beginningPages[pageNumber]):
                         pageNumber += 1
@@ -631,7 +631,7 @@ class SFApp():
 
 
             elif (self.ScF.lastNotePosition >= self.middlePages[self.currentLeftPage]
-                    and self.isMoving == False):  #50% case
+                    and not self.isMoving):  #50% case
                 self.isMoving = True
                 environLocal.printDebug('moving right page to left')
                 self.moving()
@@ -646,7 +646,7 @@ class SFApp():
                                         'page: hits=%d' % self.hits)
                 if self.hits == 2:
                     self.hits = 0
-                    if self.isMoving == False:
+                    if not self.isMoving:
                         self.isMoving = True
                         environLocal.printDebug('moving for hits')
                         self.moving()

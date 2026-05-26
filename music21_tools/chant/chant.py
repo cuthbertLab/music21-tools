@@ -161,7 +161,7 @@ class GregorianNote(note.Note):
             letter += 'w'
         elif self.stropha:
             letter += 's'
-        if self.liquescent != False:
+        if self.liquescent:
             #if nextNote is not None:
             #   if nextNote.diatonicNoteNum > self.diatonicNoteNum:
             #        letter += '<'
@@ -173,24 +173,24 @@ class GregorianNote(note.Note):
                 letter += '<'
             else:
                 letter += '~'
-        if self.punctumMora != False:
+        if self.punctumMora:
             if self.punctumMora == 1:
                 letter += '.'
             elif self.punctumMora == 2:
                 letter += '..'
             else:
                 raise ChantException('unable to do punctumMora with more than two notes')
-        if self.episema != False:
+        if self.episema:
             if self.episema == 'vertical':
                 letter += "'"
             elif self.episema == 'below':
                 letter += '_0'
             else:
                 letter += '_'
-        if self.breakNeume != False:
+        if self.breakNeume:
             letter += '!'
 
-        if self.choralSign != False:
+        if self.choralSign:
             letter += '[cs:' + self.choralSign + ']'
 
         if self.polyphonic:

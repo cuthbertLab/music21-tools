@@ -1886,13 +1886,13 @@ def setBarlineStyle(score, newStyle, oldStyle='regular', *, inPlace=False):
                     barline.style = newStyle
     return score
 
-def scaleDurations(score, scalingNum=1, *, inPlace=False, scaleUnlinked=True):
+def scaleDurations(score, scalingNum: int|float = 1, *, inPlace=False, scaleUnlinked=True):
     '''
     scale all notes and TimeSignatures by the scaling amount.
 
     returns the Score object
     '''
-    if inPlace is False:
+    if not inPlace:
         score = copy.deepcopy(score)
 
     for el in score.recurse():
