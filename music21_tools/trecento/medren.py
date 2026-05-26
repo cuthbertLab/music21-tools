@@ -1730,7 +1730,7 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
         violated by <class 'music21.stream.base.Score'>
 
     The normal case: a single flat ``Part`` carrying a Divisione at its head,
-    followed by mensural notes and Puncti.  The function returns a ``Part``
+    followed by mensural notes and puncti.  The function returns a ``Part``
     of ``Measure`` objects grouped by brevis-length, with the Divisione placed
     as the first element of the first Measure.
 
@@ -1765,10 +1765,11 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
     because trecento divisione changes are only allowed at the highest stream
     level, not within a single voice.
 
-    >>> p.insert(5, Divisione('.p.'))
+    >>> p.insert(5.0, Divisione('.p.'))
     >>> breakMensuralStreamIntoBrevisLengths(p)
     Traceback (most recent call last):
-    music21_tools.trecento.medren.MedRenException: Mensuration or divisione <notation.Divisione .p.> not consistent within hierarchy
+    music21_tools.trecento.medren.MedRenException: Mensuration or
+        divisione <notation.Divisione .p.> not consistent within hierarchy
     '''
     mOrD = inpMOrD
     mOrDInAsNone = True
