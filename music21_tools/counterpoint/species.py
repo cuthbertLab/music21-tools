@@ -976,12 +976,12 @@ class ModalCounterpoint:
         maxNote = len(s1notes)
         for i in range(maxNote):
             note1 = s1notes[i]
-            if note1.name == sixth and i < maxNote - 2
+            if note1.name == sixth and i < maxNote - 2:
                 note2 = s1notes[i + 1]
                 note3 = s1notes[i + 2]
-                if note2.name == seventh and note3.name == tonic
+                if note2.name == seventh and note3.name == tonic:
                     note1 = note1.transpose('A1')
-            elif note1.name == seventh and i < maxNote - 1
+            elif note1.name == seventh and i < maxNote - 1:
                 note2 = s1notes[i + 1]
                 if note2.name == tonic:
                     note1 = note1.transpose('A1')
@@ -999,7 +999,7 @@ class ModalCounterpoint:
         thirdsGood = False
         sixthsGood = False
 
-        while not goodHarmony or not goodMelody or not thirdsGood or not sixthsGood
+        while not goodHarmony or not goodMelody or not thirdsGood or not sixthsGood:
             environLocal.printDebug([''])
             environLocal.printDebug(['-------------------------------------'])
             environLocal.printDebug(['starting over'])
