@@ -501,7 +501,7 @@ class TrecentoCadenceWork:
         >>> accur = bs.makeWork(2)
         >>> accurIncipit = accur.incipit
         >>> print(accurIncipit)
-        <trecento.polyphonicSnippet.Incipit ...>
+        <music21_tools.trecento.polyphonicSnippet.Incipit ...>
         '''
         rowBlock = self.rowvalues[8:12]
         rowBlock.append(self.rowvalues[7])
@@ -523,8 +523,8 @@ class TrecentoCadenceWork:
         >>> accurSnippets = accur.getOtherSnippets()
         >>> for thisSnip in accurSnippets:
         ...     print(thisSnip)
-        <trecento.polyphonicSnippet.FrontPaddedSnippet ...>
-        <trecento.polyphonicSnippet.FrontPaddedSnippet ...>
+        <music21_tools.trecento.polyphonicSnippet.FrontPaddedSnippet ...>
+        <music21_tools.trecento.polyphonicSnippet.FrontPaddedSnippet ...>
 
         '''
         beginSnippetPositions = self.beginSnippetPositions
@@ -559,7 +559,7 @@ class TrecentoCadenceWork:
         >>> bs = BallataSheet()
         >>> accur = bs.makeWork(2)
         >>> print(accur.getSnippetAtPosition(12))
-        <trecento.polyphonicSnippet.FrontPaddedSnippet ...>
+        <music21_tools.trecento.polyphonicSnippet.FrontPaddedSnippet ...>
         '''
 
         if self.rowvalues[snippetPosition].strip() != '':

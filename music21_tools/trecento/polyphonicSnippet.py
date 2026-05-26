@@ -54,11 +54,11 @@ class PolyphonicSnippet(stream.Score):
 
     >>> dumClass = dummy.__class__
     >>> dumClass
-    <class 'music21.PolyphonicSnippet'>
+    <class 'music21_tools.trecento.polyphonicSnippet.PolyphonicSnippet'>
 
     >>> dumdum = dumClass()
     >>> dumdum.__class__
-    <class 'music21.PolyphonicSnippet'>
+    <class 'music21_tools.trecento.polyphonicSnippet.PolyphonicSnippet'>
 
     >>> ps2 = ps.__class__()
     >>> ps2.elements
