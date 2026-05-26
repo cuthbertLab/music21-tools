@@ -75,7 +75,7 @@ class ModalCounterpoint:
         3
         >>> n1.editorial.harmonicInterval.name
         'P5'
-        >>> m4.octave = 5 #checking for 12ths as well
+        >>> m4.octave = 5  # checking for 12ths as well
         >>> cp.findParallelFifths(cp.stream1, cp.stream2)
         3
         '''
@@ -154,7 +154,7 @@ class ModalCounterpoint:
         >>> cp.isParallelFifth(n1, n2, m1, m2) #(n1, m1) and (n2, m2) are chords
         True
         >>> m1.octave = 5
-        >>> m2.octave = 5 #test parallel 12ths
+        >>> m2.octave = 5  # test parallel 12ths
         >>> cp.isParallelFifth(n1, n2, m1, m2)
         True
 
@@ -235,7 +235,7 @@ class ModalCounterpoint:
         >>> cp.findParallelOctaves(cp.stream2, cp.stream1)
         3
         >>> m3.octave = 5
-        >>> m4.octave = 6 #check for parallel 17ths
+        >>> m4.octave = 6  # check for parallel 17ths
         >>> cp.findParallelOctaves(cp.stream2, cp.stream1)
         3
 
@@ -442,7 +442,7 @@ class ModalCounterpoint:
         True
         >>> m1.octave = 4
         >>> m2.octave = 4
-        >>> cp.isParallelUnison(n1, n2, m1, m2) #parallel octaves, not unison
+        >>> cp.isParallelUnison(n1, n2, m1, m2)  # parallel octaves, not unison
         False
         '''
         vlq = voiceLeading.VoiceLeadingQuartet(note11, note12, note21, note22)
@@ -1133,7 +1133,7 @@ class ModalCounterpoint:
 
         possibleNotes.extend(goingUp)
         possibleNotes.extend(goingDown)
-        #favor contrary motion
+        # favor contrary motion
         if bottomInt.direction < 0:
             possibleNotes.extend(goingUp)
         else:
@@ -1215,7 +1215,7 @@ class ModalCounterpoint:
 
         possibleNotes.extend(goingUp)
         possibleNotes.extend(goingDown)
-        #favor contrary motion
+        # favor contrary motion
         if bottomInt.direction < 0:
             possibleNotes.extend(goingUp)
         else:
@@ -1294,8 +1294,8 @@ class Test(unittest.TestCase):
 #
 #         counterpoint1 = ModalCounterpoint(stream1, stream2)
 #
-#         #  GGBC
-#         #  CDFF
+#         # GGBC
+#         # CDFF
 #         findPar5 = counterpoint1.findParallelFifths(stream1, stream2)
 #         print(findPar5)
 #

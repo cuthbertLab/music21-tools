@@ -246,7 +246,7 @@ class VerticalityNTupletTheoryResult(TheoryResult):
 
     def __init__(self, vsnt, partNumIdentified=None):
         super().__init__()
-        self.vsnt = vsnt #vertical slice ntuplet
+        self.vsnt = vsnt  # vertical slice ntuplet
         self.partNumIdentified = partNumIdentified
 
     def color(self,  color ='red', partNum=None, noteList=None):
@@ -298,5 +298,5 @@ if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative')
 
-    #te = TestExternal()
-    #te.demo()
+    # te = TestExternal()
+    # te.demo()

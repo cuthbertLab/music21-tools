@@ -13,15 +13,14 @@ _DOC_IGNORE_MODULE_OR_PACKAGE = True
 import math
 from . import repetitionGame
 
-import tkinter #  @UnresolvedImport @Reimport
-
+import tkinter
 
 class SFApp():
 
     def __init__(self, master):
         self.master = master
         self.frame = tkinter.Frame(master)
-        #self.frame.pack()
+        # self.frame.pack()
         self.master.wm_title('Repetition game')
 
         self.sizeButton = 11
@@ -94,10 +93,10 @@ class SFApp():
         self.buttonStart.grid(row=3, column=0, columnspan=3)
 
     def startGame(self):
-        #master = self.master
+        # master = self.master
         self.good = True
         self.textFinal.set('Wait...')
-        #self.boxName6.grid(row=4, column=0, columnspan=3)
+        # self.boxName6.grid(row=4, column=0, columnspan=3)
         self.rG = repetitionGame.repetitionGame()
         self.good = True
         self.textFinal.set('Go!')
@@ -105,14 +104,14 @@ class SFApp():
 
 
     def mainLoop(self):
-        #master = self.master
+        # master = self.master
 
 
         if self.good:
             print('rounddddddddddddasdasdadsadad', self.rG.round)
             self.textRound.set('Round %d' % (self.rG.round + 1))
             self.counter = math.pow(-1, self.rG.round)
-            if self.counter == 1: #player 1
+            if self.counter == 1:  # player 1
                 self.canvas1.create_oval(1, 1, 40, 40, fill='green')
                 self.canvas1.grid(row=1, column=0)
 
@@ -132,9 +131,9 @@ class SFApp():
         else:
             if self.counter == -1:
                 self.textP1Result.set('Winner!')
-                #boxName.grid(row=2, column=0)
+                # boxName.grid(row=2, column=0)
                 self.textP2Result.set('Second place')
-                #boxName.grid(row=2, column=2)
+                # boxName.grid(row=2, column=2)
                 self.canvas1.create_oval(1, 1, 40, 40, fill='yellow')
                 self.canvas1.grid(row=1, column=0)
 
@@ -146,7 +145,7 @@ class SFApp():
 
                 self.canvas1.create_oval(1, 1, 40, 40, fill='grey')
                 self.canvas1.grid(row=1, column=0)
-                #self.canvas2.destroy()
+                # self.canvas2.destroy()
                 self.canvas2.create_oval(1, 1, 40, 40, fill='yellow')
                 self.canvas2.grid(row=1, column=2)
 

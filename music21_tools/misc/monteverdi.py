@@ -21,11 +21,11 @@ def spliceAnalysis(book=3, madrigal=1):
     '''
     splice an analysis of the madrigal under the analysis itself
     '''
-    #mad = corpus.parse('monteverdi/madrigal.%s.%s.xml' % (book, madrigal))
+    # mad = corpus.parse('monteverdi/madrigal.%s.%s.xml' % (book, madrigal))
     analysis = corpus.parse('monteverdi/madrigal.%s.%s.rntxt' % (book, madrigal))
 
     # these are multiple parts in a score stream
-    #excerpt = mad.measures(1, 20)
+    # excerpt = mad.measures(1, 20)
 
     # get from first part
     aMeasures = analysis.parts[0].measures(1, 20)
@@ -34,14 +34,14 @@ def spliceAnalysis(book=3, madrigal=1):
         myN.style.hideObjectOnPrint = True
     x = aMeasures.write()
     print(x)
-    #excerpt.insert(0, aMeasures)
-    #excerpt.show()
+    # excerpt.insert(0, aMeasures)
+    # excerpt.show()
 
 def showAnalysis(book=3, madrigal= 3):
-    #analysis = converter.parse('d:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
+    # analysis = converter.parse('d:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
     filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, madrigal)
     analysis = corpus.parse(filename)
-    #analysis.show()
+    # analysis.show()
     (major, minor) = iqSemitonesAndPercentage(analysis)
     print(major)
     print(minor)
@@ -152,11 +152,11 @@ def iqRootsAndPercentage(analysisStream):
     active = 'minor'
     for element in romMerged:
         if 'RomanNumeral' in element.classes:
-            #distanceToTonicInSemis = int((element.root().ps -
+            # distanceToTonicInSemis = int((element.root().ps -
             #    pitch.Pitch(element.scale.tonic).ps) % 12)
             elementLetter = str(element.root().name)
 
-            ## leave El
+            # # leave El
             if element.quality == 'minor' or element.quality == 'diminished':
                 elementLetter = elementLetter.lower()
             elif element.quality == 'other':
@@ -203,7 +203,7 @@ def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
                     continue
             displayMe = False
             for i in range(len(c.parts) - 1):
-                #iName = c.parts[i].id
+                # iName = c.parts[i].id
                 ifn = c.parts[i].flatten().notesAndRests.stream()
                 omi = ifn.offsetMap()
                 for j in range(i + 1, len(c.parts)):
@@ -251,7 +251,7 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
     for p in sc.parts:
         partNotes = p.flatten().stripTies(matchByPitch=True).notesAndRests
-        #thisPartPhraseScores = [] # keeps track of the likelihood that a phrase boundary is after note i
+        # thisPartPhraseScores = [] # keeps track of the likelihood that a phrase boundary is after note i
         for i in range(2, len(partNotes) - 2): # start on the third note and stop searching on the third to last note...
             thisScore = 0
             twoNotesBack = partNotes[i - 2]
@@ -320,8 +320,8 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
 
 if __name__ == '__main__':
-    #spliceAnalysis()
-    #analyzeBooks(books=[3, 4, 5])
-    #analyzeBooks(books=[4], start=10, end=10, show=True, strict=True)
+    # spliceAnalysis()
+    # analyzeBooks(books=[3, 4, 5])
+    # analyzeBooks(books=[4], start=10, end=10, show=True, strict=True)
     findPhraseBoundaries(book=4, madrigal=12)
-    #monteverdiParallels(books=[3], start=1, end=1, show=True, strict=True)
+    # monteverdiParallels(books=[3], start=1, end=1, show=True, strict=True)

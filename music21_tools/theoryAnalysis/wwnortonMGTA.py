@@ -35,7 +35,7 @@ class wwnortonExercise:
     '''
     def __init__(self):
         self.xmlFileDirectory = 'C:/Users/bhadley/Dropbox/Music21Theory/TestFiles/Exercises/'
-        #/xmlfiles/"
+        # /xmlfiles/"
         self.xmlFilename = ''
         self.originalExercise = stream.Stream()
         self.modifiedExercise = stream.Stream()
@@ -71,12 +71,12 @@ class wwnortonExercise:
     def _partOffsetsToPartIndecies(self):
         for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = i
-        #self.modifiedExercise.show('text')
+        # self.modifiedExercise.show('text')
 
     def _partOffsetsToZero(self):
         for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = 0
-        #self.modifiedExercise.show('text')
+        # self.modifiedExercise.show('text')
 
     def _updatepn(self, newPartNum, direction):
         for partName in self.pn:
@@ -152,7 +152,7 @@ class wwnortonExercise:
             insertLoc = existingPartOffset + 0.5
             self.pn[newPartName] = partNum + 1
         self.modifiedExercise.insert(insertLoc, newPart)
-        #self.modifiedExercise.show('text')
+        # self.modifiedExercise.show('text')
         # Somehow needed for sorting...
         self.modifiedExercise._reprText()
         self._partOffsetsToZero()
@@ -168,7 +168,7 @@ class wwnortonExercise:
                 print('No Marker')
                 continue
             if markerNote.lyric != str(correctLyric):
-                #markerNote.lyric = markerNote.lyric + "->" + str(correctLyric)
+                # markerNote.lyric = markerNote.lyric + "->" + str(correctLyric)
                 markerNote.color = 'red'
 
     def showStudentExercise(self):
@@ -306,6 +306,6 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 if __name__ == '__main__':
     music21.mainTest(Test)
 
-    #te = TestExternal()
-    #te.demo()
+    # te = TestExternal()
+    # te.demo()
 

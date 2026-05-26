@@ -84,16 +84,16 @@ def nipsBuild(useOurExtractors=True, buildSet=1, evaluationMethod='coarse'):
     for wf in halfOfData:  # taking half the data here.... to get the other set do [198:]
         year = entryDict[wf][0]
 
-        ## ignore 1960s and 1970s pieces...
+        # ignore 1960s and 1970s pieces...
         if year < 1961 or year >= 1981:
             fn = leadsheetDir + str(wf) + '.mxl'
             print(fn, year, entryDict[wf][1])
             s = converter.parse(fn)
             title_id = s.metadata.title
-            #cv = year  # if not using coarse but instead using the exact year as the class value
+            # cv = year  # if not using coarse but instead using the exact year as the class value
 
             if evaluationMethod == 'coarse':
-                #coarse evaluation (only "old" or "new")
+                # coarse evaluation (only "old" or "new")
                 if year < 1961:
                     cv = 'old'
                 else:
@@ -149,8 +149,8 @@ def nipsEvalCoarse():
     data1 = orange.data.table.Table('d:/docs/research/music21/nips-2011/year5-ourExtractors-1.tab')
     data2 = orange.data.table.Table('d:/docs/research/music21/nips-2011/year6-ourExtractors-2.tab')
 
-    #data1 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year7-midi-only-1.tab')
-    #data2 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year8-midi-only-2.tab')
+    # data1 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year7-midi-only-1.tab')
+    # data2 = orange.ExampleTable('d:/docs/research/music21/nips-2011/year8-midi-only-2.tab')
 
 
     learners = {}
@@ -266,7 +266,7 @@ def getLeadsheetDatesFromBillboard():
                 group = group.replace('?', 'H')
                 t = title, group
                 tempList.append( t )
-        else: #i=2009
+        else:  # i=2009
             address = 'http://www.jamrockentertainment.com/billboard-music-top-100-songs-lististed-by-year/top-100-songs-%s.html' % i
             url = urlopen(address)
             html = url.read()
@@ -295,9 +295,7 @@ def getLeadsheetDatesFromBillboard():
         DICT[str(i)] = copy.deepcopy(tempList)
         tempList = []
 
-    #print DICT
-
-
+    # print(DICT)
     LOWERLIMIT = 1000
     UPPERLIMIT = 12938
     indexValues = range(LOWERLIMIT, UPPERLIMIT)
@@ -317,21 +315,21 @@ def getLeadsheetDatesFromBillboard():
             piece = converter.parse(dst)
             for year in DICT:
                     for title, group in DICT[year]:
-                        if piece.metadata.movementName.lower() == str(title).lower()   : #or piece.metadata.composer == str(a):
-                            #print "FOUND by title! Name", piece.metadata.movementName, "Composer", piece.metadata.composer, str(year)
-                            #print dst
+                        if piece.metadata.movementName.lower() == str(title).lower():  # or piece.metadata.composer == str(a):
+                            # print("Found by title! Name", piece.metadata.movementName, "Composer", piece.metadata.composer, str(year))
+                            # print(dst)
                             dates.append(int(year))
 
             if len(dates) > 0:
-                date = min(dates) #date of entry
+                date = min(dates)  # date of entry
                 tempList = DICT[str(date)]
                 for x in tempList:
                     for e in x:
                         if e.lower() == piece.metadata.movementName.lower():
-                            rank =  (tempList.index(x) + 1 ) #position on Billboard 100
+                            rank =  (tempList.index(x) + 1 )  # position on Billboard 100
 
-                #print "Title:", piece.metadata.movementName, "  Composer:", piece.metadata.composer, "  Date:", date, "  Position on Billboard:", rank
-                #print "Title:", piece.metadata.movementName, "  Date:", date
+                # print "Title:", piece.metadata.movementName, "  Composer:", piece.metadata.composer, "  Date:", date, "  Position on Billboard:", rank
+                # print "Title:", piece.metadata.movementName, "  Date:", date
                 matches = matches + 1
                 outputjson = outputjson + '{"%s":[%s,%s]}, ' % (i, date, rank)
         if (i % 500) == 0:
@@ -380,7 +378,7 @@ def probabilityOfChance():
         new = 1
         avg = 0.0
         for unused_trials in range(10000):
-            #generating the answerKey
+            # generating the answerKey
             answerKey = []
             for i in range(NUM_OLD_PIECES):
                 answerKey.append(old)
@@ -388,19 +386,19 @@ def probabilityOfChance():
                 answerKey.append(new)
             random.shuffle(answerKey)
 
-            #generating the answers, then comparing them
-            #to answerKey and calculating the percentage
-            #guessed correctly
+            # generating the answers, then comparing them
+            # to answerKey and calculating the percentage
+            # guessed correctly
             numCorrect = 0.0
             guessesOld = []
             guessesNew = []
             for answer in answerKey:
                 guess = random.randint(0, 1)
-                #the algorithm is smart - it knows
-                #there is a maximum number of times it
-                #can guess old vs. new, and if it
-                #has reached that maximum,
-                #it won't guess that value
+                # the algorithm is smart - it knows
+                # there is a maximum number of times it
+                # can guess old vs. new, and if it
+                # has reached that maximum,
+                # it won't guess that value
                 if guess == 0:
                     guessesOld.append(guess)
                 else:
@@ -427,19 +425,19 @@ def probabilityOfChance():
         qtothenminusk = pow(q, (n - k) )
         return nchoosek * ptothek * qtothenminusk
 
-    k = 148 #number of times music21 found correct date (successes)
-    n = TOTAL_TRIALS #total number of trials
+    k = 148  # number of times music21 found correct date (successes)
+    n = TOTAL_TRIALS  # total number of trials
     p = getPFromExperiment()
     print('The probability of a successful guess, as calculated by previous experiment', p)
     q = 1 - p
     prob = 0.0
-    #Probability of getting 148 or more correct (sum
-    #the probabilty as k increses from 148 to 214)
+    # Probability of getting 148 or more correct (sum
+    # the probabilty as k increses from 148 to 214)
     for k in range(k, TOTAL_TRIALS):
         prob = prob + BinomialProbability(n, k, p, q)
 
     print('The probability that the computer would guess correctly 69% or more of the time', prob)
 
 if __name__ == '__main__':
-    #nipsBuild()
+    # nipsBuild()
     nipsEvalCoarse()

@@ -552,10 +552,10 @@ class Test(unittest.TestCase):
 
     # def testScalesPy10(self):
     #     # look through s = corpus.parse('bwv1080/06')
-    #     #part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
-    #     #part = corpus.parse('bwv1080/03').parts[0]
+    #     # part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
+    #     # part = corpus.parse('bwv1080/03').parts[0]
     #
-    #     #from music21 import corpus, scale, note
+    #     # from music21 import corpus, scale, note
     #     from music21 import analysis
     #
     #     scDMelodicMinor = scale.MelodicMinorScale('d4')
@@ -644,7 +644,7 @@ class Test(unittest.TestCase):
     #     # Labeling a vocal part based on scale degrees derived
     #     # from key signature and from a specified target key.
     #
-    #     s = corpus.parse('hwv56/movement3-03.md')#.measures(1, 7)
+    #     s = corpus.parse('hwv56/movement3-03.md')  # .measures(1, 7)
     #     basso = s.parts['basso']
     #     s.remove(basso)
     #

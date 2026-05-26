@@ -33,7 +33,7 @@ def pitchedPhase(cycles=None, show=False):
     The source code describes how this works.
 
 
-    >>> #_DOCS_SHOW composition.phasing.pitchedPhase(cycles=4, show=True)
+    >>> # _DOCS_SHOW composition.phasing.pitchedPhase(cycles=4, show=True)
 
     .. image:: images/phasingDemo.*
             :width: 576

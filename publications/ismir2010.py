@@ -91,8 +91,8 @@ def newDomSev(show=True):
                 firstNote = thisMeasure.notesAndRests[0]
                 firstNote.lyric = primeForm
 
-                # Thus we append the chord in closed position and  then
-                #  the measure containing the chord.
+                # Thus we append the chord in closed position and then
+                # the measure containing the chord.
 
                 chordMeasure = stream.Measure()
                 chordMeasure.append(
@@ -513,7 +513,7 @@ def demoBachSearch():
 
     import random
     fpList = list(corpus.search('bach').search('.xml'))
-    
+
     random.shuffle(fpList)
     results = stream.Stream()
 

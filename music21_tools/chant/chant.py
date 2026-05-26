@@ -162,11 +162,11 @@ class GregorianNote(note.Note):
         elif self.stropha:
             letter += 's'
         if self.liquescent:
-            #if nextNote is not None:
-            #   if nextNote.diatonicNoteNum > self.diatonicNoteNum:
-            #        letter += '<'
-            #    else:
-            #        letter += '>'
+            # if nextNote is not None:
+            #    if nextNote.diatonicNoteNum > self.diatonicNoteNum:
+            #         letter += '<'
+            #     else:
+            #         letter += '>'
             if self.liquescent == 'ascending':
                 letter += '<'
             elif self.liquescent == 'descending':
@@ -332,8 +332,8 @@ class BaseScoreConverter:
 
         >>> bsc = BaseScoreConverter()
         >>> filePath = bsc.writeFile('hello')
-        >>> assert(str(filePath).endswith('.gabc')) #_DOCS_HIDE
-        >>> filePath = '/var/folders/k9/T/music21/tmpekHFCr.gabc' #_DOCS_HIDE
+        >>> assert(str(filePath).endswith('.gabc'))  # _DOCS_HIDE
+        >>> filePath = '/var/folders/k9/T/music21/tmpekHFCr.gabc'  # _DOCS_HIDE
         >>> filePath
         '/var/folders/k9/T/music21/tmpekHFCr.gabc'
 
@@ -355,9 +355,9 @@ class BaseScoreConverter:
 
         >>> bsc = BaseScoreConverter()
         >>> fn = '~cuthbert/Library/Gregorio/examples/Populas.gabc'
-        >>> #_DOCS_SHOW newFp = bsc.launchGregorio(fn)
-        >>> #_DOCS_SHOW bsc.gregorioCommand
-        >>> 'open -a"/usr/local/bin/gregorio" ' + fn #_DOCS_HIDE
+        >>> # _DOCS_SHOW newFp = bsc.launchGregorio(fn)
+        >>> # _DOCS_SHOW bsc.gregorioCommand
+        >>> 'open -a"/usr/local/bin/gregorio" ' + fn  # _DOCS_HIDE
         'open -a"/usr/local/bin/gregorio"  ~cuthbert/Library/Gregorio/examples/Populas.gabc'
 
 

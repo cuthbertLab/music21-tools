@@ -58,9 +58,9 @@ of this that will analyze the root motion in a score::
     >>> # gets a list of tuples, adjacent chord symbol objects in the score
     >>> for x in l:
     ...    averageMotion += abs(x.rootInterval().intervalClass)
-    >>> #rootInterval() returns the interval between the roots of the first chordSymbol and second
+    >>> # rootInterval() returns the interval between the roots of the first chordSymbol and second
     >>> averageMotion = averageMotion // len(l)
-    >>> averageMotion #average intervalClass in this piece is about 4
+    >>> averageMotion  # average intervalClass in this piece is about 4
     4
 
 **get only interesting music theory voiceLeading objects from a score**
@@ -379,7 +379,7 @@ class Analyzer:
                         defaultKey = score.analyze('key')
                     newKey = defaultKey
                 vlq.key = newKey
-                #vlq.key = getKeyAtMeasure(score, vlq.v1n1.measureNumber)
+                # vlq.key = getKeyAtMeasure(score, vlq.v1n1.measureNumber)
             allVLQs.extend(vlqs)
         return allVLQs
 
@@ -492,14 +492,14 @@ class Analyzer:
         '''
 
         linearSegments = []
-        #no caching here - possibly implement later on...
+        # no caching here - possibly implement later on...
         verticalities = self.getVerticalities(score)
 
         for i in range(len(verticalities) - lengthLinearSegment + 1):
             objects = []
             for n in range(lengthLinearSegment):
                 objects.append(verticalities[i + n].getObjectsByPart(partNum, classFilterList))
-                #print objects
+                # print objects
             if (lengthLinearSegment == 3
                     and 'Note' in self._getTypeOfAllObjects(objects)):
                 tnls = voiceLeading.ThreeNoteLinearSegment(objects[0], objects[1], objects[2])
@@ -1290,7 +1290,7 @@ class Analyzer:
         '''
         if editorialMarkList is None:
             editorialMarkList = []
-        #TODO: incorporate Jose's resolution rules into this method (italian6, etc.)
+        # TODO: incorporate Jose's resolution rules into this method (italian6, etc.)
         testFunction = lambda vlq: not vlq.isProperResolution()
         textFunction = lambda vlq, pn1, pn2: ('Improper resolution of ' +
                                               vlq.vIntervals[0].simpleNiceName +
@@ -1593,7 +1593,7 @@ class Analyzer:
         sid = score.id
         self.getPassingTones(score, dictKey=dictKey)
         for tr in self.store[sid]['ResultDict'][dictKey]:
-            a = tr.vsnt.tnlsDict[tr.partNumIdentified] #identifiedThreeNoteLinearSegment
+            a = tr.vsnt.tnlsDict[tr.partNumIdentified]  # identifiedThreeNoteLinearSegment
             durationNewTone = a.n1.duration.quarterLength + a.n2.duration.quarterLength
             for obj in score.recurse():
                 if obj.id == a.n2.id:
@@ -1638,7 +1638,7 @@ class Analyzer:
         sid = score.id
         self.getNeighborTones(score, dictKey=dictKey)
         for tr in self.store[sid]['ResultDict'][dictKey]:
-            a = tr.vsnt.tnlsDict[tr.partNumIdentified] #identifiedThreeNoteLinearSegment
+            a = tr.vsnt.tnlsDict[tr.partNumIdentified]  # identifiedThreeNoteLinearSegment
             durationNewTone = a.n1.duration.quarterLength + a.n2.duration.quarterLength
             for obj in score.recurse():
                 if obj.id == a.n2.id:
@@ -1646,7 +1646,7 @@ class Analyzer:
                     break
             a.n1.duration = duration.Duration(durationNewTone)
             score.stripTies(inPlace=True, matchByPitch=True)
-            #a.n1.color = 'red'
+            # a.n1.color = 'red'
         self.store[sid]['Verticalities'] = None
 
     def identifyNeighborTones(self, score, partNumToIdentify=None, color=None, dictKey=None,
@@ -1808,7 +1808,7 @@ class Analyzer:
                     else:
                         intv = resultTheoryObject.intv
                         tr = theoryResult.IntervalTheoryResult(intv)
-                        #tr.value = valueFunction(hIntv)
+                        # tr.value = valueFunction(hIntv)
                         tr.text = ('Improper dissonant harmonic interval in measure ' +
                                    str(intv.noteStart.measureNumber) + ': ' +
                                    str(intv.niceName) + ' from ' + str(intv.noteStart.name) +
@@ -2027,7 +2027,7 @@ class Analyzer:
     # homework assignments
 
     #
-    #def identifyRomanNumerals(self, score, color=None,
+    # def identifyRomanNumerals(self, score, color=None,
     #                            dictKey='romanNumerals', responseOffsetMap = []):
     #    '''
     #    Identifies the roman numerals in the piece by iterating through
@@ -2234,7 +2234,7 @@ class Analyzer:
         self.identifyHiddenOctaves(score, partNum1, partNum2, 'green', dictKey)
         self.identifyParallelUnisons(score, partNum1, partNum2, 'blue', dictKey)
         self.identifyImproperResolutions(score, partNum1, partNum2, 'purple', dictKey)
-        #self.identifyLeapNotSetWithStep(score, partNum1, partNum2, 'white', dictKey)
+        # self.identifyLeapNotSetWithStep(score, partNum1, partNum2, 'white', dictKey)
         self.identifyImproperDissonantIntervals(score, partNum1, partNum2, 'white', dictKey,
                                            unaccentedOnly = True)
         self.identifyDissonantMelodicIntervals(score, partNum1, 'cyan', dictKey)
@@ -2287,7 +2287,7 @@ class Analyzer:
                 for result in self.store[sid]['ResultDict'][resultType]:
                     resultStr += result.text
                     resultStr += '\n'
-        resultStr = resultStr[0:-1] #remove final new line character
+        resultStr = resultStr[0:-1]  # remove final new line character
         return resultStr
 
     def getHTMLResultsString(self, score, typeList=None):
@@ -2355,14 +2355,14 @@ class Analyzer:
                     del self.store[sid]['ResultDict'][dictKey]
                 except Exception:
                     pass
-                    #raise TheoryAnalyzerException('got a dictKey to remove from
+                    # raise TheoryAnalyzerException('got a dictKey to remove from
                     #    resultDictionary that wasnt in the dictionary: %s', dictKey)
         else:
             try:
                 del self.store[sid]['ResultDict'][dictKeys]
             except Exception:
                 pass
-                #raise TheoryAnalyzerException('got a dictKey to remove from resultDictionary
+                # raise TheoryAnalyzerException('got a dictKey to remove from resultDictionary
                 #    that wasn''t in the dictionary: %s', dictKeys)
     #
     def getKeyMeasureMap(self, score):
@@ -2439,7 +2439,7 @@ class Analyzer:
                         return key.Key(kName)
                     else:
                         return keyMeasureMap[dictKey]
-            if measureNumber == 0: #just in case of a pickup measure
+            if measureNumber == 0:  # just in case of a pickup measure
                 if 1 in keyMeasureMap:
                     return key.Key(key.convertKeyStringToMusic21KeyString(keyMeasureMap[1]))
             else:

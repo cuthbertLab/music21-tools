@@ -821,9 +821,9 @@ def findCorrections(correctionType='Maj3', startPiece=2, endPiece=459):
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
 #    >>> foundPieceOpus.show('lily.pdf')
 
-#    >>> #_DOCS_SHOW (totalDict, foundPieceOpus) = correctedMin6()
-#    >>> totalDict = {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, #_DOCS_HIDE
-#    ...    'capuaNotPmfc': 27, 'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82} #_DOCS_HIDE
+#    >>> # _DOCS_SHOW (totalDict, foundPieceOpus) = correctedMin6()
+#    >>> totalDict = {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3,  # _DOCS_HIDE
+#    ...    'capuaNotPmfc': 27, 'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}  # _DOCS_HIDE
 #    >>> pp(totalDict)
 #    {'alterAll': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, 'capuaNotPmfc': 27,
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
@@ -933,9 +933,9 @@ def improvedHarmony(startPiece=2, endPiece=459):
     Returns a dict showing the results
 
 
-    >>> #_DOCS_SHOW improvedHarmony()
-    >>> print("{'imperfCapua': 22, 'imperfIgnored': 155, " + #_DOCS_HIDE
-    ...    "'perfCapua': 194, 'perfIgnored': 4057}") #_DOCS_HIDE
+    >>> # _DOCS_SHOW improvedHarmony()
+    >>> print("{'imperfCapua': 22, 'imperfIgnored': 155, " +  # _DOCS_HIDE
+    ...    "'perfCapua': 194, 'perfIgnored': 4057}")  # _DOCS_HIDE
     {'imperfCapua': 22, 'imperfIgnored': 155, 'perfCapua': 194, 'perfIgnored': 4057}
     '''
 

@@ -437,7 +437,7 @@ class TrecentoCadenceWork:
 
         Changes made to a snippet are reflected in the asScore() score object:
 
-        >>> deduto.snippets[0].parts[0].flatten().notes[0].name = "C###"
+        >>> deduto.snippets[0].parts[0].flatten().notes[0].name = 'C###'
         >>> deduto.asScore().parts[0].flatten().notes[0].name
         'C###'
         '''

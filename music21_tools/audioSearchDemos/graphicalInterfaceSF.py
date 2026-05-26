@@ -34,7 +34,7 @@ from music21 import environment
 _MOD = 'audioSearch/graphicalInterfaceSF.py'
 environLocal = environment.Environment(_MOD)
 
-from music21.audioSearch import * #@UnusedWildImport
+from music21.audioSearch import *
 #from music21.audioSearch import recording
 from music21 import scale
 
@@ -61,8 +61,8 @@ class SFApp():
         self.master.wm_title('Score follower - music21')
 
         self.scoreNameSong = 'scores/d luca gloria_Page_'
-        #'/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/Saint-Saens-Clarinet-Sonata_Page_'
-        #C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
+        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/Saint-Saens-Clarinet-Sonata_Page_'
+        # C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
         #'scores/d luca gloria_Page_'
         #'scores/d luca gloria_Page_'
         self.format = 'tiff'#'jpg'
@@ -86,7 +86,7 @@ class SFApp():
         try: # for windows
             unused_user32 = ctypes.windll.user32 # test for error...
             self.screenResolution = [1024, 600]
-            #self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+            # self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
             environLocal.printDebug('screen resolution (windows) %d x %d' % (self.screenResolution[0], self.screenResolution[1]))
             self.resolution = True
         except: # mac and linux
@@ -172,7 +172,7 @@ class SFApp():
         rightCut = 0
         numberPixels = int(math.sqrt(len(data) / 3000000) * 4)
 
-        #Find top
+        # Find top
         for i in range(0, len(data), numberPixels + int(resX / 10)):
             if (data[i][0] not in colorRange
                     and data[i][1] not in colorRange
@@ -180,7 +180,7 @@ class SFApp():
                 topCut = int(i / resX)
                 break
 
-        #Find bottom
+        # Find bottom
         for i in range(len(data) - 1, 0, -1 * numberPixels - int(resX / 10)):
             if (data[i][0] not in colorRange
                     and data[i][1] not in colorRange
@@ -188,7 +188,7 @@ class SFApp():
                 bottomCut = int((len(data) - i) / resX)
                 break
 
-        #Find left
+        # Find left
         stop = False
         for xPos in range(0, resX, numberPixels):  # check every 4th pixel
             for yPos in range(xPos, resY, int(resY / 15)):
@@ -218,7 +218,7 @@ class SFApp():
             else:
                 leftCut = leftCut - numberPixels
 
-        #Find right
+        # Find right
         stop = False
         for xPos in range(resX - 1, 0, -numberPixels):  # check every 4th pixel
             for yPos in range(resX - xPos, resY, int(resY / 15)):
@@ -262,7 +262,7 @@ class SFApp():
             bottomCut = 0
         if rightCut < 0:
             rightCut = 0
-        #print (leftCut, topCut, rightCut, bottomCut)
+        # print(leftCut, topCut, rightCut, bottomCut)
         img = img.crop((leftCut, topCut, resX - rightCut, resY - bottomCut))
         return img
 
@@ -487,7 +487,7 @@ class SFApp():
                                   image=self.phimage[0], tag='leftImage')
         self.textVar1.set('Left page: %d/%d' % (1, self.totalPagesScore))
 
-        if self.totalPagesScore > 1: #there is more than 1 page
+        if self.totalPagesScore > 1:  # there is more than 1 page
             self.canvas1.delete('rightImage')
             self.canvas1.create_image(self.positionxRight, self.positionyRight,
                                       image=self.phimage[1], tag='rightImage')
@@ -502,7 +502,7 @@ class SFApp():
                                   image=self.phimage[self.totalPagesScore - 1], tag='leftImage')
         self.textVar1.set('Left page: %d/%d' % (self.totalPagesScore, self.totalPagesScore))
 
-        if self.totalPagesScore > 1: #there is more than 1 page
+        if self.totalPagesScore > 1:  # there is more than 1 page
             self.canvas1.delete('rightImage')
             self.textVar2.set('Right page: -/-')
 
@@ -534,7 +534,7 @@ class SFApp():
         self.textVar3.set('Start playing!')
 
         self.scoreFollower = ScF
-        #parameters for the thread 2
+        # parameters for the thread 2
         self.dummyQueue = queue.Queue()
         self.sampleQueue = queue.Queue()
         self.dummyQueue2 = queue.Queue()
@@ -631,11 +631,11 @@ class SFApp():
 
 
             elif (self.ScF.lastNotePosition >= self.middlePages[self.currentLeftPage]
-                    and not self.isMoving):  #50% case
+                    and not self.isMoving):  # 50% case
                 self.isMoving = True
                 environLocal.printDebug('moving right page to left')
                 self.moving()
-                #self.isMoving = False
+                # self.isMoving = False
                 environLocal.printDebug('playing a note of the second half part of the right page')
 
             elif (self.ScF.lastNotePosition >= self.beginningPages[self.currentLeftPage]
@@ -650,7 +650,7 @@ class SFApp():
                         self.isMoving = True
                         environLocal.printDebug('moving for hits')
                         self.moving()
-                        #self.isMoving = False
+                        # self.isMoving = False
             else:
                 self.hits = 0
                 environLocal.printDebug('playing a note of the left page')

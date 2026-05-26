@@ -46,7 +46,7 @@ def ch1_basic_I_A(show=True, *arguments, **keywords):
 
         # get direction of enharmonic move?
         # a move upward goes from f to g-, then a---
-        #n.pitch.getEnharmonic(1)
+        # n.pitch.getEnharmonic(1)
         found.append(None)
     if show:
         for i in range(len(pitches)):
@@ -158,7 +158,7 @@ def ch1_basic_II_A_1(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    #exercise = music21.parseData("ch1_basic_II_A_1.xml")
+    # exercise = music21.parseData("ch1_basic_II_A_1.xml")
     for n in exercise.flatten().notes: # have to use flat here
         n.lyric = n.nameWithOctave
     if show:
@@ -918,7 +918,7 @@ def ch2_writing_III_B(src):
     # note that ending ties are not given with tiny notation
     group = []
     for n in s2.notesAndRests:
-        #environLocal.printDebug([n, n.tie])
+        # environLocal.printDebug([n, n.tie])
         if n.tie != None or len(group) > 0:
             if n.tie != None and n.tie.type != 'stop':
                 group.append(n)
@@ -1839,39 +1839,39 @@ class Test(unittest.TestCase):
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    #ch2_writing_III_A_1(show=True)
+    # ch2_writing_III_A_1(show=True)
     if len(sys.argv) == 1:
         music21.mainTest(Test)
     else:
         pass
-        #b = TestExternal()
-        #b.testBasic()
+        # b = TestExternal()
+        # b.testBasic()
 
-        #ch1_writing_I_B_1(show=True)
-        #ch1_writing_I_B_2(show=True)
-        #ch1_writing_I_B_3(show=True)
-        #ch1_basic_II_C_2(show=True)
+        # ch1_writing_I_B_1(show=True)
+        # ch1_writing_I_B_2(show=True)
+        # ch1_writing_I_B_3(show=True)
+        # ch1_basic_II_C_2(show=True)
 
-        #ch5_writing_IV_A(show=True)
-
-
-        #ch2_basic_I_A_1(show=True)
+        # ch5_writing_IV_A(show=True)
 
 
-        #ch2_writing_III_A_1(show=True)
-        #ch2_writing_III_A_2(show=True)
-        #ch2_writing_III_A_3(show=True)
-
-        #ch2_writing_III_B_3(show=True)
+        # ch2_basic_I_A_1(show=True)
 
 
-        #ch2_writing_I_A_1(show=True)
-        #ch2_writing_I_A_2(show=True)
-        #ch2_writing_I_A_3(show=True)
-        #ch2_writing_I_A_4(show=True)
-        #ch2_writing_I_A_5(show=True)
+        # ch2_writing_III_A_1(show=True)
+        # ch2_writing_III_A_2(show=True)
+        # ch2_writing_III_A_3(show=True)
 
-        #ch2_writing_IV_B(show=True)
-        #ch2_writing_V_A(show=True)
+        # ch2_writing_III_B_3(show=True)
 
-        #ch2_writing_III_B_1()
+
+        # ch2_writing_I_A_1(show=True)
+        # ch2_writing_I_A_2(show=True)
+        # ch2_writing_I_A_3(show=True)
+        # ch2_writing_I_A_4(show=True)
+        # ch2_writing_I_A_5(show=True)
+
+        # ch2_writing_IV_B(show=True)
+        # ch2_writing_V_A(show=True)
+
+        # ch2_writing_III_B_1()

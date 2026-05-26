@@ -81,7 +81,7 @@ def prepareChinaEurope1():
     featureExtractors = features.extractorsById(['r31', 'r32', 'r33', 'r34', 'r35',
         'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11',
         'p12', 'p13', 'p14', 'p15', 'p16', 'p19', 'p20', 'p21'])
-    #featureExtractors = features.extractorsById('all')
+    # featureExtractors = features.extractorsById('all')
 
     oChina1 = corpus.parse('essenFolksong/han1')
     oCEurope1 = corpus.parse('essenFolksong/boehme10')
@@ -291,12 +291,10 @@ def wekaCommands():
     pass
 
 
-
-### FIGURED BASS PAPER ###
-
+# FIGURED BASS PAPER
 def tinyNotationBass():
     bass1 = converter.parse('tinyNotation: 4/4 C4 D8_6 E8_6 F4 G4_7 c1', makeNotation=False)
-    #bass1.show('lily.png')
+    # bass1.show('lily.png')
     fbLine1 = figuredBass.realizer.figuredBassFromStream(bass1)
     fbLine1.showAllRealizations()
 
@@ -329,7 +327,7 @@ def fbFeatureExtraction():
     exampleFB.parts[0][2].append(y)
 
     fb1 = figuredBass.realizer.figuredBassFromStream(exampleFB.parts[1])
-    #realization = fb1.realize()
+    # realization = fb1.realize()
     sol1 = fb1.generateRandomRealization()
 
     exampleFBOut = stream.Score()
@@ -339,18 +337,18 @@ def fbFeatureExtraction():
 
     fe1.setData(exampleFBOut)
     print(fe1.extract().vector)
-    #[0.0, 0.5, 1.0, 0.0, 0.6000000000000001, 0.0, 0.4, 0.2, 0.0, 0.7000000000000001, 0.0, 0.1]
+    # [0.0, 0.5, 1.0, 0.0, 0.6000000000000001, 0.0, 0.4, 0.2, 0.0, 0.7000000000000001, 0.0, 0.1]
     # exampleFBOut.show()
 
 if __name__ == '__main__':
     pass
-    #testTrecentoSimpler()
-    #prepareTrecentoCadences()
-    #figuredBassScale()
-    #fbFeatureExtraction()
-    #testChinaEuropeSimpler()
+    # testTrecentoSimpler()
+    # prepareTrecentoCadences()
+    # figuredBassScale()
+    # fbFeatureExtraction()
+    # testChinaEuropeSimpler()
 
-    #prepareChinaEurope2()
-    #testDataSet()
-    #testFictaFeature()
-    #example2()
+    # prepareChinaEurope2()
+    # testDataSet()
+    # testFictaFeature()
+    # example2()

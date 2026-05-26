@@ -175,7 +175,7 @@ def runOne(c, cName):
 #     for i, pOrig in enumerate(c.parts):
 #         expander = repeat.Expander(pOrig)
 #         if not expander.isExpandable():
-#             #print('incoherent repeats', cName)
+#             # print('incoherent repeats', cName)
 #             try:
 #                 pOrig = expander.process()
 #             except Exception:
@@ -184,7 +184,7 @@ def runOne(c, cName):
 #         pNew = newScore.parts[i]
 #         expander = repeat.Expander(pNew)
 #         if not expander.isExpandable():
-#             #print('incoherent repeats', cName)
+#             # print('incoherent repeats', cName)
 #             try:
 #                 pNew = expander.process()
 #             except Exception:

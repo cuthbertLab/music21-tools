@@ -53,7 +53,7 @@ def recognizeKuhlau():
     Only does the first couple of pages
     '''
     pageMeasureNumbers = [1, 73, 151, 217, 268, 313, 366,
-                          437, 506, 555, 614, 662, 702, 737, 764]  #764 is end of document
+                          437, 506, 555, 614, 662, 702, 737, 764]  # 764 is end of document
     kuhlau = converter.parse('kuhlau_op81_fl2.xml')
     recognizeScore(kuhlau, pageMeasureNumbers, iterations=3)
 

@@ -23,8 +23,8 @@ from music21 import converter
 
 def createEasyScale():
     s1 = converter.parse("tinynotation: 3/4 d8 e f g a b")
-#    s1.timeSignature = time1
-#    s1.showTimeSignature = True
+    # s1.timeSignature = time1
+    # s1.showTimeSignature = True
     s1.show('lily.png')
 
 def createSleep():

@@ -184,8 +184,8 @@ def ex1_revised(show=True, *arguments, **keywords):
     else:
         beethovenScore = corpus.parse('opus133.xml')  # load a MusicXML file
 
-    violin2 = beethovenScore[1]      # most programming languages start counting from 0,
-    #  so part 0 = violin 1, part 1 = violin 2, etc.
+    violin2 = beethovenScore[1]  # most programming languages start counting from 0,
+    # so part 0 = violin 1, part 1 = violin 2, etc.
     display = stream.Stream()  # an empty container for filling with found notes
     for thisMeasure in violin2.getElementsByClass('Measure'):
         notes = thisMeasure.findConsecutiveNotes(skipUnisons=True,

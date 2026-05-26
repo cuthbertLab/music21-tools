@@ -71,7 +71,7 @@ class repetitionGame():
             while i < len(notesList) and notesList[i].name == 'rest':
                 i = i + 1
             if i < len(notesList):
-                self.gameNotes.append(notesList[i])  #add a new note
+                self.gameNotes.append(notesList[i])  # add a new note
                 print('Well done!')
             else:
                 print('No new note added — please add one before repeating.')

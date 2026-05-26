@@ -52,7 +52,7 @@ def generateContrapuntalBassLine(harmonyObject, fbRules):
         fbLine.addElement(o)
 
     allSols = fbLine.realize(fbRules)
-    #print allSols.getNumSolutions()
+    # print(allSols.getNumSolutions())
     return allSols.generateRandomRealizations(1)
 
 def generateSmoothBassLine(harmonyObjects):
@@ -118,30 +118,29 @@ def generatePopSongRules():
     '''
     fbRules = rules.Rules()
 
-    #Single Possibility rules
-    fbRules.forbidIncompletePossibilities = True #True
-    fbRules.upperPartsMaxSemitoneSeparation = 12    #12
-    fbRules.forbidVoiceCrossing = True      #True
+    # Single Possibility rules
+    fbRules.forbidIncompletePossibilities = True
+    fbRules.upperPartsMaxSemitoneSeparation = 12
+    fbRules.forbidVoiceCrossing = True
 
-    #Consecutive Possibility rules
-    fbRules.forbidParallelFifths = True #True
-    fbRules.forbidParallelOctaves = True #True
-    fbRules.forbidHiddenFifths = True #True
-    fbRules.forbidHiddenOctaves = True #True
-    fbRules.forbidVoiceOverlap = True #True
-    fbRules.partMovementLimits = [] #[]
+    # Consecutive Possibility rules
+    fbRules.forbidParallelFifths = True
+    fbRules.forbidParallelOctaves = True
+    fbRules.forbidHiddenFifths = True
+    fbRules.forbidHiddenOctaves = True
+    fbRules.forbidVoiceOverlap = True
+    fbRules.partMovementLimits = []
 
-    #Special resolution rules
-    fbRules.resolveDominantSeventhProperly = False #True
-    fbRules.resolveDiminishedSeventhProperly = False #True
-    fbRules.resolveAugmentedSixthProperly = False #True
-    fbRules.doubledRootInDim7 = False #False
-    fbRules.applySinglePossibRulesToResolution = False #False
-    fbRules.applyConsecutivePossibRulesToResolution = False #False
-    fbRules.restrictDoublingsInItalianA6Resolution = True #True
+    # Special resolution rules
+    fbRules.resolveDominantSeventhProperly = False  # def: True
+    fbRules.resolveDiminishedSeventhProperly = False  # def: True
+    fbRules.resolveAugmentedSixthProperly = False  # def: True
+    fbRules.doubledRootInDim7 = False
+    fbRules.applySinglePossibRulesToResolution = False
+    fbRules.applyConsecutivePossibRulesToResolution = False
+    fbRules.restrictDoublingsInItalianA6Resolution = True
 
-    fbRules._upperPartsRemainSame = False        #False
-
+    fbRules._upperPartsRemainSame = False
     fbRules.partMovementLimits.append((1, 5))
 
     return fbRules
@@ -224,12 +223,12 @@ if __name__ == '__main__':
     from music21 import base
     base.mainTest(Test, TestExternal)
 
-    #from music21 import corpus
-    #from music21.demos.bhadley import HarmonyRealizer
-    #test = HarmonyRealizer.TestExternal()
+    # from music21 import corpus
+    # from music21.demos.bhadley import HarmonyRealizer
+    # test = HarmonyRealizer.TestExternal()
 
-    #test.leadsheetEx1()
-    #sc = converter.parse('https://github.com/cuthbertLab/music21/raw/master/music21/corpus/leadSheet/fosterBrownHair.mxl') # Jeannie Light Brown Hair
+    # test.leadsheetEx1()
+    # sc = converter.parse('https://github.com/cuthbertLab/music21/raw/master/music21/corpus/leadSheet/fosterBrownHair.mxl') # Jeannie Light Brown Hair
 
 
 
@@ -240,7 +239,7 @@ In: I |
 Vr: $VP I IV | I | $VP I IV | V | $VP I IV | I | IV V | I IV | IV V | [2/4] I | [4/4] IV V | I IV | IV V | I |
 S: [D] $In $Vr $Vr $Vr
 '''
-    #test.realizeclercqTemperleyEx(testfile1)
+    # test.realizeclercqTemperleyEx(testfile1)
 
     testfile2 = '''
 % Brown-Eyed Girl
@@ -253,7 +252,7 @@ Brk: I |*4 $A
 
 S: [G] $In $Vr*2 $Ext $Ch $Brk $Vr $Ext $Ch $A
 '''
-    #test.realizeclercqTemperleyEx(testfile2)
+    # test.realizeclercqTemperleyEx(testfile2)
 
 
 

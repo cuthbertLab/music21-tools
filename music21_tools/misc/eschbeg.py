@@ -55,12 +55,12 @@ def generateToneRows(numberToGenerate=1000, cardinality=12):
     '''
     generates a list of random 12-tone rows.
 
-    >>> #_DOCS_SHOW generateToneRows(4)
+    >>> # _DOCS_SHOW generateToneRows(4)
     ['T310762985E4', '9E036T472158', '5879E3T12064', '417T26E95038']
 
     generate random 3-note sets:
 
-    >>> #_DOCS_SHOW generateToneRows(4, 3)
+    >>> # _DOCS_SHOW generateToneRows(4, 3)
     ['840', 'T61', 'T10', '173']
     '''
     allNotes = '0123456789TE'
@@ -76,7 +76,7 @@ def generateRandomRows(numberToGenerate=1000):
     generates random rows which might have the
     same note twice, but never twice in a row.
 
-    >>> #_DOCS_SHOW generateRandomRows(4)
+    >>> # _DOCS_SHOW generateRandomRows(4)
     ['67051534121', '05874071696', 'E082T6569674', '4E8383E4E395']
     '''
     returnRows = []
@@ -308,7 +308,7 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
     for i in range(1, len(allHeptachords)):
         thisHeptachord = allHeptachords[i][0]
         thisHeptachordString = ''.join([numberToLetter(p) for p in thisHeptachord])
-        #print thisHeptachordString
+        # print(thisHeptachordString)
         foundTrichords = findEmbeddedChords(thisHeptachordString,
                                             cardinality = searchCardinality,
                                             skipInverse = skipInverse)
@@ -326,11 +326,3 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
 if __name__ == '__main__':
     import music21
     music21.mainTest('moduleRelative')
-
-    #print findEmbeddedChords(cardinality=5)
-    #p, t = priorProbability(100000, enforce12Tone=False)
-    #print p
-    #print t
-
-#------------------------------
-#eof

@@ -74,7 +74,7 @@ def makePDFfromPieces(start=1, finish=2):
     ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
-    for i in range(start, finish):  ## some random pieces
+    for i in range(start, finish):  # some random pieces
         randomPiece = ballataObj.makeWork( i ) #
         if randomPiece.incipit is not None:
             retrievedPieces.append(randomPiece)
@@ -82,7 +82,7 @@ def makePDFfromPieces(start=1, finish=2):
     opus = stream.Opus()
     retrievedPieces.sort(key=sortByPMFC)
     for randomPiece in retrievedPieces:
-        #print(randomPiece.title.encode('utf-8'))
+        # print(randomPiece.title.encode('utf-8'))
         randomOpus = randomPiece.asOpus()
         for s in randomOpus.scores:
             opus.insert(0, s)
@@ -93,7 +93,7 @@ def makePDFfromPieces(start=1, finish=2):
 #        randomIncipit = randomPiece.incipitClass()
 #        lilyString += randomIncipit.lily()
 #        randomCadA = randomPiece.cadenceAClass()
-##        randomCadA.header = randomIncipit.header ## use its header however
+#        randomCadA.header = randomIncipit.header  # use its header however
 #        lilyString += randomCadA.lily()
 #        randomCadB1 = randomPiece.cadenceB1Class()
 #        if randomCadB1 is not None:
@@ -114,7 +114,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
     ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
-    for i in range(start, finish):  ## some random pieces
+    for i in range(start, finish):  # some random pieces
         try:
             randomPiece = ballataObj.makeWork( i ) #
             if randomPiece.incipit:
@@ -133,7 +133,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
 #        lilyString += randomIncipit.lily()
 #
 #        randomCadA = randomPiece.cadenceAClass()
-##        randomCadA.header = randomIncipit.header ## use its header however
+#        randomCadA.header = randomIncipit.header  # use its header however
 #        for thisStream in randomCadA.streams:
 #            capua.runRulesOnStream(thisStream)
 #
@@ -159,7 +159,7 @@ def checkValidity():
     ballataObj = cadencebook.BallataSheet()
 
     for i in range(1, 378):
-        randomPiece = ballataObj.makeWork(i) #random.randint(231, 312)
+        randomPiece = ballataObj.makeWork(i)  # random.randint(231, 312)
         try:
             unused_incipitStreams = randomPiece.incipitStreams()
         except music21.tinyNotation.TinyNotationException as inst:
@@ -179,9 +179,9 @@ class Test(unittest.TestCase):
         pass
 
     def testA(self):
-        self.assertEqual(5, 5) ## something really wrong!??
+        self.assertEqual(5, 5)  # something really wrong!??
 
 if __name__ == '__main__':
-    #makePDFfromPiecesWithCapua()
+    # makePDFfromPiecesWithCapua()
     import music21
     music21.mainTest(Test, 'moduleRelative')

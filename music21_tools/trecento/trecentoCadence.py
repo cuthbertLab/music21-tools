@@ -66,7 +66,6 @@ class CadenceConverter(tinyNotation.Converter):
                     (r'(\S*)', CadenceNoteToken), # last
         ]
 
-###### test routines
 
 class Test(unittest.TestCase):
 

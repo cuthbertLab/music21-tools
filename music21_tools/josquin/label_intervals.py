@@ -17,7 +17,7 @@ def displayIntervals(file):
     (after chordification).
     '''
     sJosquinPiece = converter.parse(file)
-    #dissonant_intervals = ['m2', 'M2', 'M7', 'd5', 'm7', 'A4', 'P4']
+    # dissonant_intervals = ['m2', 'M2', 'M7', 'd5', 'm7', 'A4', 'P4']
     rJosquinPiece = sJosquinPiece.chordify()
     for c in rJosquinPiece.flatten().getElementsByClass('Chord'):
         if len(c.pitches) == 1:
@@ -35,14 +35,13 @@ def displayIntervals(file):
     sJosquinPiece.insert(0, rJosquinPiece)
     sJosquinPiece.show()
 
-#####################################################################################
-
+# -----------------------------------------------
 if __name__ == '__main__':
     import os
     import sys
 
-    basedir = '' # "/Users/Victoria/Desktop/"
-    filename = '1202a-Missa_Sine_nomine-Kyrie.xml' #argv[1]
+    basedir = ''  # "/Users/Victoria/Desktop/"
+    filename = '1202a-Missa_Sine_nomine-Kyrie.xml'  # argv[1]
     if os.path.isfile(filename):
         displayIntervals(filename)
     elif os.path.isfile(basedir + filename):

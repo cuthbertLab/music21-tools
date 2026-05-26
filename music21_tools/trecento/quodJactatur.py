@@ -231,7 +231,7 @@ def findRetrogradeVoices(show=True):
                     thisScore = strength
                 else:
                     int1 = interval.Interval(n.pitches[0], n.pitches[1])
-                    #print int1.generic.simpleUndirected
+                    # print int1.generic.simpleUndirected
                     if int1.generic.simpleUndirected in [1, 3, 4, 5]:
                         thisScore = strength
                     elif int1.generic.simpleUndirected == 6: # less good
@@ -281,8 +281,8 @@ def prepareSolution(triplumTup, ctTup, tenorTup):
             cachedParts[idString] = copy.deepcopy(qjPart)
         qjSolved.insert(0, qjPart.flatten())
 
-    #DOESN'T WORK -- am I doing something wrong?
-    #for tp in qjSolved.parts:
+    # DOESN'T WORK -- am I doing something wrong?
+    # for tp in qjSolved.parts:
     #    tp.makeMeasures(inPlace=True)
     qjChords = qjSolved.chordify()
 
@@ -362,7 +362,7 @@ def possibleSolution():
 #    qjSolved.insert(0, stream.Part())
 #    qjSolved.insert(0, qjChords)
     qjSolved.show('musicxml')
-    #qjChords.show('musicxml')
+    # qjChords.show('musicxml')
 
 def multipleSolve():
     # this is ridiculous...
@@ -448,7 +448,7 @@ def multipleSolve():
                                                      unused_fullScore) = prepareSolution(triplum,
                                                                                          ct,
                                                                                          tenor)
-                                                    #writeLine = (tripT, ctT, tenT, tripDelay,
+                                                    # writeLine = (tripT, ctT, tenT, tripDelay,
                                                     #   ctDelay, tenDelay, tripInvert, ctInvert,
                                                     #   tenInvert, tripRetro, ctRetro, tenRetro,
                                                     #    avgScore)
