@@ -22,16 +22,19 @@ import random
 eschbeg = '30ET47'
 
 def letterToNumber(letter):
-    if letter == "E": number = 11
-    elif letter == "T": number = 10
-    else: number = int(letter)
+    if letter == 'E':
+        number = 11
+    elif letter == 'T':
+        number = 10
+    else:
+        number = int(letter)
     return number
 
 def numberToLetter(number):
     if number == 11:
-        letter = "E"
+        letter = 'E'
     elif number == 10:
-        letter = "T"
+        letter = 'T'
     else:
         letter = str(number)
     return letter
@@ -40,7 +43,7 @@ def numberToLetter(number):
 def setupTranspositions():
     _eschbegTransposed = []
     for i in range(12):
-        thisTransposition = ""
+        thisTransposition = ''
         for letter in eschbeg:
             number = letterToNumber(letter)
             newnum = (number + i) % 12
@@ -55,15 +58,15 @@ def generateToneRows(numberToGenerate=1000, cardinality=12):
     '''
     generates a list of random 12-tone rows.
 
-    >>> #_DOCS_SHOW generateToneRows(4)
+    >>> # _DOCS_SHOW generateToneRows(4)
     ['T310762985E4', '9E036T472158', '5879E3T12064', '417T26E95038']
 
     generate random 3-note sets:
 
-    >>> #_DOCS_SHOW generateToneRows(4, 3)
+    >>> # _DOCS_SHOW generateToneRows(4, 3)
     ['840', 'T61', 'T10', '173']
     '''
-    allNotes = "0123456789TE"
+    allNotes = '0123456789TE'
     firstRow = list(allNotes)
     returnRows = []
     for i in range(numberToGenerate):
@@ -76,13 +79,13 @@ def generateRandomRows(numberToGenerate=1000):
     generates random rows which might have the
     same note twice, but never twice in a row.
 
-    >>> #_DOCS_SHOW generateRandomRows(4)
+    >>> # _DOCS_SHOW generateRandomRows(4)
     ['67051534121', '05874071696', 'E082T6569674', '4E8383E4E395']
     '''
     returnRows = []
     for i in range(numberToGenerate):
         myRow = []
-        lastLetter = ""
+        lastLetter = ''
         for j in range(12):
             newLetter = numberToLetter(random.randint(0, 11))
             if newLetter != lastLetter:
@@ -199,14 +202,14 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
 
     '''
     eschbegSplit12 = [letterToNumber(x) for x in testSet]
-    ret = ""
+    ret = ''
     for myTrichord in chord.tables.FORTE[cardinality]:
         if myTrichord is None:
             continue
         myPitches = myTrichord[0]
 
         myPitchString = ''.join([str(p) for p in myPitches])
-        ret += "\n[" + myPitchString + "]: "
+        ret += '\n[' + myPitchString + ']: '
         for i in range(12):
             notFound = False
             transPitches = [(p + i) % 12 for p in myPitches]
@@ -215,19 +218,19 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
                     notFound = True
             if notFound is False:
                 transPitchesString = ''.join([str(p) for p in transPitches])
-                ret += "(" + transPitchesString + ") "
+                ret += '(' + transPitchesString + ') '
 
         if skipInverse is False:
             myInverse = []
             for myPitch in myPitches:
                 myInverse.append(11 - myPitch)
             myInverseMin = min(myInverse)
-            for i,p in enumerate(myInverse):
+            for i, p in enumerate(myInverse):
                 myInverse[i] = p - myInverseMin
             myInverse = sorted(myInverse)
             myInverseString = ''.join([str(p) for p in myInverse])
-            if myInverseString != myPitchString: # some are symmetric
-                ret += "\n[" + myInverseString + "]: "
+            if myInverseString != myPitchString:  # some are symmetric
+                ret += '\n[' + myInverseString + ']: '
                 for i in range(12):
                     notFound = False
                     transInverse = [(p + i) % 12 for p in myInverse]
@@ -236,7 +239,7 @@ def findEmbeddedChords(testSet='0234589', cardinality=3, skipInverse=False):
                             notFound = True
                     if notFound is False:
                         transInverseString = ''.join([str(p) for p in transInverse])
-                        ret += "(" + transInverseString + ") "
+                        ret += '(' + transInverseString + ') '
     return ret.lstrip()
 
 def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, showMatching=True):
@@ -308,7 +311,7 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
     for i in range(1, len(allHeptachords)):
         thisHeptachord = allHeptachords[i][0]
         thisHeptachordString = ''.join([numberToLetter(p) for p in thisHeptachord])
-        #print thisHeptachordString
+        # print(thisHeptachordString)
         foundTrichords = findEmbeddedChords(thisHeptachordString,
                                             cardinality = searchCardinality,
                                             skipInverse = skipInverse)
@@ -318,19 +321,11 @@ def uniquenessOfEschbeg(cardinality=7, searchCardinality=3, skipInverse=False, s
             if '(' not in trichordInfo:
                 noneMissing = False
                 break
-        if noneMissing == showMatching: # default True
+        if noneMissing == showMatching:  # default True
             allHeptachordList.append(thisHeptachordString)
 
     return allHeptachordList
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest('moduleRelative')
-
-    #print findEmbeddedChords(cardinality=5)
-    #p, t = priorProbability(100000, enforce12Tone=False)
-    #print p
-    #print t
-
-#------------------------------
-#eof

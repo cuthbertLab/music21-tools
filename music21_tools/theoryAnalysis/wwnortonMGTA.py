@@ -9,18 +9,14 @@
 # Copyright:    Copyright © 2009-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
-
 import copy
-import unittest
-
-import music21
-
 from music21 import converter
 from music21 import stream
 from music21 import instrument
 from music21 import note
 from . import theoryAnalyzer
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
 class wwnortonExercise:
@@ -34,13 +30,13 @@ class wwnortonExercise:
 
     '''
     def __init__(self):
-        self.xmlFileDirectory = "C:/Users/bhadley/Dropbox/Music21Theory/TestFiles/Exercises/"
-        #/xmlfiles/"
-        self.xmlFilename = ""
+        self.xmlFileDirectory = 'C:/Users/bhadley/Dropbox/Music21Theory/TestFiles/Exercises/'
+        # /xmlfiles/"
+        self.xmlFilename = ''
         self.originalExercise = stream.Stream()
         self.modifiedExercise = stream.Stream()
         self.studentExercise = stream.Stream()
-        self.textResultString = ""
+        self.textResultString = ''
         self.pn = {}
         self.ads = theoryAnalyzer.Analyzer()
 
@@ -55,12 +51,12 @@ class wwnortonExercise:
         self.modifiedExercise = copy.deepcopy(self.originalExercise)
         self.addAuxillaryParts()
 
-    def manuallyLoadOriginalExercise(self,sc):
+    def manuallyLoadOriginalExercise(self, sc):
         self.originalExercise = sc
         self.modifiedExercise = copy.deepcopy(self.originalExercise)
         self.addAuxillaryParts()
 
-    def loadStudentExercise(self,sc):
+    def loadStudentExercise(self, sc):
         for n in sc.flatten().getElementsByClass('Note'):
             n.color = 'black'
         self.studentExercise = sc
@@ -69,35 +65,35 @@ class wwnortonExercise:
         return self.blankExercise
 
     def _partOffsetsToPartIndecies(self):
-        for (i,el) in enumerate(self.modifiedExercise.elements):
+        for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = i
-        #self.modifiedExercise.show('text')
+        # self.modifiedExercise.show('text')
 
     def _partOffsetsToZero(self):
-        for (i,el) in enumerate(self.modifiedExercise.elements):
+        for (i, el) in enumerate(self.modifiedExercise.elements):
             el.offset = 0
-        #self.modifiedExercise.show('text')
+        # self.modifiedExercise.show('text')
 
     def _updatepn(self, newPartNum, direction):
         for partName in self.pn:
             existingPartNum = self.pn[partName]
             if existingPartNum > newPartNum:
                 shiftedPartNum = existingPartNum + 1
-            elif existingPartNum == newPartNum and direction =="above":
+            elif existingPartNum == newPartNum and direction == 'above':
                 shiftedPartNum = existingPartNum + 1
             else:
                 shiftedPartNum = existingPartNum
             self.pn[partName] = shiftedPartNum
 
-    def addMarkerPartFromExisting(self, existingPartName, newPartName, newPartTitle="",
-                                  direction="below", rhythmType="copy", color=None):
+    def addMarkerPartFromExisting(self, existingPartName, newPartName, newPartTitle='',
+                                  direction='below', rhythmType='copy', color=None):
         partNum = self.pn[existingPartName]
 
         self._partOffsetsToPartIndecies()
 
         existingPart = self.modifiedExercise.parts[partNum]
         existingPartOffset = existingPart.offset
-        if rhythmType == "chordify":
+        if rhythmType == 'chordify':
             existingPart = self.originalExercise.chordify()
         newPart = copy.deepcopy(existingPart.getElementsByClass('Measure'))
         firstNote = True
@@ -107,14 +103,14 @@ class wwnortonExercise:
             previousNotRestContents = copy.deepcopy(m.getElementsByClass('NotRest'))
             measureDuration = m.duration.quarterLength
 
-            m.removeByClass(['GeneralNote']) # includes rests
+            m.removeByClass(['GeneralNote'])  # includes rests
             m.removeByClass(['Dynamic'])
-            m.removeByClass(['Stream']) # get voices or sub-streams
+            m.removeByClass(['Stream'])  # get voices or sub-streams
             m.removeByClass(['Dynamic'])
             m.removeByClass(['Expression'])
             m.removeByClass(['KeySignature'])
 
-            if rhythmType == "quarterNotes":
+            if rhythmType == 'quarterNotes':
                 for i in range(int(measureDuration)):
                     markerNote = note.Note('c4')
                     markerNote.notehead = 'x'
@@ -142,17 +138,17 @@ class wwnortonExercise:
         for ks in newPart.flatten().getElementsByClass('KeySignature'):
             ks.sharps = 0
         for c in newPart.flatten().getElementsByClass('Clef'):
-            c.sign = "C"
+            c.sign = 'C'
             c.line = 3
-        self._updatepn(partNum,direction=direction)
-        if direction == "above":
+        self._updatepn(partNum, direction=direction)
+        if direction == 'above':
             insertLoc = existingPartOffset - 0.5
             self.pn[newPartName] = partNum
-        elif direction == "below" or direction is None:
+        elif direction == 'below' or direction is None:
             insertLoc = existingPartOffset + 0.5
             self.pn[newPartName] = partNum + 1
-        self.modifiedExercise.insert(insertLoc,newPart)
-        #self.modifiedExercise.show('text')
+        self.modifiedExercise.insert(insertLoc, newPart)
+        # self.modifiedExercise.show('text')
         # Somehow needed for sorting...
         self.modifiedExercise._reprText()
         self._partOffsetsToZero()
@@ -165,10 +161,10 @@ class wwnortonExercise:
             correctLyric = lyricFunc(resultObj)
             markerNote = markerPart.flatten().getElementAtOrBefore(offset, classList=['Note'])
             if markerNote is None or markerNote.offset != offset:
-                print("No Marker")
+                print('No Marker')
                 continue
             if markerNote.lyric != str(correctLyric):
-                #markerNote.lyric = markerNote.lyric + "->" + str(correctLyric)
+                # markerNote.lyric = markerNote.lyric + "->" + str(correctLyric)
                 markerNote.color = 'red'
 
     def showStudentExercise(self):
@@ -194,27 +190,27 @@ class ex11_1_I(wwnortonExercise):
     def addAuxillaryParts(self):
         self.addMarkerPartFromExisting('part1',
                                        newPartName='p1ScaleDegrees',
-                                       newPartTitle="1. Scale Degrees",
-                                       direction="above")
+                                       newPartTitle='1. Scale Degrees',
+                                       direction='above')
         self.addMarkerPartFromExisting('part1',
                                        newPartName='motionType',
-                                       newPartTitle="2. Motion Type",
-                                       rhythmType="quarterNotes",
-                                       direction="above")
+                                       newPartTitle='2. Motion Type',
+                                       rhythmType='quarterNotes',
+                                       direction='above')
         self.addMarkerPartFromExisting('part1',
                                        newPartName='harmIntervals',
-                                       newPartTitle="3. Harmonic Intervals",
+                                       newPartTitle='3. Harmonic Intervals',
                                        rhythmType='chordify',
-                                       direction="below")
+                                       direction='below')
 
     def checkExercise(self):
-        self.ads.setKeyMeasureMap(self.studentExercise,{0:'F'})
+        self.ads.setKeyMeasureMap(self.studentExercise, {0: 'F'})
         self.ads.identifyMotionType(self.studentExercise, self.pn['part1'],
-                                          self.pn['part2'],dictKey='motionType')
+                                          self.pn['part2'], dictKey='motionType')
         self.ads.identifyScaleDegrees(self.studentExercise, self.pn['part1'],
                                             dictKey='p1ScaleDegrees')
         self.ads.identifyHarmonicIntervals(self.studentExercise, self.pn['part1'],
-                                                 self.pn['part2'],dictKey='harmIntervals')
+                                                 self.pn['part2'], dictKey='harmIntervals')
 
         scaleDegreeOffsetFunc = lambda resultObj: resultObj.n.offset
         scaleDegreeLyricTextFunc = lambda resultObj: resultObj.value
@@ -258,11 +254,11 @@ class ex11_3_A(wwnortonExercise):
     def addAuxillaryParts(self):
         self.addMarkerPartFromExisting('part2',
                                        newPartName='harmIntervals',
-                                       newPartTitle="1. Harmonic Intervals",
-                                       direction = "below")
+                                       newPartTitle='1. Harmonic Intervals',
+                                       direction = 'below')
 
     def checkExercise(self):
-        self.ads.setKeyMeasureMap(self.studentExercise, {0:'G', 5:'D', 8:'F'})
+        self.ads.setKeyMeasureMap(self.studentExercise, {0: 'G', 5: 'D', 8: 'F'})
         self.ads.identifyHarmonicIntervals(self.studentExercise, self.pn['part1'],
                                                  self.pn['part2'], dictKey='harmIntervals')
         self.ads.identifyCommonPracticeErrors(self.studentExercise, self.pn['part1'],
@@ -279,33 +275,4 @@ class ex11_3_A(wwnortonExercise):
                                       markerPartName='harmIntervals',
                                       offsetFunc=harmonicIntervalOffsetFunc,
                                       lyricFunc=harmonicIntervalTextFunc)
-
-
-
-# ------------------------------------------------------------
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-class TestExternal(unittest.TestCase): # pragma: no cover
-
-    def runTest(self):
-        pass
-
-    def demo(self):
-        ex = ex11_1_I()
-        sc = converter.parse('C:/Users/bhadley/Dropbox/Music21Theory/TestFiles/' +
-                             'SampleStudentResponses/S11_1_IA_completed.xml')
-        ex.loadStudentExercise(sc)
-        ex.checkExercise()
-        ex.showStudentExercise()
-
-
-if __name__ == "__main__":
-    music21.mainTest(Test)
-
-    #te = TestExternal()
-    #te.demo()
 

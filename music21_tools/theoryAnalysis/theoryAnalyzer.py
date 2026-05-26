@@ -46,9 +46,10 @@ a direct pointer to the original object in the score.
 * :meth:`~Analyzer.getMelodicIntervals`
 
 You can then iterate through these objects and access the attributes directly. Here is an example
-of this that will analyze the root motion in a score:
+of this that will analyze the root motion in a score::
 
-
+    >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+    >>> from music21 import harmony
     >>> p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony').stream()
     >>> p = harmony.realizeChordSymbolDurations(p)
     >>> averageMotion = 0
@@ -58,9 +59,9 @@ of this that will analyze the root motion in a score:
     >>> # gets a list of tuples, adjacent chord symbol objects in the score
     >>> for x in l:
     ...    averageMotion += abs(x.rootInterval().intervalClass)
-    >>> #rootInterval() returns the interval between the roots of the first chordSymbol and second
+    >>> # rootInterval() returns the interval between the roots of the first chordSymbol and second
     >>> averageMotion = averageMotion // len(l)
-    >>> averageMotion #average intervalClass in this piece is about 4
+    >>> averageMotion  # average intervalClass in this piece is about 4
     4
 
 **get only interesting music theory voiceLeading objects from a score**
@@ -122,19 +123,18 @@ As an example, the steps involved in these methods calls include:
 7. if all checks are true, the passingTone or neighborTone is removed from the score
    (because the whole point of parsing the score into voiceLeadingObjects was to
    maintain a direct pointer to the original object in the score.)
-8. the gap created by the deletion is filled in by extending the duration of the previous note
+8. the gap created by the deletion is filled in by extending the duration of the previous note::
 
+    >>> p = corpus.parse('bwv6.6').measures(0, 20)
+    >>> #_DOCS_SHOW p.show()
+        .. image:: images/completebach.*
+        :width: 500
 
->>> p = corpus.parse('bwv6.6').measures(0, 20)
->>> #_DOCS_SHOW p.show()
-    .. image:: images/completebach.*
-    :width: 500
-
->>> ads.removePassingTones(p)
->>> ads.removeNeighborTones(p)
->>> #_DOCS_SHOW p.show()
-    .. image:: images/bachnononharm.*
-    :width: 500
+    >>> ads.removePassingTones(p)
+    >>> ads.removeNeighborTones(p)
+    >>> #_DOCS_SHOW p.show()
+        .. image:: images/bachnononharm.*
+        :width: 500
 
 ===========================================
 Detailed Method Documentation
@@ -161,10 +161,8 @@ from music21 import chord
 from music21 import corpus
 from music21 import duration
 from music21 import exceptions21
-from music21 import harmony
 from music21 import interval
 from music21 import key
-from music21 import meter
 from music21 import note
 from music21 import roman
 from music21 import stream
@@ -178,29 +176,29 @@ environLocal = environment.Environment(_MOD)
 
 class Analyzer:
     _DOC_ORDER = ['getVerticalities', 'getVLQs', 'getThreeNoteLinearSegments',
-              'getLinearSegments', 'getVerticalityNTuplets', 'getHarmonicIntervals',
-              'getMelodicIntervals', 'getParallelFifths', 'getPassingTones',
-              'getNeighborTones', 'getParallelOctaves', 'identifyParallelFifths',
-              'identifyParallelOctaves', 'identifyParallelUnisons',
-              'identifyHiddenFifths', 'identifyHiddenOctaves', 'identifyImproperResolutions',
-              'identifyLeapNotSetWithStep', 'identifyOpensIncorrectly',
-              'identifyClosesIncorrectly',
-              'identifyPassingTones', 'removePassingTones', 'identifyNeighborTones',
-              'removeNeighborTones', 'identifyDissonantHarmonicIntervals',
-              'identifyImproperDissonantIntervals',
-              'identifyDissonantMelodicIntervals', 'identifyObliqueMotion',
-              'identifySimilarMotion',
-              'identifyParallelMotion',
-              'identifyContraryMotion', 'identifyOutwardContraryMotion',
-              'identifyInwardContraryMotion', 'identifyAntiParallelMotion',
-              'identifyTonicAndDominant', 'identifyHarmonicIntervals',
-              'identifyScaleDegrees', 'identifyMotionType',
-              'identifyCommonPracticeErrors',
-              'addAnalysisData', 'removeFromAnalysisData', 'setKeyMeasureMap',
-              'getKeyMeasureMap', 'getKeyAtMeasure',
-              'getResultsString', 'colorResults', 'getHTMLResultsString',
-              'getAllPartNumPairs', 'getNotes'
-            ]
+                  'getLinearSegments', 'getVerticalityNTuplets', 'getHarmonicIntervals',
+                  'getMelodicIntervals', 'getParallelFifths', 'getPassingTones',
+                  'getNeighborTones', 'getParallelOctaves', 'identifyParallelFifths',
+                  'identifyParallelOctaves', 'identifyParallelUnisons',
+                  'identifyHiddenFifths', 'identifyHiddenOctaves', 'identifyImproperResolutions',
+                  'identifyLeapNotSetWithStep', 'identifyOpensIncorrectly',
+                  'identifyClosesIncorrectly',
+                  'identifyPassingTones', 'removePassingTones', 'identifyNeighborTones',
+                  'removeNeighborTones', 'identifyDissonantHarmonicIntervals',
+                  'identifyImproperDissonantIntervals',
+                  'identifyDissonantMelodicIntervals', 'identifyObliqueMotion',
+                  'identifySimilarMotion',
+                  'identifyParallelMotion',
+                  'identifyContraryMotion', 'identifyOutwardContraryMotion',
+                  'identifyInwardContraryMotion', 'identifyAntiParallelMotion',
+                  'identifyTonicAndDominant', 'identifyHarmonicIntervals',
+                  'identifyScaleDegrees', 'identifyMotionType',
+                  'identifyCommonPracticeErrors',
+                  'addAnalysisData', 'removeFromAnalysisData', 'setKeyMeasureMap',
+                  'getKeyMeasureMap', 'getKeyAtMeasure',
+                  'getResultsString', 'colorResults', 'getHTMLResultsString',
+                  'getAllPartNumPairs', 'getNotes',
+                  ]
 
 
     def __init__(self):
@@ -212,6 +210,7 @@ class Analyzer:
 
         also adds to any embedded Streams...
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> p = stream.Part()
         >>> s = stream.Score()
         >>> s.insert(0, p)
@@ -234,8 +233,6 @@ class Analyzer:
                 dd['ResultDict'] = defaultdict(dict)
                 self.store[p.id] = dd
 
-
-
     # --------------------------------------------------------------------------------------
     # Methods to split the score up into little pieces for analysis
     # The little pieces are all from voiceLeading.py, such as
@@ -248,6 +245,7 @@ class Analyzer:
         to determine what vertical slices to take. Default is to return only objects of
         type Note, Chord, Harmony, and Rest.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> n1 = note.Note('c5')
         >>> n1.quarterLength = 4
         >>> n2 = note.Note('f4')
@@ -285,6 +283,7 @@ class Analyzer:
          <music21.voiceLeading.Verticality contentDict=defaultdict(<... 'list'>,
                  {0: [<music21.chord.Chord A B C>]})>]
 
+        >>> from music21 import harmony
         >>> sc3 = stream.Score()
         >>> p1 = stream.Part()
         >>> p1.append(harmony.ChordSymbol('C', quarterLength = 1))
@@ -304,7 +303,7 @@ class Analyzer:
         sid = score.id
         self.addAnalysisData(score)
         if ('Verticalities' in self.store[sid]
-                and self.store[sid]['Verticalities'] != None):
+                and self.store[sid]['Verticalities'] is not None):
             return self.store[sid]['Verticalities']
 
         # if elements exist at same offset, return both
@@ -324,16 +323,16 @@ class Analyzer:
                                                                   classList=classFilterList)
                     # el = part.flatten().getElementAtOrBefore(c.offset,classList=[
                     #             'Note', 'Rest', 'Chord', 'Harmony'])
-                    for el in elementStream.elements:
+                    for el in elementStream:
                         contentDict[partNum].append(el)
-                    partNum +=1
+                    partNum += 1
             else:
                 elementStream = score.flatten().getElementsByOffset(c.offset,
                                                                mustBeginInSpan=False,
                                                                classList=classFilterList)
                 # el = part.flatten().getElementAtOrBefore(c.offset,
                 #            classList=['Note', 'Rest', 'Chord', 'Harmony'])
-                for el in elementStream.elements:
+                for el in elementStream:
                     contentDict[partNum].append(el)
                 partNum += 1
 
@@ -349,6 +348,7 @@ class Analyzer:
         extracts and returns a list of the :class:`~music21.voiceLeading.VoiceLeadingQuartet`
         objects present between partNum1 and partNum2 in the score
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -383,7 +383,7 @@ class Analyzer:
                         defaultKey = score.analyze('key')
                     newKey = defaultKey
                 vlq.key = newKey
-                #vlq.key = getKeyAtMeasure(score, vlq.v1n1.measureNumber)
+                # vlq.key = getKeyAtMeasure(score, vlq.v1n1.measureNumber)
             allVLQs.extend(vlqs)
         return allVLQs
 
@@ -393,6 +393,7 @@ class Analyzer:
         objects present in partNum in the score (three note linear segments are made up of ONLY
         three notes)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -440,6 +441,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -479,6 +481,7 @@ class Analyzer:
         <music21.interval.ChromaticInterval -7> <music21.interval.ChromaticInterval -2>
         <music21.interval.ChromaticInterval 5> <music21.interval.ChromaticInterval 0>
 
+        >>> from music21 import *
         >>> sc3 = stream.Score()
         >>> part2 = stream.Part()
         >>> part2.append(harmony.ChordSymbol('D-', quarterLength=1))
@@ -495,14 +498,14 @@ class Analyzer:
         '''
 
         linearSegments = []
-        #no caching here - possibly implement later on...
+        # no caching here - possibly implement later on...
         verticalities = self.getVerticalities(score)
 
         for i in range(len(verticalities) - lengthLinearSegment + 1):
             objects = []
             for n in range(lengthLinearSegment):
                 objects.append(verticalities[i + n].getObjectsByPart(partNum, classFilterList))
-                #print objects
+                # print objects
             if (lengthLinearSegment == 3
                     and 'Note' in self._getTypeOfAllObjects(objects)):
                 tnls = voiceLeading.ThreeNoteLinearSegment(objects[0], objects[1], objects[2])
@@ -521,8 +524,8 @@ class Analyzer:
     def _getTypeOfAllObjects(self, objectList):
         setList = []
         for obj in objectList:
-            if obj != None:
-                setList.append(set (obj.classes) )
+            if obj is not None:
+                setList.append(set(obj.classes) )
 
         if setList:
             lastSet = setList[0]
@@ -541,6 +544,7 @@ class Analyzer:
         :class:`~music21.voiceLeading.VerticalityNTuplet` or the
         corresponding subclass (currently only supports triplets)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part1 = stream.Part()
@@ -558,9 +562,11 @@ class Analyzer:
         >>> ads = Analyzer()
         >>> len(ads.getVerticalityNTuplets(sc, 3))
         2
-        >>> ads.getVerticalityNTuplets(sc, 3)[1]
-        <music21.voiceLeading.VerticalityTriplet listOfVerticalities=[<music21.voiceLeading.Verticality...>,
-            <music21.voiceLeading.Verticality...>, <music21.voiceLeading.Verticality...>]>
+        >>> triplet = ads.getVerticalityNTuplets(sc, 3)[1]
+        >>> triplet.__class__.__name__
+        'VerticalityTriplet'
+        >>> len(triplet.verticalities)
+        3
         '''
         verticalityNTuplets = []
         sid = score.id
@@ -594,6 +600,7 @@ class Analyzer:
         returns a list of all the harmonic intervals (:class:`~music21.interval.Interval` )
         occurring between the two specified parts.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('e4'))
@@ -633,6 +640,7 @@ class Analyzer:
         returns a list of all the melodic intervals (:class:`~music21.interval.Interval`)
         in the specified part.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -650,7 +658,7 @@ class Analyzer:
         '''
         mInvList = []
         noteList = score.parts[partNum].flatten().getElementsByClass(['Note', 'Rest'])
-        for (i,n1) in enumerate(noteList[:-1]):
+        for (i, n1) in enumerate(noteList[:-1]):
             n2 = noteList[i + 1]
 
             if 'Note' in n1.classes and 'Note' in n2.classes:
@@ -667,6 +675,7 @@ class Analyzer:
         returns a list of notes present in the score. If Rests are present,
         appends None to the list
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> p = stream.Part()
         >>> p.repeatAppend(note.Note('C'), 3)
@@ -698,6 +707,7 @@ class Analyzer:
         Gets a list of all possible pairs of partNumbers:
         tuples (partNum1, partNum2) where 0 <= partNum1 < partnum2 < numParts
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c5'))
@@ -774,19 +784,19 @@ class Analyzer:
         else:
 
             vlqList = self.getVLQs(score, partNum1, partNum2)
-            if endIndex is None and startIndex >=0:
+            if endIndex is None and startIndex >= 0:
                 endIndex = len(vlqList)
 
             for vlq in vlqList[startIndex:endIndex]:
 
-                if testFunction(vlq) is not False: # True or value
+                if testFunction(vlq) is not False:  # True or value
                     tr = theoryResult.VLQTheoryResult(vlq)
                     tr.value = testFunction(vlq)
                     if textFunction is None:
                         tr.text = tr.value
                     else:
                         tr.text = textFunction(vlq, partNum1, partNum2)
-                    if editorialDictKey != None:
+                    if editorialDictKey is not None:
                         tr.markNoteEditorial(editorialDictKey, editorialValue, editorialMarkList)
                     if color is not None:
                         tr.color(color)
@@ -807,7 +817,7 @@ class Analyzer:
             hIntvList = self.getHarmonicIntervals(score, partNum1, partNum2)
 
             for hIntv in hIntvList:
-                if testFunction(hIntv) is not False: # True or value
+                if testFunction(hIntv) is not False:  # True or value
 
                     tr = theoryResult.IntervalTheoryResult(hIntv)
                     tr.value = valueFunction(hIntv)
@@ -828,7 +838,7 @@ class Analyzer:
             mIntvList = self.getMelodicIntervals(score, partNum)
 
             for mIntv in mIntvList:
-                if testFunction(mIntv) is not False: # True or value
+                if testFunction(mIntv) is not False:  # True or value
                     tr = theoryResult.IntervalTheoryResult(mIntv)
                     tr.value = testFunction(mIntv)
                     tr.text = textFunction(mIntv, partNum)
@@ -848,7 +858,7 @@ class Analyzer:
             nList = self.getNotes(score, partNum)
 
             for n in nList:
-                if testFunction(score, n) is not False: # True or value
+                if testFunction(score, n) is not False:  # True or value
                     tr = theoryResult.NoteTheoryResult(n)
                     tr.value = testFunction(score, n)
 
@@ -900,7 +910,7 @@ class Analyzer:
             for vsnt in self.getVerticalityNTuplets(score, nTupletNum):
                 if testFunction(vsnt, partNumToIdentify) is not False:
                     tr = theoryResult.VerticalityNTupletTheoryResult(vsnt, partNumToIdentify)
-                    if editorialDictKey != None:
+                    if editorialDictKey is not None:
                         tr.markNoteEditorial(editorialDictKey, editorialValue, editorialMarkDict)
                     if textFunction is not None:
                         tr.text = textFunction(vsnt, partNumToIdentify)
@@ -949,6 +959,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -975,15 +986,15 @@ class Analyzer:
         'Parallel fifth in measure 1: Part 1 moves from D to E while part 2 moves from G to A'
         '''
         testFunction = lambda vlq: vlq.parallelFifth()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel fifth in measure "
+        textFunction = lambda vlq, pn1, pn2: ('Parallel fifth in measure '
                                               + str(vlq.v1n1.measureNumber)
-                                              + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name + " "
-                                              + "while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+                                              + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name + ' '
+                                              + 'while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -995,6 +1006,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1043,6 +1055,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1066,14 +1079,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.parallelOctave()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel octave in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel octave in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1085,6 +1098,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1125,6 +1139,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1153,14 +1168,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.parallelUnison()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel unison in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel unison in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1177,6 +1192,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1200,14 +1216,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.hiddenFifth()
-        textFunction = lambda vlq, pn1, pn2: ("Hidden fifth in measure "
-                                              + str(vlq.v1n1.measureNumber) +": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Hidden fifth in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1224,6 +1240,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1247,14 +1264,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.hiddenOctave()
-        textFunction = lambda vlq, pn1, pn2: ("Hidden octave in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Hidden octave in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1271,6 +1288,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1293,16 +1311,16 @@ class Analyzer:
         '''
         if editorialMarkList is None:
             editorialMarkList = []
-        #TODO: incorporate Jose's resolution rules into this method (italian6, etc.)
+        # TODO: incorporate Jose's resolution rules into this method (italian6, etc.)
         testFunction = lambda vlq: not vlq.isProperResolution()
-        textFunction = lambda vlq, pn1, pn2: ("Improper resolution of " +
+        textFunction = lambda vlq, pn1, pn2: ('Improper resolution of ' +
                                               vlq.vIntervals[0].simpleNiceName +
-                                              " in measure " + str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
+                                              ' in measure ' + str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
                                               vlq.v1n1.name +
-                                              " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name + " to " + vlq.v2n2.name)
+                                              ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction,
                             textFunction, color, editorialDictKey='isImproperResolution',
                             editorialValue=True, editorialMarkList=editorialMarkList)
@@ -1320,6 +1338,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1344,14 +1363,14 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.leapNotSetWithStep()
-        textFunction = lambda vlq, pn1, pn2: ("Leap not set with step in measure "
-                                              + str(vlq.v1n1.measureNumber) + ": "
-                                              + "Part " + str(pn1 + 1)
-                                              + " moves from " + vlq.v1n1.name
-                                              + " to " + vlq.v1n2.name
-                                              + " while part " + str(pn2 + 1)
-                                              + " moves from " + vlq.v2n1.name
-                                              + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Leap not set with step in measure '
+                                              + str(vlq.v1n1.measureNumber) + ': '
+                                              + 'Part ' + str(pn1 + 1)
+                                              + ' moves from ' + vlq.v1n1.name
+                                              + ' to ' + vlq.v1n2.name
+                                              + ' while part ' + str(pn2 + 1)
+                                              + ' moves from ' + vlq.v2n1.name
+                                              + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1363,6 +1382,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1387,7 +1407,7 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.opensIncorrectly()
-        textFunction = lambda vlq, pn1, pn2: "Opening harmony is not in style"
+        textFunction = lambda vlq, pn1, pn2: 'Opening harmony is not in style'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction,
                             textFunction, color, startIndex = 0, endIndex = 1)
 
@@ -1399,6 +1419,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1425,7 +1446,7 @@ class Analyzer:
 
         '''
         testFunction = lambda vlq: vlq.closesIncorrectly()
-        textFunction = lambda vlq, pn1, pn2: "Closing harmony is not in style"
+        textFunction = lambda vlq, pn1, pn2: 'Closing harmony is not in style'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey, testFunction, textFunction,
                             color, startIndex=-1)
 
@@ -1445,6 +1466,8 @@ class Analyzer:
         :class:`~music21.editorial.NoteEditorial` value of
         editorialValue at ``note.editorial.[editorialDictKey]``
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1485,8 +1508,8 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified by
         :meth:`~music21.voiceLeading.VerticalityTriplet.hasPassingTone`
 
-
-
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1526,8 +1549,8 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified
         by :meth:`~music21.voiceLeading.VerticalityTriplet.hasNeighborTone`
 
-
-
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1568,7 +1591,8 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
-
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1597,7 +1621,7 @@ class Analyzer:
         sid = score.id
         self.getPassingTones(score, dictKey=dictKey)
         for tr in self.store[sid]['ResultDict'][dictKey]:
-            a = tr.vsnt.tnlsDict[tr.partNumIdentified] #identifiedThreeNoteLinearSegment
+            a = tr.vsnt.tnlsDict[tr.partNumIdentified]  # identifiedThreeNoteLinearSegment
             durationNewTone = a.n1.duration.quarterLength + a.n2.duration.quarterLength
             for obj in score.recurse():
                 if obj.id == a.n2.id:
@@ -1613,6 +1637,8 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1641,7 +1667,7 @@ class Analyzer:
         sid = score.id
         self.getNeighborTones(score, dictKey=dictKey)
         for tr in self.store[sid]['ResultDict'][dictKey]:
-            a = tr.vsnt.tnlsDict[tr.partNumIdentified] #identifiedThreeNoteLinearSegment
+            a = tr.vsnt.tnlsDict[tr.partNumIdentified]  # identifiedThreeNoteLinearSegment
             durationNewTone = a.n1.duration.quarterLength + a.n2.duration.quarterLength
             for obj in score.recurse():
                 if obj.id == a.n2.id:
@@ -1649,7 +1675,7 @@ class Analyzer:
                     break
             a.n1.duration = duration.Duration(durationNewTone)
             score.stripTies(inPlace=True, matchByPitch=True)
-            #a.n1.color = 'red'
+            # a.n1.color = 'red'
         self.store[sid]['Verticalities'] = None
 
     def identifyNeighborTones(self, score, partNumToIdentify=None, color=None, dictKey=None,
@@ -1662,8 +1688,8 @@ class Analyzer:
         on weak beats). unaccentedOnly
         by default set to True
 
-
-
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1697,7 +1723,7 @@ class Analyzer:
                                          ' identified as a neighbor tone in part ' + str(pn + 1))
         self._identifyBasedOnVerticalityNTuplet(score, partNumToIdentify,  dictKey, testFunction,
                                            textFunction, color, editorialDictKey, editorialValue,
-                                           editorialMarkDict={1:[partNumToIdentify]}, nTupletNum=3)
+                                           editorialMarkDict={1: [partNumToIdentify]}, nTupletNum=3)
 
     def identifyDissonantHarmonicIntervals(self, score, partNum1=None, partNum2=None, color=None,
                                            dictKey='dissonantHarmonicIntervals'):
@@ -1713,6 +1739,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1740,13 +1767,13 @@ class Analyzer:
             from F to B between part 1 and part 2'
         '''
         testFunction = lambda hIntv: hIntv is not None and not hIntv.isConsonant()
-        textFunction = lambda hIntv, pn1, pn2: ("Dissonant harmonic interval in measure "
-                                                + str(hIntv.noteStart.measureNumber) + ": "
-                                                + str(hIntv.simpleNiceName) + " from "
-                                                + str(hIntv.noteStart.name) + " to "
+        textFunction = lambda hIntv, pn1, pn2: ('Dissonant harmonic interval in measure '
+                                                + str(hIntv.noteStart.measureNumber) + ': '
+                                                + str(hIntv.simpleNiceName) + ' from '
+                                                + str(hIntv.noteStart.name) + ' to '
                                                 + str(hIntv.noteEnd.name)
-                                                + " between part " + str(pn1 + 1)
-                                                + " and part " + str(pn2 + 1))
+                                                + ' between part ' + str(pn1 + 1)
+                                                + ' and part ' + str(pn2 + 1))
         self._identifyBasedOnHarmonicInterval(score, partNum1, partNum2, color,
                                               dictKey, testFunction,
                                          textFunction)
@@ -1760,6 +1787,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1783,7 +1811,8 @@ class Analyzer:
         >>> len(ads.store[sc.id]['ResultDict']['improperDissonantIntervals'])
         1
         >>> ads.store[sc.id]['ResultDict']['improperDissonantIntervals'][0].text
-        'Improper dissonant harmonic interval in measure 1: Perfect Fourth from B to E between part 1 and part 2'
+        'Improper dissonant harmonic interval in measure 1:
+            Perfect Fourth from B to E between part 1 and part 2'
 
         '''
         sid = score.id
@@ -1812,13 +1841,13 @@ class Analyzer:
                     else:
                         intv = resultTheoryObject.intv
                         tr = theoryResult.IntervalTheoryResult(intv)
-                        #tr.value = valueFunction(hIntv)
-                        tr.text = ("Improper dissonant harmonic interval in measure " +
-                                   str(intv.noteStart.measureNumber) +": " +
-                                   str(intv.niceName) + " from " + str(intv.noteStart.name) +
-                                   " to " + str(intv.noteEnd.name) +
-                                   " between part " + str(partNum1 + 1) +
-                                   " and part " + str(partNum2 + 1))
+                        # tr.value = valueFunction(hIntv)
+                        tr.text = ('Improper dissonant harmonic interval in measure ' +
+                                   str(intv.noteStart.measureNumber) + ': ' +
+                                   str(intv.niceName) + ' from ' + str(intv.noteStart.name) +
+                                   ' to ' + str(intv.noteEnd.name) +
+                                   ' between part ' + str(partNum1 + 1) +
+                                   ' and part ' + str(partNum2 + 1))
                         if color is not None:
                             tr.color(color)
                         self._updateScoreResultDict(score, dictKey, tr)
@@ -1836,6 +1865,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1861,11 +1891,11 @@ class Analyzer:
 
         '''
         testFunction = lambda mIntv: mIntv is not None and mIntv.simpleName in [
-                                                    "A2", "A4", "d5", "m7", "M7"]
-        textFunction = lambda mIntv, pn: ("Dissonant melodic interval in part " + str(pn + 1) +
-                                          " measure " + str(mIntv.noteStart.measureNumber) +": " +
-                                          str(mIntv.simpleNiceName) + " from " +
-                                          str(mIntv.noteStart.name) + " to " +
+                                                    'A2', 'A4', 'd5', 'm7', 'M7']
+        textFunction = lambda mIntv, pn: ('Dissonant melodic interval in part ' + str(pn + 1) +
+                                          ' measure ' + str(mIntv.noteStart.measureNumber) + ': ' +
+                                          str(mIntv.simpleNiceName) + ' from ' +
+                                          str(mIntv.noteStart.name) + ' to ' +
                                           str(mIntv.noteEnd.name))
         self._identifyBasedOnMelodicInterval(score, partNum, color, dictKey,
                                              testFunction, textFunction)
@@ -1879,85 +1909,85 @@ class Analyzer:
     def identifyObliqueMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'obliqueMotion'
         testFunction = lambda vlq: vlq.obliqueMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Oblique motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name + " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Oblique motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifySimilarMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'similarMotion'
         testFunction = lambda vlq: vlq.similarMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Similar motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Similar motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyParallelMotion(self, score, partNum1=None, partNum2=None, color= None):
         dictKey = 'parallelMotion'
         testFunction = lambda vlq: vlq.parallelMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Parallel motion in measure " +
-                                              str(vlq.v1n1.measureNumber) +": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Parallel motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'contraryMotion'
         testFunction = lambda vlq: vlq.contraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyOutwardContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'outwardContraryMotion'
         testFunction = lambda vlq: vlq.outwardContraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Outward contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " +
-                                              vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Outward contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' +
+                                              vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
     def identifyInwardContraryMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'inwardContraryMotion'
         testFunction = lambda vlq: vlq.inwardContraryMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Inward contrary motion in measure " +
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Inward contrary motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, color, dictKey,
                                  testFunction, textFunction)
 
     def identifyAntiParallelMotion(self, score, partNum1=None, partNum2=None, color=None):
         dictKey = 'antiParallelMotion'
         testFunction = lambda vlq: vlq.antiParallelMotion()
-        textFunction = lambda vlq, pn1, pn2: ("Anti-parallel motion in measure " +
-                                            str(vlq.v1n1.measureNumber) +": " +
-                                            "Part " + str(pn1 + 1) + " moves from " +
-                                            vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                            "while part " + str(pn2 + 1) + " moves from " +
-                                            vlq.v2n1.name+ " to " + vlq.v2n2.name)
+        textFunction = lambda vlq, pn1, pn2: ('Anti-parallel motion in measure ' +
+                                            str(vlq.v1n1.measureNumber) + ': ' +
+                                            'Part ' + str(pn1 + 1) + ' moves from ' +
+                                            vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                            'while part ' + str(pn2 + 1) + ' moves from ' +
+                                            vlq.v2n1.name + ' to ' + vlq.v2n2.name)
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -1976,6 +2006,7 @@ class Analyzer:
         slice at offset 0, 6, and 7
         in the piece, pass ``responseOffsetMap=[0, 6, 7]``
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2006,7 +2037,7 @@ class Analyzer:
 
         def testFunction(vs, score):
             noteList = vs.getObjectsByClass('Note')
-            if not None in noteList:
+            if None not in noteList:
                 inChord = chord.Chord(noteList)
                 inKey = self.getKeyAtMeasure(score, noteList[0].measureNumber)
                 chordBass = noteList[-1]
@@ -2020,7 +2051,7 @@ class Analyzer:
             for n in vs.getObjectsByClass('Note'):
                 notes += n.name + ','
             notes = notes[:-1]
-            return "Roman Numeral of " + notes + ' is ' + rn
+            return 'Roman Numeral of ' + notes + ' is ' + rn
 
         self._identifyBasedOnVerticality(score, color, dictKey, testFunction, textFunction,
                                     responseOffsetMap=responseOffsetMap)
@@ -2031,7 +2062,7 @@ class Analyzer:
     # homework assignments
 
     #
-    #def identifyRomanNumerals(self, score, color=None,
+    # def identifyRomanNumerals(self, score, color=None,
     #                            dictKey='romanNumerals', responseOffsetMap = []):
     #    '''
     #    Identifies the roman numerals in the piece by iterating through
@@ -2079,6 +2110,7 @@ class Analyzer:
         created with ``.value`` set to the string most commonly
         used to identify the interval (0 through 9, with A4 and d5)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2108,7 +2140,7 @@ class Analyzer:
 
         '''
         testFunction = lambda hIntv: hIntv.generic.undirected if hIntv is not None else False
-        textFunction = lambda hIntv, pn1, pn2: ("harmonic interval between "
+        textFunction = lambda hIntv, pn1, pn2: ('harmonic interval between '
                             + hIntv.noteStart.name
                             + ' and ' + hIntv.noteEnd.name + ' between parts ' + str(pn1 + 1)
                             + ' and ' + str(pn2 + 1) + ' is a ' + str(hIntv.niceName))
@@ -2128,6 +2160,7 @@ class Analyzer:
         '''
         identify all the scale degrees in the score in partNum, or if not specified ALL partNums
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2160,7 +2193,7 @@ class Analyzer:
         testFunction = lambda sc, n: (str(self.getKeyAtMeasure(sc,
                                             n.measureNumber).getScale().getScaleDegreeFromPitch(
                                                 n.pitch)) ) if n is not None else False
-        textFunction = lambda n, pn, scaleDegree: ("scale degree of " + n.name + ' in part ' +
+        textFunction = lambda n, pn, scaleDegree: ('scale degree of ' + n.name + ' in part ' +
                                                    str(pn + 1) + ' is ' + str(scaleDegree))
         self._identifyBasedOnNote(score, partNum, color, dictKey, testFunction, textFunction)
 
@@ -2178,6 +2211,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2207,13 +2241,13 @@ class Analyzer:
         '''
 
         testFunction = lambda vlq: vlq.motionType().value
-        textFunction = lambda vlq, pn1, pn2: (vlq.motionType().value + ' Motion in measure '+
-                                              str(vlq.v1n1.measureNumber) + ": " +
-                                              "Part " + str(pn1 + 1) + " moves from " +
-                                              vlq.v1n1.name + " to " + vlq.v1n2.name + " " +
-                                              "while part " + str(pn2 + 1) + " moves from " +
-                                              vlq.v2n1.name+ " to " + vlq.v2n2.name) if (
-                                                vlq.motionType() != "No Motion") else 'No motion'
+        textFunction = lambda vlq, pn1, pn2: (vlq.motionType().value + ' Motion in measure ' +
+                                              str(vlq.v1n1.measureNumber) + ': ' +
+                                              'Part ' + str(pn1 + 1) + ' moves from ' +
+                                              vlq.v1n1.name + ' to ' + vlq.v1n2.name + ' ' +
+                                              'while part ' + str(pn2 + 1) + ' moves from ' +
+                                              vlq.v2n1.name + ' to ' + vlq.v2n2.name) if (
+                                                vlq.motionType() != 'No Motion') else 'No motion'
         self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey,
                                  testFunction, textFunction, color)
 
@@ -2238,10 +2272,10 @@ class Analyzer:
         self.identifyHiddenOctaves(score, partNum1, partNum2, 'green', dictKey)
         self.identifyParallelUnisons(score, partNum1, partNum2, 'blue', dictKey)
         self.identifyImproperResolutions(score, partNum1, partNum2, 'purple', dictKey)
-        #self.identifyLeapNotSetWithStep(score, partNum1, partNum2, 'white', dictKey)
+        # self.identifyLeapNotSetWithStep(score, partNum1, partNum2, 'white', dictKey)
         self.identifyImproperDissonantIntervals(score, partNum1, partNum2, 'white', dictKey,
                                            unaccentedOnly = True)
-        self.identifyDissonantMelodicIntervals(score, partNum1,'cyan', dictKey)
+        self.identifyDissonantMelodicIntervals(score, partNum1, 'cyan', dictKey)
         self.identifyOpensIncorrectly(score, partNum1, partNum2, 'brown', dictKey)
         self.identifyClosesIncorrectly(score, partNum1, partNum2, 'gray', dictKey)
 
@@ -2254,6 +2288,7 @@ class Analyzer:
         returns string of all results found by calling all
         identify methods on the TheoryAnalyzer score
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2281,17 +2316,17 @@ class Analyzer:
         Hidden fifth in measure 1: Part 1 moves from C to D while part 2 moves from C to G
         Closing harmony is not in style
         '''
-        resultStr = ""
+        resultStr = ''
         sid = score.id
 
         self.addAnalysisData(score)
         for resultType in self.store[sid]['ResultDict']:
             if typeList is None or resultType in typeList:
-                resultStr += resultType + ": \n"
+                resultStr += resultType + ': \n'
                 for result in self.store[sid]['ResultDict'][resultType]:
                     resultStr += result.text
-                    resultStr += "\n"
-        resultStr = resultStr[0:-1] #remove final new line character
+                    resultStr += '\n'
+        resultStr = resultStr[0:-1]  # remove final new line character
         return resultStr
 
     def getHTMLResultsString(self, score, typeList=None):
@@ -2299,18 +2334,18 @@ class Analyzer:
         returns string of all results found by calling all
         identify methods on the TheoryAnalyzer score
         '''
-        resultStr = ""
+        resultStr = ''
         sid = score.id
 
         self.addAnalysisData(score)
         for resultType in self.store[sid]['ResultDict']:
             if typeList is None or resultType in typeList:
-                resultStr += "<b>" + resultType + "</B>: <br /><ul>"
+                resultStr += '<b>' + resultType + '</B>: <br /><ul>'
                 for result in self.store[sid]['ResultDict'][resultType]:
                     resultStr += ("<li style='color:" + result.currentColor + "'><b>" +
-                                  result.text.sub(':',"</b>:<span style='color:black'>") +
-                                  "</span></li>")
-                resultStr += "</ul><br />"
+                                  result.text.sub(':', "</b>:<span style='color:black'>") +
+                                  '</span></li>')
+                resultStr += '</ul><br />'
 
         return resultStr
 
@@ -2334,6 +2369,7 @@ class Analyzer:
         you'd like removed. Pass in a list of dictKeys or just a single dictionary key.
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> ads = Analyzer()
         >>> ads.addAnalysisData(sc)
@@ -2341,7 +2377,7 @@ class Analyzer:
         ...        'h1':'another sample response', '5':'third sample response'}
         >>> ads.removeFromAnalysisData(sc, 'sampleDictKey')
         >>> for k in sorted(list(ads.store[sc.id]['ResultDict'].keys())):
-        ...     print("{0}\t{1}".format(k, ads.store[sc.id]['ResultDict'][k]))
+        ...     print("{0}	{1}".format(k, ads.store[sc.id]['ResultDict'][k]))
         5   third sample response
         h1  another sample response
 
@@ -2359,14 +2395,14 @@ class Analyzer:
                     del self.store[sid]['ResultDict'][dictKey]
                 except Exception:
                     pass
-                    #raise TheoryAnalyzerException('got a dictKey to remove from
+                    # raise TheoryAnalyzerException('got a dictKey to remove from
                     #    resultDictionary that wasnt in the dictionary: %s', dictKey)
         else:
             try:
                 del self.store[sid]['ResultDict'][dictKeys]
             except Exception:
                 pass
-                #raise TheoryAnalyzerException('got a dictKey to remove from resultDictionary
+                # raise TheoryAnalyzerException('got a dictKey to remove from resultDictionary
                 #    that wasn''t in the dictionary: %s', dictKeys)
     #
     def getKeyMeasureMap(self, score):
@@ -2390,6 +2426,7 @@ class Analyzer:
         for analysis purposes only - no key object is actually added to the score.
         Check the music xml to verify measure numbers; pickup measures are usually 0.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> n1 = note.Note('c5')
         >>> n1.quarterLength = 4
         >>> n2 = note.Note('f4')
@@ -2422,6 +2459,7 @@ class Analyzer:
         uses keyMeasureMap to return music21 key object. If keyMeasureMap not specified,
         returns key analysis of theory score as a whole.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> s = stream.Score()
 
         >>> ads = Analyzer()
@@ -2443,7 +2481,7 @@ class Analyzer:
                         return key.Key(kName)
                     else:
                         return keyMeasureMap[dictKey]
-            if measureNumber == 0: #just in case of a pickup measure
+            if measureNumber == 0:  # just in case of a pickup measure
                 if 1 in keyMeasureMap:
                     return key.Key(key.convertKeyStringToMusic21KeyString(keyMeasureMap[1]))
             else:
@@ -2459,19 +2497,18 @@ class TheoryAnalyzerException(exceptions21.Music21Exception):
 class Test(unittest.TestCase):
 
     def testChordMotionExample(self):
-        pass # in doctest
-#         from music21 import harmony, theoryAnalysis
-#         p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony')
-#         harmony.realizeChordSymbolDurations(p)
-#         averageMotion = 0
-#         l = ads.getLinearSegments(p, 0, 2, ['Harmony'])
-#         for x in l:
-#             averageMotion += abs(x.rootInterval().intervalClass)
-#         averageMotion = averageMotion // len(l)
-#         self.assertEqual(averageMotion, 4)
-#
+        pass  # in doctest
+        # from music21 import harmony, theoryAnalysis
+        # p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony')
+        # harmony.realizeChordSymbolDurations(p)
+        # averageMotion = 0
+        # l = ads.getLinearSegments(p, 0, 2, ['Harmony'])
+        # for x in l:
+        #     averageMotion += abs(x.rootInterval().intervalClass)
+        # averageMotion = averageMotion // len(l)
+        # self.assertEqual(averageMotion, 4)
+
     def testFastVerticalityCheck(self):
-        from music21 import stream
         sc = stream.Score()
         part0 = stream.Part()
         p0measure1 = stream.Measure(number=1)
@@ -2497,28 +2534,23 @@ class Test(unittest.TestCase):
                          'Roman Numeral of B-,G is I')
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
-
-    def runTest(self):
-        pass
-
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def demo(self):
         from music21 import converter
         sc = converter.parse(
             '/Users/bhadley/Dropbox/Music21Theory/TestFiles/TheoryAnalyzer/TATest.xml')
         ads = Analyzer()
         ads.identifyCommonPracticeErrors(sc)
+        # sc.show()
 
-        #sc.show()
     def removeNHTones(self):
         p = corpus.parse('bwv6.6').measures(0, 20)
         p.show()
-
         ads = Analyzer()
         ads.removePassingTones(p)
         ads.removeNeighborTones(p)
         p.show()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, 'moduleRelative') #, runTest='testFastVerticalityCheck')
+    music21.mainTest(Test, 'moduleRelative')

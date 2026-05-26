@@ -31,7 +31,7 @@ def main():
             ambi = p.analyze('ambitus')
             distance = ambi.diatonic.generic.undirected
             if distance >= 15:
-                print("************ GOT ONE!: {0} ************".format(ambi))
+                print('************ GOT ONE!: {0} ************'.format(ambi))
             elif distance >= 9:
                 print(ambi)
             else:
@@ -42,9 +42,5 @@ def main():
 _DOC_ORDER = []
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
-
-# -----------------------------------------------------------------------------
-# eof
-

@@ -27,14 +27,15 @@ class PolyphonicSnippet(stream.Score):
     The fourth is the cadence type (optional), the fifth is the time signature
     if not the same as the time signature of the parentPiece.
 
-    >>> from . import trecentoCadence
-    >>> cantus = trecentoCadence.CadenceConverter(
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
+    >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
+    >>> from music21_tools.trecento.trecentoCadence import CadenceConverter
+    >>> cantus = CadenceConverter(
     ...         "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
-    >>> tenor = trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
-    >>> from . import cadencebook
+    >>> tenor = CadenceConverter("6/8 F1. f2. e4. d").parse().stream
     >>> ps = PolyphonicSnippet(
     ...         [cantus, tenor, None, "8-8", "6/8"],
-    ...         parentPiece=cadencebook.BallataSheet().makeWork(3))
+    ...         parentPiece=BallataSheet().makeWork(3))
     >>> ps.elements
     (<music21.metadata.Metadata object at 0x...>, <music21.stream.Part C>, <music21.stream.Part T>)
 
@@ -54,21 +55,22 @@ class PolyphonicSnippet(stream.Score):
 
     >>> dumClass = dummy.__class__
     >>> dumClass
-    <class 'music21.PolyphonicSnippet'>
+    <class 'music21_tools.trecento.polyphonicSnippet.PolyphonicSnippet'>
 
     >>> dumdum = dumClass()
     >>> dumdum.__class__
-    <class 'music21.PolyphonicSnippet'>
+    <class 'music21_tools.trecento.polyphonicSnippet.PolyphonicSnippet'>
 
     >>> ps2 = ps.__class__()
     >>> ps2.elements
     ()
 
+    >>> from music21_tools.trecento.polyphonicSnippet import Incipit
     >>> dummy2 = Incipit()
     >>> dummy2.elements
     ()
     '''
-    snippetName = ""
+    snippetName = ''
 
     def __init__(self, fiveExcelCells=None, parentPiece=None):
         super().__init__()
@@ -76,7 +78,7 @@ class PolyphonicSnippet(stream.Score):
             fiveExcelCells = []
         if fiveExcelCells != []:
             if len(fiveExcelCells) != 5:
-                raise Exception("Need five Excel Cells to make a PolyphonicSnippet object")
+                raise Exception('Need five Excel Cells to make a PolyphonicSnippet object')
 
             self.cadenceType = fiveExcelCells[3]
             self.timeSig = meter.TimeSignature(fiveExcelCells[4])
@@ -87,16 +89,16 @@ class PolyphonicSnippet(stream.Score):
 
             self.longestLineLength = 0
 
-            if self.contratenor == "" or self.contratenor is None:
+            if self.contratenor == '' or self.contratenor is None:
                 self.contratenor = None
             else:
                 self.contratenor.id = 'Ct'
-            if self.tenor == "" or self.tenor is None:
+            if self.tenor == '' or self.tenor is None:
                 self.tenor = None
             else:
                 self.tenor.id = 'T'
 
-            if self.cantus == "" or self.cantus is None:
+            if self.cantus == '' or self.cantus is None:
                 self.cantus = None
             else:
                 self.cantus.id = 'C'
@@ -136,23 +138,23 @@ class PolyphonicSnippet(stream.Score):
 
     def header(self):
         '''returns a string that prints an appropriate header for this cadence'''
-        if self.snippetName == "":
-            if (self.parentPiece is not None):
-                headOut = ""
+        if self.snippetName == '':
+            if self.parentPiece is not None:
+                headOut = ''
                 parentPiece = self.parentPiece
-                if (parentPiece.fischerNum):
-                    headOut += str(parentPiece.fischerNum) + ". "
+                if parentPiece.fischerNum:
+                    headOut += str(parentPiece.fischerNum) + '. '
                 if parentPiece.title:
                     headOut += parentPiece.title
                 if (parentPiece.pmfcVol and parentPiece.pmfcPageRange()):
-                    headOut += " PMFC " + str(parentPiece.pmfcVol) + " "
+                    headOut += ' PMFC ' + str(parentPiece.pmfcVol) + ' '
                     headOut += parentPiece.pmfcPageRange()
                 return headOut
             else:
-                return ""
+                return ''
         else:
-            if (self.parentPiece is not None):
-                headOut = self.parentPiece.title + " -- " + self.snippetName
+            if self.parentPiece is not None:
+                headOut = self.parentPiece.title + ' -- ' + self.snippetName
             else:
                 return self.snippetName
 
@@ -161,7 +163,7 @@ class PolyphonicSnippet(stream.Score):
         returns the length. (in quarterLengths) for the longest line
         in the parts
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
         >>> s1 = stream.Part([note.Note(type='whole')])
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
@@ -169,7 +171,6 @@ class PolyphonicSnippet(stream.Score):
         >>> ps = PolyphonicSnippet(fiveExcelRows)
         >>> ps.findLongestCadence()
         4.0
-
         '''
         longestLineLength = 0
         for thisStream in self.parts:
@@ -185,6 +186,7 @@ class PolyphonicSnippet(stream.Score):
         '''
         returns the number of measures short that each stream is compared to the longest stream.
 
+        >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
         >>> s1 = stream.Part([note.Note(type='whole')])
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
@@ -199,25 +201,22 @@ class PolyphonicSnippet(stream.Score):
         >>> ps.measuresShort(s1)
         0.0
         '''
-
-
         timeSigLength = self.timeSig.barDuration.quarterLength
         thisStreamLength = thisStream.duration.quarterLength
         shortness = self.findLongestCadence() - thisStreamLength
-        shortmeasures = shortness/timeSigLength
+        shortmeasures = shortness / timeSigLength
         return shortmeasures
 
 
-
 class Incipit(PolyphonicSnippet):
-    snippetName = ""
+    snippetName = ''
 
     def backPadLine(self, thisStream):
         '''
         Pads a Stream with a bunch of rests at the
         end to make it the same length as the longest line
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import Incipit
         >>> ts = meter.TimeSignature('1/4')
         >>> s1 = stream.Part([ts])
         >>> s1.repeatAppend(note.Note(type='quarter'), 4)
@@ -240,11 +239,10 @@ class Incipit(PolyphonicSnippet):
         {3.0} <music21.stream.Measure 4 offset=3.0>
             {0.0} <music21.note.Rest quarter>
             {1.0} <music21.bar.Barline type=final>
-
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
-        if (shortMeasures > 0):
+        if shortMeasures:
             shortDuration = self.timeSig.barDuration
             hasMeasures = thisStream.hasMeasures()
             if hasMeasures:
@@ -275,15 +273,15 @@ class Incipit(PolyphonicSnippet):
                 lastMeasure.rightBarline = oldRightBarline
 
 
-
 class FrontPaddedSnippet(PolyphonicSnippet):
-    snippetName = ""
+    snippetName = ''
 
     def frontPadLine(self, thisStream):
-        '''Pads a line with a bunch of rests at the
+        '''
+        Pads a line with a bunch of rests at the
         front to make it the same length as the longest line
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import FrontPaddedSnippet
         >>> ts = meter.TimeSignature('1/4')
         >>> s1 = stream.Part([ts])
         >>> s1.repeatAppend(note.Note(type='quarter'), 4)
@@ -306,11 +304,10 @@ class FrontPaddedSnippet(PolyphonicSnippet):
         {3.0} <music21.stream.Measure 4 offset=3.0>
             {0.0} <music21.note.Note C>
             {1.0} <music21.bar.Barline type=final>
-
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
-        if (shortMeasures > 0):
+        if shortMeasures:
             shortDuration = self.timeSig.barDuration
             offsetShift = shortDuration.quarterLength * shortMeasures
             hasMeasures = thisStream.hasMeasures()
@@ -325,7 +322,6 @@ class FrontPaddedSnippet(PolyphonicSnippet):
             else:
                 for thisNote in thisStream.iter.notesAndRests:
                     thisNote.setOffsetBySite(thisStream, thisStream.elementOffset(m) + offsetShift)
-
 
             for i in range(shortMeasures):
                 newRest = note.Rest()
@@ -355,18 +351,10 @@ class FrontPaddedSnippet(PolyphonicSnippet):
                         newFirstM.insert(nOffset, n)
 
 
-
-
-
-
 class Test(unittest.TestCase):
-    pass
-
-    def runTest(self):
-        pass
-
     def testCopyAndDeepcopy(self):
-        '''Test copying all objects defined in this module
+        '''
+        Test copying all objects defined in this module
         '''
         import sys
         for part in sys.modules[self.__module__].__dict__:
@@ -375,7 +363,7 @@ class Test(unittest.TestCase):
             elif part in ['Test', 'TestExternal']:
                 continue
             elif callable(part):
-                #environLocal.printDebug(['testing copying on', part])
+                # environLocal.printDebug(['testing copying on', part])
                 obj = getattr([self.__module__, part])()
                 a = copy.copy(obj)
                 b = copy.deepcopy(obj)
@@ -383,24 +371,16 @@ class Test(unittest.TestCase):
                 self.assertNotEqual(b, obj)
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
-    pass
-
-    def runTest(self):
-        pass
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def testLily(self):
         from . import trecentoCadence, cadencebook
         cantus = trecentoCadence.CadenceConverter(
                             "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
-        tenor = trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
-        ps = PolyphonicSnippet([cantus, tenor, None, "8-8", "6/8"],
+        tenor = trecentoCadence.CadenceConverter('6/8 F1. f2. e4. d').parse().stream
+        ps = PolyphonicSnippet([cantus, tenor, None, '8-8', '6/8'],
                                parentPiece=cadencebook.BallataSheet().makeWork(3))
         ps.show('musicxml.png')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, TestExternal, 'importPlusRelative')
-
-# -----------------------------------------------------------------------------
-# eof
-

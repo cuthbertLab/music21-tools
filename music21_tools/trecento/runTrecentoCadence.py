@@ -10,8 +10,7 @@
 '''
 Python script to find out certain statistics about the trecento cadences
 '''
-
-import unittest
+import music21
 from . import cadencebook
 
 def countTimeSig():
@@ -25,19 +24,19 @@ def countTimeSig():
 
     for trecentoWork in ballataObj:
         thisTime = trecentoWork.timeSigBegin
-        thisTime = thisTime.strip() # remove leading and trailing whitespace
-        if (thisTime == ""):
+        thisTime = thisTime.strip()  # remove leading and trailing whitespace
+        if thisTime == '':
             pass
         else:
             totalPieces += 1
-            if (thisTime in timeSigCounter):
+            if thisTime in timeSigCounter:
                 timeSigCounter[thisTime] += 1
             else:
                 timeSigCounter[thisTime] = 1
 
     for thisKey in sorted(timeSigCounter):
-        print(thisKey, ":", timeSigCounter[thisKey],
-              str(int(timeSigCounter[thisKey] * 100 / totalPieces)) + "%")
+        print(thisKey, ':', timeSigCounter[thisKey],
+              str(int(timeSigCounter[thisKey] * 100 / totalPieces)) + '%')
 
 def sortByPMFC(work):
     '''
@@ -74,7 +73,7 @@ def makePDFfromPieces(start=1, finish=2):
     ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
-    for i in range(start, finish):  ## some random pieces
+    for i in range(start, finish):  # some random pieces
         randomPiece = ballataObj.makeWork( i ) #
         if randomPiece.incipit is not None:
             retrievedPieces.append(randomPiece)
@@ -82,7 +81,7 @@ def makePDFfromPieces(start=1, finish=2):
     opus = stream.Opus()
     retrievedPieces.sort(key=sortByPMFC)
     for randomPiece in retrievedPieces:
-        #print(randomPiece.title.encode('utf-8'))
+        # print(randomPiece.title.encode('utf-8'))
         randomOpus = randomPiece.asOpus()
         for s in randomOpus.scores:
             opus.insert(0, s)
@@ -93,7 +92,7 @@ def makePDFfromPieces(start=1, finish=2):
 #        randomIncipit = randomPiece.incipitClass()
 #        lilyString += randomIncipit.lily()
 #        randomCadA = randomPiece.cadenceAClass()
-##        randomCadA.header = randomIncipit.header ## use its header however
+#        randomCadA.header = randomIncipit.header  # use its header however
 #        lilyString += randomCadA.lily()
 #        randomCadB1 = randomPiece.cadenceB1Class()
 #        if randomCadB1 is not None:
@@ -114,13 +113,13 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
     ballataObj = cadencebook.BallataSheet()
 
     retrievedPieces = []
-    for i in range(start, finish):  ## some random pieces
+    for i in range(start, finish):  # some random pieces
         try:
             randomPiece = ballataObj.makeWork( i ) #
             if randomPiece.incipit:
                 retrievedPieces.append(randomPiece)
-        except:
-            raise Exception("Ugg " + str(i))
+        except Exception as exc:
+            raise Exception(f'Could not retrieve random piece at index {i}') from exc
 
 #    lilyString = ""
 #    retrievedPieces.sort(key=sortByPMFC)
@@ -133,7 +132,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
 #        lilyString += randomIncipit.lily()
 #
 #        randomCadA = randomPiece.cadenceAClass()
-##        randomCadA.header = randomIncipit.header ## use its header however
+#        randomCadA.header = randomIncipit.header  # use its header however
 #        for thisStream in randomCadA.streams:
 #            capua.runRulesOnStream(thisStream)
 #
@@ -158,34 +157,9 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
 def checkValidity():
     ballataObj = cadencebook.BallataSheet()
 
-    for i in range(1,378):
-        randomPiece = ballataObj.makeWork(i) #random.randint(231, 312)
+    for i in range(1, 378):
+        randomPiece = ballataObj.makeWork(i)  # random.randint(231, 312)
         try:
             unused_incipitStreams = randomPiece.incipitStreams()
         except music21.tinyNotation.TinyNotationException as inst:
-            raise Exception(randomPiece.title + " had problem " + inst.args)
-
-
-# temporarily commenting out for adding standard test approach
-# if (__name__ == "__main__"):
-# #    countTimeSig()
-#     makePDFfromPiecesWithCapua()
-
-
-# ------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-    def testA(self):
-        self.assertEqual(5, 5) ## something really wrong!??
-
-if __name__ == "__main__":
-    #makePDFfromPiecesWithCapua()
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-
-
-# -----------------------------------------------------------------------------
-# eof
+            raise Exception(randomPiece.title + ' had problem ' + inst.args)

@@ -23,32 +23,23 @@ environLocal = environment.Environment(_MOD)
 # ------------------------------------------------------------------------------
 # all are tests
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-# ------------------------------------------------------------------------------
-# CHAPTER 6
-# ------------------------------------------------------------------------------
-# Basic Elements
-# ------------------------------------------------------------------------------
-# I. Writing generic intervals (melodic)
-
-
+    # ------------------------------------------------------------------------------
+    # CHAPTER 6
+    # ------------------------------------------------------------------------------
+    # Basic Elements
+    # ------------------------------------------------------------------------------
+    # I. Writing generic intervals (melodic)
     def xtest_Ch6_basic_I_A(self, *arguments, **keywords):
         '''p55
         Write a whole note on the specified generic interval. Do not add sharps or flats.
 
-        MSC: 2013 Oct -- No longer works now that convertGenericToSemitone() [buggy] has been removed.
+        MSC: 2013 Oct -- No longer works now that convertGenericToSemitone()
+        [buggy] has been removed.
         '''
         pass
 
-
-
-
-# ------------------------------------------------------------------------------
-# II. Writing major and perfect pitch intervals
-
+    # ------------------------------------------------------------------------------
+    # II. Writing major and perfect pitch intervals
     def test_Ch6_basic_II_A(self, *arguments, **keywords):
         '''p. 55
         Write the specified melodic interval above the given note.
@@ -71,7 +62,7 @@ class Test(unittest.TestCase):
             if i == len(pitches1):
                 s.append(clef.BassClef())
 
-            p = pitch.Pitch(p) # convert string to obj
+            p = pitch.Pitch(p)  # convert string to obj
             iObj = interval.Interval(intervals[i])
             c = chord.Chord([p, p.transpose(iObj)], type='whole')
             s.append(c)
@@ -86,128 +77,14 @@ class Test(unittest.TestCase):
         self.assertEqual(match, ['C5', 'C#5', 'C5', 'C#5', 'B-4', 'E3', 'B-2', 'B-2', 'A-3', 'B-2'])
 
 
-    def test_Ch6_basic_II_B(self, *arguments, **keywords):
-        pass
-
-# ------------------------------------------------------------------------------
-# III. Writing major, minor, and perfect pitch intervals
-
-
-# ------------------------------------------------------------------------------
-# IV. Writing diminished and augmented pitch intervals
-
-# ------------------------------------------------------------------------------
-# V. Enharmonically equivalent intervals
-
-
-# ------------------------------------------------------------------------------
-# VI. Interval inversion
-
-
-# ------------------------------------------------------------------------------
-# VII. Interval class
-
-
-
-# ------------------------------------------------------------------------------
-# VII. Interval class
-
-
-
-# ------------------------------------------------------------------------------
-# Writing Exercises
-# ------------------------------------------------------------------------------
-# Writing intervals
-
-
-# ------------------------------------------------------------------------------
-# Analysis
-# ------------------------------------------------------------------------------
-# I. Harmonic and melodic intervals
-
-
-
-# ------------------------------------------------------------------------------
-# II. Melodic intervals, compound intervals, and interval class
-
-
-
-
-
-# ------------------------------------------------------------------------------
-# CHAPTER 7: Triads and Seventh Chords
-# ------------------------------------------------------------------------------
-# Basic Elements
-# ------------------------------------------------------------------------------
-# I. Building triads above a scale
-
-
-
-# ------------------------------------------------------------------------------
-# II. Spelling isolated triads
-
-
-# ------------------------------------------------------------------------------
-# III. Scale-degree triads
-
-
-# ------------------------------------------------------------------------------
-# IV. Building seventh chords above a scale
-
-
-# ------------------------------------------------------------------------------
-# V. Spelling isolated seventh chords
-
-
-
-# ------------------------------------------------------------------------------
-# VI. Scale-degree triads and seventh chords in inversion
-
-
-# ------------------------------------------------------------------------------
-# Analysis
-# ------------------------------------------------------------------------------
-# I. Brief analysis
-
-
-# ------------------------------------------------------------------------------
-# II. Examining a lead sheet
-
-
-
-
-
-
-
-# ------------------------------------------------------------------------------
-# CHAPTER 8: Intervals in Action
-# ------------------------------------------------------------------------------
-# Basic Elements
-# ------------------------------------------------------------------------------
-# I. Opening and closing patterns in note-against-note counterpoint
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     import sys
 
-    if len(sys.argv) == 1: # normal conditions
+    if len(sys.argv) == 1:  # normal conditions
         music21.mainTest(Test)
 
     elif len(sys.argv) > 1:
         t = Test()
 
-        #t.test_Ch6_basic_II_A(show=True)
-
-
-
+        # t.test_Ch6_basic_II_A(show=True)

@@ -8,8 +8,6 @@
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
 '''
-``ALPHA MODULE``: Not directly supported by cuthbertLab.
-
 Classes and Tools for converting Music21 Streams to Gregorio .gabc
 
 Requires the amazing Gregoio library: http://gregorio-project.github.io , which itself
@@ -27,23 +25,22 @@ from music21 import note
 from music21 import stream
 
 from music21 import environment
-_MOD = "chant.py"
+_MOD = 'chant.py'
 environLocal = environment.Environment(_MOD)
-
 
 def fromStream(inputStream):
     if inputStream.metadata is not None:
         incipit = inputStream.metadata.title
     else:
-        incipit = "Benedicamus Domino"
+        incipit = 'Benedicamus Domino'
     out = ''
     out += 'name: ' + incipit + ';\n'
-    out += "%%\n"
+    out += '%%\n'
     return out
 
 class GregorianStream(stream.Stream):
     r'''
-
+    >>> from music21_tools.chant.chant import GregorianStream, GregorianNote
     >>> s = GregorianStream()
     >>> s.append(clef.AltoClef())
     >>> n = GregorianNote("C4")
@@ -54,43 +51,43 @@ class GregorianStream(stream.Stream):
     >>> s.append(n)
     >>> s.toGABCText()
     '(c3) Po(ho)\n'
-
     '''
     def toGABCText(self):
         currentClef = None
-        outLine = ""
+        outLine = ''
         startedSyllable = False
         for e in self:
             if hasattr(e, 'isNote') and e.isNote is True:
-                if e.lyrics and e.lyrics[0] != "":
+                if e.lyrics and e.lyrics[0] != '':
                     if startedSyllable:
-                        outLine += ")"
+                        outLine += ')'
                         startedSyllable = False
                     if e.lyrics[0].syllabic in ['begin', 'single']:
-                        outLine += " "
+                        outLine += ' '
                     outLine += e.lyrics[0].text
-                    outLine += "("
+                    outLine += '('
                     startedSyllable = True
 
                 outLine += e.toGABC(useClef=currentClef)
             elif 'Clef' in e.classes:
                 if startedSyllable:
-                    outLine += ") "
+                    outLine += ') '
                     startedSyllable = False
                 currentClef = e
                 outLine += self.clefToGABC(e) + ' '
         if startedSyllable:
-            outLine += ")\n"
+            outLine += ')\n'
         return outLine
 
     def clefToGABC(self, clefIn):
         '''
+        >>> from music21_tools.chant.chant import GregorianStream
         >>> s = GregorianStream()
         >>> c = clef.AltoClef()
         >>> s.clefToGABC(c)
         '(c3)'
         '''
-        return "(" + clefIn.sign.lower() + str(clefIn.line) + ")"
+        return '(' + clefIn.sign.lower() + str(clefIn.line) + ')'
 
 
 class GregorianNote(note.Note):
@@ -99,13 +96,11 @@ class GregorianNote(note.Note):
     contains extra attributes which represent the interpretation or
     graphical representation of the note.
 
-
     Most of the attributes default to False.  Exceptions are noted below.
-
 
     Example: a very special note.
 
-
+    >>> from music21_tools.chant.chant import GregorianNote
     >>> n = GregorianNote("C4")
     >>> n.liquescent = True
     >>> n.quilisma = True
@@ -149,7 +144,7 @@ class GregorianNote(note.Note):
     def toGABC(self, useClef=None, nextNote=None):
         letter = self.toBasicGABC(useClef)
         if self.debilis:
-            letter = "-" + letter
+            letter = '-' + letter
         if self.inclinatum:
             letter = letter.upper()
 
@@ -165,40 +160,40 @@ class GregorianNote(note.Note):
             letter += 'w'
         elif self.stropha:
             letter += 's'
-        if self.liquescent != False:
-            #if nextNote is not None:
-            #   if nextNote.diatonicNoteNum > self.diatonicNoteNum:
-            #        letter += '<'
-            #    else:
-            #        letter += '>'
+        if self.liquescent:
+            # if nextNote is not None:
+            #    if nextNote.diatonicNoteNum > self.diatonicNoteNum:
+            #         letter += '<'
+            #     else:
+            #         letter += '>'
             if self.liquescent == 'ascending':
                 letter += '<'
             elif self.liquescent == 'descending':
                 letter += '<'
             else:
                 letter += '~'
-        if self.punctumMora != False:
+        if self.punctumMora:
             if self.punctumMora == 1:
                 letter += '.'
             elif self.punctumMora == 2:
                 letter += '..'
             else:
                 raise ChantException('unable to do punctumMora with more than two notes')
-        if self.episema != False:
+        if self.episema:
             if self.episema == 'vertical':
-                letter += '\''
+                letter += "'"
             elif self.episema == 'below':
                 letter += '_0'
             else:
                 letter += '_'
-        if self.breakNeume != False:
-            letter += "!"
+        if self.breakNeume:
+            letter += '!'
 
-        if self.choralSign != False:
-            letter += "[cs:" + self.choralSign + "]"
+        if self.choralSign:
+            letter += '[cs:' + self.choralSign + ']'
 
         if self.polyphonic:
-            letter = "{" + letter + "}"
+            letter = '{' + letter + '}'
         return letter
 
 
@@ -208,6 +203,7 @@ class GregorianNote(note.Note):
 
         see http://home.gna.org/gregorio/gabc/ for more details.  'd' = lowest line
 
+        >>> from music21_tools.chant.chant import GregorianNote
         >>> n = GregorianNote("C4")
         >>> c = clef.AltoClef()
         >>> n.toBasicGABC(c)
@@ -230,7 +226,7 @@ class GregorianNote(note.Note):
 
         if not hasattr(useClef, 'lowestLine'):
             raise ChantException(
-                "useClef has to define the diatonicNoteNum representing the lowest line")
+                'useClef has to define the diatonicNoteNum representing the lowest line')
 
         stepsAboveLowestLine = inNote.pitch.diatonicNoteNum - useClef.lowestLine
         asciiNote = stepsAboveLowestLine + asciiD
@@ -238,17 +234,17 @@ class GregorianNote(note.Note):
         if asciiNote < asciiA:
             if usedDefaultClef is True:
                 raise ChantException(
-                    "note is too low for the default clef (AltoClef), choose a lower one")
+                    'note is too low for the default clef (AltoClef), choose a lower one')
             else:
                 raise ChantException(
-                    "note is too low for the clef (%s), choose a lower one" % str(useClef))
+                    'note is too low for the clef (%s), choose a lower one' % str(useClef))
         elif asciiNote > asciiM:
             if usedDefaultClef is True:
                 raise ChantException(
-                    "note is too high for the default clef (AltoClef), choose a higher one")
+                    'note is too high for the default clef (AltoClef), choose a higher one')
             else:
                 raise ChantException(
-                    "note is too high for the clef (%s), choose a higher one" % str(useClef))
+                    'note is too high for the clef (%s), choose a higher one' % str(useClef))
         else:
             return chr(asciiNote)
 
@@ -258,7 +254,7 @@ class GregorianNote(note.Note):
 
     def _setFill(self, value):
         if value not in self.fillDic:
-            raise ChantException("Cannot set fill to value %s." % value)
+            raise ChantException('Cannot set fill to value %s.' % value)
         self._fill = value
 
     fill = property(_getFill, _setFill, doc='''Sets the
@@ -320,30 +316,31 @@ class BaseScoreConverter:
     def __init__(self):
         self.environLocal = environLocal
         self.gregorioConverter = '/usr/local/bin/gregorio'
-        self.gregorioOptions = ""
+        self.gregorioOptions = ''
         self.gregorioCommand = None
 
         self.latexConverter = '/usr/texbin/lualatex'
         self.latexOptions = '--interaction=nonstopmode'
 
-        self.score = ""
-        self.incipit = ""
-        self.mode = ""
+        self.score = ''
+        self.incipit = ''
+        self.mode = ''
         self.paperType = None
 
     def writeFile(self, text=None):
         '''
 
+        >>> from music21_tools.chant.chant import BaseScoreConverter
         >>> bsc = BaseScoreConverter()
         >>> filePath = bsc.writeFile('hello')
-        >>> assert(str(filePath).endswith('.gabc')) #_DOCS_HIDE
-        >>> filePath = '/var/folders/k9/T/music21/tmpekHFCr.gabc' #_DOCS_HIDE
+        >>> assert(str(filePath).endswith('.gabc'))  # _DOCS_HIDE
+        >>> filePath = '/var/folders/k9/T/music21/tmpekHFCr.gabc'  # _DOCS_HIDE
         >>> filePath
         '/var/folders/k9/T/music21/tmpekHFCr.gabc'
 
         '''
 
-        if text is None or text == "":
+        if text is None or text == '':
             raise ChantException('Cannot write file if there is no data')
         fp = self.environLocal.getTempFile('.gabc')
         f = open(fp, 'w')
@@ -357,11 +354,12 @@ class BaseScoreConverter:
         converts a .gabc file to LaTeX using the
         gregorio converter.  Returns the filename with .tex substituted for .gabc
 
+        >>> from music21_tools.chant.chant import BaseScoreConverter
         >>> bsc = BaseScoreConverter()
         >>> fn = '~cuthbert/Library/Gregorio/examples/Populas.gabc'
-        >>> #_DOCS_SHOW newFp = bsc.launchGregorio(fn)
-        >>> #_DOCS_SHOW bsc.gregorioCommand
-        >>> 'open -a"/usr/local/bin/gregorio" ' + fn #_DOCS_HIDE
+        >>> # _DOCS_SHOW newFp = bsc.launchGregorio(fn)
+        >>> # _DOCS_SHOW bsc.gregorioCommand
+        >>> 'open -a"/usr/local/bin/gregorio" ' + fn  # _DOCS_HIDE
         'open -a"/usr/local/bin/gregorio"  ~cuthbert/Library/Gregorio/examples/Populas.gabc'
 
 
@@ -433,7 +431,8 @@ class DefaultTeXWrapper:
 
 % If you use usual TeX fonts, here is a starting point:
 \\usepackage{times}
-% to change the font to something better, you can install the kpfonts package (if not already installed). To do so
+% to change the font to something better, you can install the kpfonts package
+    % (if not already installed). To do so
 % go open the "TeX Live Manager" in the Menu Start->All Programs->TeX Live 2010
 
 % here we begin the document
@@ -469,7 +468,7 @@ SCOREGOESHERE
         r'''
         Puts the correct information into the TeXWrapper for the document
 
-
+        >>> from music21_tools.chant.chant import DefaultTeXWrapper
         >>> wrapper = DefaultTeXWrapper()
         >>> class Converter():
         ...    score = r'\note{C}' + "\n" + r'\endgregorioscore %' + "\n" + r'\endinput %'
@@ -507,7 +506,7 @@ SCOREGOESHERE
         wrapper = re.sub(r'INCIPITGOESHERE', incipit, wrapper)
         wrapper = re.sub(r'MODEGOESHERE', mode, wrapper)
         wrapper = re.sub(r'PAPERTYPEGOESHERE', paperType, wrapper)
-        wrapper = re.sub(r'\\endinput %', r'\\end{document}' + "\n" + r'\\endinput %', wrapper)
+        wrapper = re.sub(r'\\endinput %', r'\\end{document}' + '\n' + r'\\endinput %', wrapper)
         return wrapper
 
 
@@ -515,45 +514,32 @@ SCOREGOESHERE
 class ChantException(exceptions21.Music21Exception):
     pass
 
-
-
-class Test(unittest.TestCase):
-    pass
-
-    def runTest(self):
-        pass
-
-class TestExternal(unittest.TestCase): # pragma: no cover
-    pass
-
-    def runTest(self):
-        pass
-
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def testSimpleFile(self):
         s = GregorianStream()
         s.append(clef.AltoClef())
 
-        n = GregorianNote("C4")
-        l = note.Lyric("Po")
-        l.syllabic = "begin"
-        n.lyrics.append(l)
+        n = GregorianNote('C4')
+        lyric = note.Lyric('Po')
+        lyric.syllabic = 'begin'
+        n.lyrics.append(lyric)
         n.oriscus = True
         s.append(n)
-        n2 = GregorianNote("D4")
+        n2 = GregorianNote('D4')
         s.append(n2)
-        n3 = GregorianNote("C4")
+        n3 = GregorianNote('C4')
         n3.stropha = True
         s.append(n3)
-        n4 = GregorianNote("B3")
+        n4 = GregorianNote('B3')
         n4.stropha = True
         s.append(n4)
 
         gabcText = s.toGABCText()
         bsc = BaseScoreConverter()
         bsc.score = gabcText
-        bsc.incipit = "Populus"
+        bsc.incipit = 'Populus'
         bsc.mode = 'VII'
-        fn = bsc.writeFile("style: modern;\n\n%%\n" + gabcText)
+        fn = bsc.writeFile('style: modern;\n\n%%\n' + gabcText)
         texfn = bsc.launchGregorio(fn)
         texfh = open(texfn)
         texcontents = texfh.read()
@@ -568,15 +554,6 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         os.system('open %s' % pdffn)
 
 
-
 # ------------------------------------------------------------------------------
 # define presented order in documentation
 _DOC_ORDER = []
-
-
-if __name__ == "__main__":
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-
-# -----------------------------------------------------------------------------
-# eof

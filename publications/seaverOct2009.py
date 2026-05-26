@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from music21 import stream
 from music21 import clef
 from music21 import converter, corpus, instrument, graph, note, meter, humdrum
@@ -44,7 +43,7 @@ def simple3():
 
     defaultPitch = music21.pitch.Pitch("C3")
 
-    #  semiFlat lets me get all Measures no matter where they reside in the tree structure
+    # semiFlat lets me get all Measures no matter where they reside in the tree structure
     measureStream = converter.parse(humdrum.testFiles.mazurka6
                                     ).flatten(retainContainers=True).getElementsByClass('Measure')
     rhythmicHash = defaultdict(list)
@@ -93,7 +92,7 @@ def simple3():
 def displayChopinRhythms():
     defaultPitch = music21.pitch.Pitch("C3")
 
-    #  semiFlat lets me get all Measures no matter where they reside in the tree structure
+    # semiFlat lets me get all Measures no matter where they reside in the tree structure
     measureStream = converter.parse(humdrum.testFiles.mazurka6
                                     ).flatten(retainContainers=True).getElementsByClass('Measure')
     rhythmicHash = {}
@@ -394,7 +393,7 @@ def januaryThankYou():
 # single labeled chord can be difficult.  The first and second should be
 # extremely easy.  The third and fifth should be easy to construct in
 # such a way that it doesn't miss anything but it might give some
-# results that are "false positives".  #4 will be the hardest to
+# results that are "false positives".  No. 4 will be the hardest to
 # construct, since a half cadence is something that's not determined so
 # much by the cadence chord and the chords directly preceding but more
 # from a larger sense of tonal listening which is of course harder to
@@ -493,10 +492,6 @@ def js_q5():
 tests = [simple4a, simple4b, simple4c, simple4e, simple4f]
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''Test showing functions
         '''
@@ -510,26 +505,13 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def xtestBasic(self):
         '''seaverOct2009: Test non-showing functions
         '''
         for func in tests:
             func(show=False)
 
-
 if __name__ == "__main__":
     # js_q1()
     music21.mainTest(Test)
     # music21.mainTest(TestExternal)
-
-
-
-
-# -----------------------------------------------------------------------------
-# eof
-

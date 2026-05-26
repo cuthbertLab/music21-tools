@@ -40,7 +40,7 @@ def lowerLines():
                 appendNote = copy.deepcopy(rowNotes[currentNote % 10])
             else:  # second set of rotations is up a step:
                 appendNote = rowNotes[currentNote % 10].transpose(2)
-                # if phraseNumber == 8 and addNote == 9: # mistaken transpositions by RCS
+                # if phraseNumber == 8 and addNote == 9:  # mistaken transpositions by RCS
                 #     appendNote = appendNote.transpose(-1)
                 #     appendNote.lyrics.append(note.Lyric(text="*", number=3))
                 #
@@ -50,20 +50,20 @@ def lowerLines():
 
             if addNote == 0:
                 if phraseNumber != 8:
-                    appendNote.lyrics.append(note.Lyric(text="p" + str(phraseNumber), number=1))
+                    appendNote.lyrics.append(note.Lyric(text='p' + str(phraseNumber), number=1))
                 else:
-                    appendNote.lyrics.append(note.Lyric(text="p8*", number=1))
+                    appendNote.lyrics.append(note.Lyric(text='p8*', number=1))
             if (currentNote % 10 == (rotationNumber + 8) % 10) and (currentNote != 0):
                 currentNote += 2
                 rotationNumber += 1
             else:
                 if currentNote % 10 == (rotationNumber + 9) % 10:
-                    appendNote.lyrics.append(note.Lyric(text="r" + str(rotationNumber), number=2))
+                    appendNote.lyrics.append(note.Lyric(text='r' + str(rotationNumber), number=2))
                     if rotationNumber in range(13, 22):
                         appendNote.transpose(correctTranspositions[rotationNumber - 13],
                                              inPlace=True)
                         appendNote.pitch.simplifyEnharmonic(inPlace=True)
-                        appendNote.lyrics.append(note.Lyric(text="*", number=3))
+                        appendNote.lyrics.append(note.Lyric(text='*', number=3))
 
                 currentNote += 1
             if addNote == 20 - phraseNumber:  # correct Last Notes
@@ -76,7 +76,7 @@ def lowerLines():
     # retrograde
     totalNotes = len(myRow)
     for i in range(2, totalNotes + 1):  # skip last note
-        el = myRow[totalNotes-i]
+        el = myRow[totalNotes - i]
         if 'Note' in el.classes:
             elNote = el.transpose('A1')
             elNote.pitch.simplifyEnharmonic(inPlace=True)

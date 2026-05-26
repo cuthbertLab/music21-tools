@@ -39,13 +39,9 @@ try out different solutions, moving notes over a measure or two, etc.
 without any problems.  Working on this problem also gave a great test
 of music21's ability to manipulate diatonic Streams.
 '''
-
 import copy
-import unittest
-
 
 from music21 import clef
-#from music21 import common
 from music21 import corpus
 from music21 import exceptions21
 from music21 import instrument
@@ -193,9 +189,9 @@ def getQJ():
     <music21.note.Note C>
     '''
 
-    qj = corpus.parse("ciconia/quod_jactatur")
+    qj = corpus.parse('ciconia/quod_jactatur')
     qjPart = qj.getElementsByClass(stream.Part)[0]
-    qjPart.transpose("P-8", inPlace=True)
+    qjPart.transpose('P-8', inPlace=True)
     qjPart.replace(qjPart.flatten().getElementsByClass(clef.Clef)[0], clef.BassClef())
     cachedParts['1-0-False-False'] = copy.deepcopy(qjPart)
     return qjPart
@@ -231,10 +227,10 @@ def findRetrogradeVoices(show=True):
                     thisScore = strength
                 else:
                     int1 = interval.Interval(n.pitches[0], n.pitches[1])
-                    #print int1.generic.simpleUndirected
+                    # print(int1.generic.simpleUndirected)
                     if int1.generic.simpleUndirected in [1, 3, 4, 5]:
                         thisScore = strength
-                    elif int1.generic.simpleUndirected == 6: # less good
+                    elif int1.generic.simpleUndirected == 6:  # less good
                         thisScore = strength / 2.0
                     else:
                         thisScore = -2 * strength
@@ -246,7 +242,7 @@ def findRetrogradeVoices(show=True):
                 totIntervals += 1
                 n.lyric = str(thisScore)
 
-            finalScore = int(100*(consScore + 0.0)/totIntervals)
+            finalScore = int(100 * (consScore + 0.0) / totIntervals)
             qj.insert(0, qjChords.flatten())
             qj2.flatten().notesAndRests[0].addLyric('Trans: ' + str(transpose))
             qj2.flatten().notesAndRests[0].addLyric('Invert: ' + str(invert))
@@ -256,20 +252,20 @@ def findRetrogradeVoices(show=True):
                 qj.show()
             else:
                 if invert:
-                    invStr = "Invert"
+                    invStr = 'Invert'
                 else:
-                    invStr = "      "
-                print(str(transpose) + " " + invStr + " " + str(finalScore))
+                    invStr = '      '
+                print(str(transpose) + ' ' + invStr + ' ' + str(finalScore))
 
 def prepareSolution(triplumTup, ctTup, tenorTup):
     qjSolved = stream.Score()
 
     for transpose, delay, invert, retro in [triplumTup, ctTup, tenorTup]:
-        idString = "%d-%d-%s-%s" % (transpose, delay, invert, retro)
+        idString = '%d-%d-%s-%s' % (transpose, delay, invert, retro)
         if idString in cachedParts:
             qjPart = copy.deepcopy(cachedParts[idString])
         else:
-            qjPart = copy.deepcopy(cachedParts["1-0-False-False"])
+            qjPart = copy.deepcopy(cachedParts['1-0-False-False'])
             if retro is True:
                 qjPart = reverse(qjPart, makeNotation = False)
             if invert is True:
@@ -281,8 +277,8 @@ def prepareSolution(triplumTup, ctTup, tenorTup):
             cachedParts[idString] = copy.deepcopy(qjPart)
         qjSolved.insert(0, qjPart.flatten())
 
-    #DOESN'T WORK -- am I doing something wrong?
-    #for tp in qjSolved.parts:
+    # DOESN'T WORK -- am I doing something wrong?
+    # for tp in qjSolved.parts:
     #    tp.makeMeasures(inPlace=True)
     qjChords = qjSolved.chordify()
 
@@ -292,7 +288,7 @@ def prepareSolution(triplumTup, ctTup, tenorTup):
     startCounting = False
 
     for n in qjChords.flatten().notes:
-        if not 'Chord' in n.classes:
+        if 'Chord' not in n.classes:
             continue
         if (startCounting is False or n.offset >= 70) and len(n.pitches) < 2:
             continue
@@ -309,7 +305,7 @@ def prepareSolution(triplumTup, ctTup, tenorTup):
         totIntervals += 1
         n.lyric = str(thisScore)
 
-    return (qjChords, (consScore/(totIntervals + 0.0)), qjSolved)
+    return (qjChords, (consScore / (totIntervals + 0.0)), qjSolved)
 
 def getStrengthForNote(n):
     '''
@@ -322,9 +318,9 @@ def getStrengthForNote(n):
     solutions should use n.beat
     '''
 
-    if (n.offset / 2.0) == int(n.offset / 2.0): # downbeat
+    if (n.offset / 2.0) == int(n.offset / 2.0):  # downbeat
         strength = 4
-    elif (n.offset) == int(n.offset): # strong beat
+    elif (n.offset) == int(n.offset):  # strong beat
         strength = 2
     else:
         strength = 0.5
@@ -362,7 +358,7 @@ def possibleSolution():
 #    qjSolved.insert(0, stream.Part())
 #    qjSolved.insert(0, qjChords)
     qjSolved.show('musicxml')
-    #qjChords.show('musicxml')
+    # qjChords.show('musicxml')
 
 def multipleSolve():
     # this is ridiculous...
@@ -429,7 +425,7 @@ def multipleSolve():
                                                         continue
                                                         # same as lowestInvert == True and
                                                         #    middleInvert == False
-                                                    if (transLowest == 1 and transMiddle == 1):
+                                                    if transLowest == 1 and transMiddle == 1:
                                                         continue
                                                         # if transHighest == 4 then it's the same
                                                         # as (-4, -4, 1) except for a few tritones
@@ -448,7 +444,7 @@ def multipleSolve():
                                                      unused_fullScore) = prepareSolution(triplum,
                                                                                          ct,
                                                                                          tenor)
-                                                    #writeLine = (tripT, ctT, tenT, tripDelay,
+                                                    # writeLine = (tripT, ctT, tenT, tripDelay,
                                                     #   ctDelay, tenDelay, tripInvert, ctInvert,
                                                     #   tenInvert, tripRetro, ctRetro, tenRetro,
                                                     #    avgScore)
@@ -466,32 +462,14 @@ def multipleSolve():
                                                                  lowestRetro,
                                                                  avgScore)
                                                     if avgScore > 0:
-                                                        print("")
+                                                        print('')
                                                         if avgScore > maxScore:
                                                             maxScore = avgScore
-                                                            print("***** ", end="")
+                                                            print('***** ', end='')
                                                         print(writeLine)
                                                     else:
-                                                        print(str(i) + " ", end="")
+                                                        print(str(i) + ' ', end='')
                                                     csvFile.writerow(writeLine)
 
 class QuodJactaturException(exceptions21.Music21Exception):
     pass
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
-
-if __name__ == "__main__":
-    import music21
-    music21.mainTest('importPlusRelative')
-#    bentWolfSolution()
-#    possibleSolution()
-#    findRetrogradeVoices()
-    pass
-# -----------------------------------------------------------------------------
-# eof
-

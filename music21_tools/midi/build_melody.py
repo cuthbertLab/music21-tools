@@ -28,7 +28,7 @@ def populate_midi_track_from_data(mt, data):
         mt.events.append(dt)
 
         me = midi.MidiEvent(mt)
-        me.type = "NOTE_ON"
+        me.type = 'NOTE_ON'
         me.channel = 1
         me.time = None  # d
         me.pitch = p
@@ -42,7 +42,7 @@ def populate_midi_track_from_data(mt, data):
         mt.events.append(dt)
 
         me = midi.MidiEvent(mt)
-        me.type = "NOTE_OFF"
+        me.type = 'NOTE_OFF'
         me.channel = 1
         me.time = None  # d
         me.pitch = p
@@ -58,7 +58,7 @@ def populate_midi_track_from_data(mt, data):
     mt.events.append(dt)
 
     me = midi.MidiEvent(mt)
-    me.type = "END_OF_TRACK"
+    me.type = 'END_OF_TRACK'
     me.channel = 1
     me.data = ''  # must set data to empty string
     mt.events.append(me)
@@ -69,7 +69,7 @@ def main():
     mt = midi.MidiTrack(1)
 
     # duration, pitch, velocity
-    data = [] # one start note
+    data = []  # one start note
 
     beats_per_measure = 4
     measures = 16
@@ -91,7 +91,7 @@ def main():
 
     env = environment.Environment()
     temp_filename = env.getTempFile('.mid')
-    print("Saving file to: %s" % temp_filename)
+    print('Saving file to: %s' % temp_filename)
     mf.open(temp_filename, 'wb')
     mf.write()
     mf.close()

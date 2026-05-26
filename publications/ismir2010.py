@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         ismir2010.py
 # Purpose:      Examples for ISMIR 2010 paper
@@ -91,8 +90,8 @@ def newDomSev(show=True):
                 firstNote = thisMeasure.notesAndRests[0]
                 firstNote.lyric = primeForm
 
-                # Thus we append the chord in closed position and  then
-                #  the measure containing the chord.
+                # Thus we append the chord in closed position and then
+                # the measure containing the chord.
 
                 chordMeasure = stream.Measure()
                 chordMeasure.append(
@@ -326,7 +325,7 @@ def demoBasic():
     len(soprano.getElementsByClass('Measure'))
     _mRange = soprano.measures(14, 16)
     # mRange.show()
-    # mRange.sorted.show('text') # here we can see this
+    # mRange.sorted.show('text')  # here we can see this
 
 
 
@@ -513,7 +512,7 @@ def demoBachSearch():
 
     import random
     fpList = list(corpus.search('bach').search('.xml'))
-    
+
     random.shuffle(fpList)
     results = stream.Stream()
 
@@ -607,10 +606,6 @@ dependent = [messiaen]
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''ismir2010: Test non-showing functions
 
@@ -620,10 +615,6 @@ class Test(unittest.TestCase):
             func(show=False)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         for func in funcList:
             func(show=True)
@@ -655,7 +646,4 @@ if __name__ == "__main__":
     demoBachSearch()
     # demoGraphMessiaenBrief()
     # demoGraphMessiaen()
-
-# -----------------------------------------------------------------------------
-# eof
 

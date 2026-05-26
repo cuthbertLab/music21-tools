@@ -15,15 +15,15 @@ from typing import cast
 
 import math
 
-from music21 import *
+from music21 import converter, note, stream
 
 
 def smooth01(steps):
     # f(x) = arcsin(2x-1)/pi+1/2
     out = []
-    for i in range(1, steps+1):
-        frac = i/steps
-        out.append(math.asin(2*frac-1)/math.pi + 1/2)
+    for i in range(1, steps + 1):
+        frac = i / steps
+        out.append(math.asin(2 * frac - 1) / math.pi + 1 / 2)
     return out
 
     # return [0] + [math.asin(2*(i/steps)+1)/math.pi + 1/2 for i in range(1, steps-1)] + [1]
@@ -36,7 +36,6 @@ def main():
     basis = cast(stream.Measure, converter.parse("tinynotation: 2/4 c16 d e f g a c' b")
                  .getElementsByClass('Measure').first())
     vols = [[1, 0, 1, 0, 1, 0, 1, 0] * reps]
-    smooths = smooth01(reps)
     for i, n in enumerate(basis.notes):
         n.volume.velocityScalar = vols[0][i]
     notes = basis[note.Note]
@@ -51,7 +50,7 @@ def main():
     notes[7].groups.append('B')
 
     part = stream.Part()
-    for rep_n in range(reps):
+    for _ in range(reps):
         new_measure = deepcopy(basis)
         part.append(new_measure)
 
@@ -78,16 +77,16 @@ def fade_note(
 ):
     reps = end_rep - start_rep
     smooths = smooth01(reps)
-    positions = [(1-s) * pos_offset_at_zero for s in smooths]
+    positions = [(1 - s) * pos_offset_at_zero for s in smooths]
     if fade_out:
-        smooths = [1-s for s in smooths]
+        smooths = [1 - s for s in smooths]
 
     m: stream.Measure
     for i, m in enumerate(part.getElementsByClass('Measure')):
         if i < start_rep:
             continue
         found = m.getElementsByClass(note.Note).getElementsByGroup(group_name)
-        index_in_smooths = i-start_rep if i < end_rep else end_rep-1-start_rep
+        index_in_smooths = i - start_rep if i < end_rep else end_rep - 1 - start_rep
         # print(index_in_smooths, smooths)
         for n in found:
             n.volume.velocityScalar = smooths[index_in_smooths]

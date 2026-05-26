@@ -9,8 +9,6 @@
 # Copyright:    Copyright © 2009-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-import unittest
-
 class TheoryResult:
     '''
     A TheoryResult object is used to store information about the results
@@ -26,11 +24,11 @@ class TheoryResult:
     'currentColor': 'The color of the entire theory result object',
     }
     def __init__(self):
-        self.text = ""
-        self.value = ""
-        self.currentColor = ""
+        self.text = ''
+        self.value = ''
+        self.currentColor = ''
 
-    def color(self,color):
+    def color(self, color):
         '''
         Bass-class method to color the individual elements in the theory result object.
         Polymorphically colors the theory result objects based on the type of object.
@@ -246,7 +244,7 @@ class VerticalityNTupletTheoryResult(TheoryResult):
 
     def __init__(self, vsnt, partNumIdentified=None):
         super().__init__()
-        self.vsnt = vsnt #vertical slice ntuplet
+        self.vsnt = vsnt  # vertical slice ntuplet
         self.partNumIdentified = partNumIdentified
 
     def color(self,  color ='red', partNum=None, noteList=None):
@@ -255,12 +253,12 @@ class VerticalityNTupletTheoryResult(TheoryResult):
         '''
         if noteList is None:
             noteList = []
-        if partNum != None:
+        if partNum is not None:
             print('color...', partNum, self.partNumIdentified, self.vsnt.nTupletNum,
                   self.vsnt.tnlsDict.keys())
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[partNum].color(color)
-        elif self.partNumIdentified !=None:
+        elif self.partNumIdentified is not None:
             if self.vsnt.nTupletNum == 3:
                 self.vsnt.tnlsDict[self.partNumIdentified].color(color, [2] )
 
@@ -273,30 +271,8 @@ class VerticalityNTupletTheoryResult(TheoryResult):
         Default editorialMarkDict = {2:[1]}
         '''
         if editorialMarkDict is None:
-            editorialMarkDict = {2:[1]}
+            editorialMarkDict = {2: [1]}
         for vsNum, partNumList in editorialMarkDict.items():
             for unused_counter_partNum in partNumList:
                 self.vsnt.verticalities[vsNum].getObjectsByPart(0,
                     classFilterList=['Note']).editorial[editorialDictKey] = editorialValue
-
-
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-class TestExternal(unittest.TestCase): # pragma: no cover
-
-    def runTest(self):
-        pass
-
-    def demo(self):
-        pass
-
-
-if __name__ == "__main__":
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-
-    #te = TestExternal()
-    #te.demo()

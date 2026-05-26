@@ -59,9 +59,11 @@ def applyCapuaToCadencebookWork(thisWork):
     :class:`~music21.alpha.trecento.polyphonicSnippet.PolyphonicSnippet` objects
     (a Score subclass)
 
+    >>> from music21_tools.trecento.capua import applyCapuaToCadencebookWork, capuaFictaToAccidental
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
     >>> import copy
 
-    >>> b = cadencebook.BallataSheet().makeWork(331) # Francesco, Non Creder Donna
+    >>> b = BallataSheet().makeWork(331)  # Francesco, Non Creder Donna
     >>> bOrig = copy.deepcopy(b)
     >>> applyCapuaToCadencebookWork(b)
     >>> bFN = b.asScore().flatten().notes
@@ -573,8 +575,10 @@ def compareThreeFictas(srcStream1, srcStream2):
 
     srcStream1 and srcStream2 should be .flatten().notesAndRests
 
-    >>> b = cadencebook.BallataSheet().makeWork(331).asScore()
-    >>> #_DOCS_SHOW b.show()
+    >>> from music21_tools.trecento.capua import applyCapuaToStream, compareThreeFictas
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
+    >>> b = BallataSheet().makeWork(331).asScore()
+    >>> # _DOCS_SHOW b.show()
     >>> b0n = b.parts[0].flatten().notesAndRests.stream()
     >>> b1n = b.parts[1].flatten().notesAndRests.stream()
     >>> applyCapuaToStream(b0n)
@@ -821,9 +825,9 @@ def findCorrections(correctionType='Maj3', startPiece=2, endPiece=459):
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
 #    >>> foundPieceOpus.show('lily.pdf')
 
-#    >>> #_DOCS_SHOW (totalDict, foundPieceOpus) = correctedMin6()
-#    >>> totalDict = {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, #_DOCS_HIDE
-#    ...    'capuaNotPmfc': 27, 'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82} #_DOCS_HIDE
+#    >>> # _DOCS_SHOW (totalDict, foundPieceOpus) = correctedMin6()
+#    >>> totalDict = {'potentialChange': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3,  # _DOCS_HIDE
+#    ...    'capuaNotPmfc': 27, 'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}  # _DOCS_HIDE
 #    >>> pp(totalDict)
 #    {'alterAll': 82, 'capuaAlt': 30, 'pmfcAndCapua': 3, 'capuaNotPmfc': 27,
 #        'pmfcAlt': 4, 'pmfcNotCapua': 1, 'totalNotes': 82}
@@ -933,9 +937,9 @@ def improvedHarmony(startPiece=2, endPiece=459):
     Returns a dict showing the results
 
 
-    >>> #_DOCS_SHOW improvedHarmony()
-    >>> print("{'imperfCapua': 22, 'imperfIgnored': 155, " + #_DOCS_HIDE
-    ...    "'perfCapua': 194, 'perfIgnored': 4057}") #_DOCS_HIDE
+    >>> # _DOCS_SHOW improvedHarmony()
+    >>> print("{'imperfCapua': 22, 'imperfIgnored': 155, " +  # _DOCS_HIDE
+    ...    "'perfCapua': 194, 'perfIgnored': 4057}")  # _DOCS_HIDE
     {'imperfCapua': 22, 'imperfIgnored': 155, 'perfCapua': 194, 'perfIgnored': 4057}
     '''
 
@@ -963,7 +967,8 @@ def improvedHarmony(startPiece=2, endPiece=459):
             if len(thisSnippetParts) < 2:
                 continue
             srcStream1 = thisSnippetParts['C'].flatten().notesAndRests
-            srcStream2 = thisSnippetParts['T'].flatten().notesAndRests  # ignore 3rd voice for now...
+            # ignore 3rd voice for now...
+            srcStream2 = thisSnippetParts['T'].flatten().notesAndRests
             srcStream1.attachIntervalsBetweenStreams(srcStream2)
             # srcStream2.attachIntervalsBetweenStreams(srcStream1)
             applyCapuaToStream(srcStream1)
@@ -1038,48 +1043,19 @@ def ruleFrequency(startNumber=2, endNumber=459):
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testRunNonCrederDonna(self):
-        pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
-        ballataObj = cadencebook.BallataSheet()
-        pieceObj = ballataObj.makeWork(pieceNum)
-
-        applyCapuaToCadencebookWork(pieceObj)
-        srcStream = pieceObj.snippets[0].parts[0].flatten().notesAndRests.stream()
-        cmpStream = pieceObj.snippets[0].parts[1].flatten().notesAndRests.stream()
-        # ignore 3rd voice for now...
-        srcStream.attachIntervalsBetweenStreams(cmpStream)
-        cmpStream.attachIntervalsBetweenStreams(srcStream)
-
-        # colorCapuaFicta(srcStream, cmpStream, 'both')
-
-        outList = []
-        for n in srcStream:
-            if n.editorial.harmonicInterval is not None:
-                outSublist = [n.name, n.editorial.harmonicInterval.simpleName]
-                if 'capuaFicta' in n.editorial:
-                    outSublist.append(repr(n.editorial.capuaFicta))
-                else:
-                    outSublist.append(None)
-                outList.append(outSublist)
-
+        _pieceObj, outList = _analyzeNonCrederDonna()
         self.assertEqual(outList,
                          [
                              ['A', 'P5', None], ['A', 'M6', None],
                              ['G', 'P5', None], ['G', 'm6', None],
-                             ['A', 'm7', None], ['F', 'd5', '<accidental sharp>'],
+                             ['A', 'm7', None], ['F', 'd5', '<music21.pitch.Accidental sharp>'],
                              ['G', 'm6', None], ['A', 'P1', None],
                              ['B', 'M6', None], ['A', 'P5', None],
                              ['G', 'm7', None], ['G', 'm6', None],
                              ['F', 'd5', None], ['E', 'M3', None],
                              ['D', 'P1', None]
                           ])
-        # pieceObj.asOpus().show('lily.pdf')
-
-        return pieceObj
 
     def testRun1(self):
         ballataSht = cadencebook.BallataSheet()
@@ -1132,19 +1108,47 @@ class Test(unittest.TestCase):
 #        assert n13.style.color == 'green'
 
 
-class TestExternal(unittest.TestCase):  # pragma: no cover
-    def runTest(self):
-        pass
+def _analyzeNonCrederDonna():
+    '''
+    Run Capua on Francesco, "Non creder, donna" (PMFC 4 6-7, BallataSheet
+    row 331). Returns ``(pieceObj, outList)`` so both ``Test`` (which only
+    asserts on ``outList``) and ``TestExternal`` (which renders ``pieceObj``
+    with LilyPond) can share the analysis without a test method returning a
+    value (deprecated in unittest).
+    '''
+    pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
+    ballataObj = cadencebook.BallataSheet()
+    pieceObj = ballataObj.makeWork(pieceNum)
 
+    applyCapuaToCadencebookWork(pieceObj)
+    srcStream = pieceObj.snippets[0].parts[0].flatten().notesAndRests.stream()
+    cmpStream = pieceObj.snippets[0].parts[1].flatten().notesAndRests.stream()
+    # ignore 3rd voice for now...
+    srcStream.attachIntervalsBetweenStreams(cmpStream)
+    cmpStream.attachIntervalsBetweenStreams(srcStream)
+
+    outList = []
+    for n in srcStream:
+        if n.editorial.harmonicInterval is not None:
+            outSublist = [n.name, n.editorial.harmonicInterval.simpleName]
+            if 'capuaFicta' in n.editorial:
+                outSublist.append(repr(n.editorial.capuaFicta))
+            else:
+                outSublist.append(None)
+            outList.append(outSublist)
+
+    return pieceObj, outList
+
+
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def testRunNonCrederDonna(self):
-        t = Test()
-        pObj = t.testRunNonCrederDonna()
+        pObj, _outList = _analyzeNonCrederDonna()
         pObj.asOpus().show('lily.png')
 
     def testShowFourA(self):
         ballataObj = cadencebook.BallataSheet()
         showStream = stream.Opus()
-        for i in range(2, 45):  # 459): # all ballate
+        for i in range(2, 45):  # 459):  # all ballate
             pieceObj = ballataObj.makeWork(i)  # N.B. -- we now use Excel column numbers
             theseSnippets = pieceObj.snippets
             for thisSnippet in theseSnippets:
@@ -1162,10 +1166,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 class TestSlow(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testCompare1(self):
         ballataObj = cadencebook.BallataSheet()
         totalDict = {
@@ -1219,7 +1219,7 @@ if __name__ == '__main__':
     # runPiece(267)
     # (totalDict, foundPieceOpus) = findCorrections(correctionType='min6',
     #             startPiece=21, endPiece=22)
-    # print totalDict
+    # print(totalDict)
     # if len(foundPieceOpus) > 0:
     #     foundPieceOpus.show('lily.png')
     import music21

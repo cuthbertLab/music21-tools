@@ -13,14 +13,16 @@ aug30.py -- Short algorithmic composition demo in music21
 written on August 30, 2008
 converted to new system on Dec. 26, 2010
 '''
+import copy
+import random
+import unittest
+
 from music21 import articulations
 from music21 import duration
 from music21 import meter
 from music21 import note
 from music21 import tempo
 from music21 import stream
-import copy
-import random
 
 def rhythmLine(baseNote=None, minLength=8.0, maxProbability=0.5):
     if baseNote is None:
@@ -93,9 +95,9 @@ def nextOrPreviousType(baseDuration):
 
 def addPart(minLength=80, maxProbability=0.7, instrument=None):
     s1 = rhythmLine(minLength=minLength, maxProbability=maxProbability)
-    ts1 = meter.TimeSignature("4/4")
+    ts1 = meter.TimeSignature('4/4')
     s1.insert(0, ts1)
-    s1.insert(0, tempo.MetronomeMark(number=180, text="very fast"))
+    s1.insert(0, tempo.MetronomeMark(number=180, text='very fast'))
     if instrument is not None:
         s1.insert(0, instrument)
     s1.makeAccidentals()
@@ -110,7 +112,7 @@ def addPart(minLength=80, maxProbability=0.7, instrument=None):
     return s1
 
 
-def test():
+def demo():
     from music21 import instrument as j
     sc1 = stream.Score()
     # instruments = [Piccolo(), Glockenspiel(), 72, 69, 41, 27, 47, 1, 1, 1, 1, 34]
@@ -131,9 +133,11 @@ def test():
         sc1.insert(0, part)
     sc1.show()
 
-if __name__ == "__main__":
-    test()
 
-# -----------------------------------------------------------------------------
-# eof
+class TestExternal(unittest.TestCase):  # pragma: no cover
+    def testDemo(self):
+        demo()
 
+
+if __name__ == '__main__':
+    demo()

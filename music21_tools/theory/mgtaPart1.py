@@ -46,7 +46,7 @@ def ch1_basic_I_A(show=True, *arguments, **keywords):
 
         # get direction of enharmonic move?
         # a move upward goes from f to g-, then a---
-        #n.pitch.getEnharmonic(1)
+        # n.pitch.getEnharmonic(1)
         found.append(None)
     if show:
         for i in range(len(pitches)):
@@ -62,16 +62,16 @@ def ch1_basic_I_B(show=True, *arguments, **keywords):
     '''
     pitches = [('a#', 'b'), ('b-', 'c#'), ('g-', 'a'), ('d-', 'c##'),
                ('f', 'e'), ('f#', 'e')]
-    for i,j in pitches:
+    for i, j in pitches:
         n1 = note.Note(i)
         n2 = note.Note(j)
         i1 = interval.notesToInterval(n1, n2)
-        if i1.intervalClass == 1: # by interval class
-            unused_mark = "H"
+        if i1.intervalClass == 1:  # by interval class
+            unused_mark = 'H'
         elif i1.intervalClass == 2:
-            unused_mark = "W"
+            unused_mark = 'W'
         else:
-            unused_mark = "N"
+            unused_mark = 'N'
 
 # no keyboard diagram yet!
 #         k1 = keyboard.Diagram()
@@ -158,8 +158,8 @@ def ch1_basic_II_A_1(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    #exercise = music21.parseData("ch1_basic_II_A_1.xml")
-    for n in exercise.flatten().notes: # have to use flat here
+    # exercise = music21.parseData("ch1_basic_II_A_1.xml")
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     if show:
         exercise.show()
@@ -188,10 +188,10 @@ def ch1_basic_II_A_2(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.BassClef())
-    exercise = exercise.sorted # need sorted to get clef
+    exercise = exercise.sorted  # need sorted to get clef
     if show:
         exercise.show()
 
@@ -200,7 +200,9 @@ def ch1_basic_II_A_2(show=True, *arguments, **keywords):
 def ch1_basic_II_B_1(show=True, *arguments, **keywords):
     '''
     p4.
-    For each of the five trebleclef pitches on the left, write the alto-clef equivalent on the right. Then label each pitch with the correct name and octave designation.
+    For each of the five trebleclef pitches on the left, write the alto-clef
+    equivalent on the right. Then label each pitch with the correct name and
+    octave designation.
     '''
     humdata = '''
 **kern
@@ -212,7 +214,7 @@ def ch1_basic_II_B_1(show=True, *arguments, **keywords):
 *-
 '''
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.AltoClef())
     if show:
@@ -222,11 +224,13 @@ def ch1_basic_II_B_1(show=True, *arguments, **keywords):
 def ch1_basic_II_B_2(show=True, *arguments, **keywords):
     '''
     p4.
-    For each of the five bass clef pitches on the left, write the tenor-clef equivalent on the right. Then label each pitch with the correct name and octave designation.
+    For each of the five bass clef pitches on the left, write the tenor-clef
+    equivalent on the right. Then label each pitch with the correct name and
+    octave designation.
     '''
     humdata = '**kern\n1F#1e-\n1B\n1D-\n1c\n*-'
     exercise = converter.parseData(humdata)
-    for n in exercise.flatten().notes: # have to use flat here
+    for n in exercise.flatten().notes:  # have to use flat here
         n.lyric = n.nameWithOctave
     exercise.insert(0, clef.TenorClef())
     if show:
@@ -245,7 +249,7 @@ def ch1_basic_II_C(data, intervalShift):
                 n1 = note.Note(e)
                 n1.quarterLength = 4
                 n2 = n1.transpose(intervalShift)
-                m.append(chord.Chord([n1, n2])) # chord to show both
+                m.append(chord.Chord([n1, n2]))  # chord to show both
             else:
                 m.append(e)
         m.timeSignature = m.bestTimeSignature()
@@ -331,7 +335,7 @@ def ch1_writing_I_A_1(show=True, *arguments, **keywords):
 '''
     ex = converter.parseData(humdata)
     ex = ex.transpose('p8')
-    ex.insert(0, clef.BassClef()) # maintain clef
+    ex.insert(0, clef.BassClef())  # maintain clef
     if show:
         ex.show()
 
@@ -354,7 +358,7 @@ def ch1_writing_I_A_2(show=True, *arguments, **keywords):
     # this notation excerpt is incomplete
     ex = converter.parseData(humdata)
     ex = ex.transpose('p8')
-    ex.insert(0, clef.TrebleClef()) # maintain clef
+    ex.insert(0, clef.TrebleClef())  # maintain clef
     if show:
         ex.show()
 
@@ -365,8 +369,8 @@ def ch1_writing_I_B_1(show=True, *arguments, **keywords):
     Transcribe these melodies into the clef specified without changing octaves.
     '''
     # camptown races
-    ex = converter.parse("tinynotation: 2/4 g8 g e g", makeNotation=False)
-    ex.insert(0, clef.AltoClef()) # maintain clef
+    ex = converter.parse('tinynotation: 2/4 g8 g e g', makeNotation=False)
+    ex.insert(0, clef.AltoClef())  # maintain clef
     if show:
         ex.show()
 
@@ -456,7 +460,7 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
     import random
     from music21 import stream, expressions, pitch
 
-    dirWeight = [-1, 1] # start with an even distribution
+    dirWeight = [-1, 1]  # start with an even distribution
     s = stream.Stream()
 
     nStart = note.Note('g4')
@@ -471,7 +475,7 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
         if len(s) > 4 and n.pitch.pitchClass == nStart.pitch.pitchClass:
             n.expressions.append(expressions.Fermata())
             break
-        if len(s) > 30: # emergency break in case the piece is too long
+        if len(s) > 30:  # emergency break in case the piece is too long
             break
         direction = random.choice(dirWeight)
         if direction == 1:
@@ -484,9 +488,9 @@ def ch1_writing_II_A(show=True, *arguments, **keywords):
             break # end b/c our transposition have exceeded accidental range
 
         iSpread = interval.notesToInterval(nStart, n)
-        if iSpread.direction == -1: # we are below our target, favor upward
+        if iSpread.direction == -1:  # we are below our target, favor upward
             dirWeight = [-1, 1, 1]
-        if iSpread.direction == 1: # we are above our target, favor down
+        if iSpread.direction == 1:  # we are above our target, favor down
             dirWeight = [-1, -1, 1]
 
     if show:
@@ -550,10 +554,10 @@ def ch2_basic_I_A_1(show=True, *arguments, **keywords):
     ex = stream.Stream()
     ex.insert(key.KeySignature(1))
 
-    data = [[('d6',1.5)],
-            [('d6',1.5)],
-            [('d6',.5),('c6',.5),('b5',.5)],
-            [('rest',.5),('b5',.25),('c6',.25),('d6',.5)],
+    data = [[('d6', 1.5)],
+            [('d6', 1.5)],
+            [('d6', .5), ('c6', .5), ('b5', .5)],
+            [('rest', .5), ('b5', .25), ('c6', .25), ('d6', .5)],
            ]
 
     for mData in data:
@@ -608,13 +612,16 @@ def ch2_basic_I_B(show=True, *arguments, **keywords):
     (Given meter type and one of meter, beat unit,
     beat division, full bar divisions, provide the other data)
     '''
-    # a brute force way to do this might have a function in meter.py that returns a number of candidates for a given meter type and some other parameter (bar duration). then, these values can be tested for match.
+    # a brute force way to do this might have a function in meter.py that returns
+    # a number of candidates for a given meter type and some other parameter
+    # (bar duration). then, these values can be tested for match.
     pass
 
 
 def ch2_basic_I_C(show=True, *arguments, **keywords):
     '''p. 13
-    Complete the chart below. (For a given meter, provide meter type, beat unit, beat division, and beat subdivision.)
+    Complete the chart below. (For a given meter, provide meter type, beat unit,
+    beat division, and beat subdivision.)
     '''
     from music21 import meter, stream
 
@@ -711,7 +718,7 @@ def ch2_writing_I_A(tsStr, barGroups):
     for b in barGroups:
         summation = 0
         for ql in b:
-            if ql > 0: # quick encoding: negative values for rests
+            if ql > 0:  # quick encoding: negative values for rests
                 n = note.Note()
             else:
                 n = note.Rest()
@@ -729,7 +736,8 @@ def ch2_writing_I_A(tsStr, barGroups):
 def ch2_writing_I_A_1(show=True, *arguments, **keywords):
     '''p. 14
 
-    Complete the rhythms below by adding one note value that completes any measure with too few beats.
+    Complete the rhythms below by adding one note value that completes any
+    measure with too few beats.
     '''
     barGroups = ([.5], [.75, .25], [.5, .75], [.25, .25, .25, .25], [.5], [])
     ex = ch2_writing_I_A('3/8', barGroups)
@@ -742,7 +750,9 @@ def ch2_writing_I_A_1(show=True, *arguments, **keywords):
 def ch2_writing_I_A_2(show=True, *arguments, **keywords):
     '''p. 14
     '''
-    barGroups = ([.75, .25, .25, .25, .25, .25, 1.5], [.25, .25, .5, -.5, .5], [2, .25, .25, .25, .25, .25, .25], [3])
+    barGroups = ([.75, .25, .25, .25, .25, .25, 1.5],
+                 [.25, .25, .5, -.5, .5],
+                 [2, .25, .25, .25, .25, .25, .25], [3])
     ex = ch2_writing_I_A('4/4', barGroups)
     if show:
         ex.show()
@@ -752,7 +762,8 @@ def ch2_writing_I_A_2(show=True, *arguments, **keywords):
 def ch2_writing_I_A_3(show=True, *arguments, **keywords):
     '''p. 14
     '''
-    barGroups = ([2, 1.5, .5, .5, .5, .5], [-.5, .5, .5, .5, 1, 1, 1], [4, 1.5], [.5, .5, .5, .5, .5, 1, .5])
+    barGroups = ([2, 1.5, .5, .5, .5, .5], [-.5, .5, .5, .5, 1, 1, 1],
+                 [4, 1.5], [.5, .5, .5, .5, .5, 1, .5])
     ex = ch2_writing_I_A('3/2', barGroups)
     if show:
         ex.show()
@@ -815,7 +826,9 @@ def ch2_writing_I_B_5(show=True, *arguments, **keywords):
 def ch2_writing_II_A(show=True, *arguments, **keywords):
     '''p. 15
 
-    Each of these pieces begins with an anacrusis. What note value (or note value plus rest) could the composer use to fill the last measure of the compositions correctly.
+    Each of these pieces begins with an anacrusis. What note value (or note value
+    plus rest) could the composer use to fill the last measure of the compositions
+    correctly.
     '''
     pass
 
@@ -918,20 +931,20 @@ def ch2_writing_III_B(src):
     # note that ending ties are not given with tiny notation
     group = []
     for n in s2.notesAndRests:
-        #environLocal.printDebug([n, n.tie])
-        if n.tie != None or len(group) > 0:
-            if n.tie != None and n.tie.type != 'stop':
+        # environLocal.printDebug([n, n.tie])
+        if n.tie is not None or len(group) > 0:
+            if n.tie is not None and n.tie.type != 'stop':
                 group.append(n)
-            else: # end of tied notes
+            else:  # end of tied notes
                 group.append(n)
-                ql= sum([x.quarterLength for x in group])
+                ql = sum([x.quarterLength for x in group])
                 for i in range(len(group)):
-                    if i == 0: # keep first, extend dur
+                    if i == 0:  # keep first, extend dur
                         group[i].quarterLength = ql
                         group[i].tie = None # remove tie
-                    else: # remove from source
+                    else:  # remove from source
                         s2.remove(group[i])
-                group = [] # reset
+                group = []  # reset
 
     environLocal.printDebug(['post editing'])
 
@@ -943,7 +956,7 @@ def ch2_writing_III_B_1(show=True, *arguments, **keywords):
 
     Renotate the following rhythms without ties.
     '''
-    ex = converter.parse("tinynotation: 3/8 c8~ c16 c16 c16 c16 c8~ c8 c c16 c~ c c c8 c4~ c8")
+    ex = converter.parse('tinynotation: 3/8 c8~ c16 c16 c16 c16 c8~ c8 c c16 c~ c c c8 c4~ c8')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -955,7 +968,8 @@ def ch2_writing_III_B_1(show=True, *arguments, **keywords):
 def ch2_writing_III_B_2(show=True, *arguments, **keywords):
     '''p. 17
     '''
-    ex = converter.parse("tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2")
+    ex = converter.parse(
+        'tinynotation: 4/4 c4~ c8 c16 c c8 c~ c c c2~ c4 c8 c8 c8~ c16 c c8~ c16 c c2')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -967,7 +981,7 @@ def ch2_writing_III_B_2(show=True, *arguments, **keywords):
 def ch2_writing_III_B_3(show=True, *arguments, **keywords):
     '''p. 17
     '''
-    ex = converter.parse("tinynotation: 3/2 c2~ c4 c c~ c8 c c4 c~ c c c2 c2 c2~ c4 c c1~ c2")
+    ex = converter.parse('tinynotation: 3/2 c2~ c4 c c~ c8 c c4 c~ c c c2 c2 c2~ c4 c c1~ c2')
 
     ex = ch2_writing_III_B(ex)
     if show:
@@ -993,7 +1007,9 @@ def ch2_writing_IV_A(show=True, *arguments, **keywords):
 def ch2_writing_IV_B(show=True, *arguments, **keywords):
     '''p. 18
     '''
-    ex = converter.parse("tinynotation: 2/4 c8. c16 e8 g c'4. r8 a8. a16 c'8 a g4. e16 f g8 g8 e16 e g16 g a8 g8 e4 d8 e16 f e d8 d16 c4.")
+    ex = converter.parse(
+        "tinynotation: 2/4 c8. c16 e8 g c'4. r8 a8. a16 c'8 a g4. e16 f g8 g8"
+        ' e16 e g16 g a8 g8 e4 d8 e16 f e d8 d16 c4.')
 
     ex = ex.makeMeasures()
     ex.makeBeams(inPlace=True)
@@ -1015,7 +1031,9 @@ def ch2_writing_V_A(show=True, *arguments, **keywords):
     from music21 import key
 
     # note: tiny is not encoding C#s for c'#4 properly (it seems)
-    ex = converter.parse("tinynotation: 3/2 g#1 f#4 g#4 a1 g#2 f#1 g#4. en8 g#2 f#4 r4 f#4 d#8 B8 e2 r4 e4 a4. a8 a2 g#4 g# b4. e8 a2~ a4 a4 d'n4. d'8 d'n2 c'#4 c'# c'# c'#")
+    ex = converter.parse(
+        'tinynotation: 3/2 g#1 f#4 g#4 a1 g#2 f#1 g#4. en8 g#2 f#4 r4 f#4 d#8 B8'
+        " e2 r4 e4 a4. a8 a2 g#4 g# b4. e8 a2~ a4 a4 d'n4. d'8 d'n2 c'#4 c'# c'# c'#")
 
     ex.insert(0, key.KeySignature(4))
     # presently, this only works if makeAccidentals is called before make measures
@@ -1295,7 +1313,9 @@ def ch3_analysis_II_B(show=True, *arguments, **keywords):
 def ch4_basic_I_A(show=True, *arguments, **keywords):
     '''p. 33
 
-    For each major key, write out the scale. Circle degree 6. Write out a new scale that begins ont he pitch class you circled. Write the name of this relative-minor scale on the line indicated.
+    For each major key, write out the scale. Circle degree 6. Write out a new
+    scale that begins ont he pitch class you circled. Write the name of this
+    relative-minor scale on the line indicated.
     '''
     pass
 
@@ -1589,13 +1609,13 @@ def ch5_writing_IV_A(show=True, *arguments, **keywords):
     ex.insert(meter.TimeSignature('6/4'))
     ex.insert(key.KeySignature(3))
 
-    for p, d in [(None,1), ('f#3',1),('g#3',1),('a3',4),
-                 ('g#3',.5),('a#3',.5),('b3',2),
-                 ('a#3',.5),('g#3',.5),('a#3',.5),('b#3',.5),
-                 ('c#4',1.5),('b3',.5),('a3',.5),('c#4',.5),('b3',.5),('a3',.5),
-                 ('g#3',2),('f#3',3), (None,.5), ('c#4',.5),('c#4',.5),
-                 ('b3',.5),('b3',.5),('a#3',.5)]:
-        if p == None:
+    for p, d in [(None, 1), ('f#3', 1), ('g#3', 1), ('a3', 4),
+                 ('g#3', .5), ('a#3', .5), ('b3', 2),
+                 ('a#3', .5), ('g#3', .5), ('a#3', .5), ('b#3', .5),
+                 ('c#4', 1.5), ('b3', .5), ('a3', .5), ('c#4', .5), ('b3', .5), ('a3', .5),
+                 ('g#3', 2), ('f#3', 3), (None, .5), ('c#4', .5), ('c#4', .5),
+                 ('b3', .5), ('b3', .5), ('a#3', .5)]:
+        if p is None:
             n = note.Rest()
         else:
             n = note.Note(p)
@@ -1817,19 +1837,13 @@ FUNCTIONS = [ch1_basic_I_A,
 
             ]
 
-class TestExternal(unittest.TestCase): # pragma: no cover
-    def runTest(self):
-        pass
-
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def testBasic(self):
         for func in FUNCTIONS:
             func(show=True, play=False)
 
 
 class Test(unittest.TestCase):
-    def runTest(self):
-        pass
-
     def testBasic(self):
         for func in FUNCTIONS:
             func(show=False, play=False)
@@ -1838,44 +1852,40 @@ class Test(unittest.TestCase):
 
 
 # ------------------------------------------------------------------------------
-if __name__ == "__main__":
-    #ch2_writing_III_A_1(show=True)
+if __name__ == '__main__':
+    # ch2_writing_III_A_1(show=True)
     if len(sys.argv) == 1:
         music21.mainTest(Test)
     else:
         pass
-        #b = TestExternal()
-        #b.testBasic()
+        # b = TestExternal()
+        # b.testBasic()
 
-        #ch1_writing_I_B_1(show=True)
-        #ch1_writing_I_B_2(show=True)
-        #ch1_writing_I_B_3(show=True)
-        #ch1_basic_II_C_2(show=True)
+        # ch1_writing_I_B_1(show=True)
+        # ch1_writing_I_B_2(show=True)
+        # ch1_writing_I_B_3(show=True)
+        # ch1_basic_II_C_2(show=True)
 
-        #ch5_writing_IV_A(show=True)
-
-
-        #ch2_basic_I_A_1(show=True)
+        # ch5_writing_IV_A(show=True)
 
 
-        #ch2_writing_III_A_1(show=True)
-        #ch2_writing_III_A_2(show=True)
-        #ch2_writing_III_A_3(show=True)
-
-        #ch2_writing_III_B_3(show=True)
+        # ch2_basic_I_A_1(show=True)
 
 
-        #ch2_writing_I_A_1(show=True)
-        #ch2_writing_I_A_2(show=True)
-        #ch2_writing_I_A_3(show=True)
-        #ch2_writing_I_A_4(show=True)
-        #ch2_writing_I_A_5(show=True)
+        # ch2_writing_III_A_1(show=True)
+        # ch2_writing_III_A_2(show=True)
+        # ch2_writing_III_A_3(show=True)
 
-        #ch2_writing_IV_B(show=True)
-        #ch2_writing_V_A(show=True)
+        # ch2_writing_III_B_3(show=True)
 
-        #ch2_writing_III_B_1()
 
-# -----------------------------------------------------------------------------
-# eof
+        # ch2_writing_I_A_1(show=True)
+        # ch2_writing_I_A_2(show=True)
+        # ch2_writing_I_A_3(show=True)
+        # ch2_writing_I_A_4(show=True)
+        # ch2_writing_I_A_5(show=True)
 
+        # ch2_writing_IV_B(show=True)
+        # ch2_writing_V_A(show=True)
+
+        # ch2_writing_III_B_1()

@@ -33,15 +33,15 @@ def pitchedPhase(cycles=None, show=False):
     The source code describes how this works.
 
 
-    >>> #_DOCS_SHOW composition.phasing.pitchedPhase(cycles=4, show=True)
+    >>> # _DOCS_SHOW composition.phasing.pitchedPhase(cycles=4, show=True)
 
     .. image:: images/phasingDemo.*
             :width: 576
 
     '''
 
-    sSrc = converter.parse("""tinynotation: 12/16 E16 F# B c# d F# E c# B F# d c#
-                              E16 F# B c# d F# E c# B F# d c#""", makeNotation=False)
+    sSrc = converter.parse('''tinynotation: 12/16 E16 F# B c# d F# E c# B F# d c#
+                              E16 F# B c# d F# E c# B F# d c#''', makeNotation=False)
     sPost = stream.Score()
     sPost.title = 'phasing experiment'
     sPost.insert(0, stream.Part())
@@ -112,7 +112,7 @@ def pendulumMusic(show=True,
             elif ps < 36:
                 active = 3
 
-            jQuant = round(j*8)/8.0
+            jQuant = round(j * 8) / 8.0
 
             establishedChords = parts[active].getElementsByOffset(jQuant)
             if len(establishedChords) == 0:
@@ -123,7 +123,7 @@ def pendulumMusic(show=True,
                 c = establishedChords[0]
                 c.append(p)
 
-            j += loopLength/(maxNotesPerLoop - totalParts + i)
+            j += loopLength / (maxNotesPerLoop - totalParts + i)
             # j += (8+(8-i))/8.0
         p = octo.next(p, stepSize=scaleStepSize)
 
@@ -143,21 +143,11 @@ def pendulumMusic(show=True,
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def testBasic(self, cycles=4, show=False):
         # run a reduced version
         pitchedPhase(cycles=cycles, show=show)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
-
     def testBasic(self, cycles=8, show=True):
         # run a reduced version
         pitchedPhase(cycles=cycles, show=show)
@@ -188,7 +178,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 # define presented order in documentation
 _DOC_ORDER = [pitchedPhase]
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) == 1:  # normal conditions
         import music21
         music21.mainTest(TestExternal)
@@ -196,10 +186,3 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1:
         t = Test()
         t.testBasic(cycles=None, show=True)
-
-
-
-
-# -----------------------------------------------------------------------------
-# eof
-

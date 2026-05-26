@@ -12,9 +12,8 @@
 This module defines the ContourFinder and AggregateContour objects.
 '''
 import random
-import unittest
 
-from music21 import base # for _missingImport testing.
+from music21 import base  # for _missingImport testing.
 from music21 import repeat
 from music21 import exceptions21
 from music21 import corpus
@@ -23,7 +22,7 @@ from music21 import environment
 _MOD = 'contour.py'
 environLocal = environment.Environment(_MOD)
 
-#---------------------------------------------------
+# ---------------------------------------------------
 class ContourException(exceptions21.Music21Exception):
     pass
 
@@ -64,25 +63,31 @@ class ContourFinder:
     M and n are specified by 'window' and 'slide', which are both 1 by default.
 
 
+    >>> from music21_tools.contour.contour import ContourFinder
     >>> s = corpus.parse('bwv29.8')
-    >>> ContourFinder(s).plot('tonality')
+    >>> tonalContour = ContourFinder(s).getContour('tonality')
+    >>> isinstance(tonalContour, dict)
+    True
+
+    To render visually, call ``.plot('tonality')`` instead of ``.getContour(...)``.
 
     TODO: image here...
 
     '''
     def __init__(self, s=None):
-        self.s = s # a stream.Score object
-        self.sChords = None #lazy evaluation...
+        self.s = s  # a stream.Score object
+        self.sChords = None  # lazy evaluation...
         self.key = None
 
-        self._contours = { } #A dictionary mapping a contour type to a normalized contour dictionary
+        # A dictionary mapping a contour type to a normalized contour dictionary
+        self._contours = {}
 
-        #self.metrics contains a dictionary mapping the name of a metric to a tuple (x,y)
+        # self.metrics contains a dictionary mapping the name of a metric to a tuple (x,y)
         # where x=metric function and y=needsChordify
 
-        self._metrics = {"dissonance": (self.dissonanceMetric, True),
-                         "spacing": (self.spacingMetric, True),
-                        "tonality": (self.tonalDistanceMetric, False) }
+        self._metrics = {'dissonance': (self.dissonanceMetric, True),
+                         'spacing': (self.spacingMetric, True),
+                         'tonality': (self.tonalDistanceMetric, False) }
         self.isContourFinder = True
 
 
@@ -90,7 +95,6 @@ class ContourFinder:
         '''
         Sets the key of ContourFinder's internal stream.  If not set manually, self.key will
         be determined by self.s.analyze('key').
-
         '''
         self.key = key
 
@@ -110,6 +114,7 @@ class ContourFinder:
         measures 3-6: f(measures 3-6),
         measures 5-8: f( measures5-8), ...}
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> metric = lambda s: len(s.measureOffsetMap())
         >>> c = corpus.parse('bwv10.7')
         >>> res = ContourFinder(c).getContourValuesForMetric(metric, 3, 2, False)
@@ -122,8 +127,8 @@ class ContourFinder:
 
 
         OMIT_FROM_DOCS
-        >>> #set([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]).issubset(set(res.keys()))
 
+        set([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]).issubset(set(res.keys()))
         '''
         res = {}
 
@@ -141,19 +146,18 @@ class ContourFinder:
         numMeasures = len(mOffsets) - hasPickup
 
 
-        for i in range(1, numMeasures + 1, slide):  #or numMeasures-window + 1
+        for i in range(1, numMeasures + 1, slide):  # or numMeasures-window + 1
             fragment = s.measures(i, i + window - 1)
 
-            #TODO: maybe check that i+window-1 is less than numMeasures + window / 2
-
+            # TODO: maybe check that i+window-1 is less than numMeasures + window / 2
             resValue = metric(fragment)
 
             res[i] = resValue
 
         return res
 
-    #TODO: tests that use simple 4-bar pieces that we have to create...
-    #ALSO: Need pictures or something! Need a clear demonstration!
+    # TODO: tests that use simple 4-bar pieces that we have to create...
+    #     also: Need pictures or something! Need a clear demonstration!
     def getContour(self, cType, window=None, slide=None, overwrite=False,
                    metric=None, needsChordify=False, normalized=False):
         '''
@@ -181,6 +185,7 @@ class ContourFinder:
         use normalized=False (the default), but to get a contour
         which evenly divides time between 1.0 and 100.0, use normalized=True
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> cf = ContourFinder( corpus.parse('bwv10.7'))
         >>> mycontour = cf.getContour('dissonance')
         >>> [mycontour[x] for x in sorted(mycontour.keys())]  # doctest: +NORMALIZE_WHITESPACE
@@ -193,8 +198,8 @@ class ContourFinder:
 
         >>> mycontour = cf.getContour('spacing', metric = lambda x: 2, overwrite=False)
         Traceback (most recent call last):
-        OverwriteException: Attempted to overwrite 'spacing' metric but did
-                not specify overwrite=True
+        music21_tools.contour.contour.OverwriteException: Attempted to overwrite
+        'spacing' metric but did not specify overwrite=True
 
         >>> mycontour = cf.getContour('spacing', slide=3, metric = lambda x: 2.0, overwrite=True)
         >>> [mycontour[x] for x in sorted(mycontour.keys())]
@@ -209,14 +214,14 @@ class ContourFinder:
             if cType in self._contours:
                 if window is not None or slide is not None:
                     raise OverwriteException(
-                        "Attempted to overwrite cached contour of type {0}".format(cType) +
-                        " but did not specify overwrite=True")
+                        'Attempted to overwrite cached contour of type {0}'.format(cType) +
+                        ' but did not specify overwrite=True')
                 else:
                     return self._contours[cType]
             elif cType in self._metrics:
                 if metric is not None:
                     raise OverwriteException("Attempted to overwrite '{0}' ".format(cType) +
-                                             "metric but did not specify overwrite=True")
+                                             'metric but did not specify overwrite=True')
                 else:
                     metric, needsChordify = self._metrics[cType]
             else:
@@ -226,7 +231,7 @@ class ContourFinder:
                 if cType in self._metrics:
                     metric, needsChordify = self._metrics[cType]
                 else:
-                    raise ContourException("Must provide your own metric for type: %s" % cType)
+                    raise ContourException('Must provide your own metric for type: %s' % cType)
 
 
         if slide is None:
@@ -249,6 +254,7 @@ class ContourFinder:
         '''
         Normalize a contour dictionary so that the values of the keys range from 0.0 to length.
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> mycontour = { 0.0: 1.0, 3.0: 0.5, 6.0: 0.8, 9.0: 0.3, 12.0: 0.15,
         ...            15.0: 0.13, 18.0: 0.4, 21.0: 0.6 }
         >>> res = ContourFinder()._normalizeContour(mycontour, 100)
@@ -273,7 +279,7 @@ class ContourFinder:
         myKeys.sort()
         numKeys = len(myKeys)
 
-        spacing = (maxKey)/(numKeys-1.0)
+        spacing = maxKey / (numKeys - 1.0)
         res = {}
         i = 0.0
 
@@ -284,7 +290,7 @@ class ContourFinder:
 
         return res
 
-    #TODO: give same args as getContour, maybe? Also, test this.
+    # TODO: give same args as getContour, maybe? Also, test this.
     def plot(self, cType, contourIn=None, regression=True, order=4,
              title='Contour Plot', fileName=None):
         (plt, numpy) = _getExtendedModules()
@@ -309,12 +315,12 @@ class ContourFinder:
 
 
 
-            plt.plot(t, p(t), 'o-', label='estimate', markersize=1) #probably change label
+            plt.plot(t, p(t), 'o-', label='estimate', markersize=1)  # probably change label
 
         plt.xlabel('Time (arbitrary units)')
         plt.ylabel('Value for %s metric' % cType)
-        plt.title(title) #say for which piece
-        #plt.savefig(filename + '.png')
+        plt.title(title)  # say for which piece
+        # plt.savefig(filename + '.png')
 
         if fileName is not None:
             plt.savefig(fileName + '.png')
@@ -329,6 +335,7 @@ class ContourFinder:
         Returns a version of contourDict where the keys-to-values mapping is scrambled.
 
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> myDict = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 11:11, 12:12, 13:13,
         ...           14:14, 15:15, 16:16, 17:17, 18:18, 19:19, 20:20}
         >>> res = ContourFinder().randomize(myDict)
@@ -353,7 +360,7 @@ class ContourFinder:
         return res
 
 
-    #--- code for the metrics
+    # --- code for the metrics
     def _calcGenericMetric(self, inpStream, chordMetric):
         '''
         Helper function which, given a metric value for a chord, calculates a metric
@@ -363,14 +370,14 @@ class ContourFinder:
         '''
 
         score = 0
-        n=0
+        n = 0
 
         for measure in inpStream:
             if 'Measure' in measure.classes:
                 for chord in measure:
                     if 'Chord' in chord.classes:
                         dur = chord.duration.quarterLength
-                        score += chordMetric(chord)*dur
+                        score += chordMetric(chord) * dur
                         n += dur
 
         if n != 0:
@@ -386,6 +393,7 @@ class ContourFinder:
         To work correctly, input must contain measures and no parts.
 
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> c = corpus.parse('bwv102.7').chordify()
         >>> ContourFinder().dissonanceMetric( c.measures(1, 1) )
         0.25
@@ -395,16 +403,14 @@ class ContourFinder:
         True
         '''
 
-        return self._calcGenericMetric(inpStream, lambda x: 1-x.isConsonant() )
+        return self._calcGenericMetric(inpStream, lambda x: 1 - x.isConsonant() )
 
     def spacingMetric(self, inpStream):
         '''
-        Defines a metric which takes a music21 stream containng measures and no parts.
+        Defines a metric which takes a music21 stream containing measures and no parts.
         This metric measures how spaced out notes in a piece are.
-
         '''
-
-        #TODO: FIGURE OUT IF THIS IS REASONABLE! MIGHT WANT TO JUST DO: sqrt( sum(dist^2) )
+        # TODO: Figure out if this is reasonable. Might want to just do: sqrt( sum(dist^2) )
         def spacingForChord(chord):
             pitches = [ x.ps for x in chord.pitches ]
             pitches.sort()
@@ -416,12 +422,11 @@ class ContourFinder:
                 return (pitches[1] - pitches[0])
             else:
                 res += (pitches[1] - pitches[0]) ** (0.7)
-                for i in range(1, len(pitches)-1):
-                    res += (pitches[i + 1]-pitches[i]) ** (1.5)
+                for i in range(1, len(pitches) - 1):
+                    res += (pitches[i + 1] - pitches[i]) ** (1.5)
             return res
 
         return self._calcGenericMetric(inpStream, spacingForChord)
-
 
 
     def tonalDistanceMetric(self, inpStream):
@@ -429,13 +434,18 @@ class ContourFinder:
         Returns a number between 0.0 and 1.0 that is a measure of how far away the key of
         inpStream is from the key of ContourFinder's internal stream.
         '''
+        from music21.analysis.discrete import DiscreteAnalysisException
 
         if self.key is None:
             self.key = self.s.analyze('key')
 
-        guessedKey = inpStream.analyze('key')
+        try:
+            guessedKey = inpStream.analyze('key')
+        except DiscreteAnalysisException:
+            # music21 raises exception when stream has no notes.
+            return 0.5
 
-        certainty = -2 #should be replaced by a value between -1 and 1
+        certainty = -2  # should be replaced by a value between -1 and 1
 
         if guessedKey == self.key:
             certainty = guessedKey.correlationCoefficient
@@ -521,7 +531,7 @@ class AggregateContour:
 
 
 
-    def getCombinedContour(self, cType): #, metric=None, window=1, slide=1, order=8):
+    def getCombinedContour(self, cType):  # , metric=None, window=1, slide=1, order=8):
         '''
         Returns the combined contour of the type specified by cType.  Instead of a dictionary,
         this contour is just a list of ordered pairs (tuples) with the
@@ -565,11 +575,9 @@ class AggregateContour:
 
 
     def plot(self, cType, showPoints=True, comparisonContour=None, regression=True, order=6):
-
-        #TODO: maybe have an option of specifying a different
-        # color thing for each individual contour...
-
-        if cType not in self.aggContours: #['dissonance', 'tonality', 'distance']:
+        # TODO: maybe have an option of specifying a different
+        #     color thing for each individual contour...
+        if cType not in self.aggContours:  # ['dissonance', 'tonality', 'distance']:
             return None
         else:
             contour = self.getCombinedContour(cType)
@@ -581,7 +589,7 @@ class AggregateContour:
 #         else:
 #             contour = self._aggContoursAsList[cType]
 #
-        (plt, numpy) = _getExtendedModules() #@UnusedVariable
+        (plt, numpy) = _getExtendedModules()
 
         x, y = zip(*contour)
 
@@ -593,17 +601,17 @@ class AggregateContour:
             y = [comparisonContour[i] for i in x]
 
             plt.plot(x, y, '.', label='compContour', markersize=8)
-        #p = numpy.poly1d( numpy.polyfit(x, y, order))
+        # p = numpy.poly1d( numpy.polyfit(x, y, order))
         p = self.getCombinedContourPoly(cType)
 
         if regression:
             t = numpy.linspace(0, max(x), max(x) + 1)
-            plt.plot(t, p(t), 'o-', label='estimate', markersize=1) #probably change label
+            plt.plot(t, p(t), 'o-', label='estimate', markersize=1)  # probably change label
 
         plt.xlabel('Time (percentage of piece)')
-        plt.ylabel('Value') #change this
-        plt.title('title') #say for which piece
-        #plt.savefig(filename + '.png')
+        plt.ylabel('Value')  # change this
+        plt.title('title')  # say for which piece
+        # plt.savefig(filename + '.png')
         plt.show()
 
         plt.clf()
@@ -651,10 +659,9 @@ def _getOutliers():
 
 
 def _runExperiment():
-    #get chorale iterator, initialize ac
-
+    # get chorale iterator, initialize ac
     ac = AggregateContour()
-    #unresolved problem numbers: 88 (repeatFinder fails!)
+    # unresolved problem numbers: 88 (repeatFinder fails!)
 
     goodChorales = ['bach/bwv330', 'bach/bwv245.22', 'bach/bwv431',
                     'bach/bwv324', 'bach/bwv384', 'bach/bwv379', 'bach/bwv365',
@@ -726,19 +733,19 @@ def _runExperiment():
                     'bach/bwv343', 'bach/bwv311']
     currentNum = 1
 
-    #BCI = corpus.chorales.Iterator(1, 371, returnType='filename') #highest number is 371
-    #highestNum = BCI.highestNumber
-    #currentNum = BCI.currentNumber
+    # BCI = corpus.chorales.Iterator(1, 371, returnType='filename')  # highest number is 371
+    # highestNum = BCI.highestNumber
+    # currentNum = BCI.currentNumber
     for chorale in goodChorales:
 
         print(currentNum)
 
-        currentNum +=1
+        currentNum += 1
 
 #         '''
 #         if chorale == 'bach/bwv277':
-#             continue    #this chorale here has an added measure
-#                         # container randomly in the middle which breaks things.
+#             continue  # this chorale here has an added measure
+#                       # container randomly in the middle which breaks things.
 #         '''
         chorale = corpus.parse(chorale)
 
@@ -759,7 +766,7 @@ def _runExperiment():
 #             print("too long")
 #             continue
 #         '''
-        cf= ContourFinder(chorale)
+        cf = ContourFinder(chorale)
         ac.addPieceToContour(cf, 'dissonance')
         ac.addPieceToContour(cf, 'tonality')
         ac.addPieceToContour(cf, 'spacing')
@@ -770,7 +777,7 @@ def _runExperiment():
 
     for cType in ['spacing', 'tonality', 'dissonance']:
 
-        print("considering", cType, ": ")
+        print('considering', cType, ': ')
 
         cf = ContourFinder()
         totalSuccesses = 0
@@ -790,13 +797,13 @@ def _runExperiment():
 
             if successes > 50:
                 totalSuccesses += 1
-                #print "GREAT SUCCESS!"
+                # print('Great success!')
             else:
                 totalFailures += 1
-                print("failure: chorale " + goodChorales[j])  #index ", str(i)
+                print('failure: chorale ' + goodChorales[j])  # index ", str(i)
 
-        print(cType, ": totalSuccesses =", str(totalSuccesses),
-              "totalFailures =", str(totalFailures))
+        print(cType, ': totalSuccesses =', str(totalSuccesses),
+              'totalFailures =', str(totalFailures))
 
 def _plotChoraleContours():
     BCI = corpus.chorales.Iterator(1, 75, returnType='filename')
@@ -805,23 +812,11 @@ def _plotChoraleContours():
         cf = ContourFinder(s)
         chorale = chorale[5:]
         print(chorale)
-        #cf.plot('dissonance', fileName= chorale + 'dissonance', regression=False)
+        # cf.plot('dissonance', fileName= chorale + 'dissonance', regression=False)
         try:
-            cf.plot('tonality', fileName= chorale + 'tonality', regression=False)
+            cf.plot('tonality', fileName=chorale + 'tonality', regression=False)
         except exceptions21.Music21Exception:
             print(chorale)
             s.show()
             break
     pass
-
-
-#------------------------
-class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-if __name__ == "__main__":
-    import music21
-    music21.mainTest(Test, 'moduleRelative')
-

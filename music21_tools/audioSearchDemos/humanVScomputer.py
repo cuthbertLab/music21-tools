@@ -8,13 +8,14 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
+import time
+import random
 
 from music21 import scale, note
 from music21 import audioSearch as base
-#from music21.audioSearch import *
-import time
-import random
+# from music21.audioSearch import *
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
 
 
 
@@ -24,22 +25,22 @@ def runGame():
     good = True
     gameNotes = []
 
-    print("Welcome to the music21 game!")
-    print("Rules:")
-    print("The computer generates a note (and it will play them in the future).")
-    print("The player has to play all the notes from the beginning.")
+    print('Welcome to the music21 game!')
+    print('Rules:')
+    print('The computer generates a note (and it will play them in the future).')
+    print('The player has to play all the notes from the beginning.')
     time.sleep(2)
-    print("3, 2, 1 GO!")
-    nameNotes = ["A", "B", "C", "D", "E", "F", "G"]
-    while(good == True):
+    print('3, 2, 1 GO!')
+    nameNotes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    while good:
         randomNumber = random.randint(0, 6)
         octaveNumber = 4 # I can put a random number here...
-        fullNameNote = "%s%d" % (nameNotes[randomNumber], octaveNumber)
+        fullNameNote = '%s%d' % (nameNotes[randomNumber], octaveNumber)
         gameNotes.append(note.Note(fullNameNote))
 
         roundNumber = roundNumber + 1
-        print("ROUND %d" % roundNumber)
-        print("NOTES UNTIL NOW: (this will not be shown in the final version)")
+        print('Round %d' % roundNumber)
+        print('Notes so far (debug-only, will not appear in the final version):')
         for k in range(len(gameNotes)):
             print(gameNotes[k].fullName)
 
@@ -47,30 +48,29 @@ def runGame():
         freqFromAQList = base.getFrequenciesFromMicrophone(length=seconds, storeWaveFilename=None)
         detectedPitchesFreq = base.detectPitchFrequencies(freqFromAQList, useScale)
         detectedPitchesFreq = base.smoothFrequencies(detectedPitchesFreq)
-        (detectedPitchObjects, unused_listplot) = base.pitchFrequenciesToObjects(detectedPitchesFreq, useScale)
-        (notesList, unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
+        (detectedPitchObjects,
+         unused_listplot) = base.pitchFrequenciesToObjects(detectedPitchesFreq, useScale)
+        (notesList,
+         unused_durationList) = base.joinConsecutiveIdenticalPitches(detectedPitchObjects)
         j = 0
         i = 0
-        while i < len(notesList) and j < len(gameNotes) and good == True:
-            if notesList[i].name == "rest":
+        while i < len(notesList) and j < len(gameNotes) and good:
+            if notesList[i].name == 'rest':
                 i = i + 1
             elif notesList[i].name == gameNotes[j].name:
                 i = i + 1
                 j = j + 1
             else:
-                print("WRONG NOTE! You played", notesList[i].fullName, "and should have been", gameNotes[j].fullName)
+                print('Wrong note. You played', notesList[i].fullName,
+                      'and it should have been', gameNotes[j].fullName)
                 good = False
 
-        if good == True and j != len(gameNotes):
+        if good and j != len(gameNotes):
             good = False
-            print("YOU ARE VERY SLOW!!! PLAY FASTER NEXT TIME!")
+            print("Time's up — try a faster pace next round.")
 
-        if good == False:
-            print("GAME OVER! TOTAL ROUNDS: %d" % roundNumber)
+        if not good:
+            print('Game over. Total rounds: %d' % roundNumber)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     runGame()
-
-
-# -----------------------------------------------------------------------------
-# eof

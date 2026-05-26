@@ -21,11 +21,11 @@ def spliceAnalysis(book=3, madrigal=1):
     '''
     splice an analysis of the madrigal under the analysis itself
     '''
-    #mad = corpus.parse('monteverdi/madrigal.%s.%s.xml' % (book, madrigal))
+    # mad = corpus.parse('monteverdi/madrigal.%s.%s.xml' % (book, madrigal))
     analysis = corpus.parse('monteverdi/madrigal.%s.%s.rntxt' % (book, madrigal))
 
     # these are multiple parts in a score stream
-    #excerpt = mad.measures(1, 20)
+    # excerpt = mad.measures(1, 20)
 
     # get from first part
     aMeasures = analysis.parts[0].measures(1, 20)
@@ -33,40 +33,41 @@ def spliceAnalysis(book=3, madrigal=1):
     for myN in aMeasures.flatten().notesAndRests:
         myN.style.hideObjectOnPrint = True
     x = aMeasures.write()
-    print (x)
-    #excerpt.insert(0, aMeasures)
-    #excerpt.show()
+    print(x)
+    # excerpt.insert(0, aMeasures)
+    # excerpt.show()
 
 def showAnalysis(book=3, madrigal= 3):
-    #analysis = converter.parse('d:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
+    # analysis = converter.parse(
+    #     'd:/docs/research/music21/dmitri_analyses/Mozart Piano Sonatas/k331.rntxt')
     filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, madrigal)
     analysis = corpus.parse(filename)
-    #analysis.show()
+    # analysis.show()
     (major, minor) = iqSemitonesAndPercentage(analysis)
-    print (major)
-    print (minor)
+    print(major)
+    print(minor)
 
 def analyzeBooks(books=(3,), start=1, end=20, show=False, strict=False):
-    majorFig = ""
-    minorFig = ""
-    majorSt = ""
-    minorSt = ""
-    majorRoot = ""
-    minorRoot = ""
+    majorFig = ''
+    minorFig = ''
+    majorSt = ''
+    minorSt = ''
+    majorRoot = ''
+    minorRoot = ''
     for book in books:
         for i in range(start, end + 1):
             filename = 'monteverdi/madrigal.%s.%s.rntxt' % (book, i)
-            if strict == True:
+            if strict:
                 analysis = corpus.parse(filename)
-                print(book,i)
+                print(book, i)
             else:
                 try:
                     analysis = corpus.parse(filename)
-                    print(book,i)
+                    print(book, i)
                 except Exception:
-                    print("Cannot parse %s, maybe it does not exist..." % (filename))
+                    print('Cannot parse %s, maybe it does not exist...' % (filename))
                     continue
-            if show == True:
+            if show:
                 analysis.show()
             (MF, mF) = iqChordsAndPercentage(analysis)
             (MSt, mSt) = iqSemitonesAndPercentage(analysis)
@@ -94,17 +95,17 @@ def iqChordsAndPercentage(analysisStream):
     '''
     totalDuration = analysisStream.duration.quarterLength
     romMerged = analysisStream.flatten().stripTies()
-    major = ""
-    minor = ""
+    major = ''
+    minor = ''
     active = 'minor'
     for element in romMerged:
-        if "RomanNumeral" in element.classes:
+        if 'RomanNumeral' in element.classes:
             fig = element.figure
             fig = fig.replace('[no5]', '')
             fig = fig.replace('[no3]', '')
             fig = fig.replace('[no1]', '')
-            longString = fig + " (" + str(int(
-                            element.duration.quarterLength * 10000 / totalDuration) / 100) + ") "
+            longString = fig + ' (' + str(int(
+                            element.duration.quarterLength * 10000 / totalDuration) / 100) + ') '
             if active == 'major':
                 major += longString
             else:
@@ -112,25 +113,25 @@ def iqChordsAndPercentage(analysisStream):
         elif hasattr(element, 'tonic'):
             if element.mode == 'major':
                 active = 'major'
-                major += "\n" + element.tonic + " " + element.mode + " "
+                major += '\n' + element.tonic + ' ' + element.mode + ' '
             else:
                 active = 'minor'
-                minor += "\n" + element.tonic + " " + element.mode + " "
+                minor += '\n' + element.tonic + ' ' + element.mode + ' '
     return (major, minor)
 
 def iqSemitonesAndPercentage(analysisStream):
     totalDuration = analysisStream.duration.quarterLength
     romMerged = analysisStream.flatten().stripTies()
-    major = ""
-    minor = ""
+    major = ''
+    minor = ''
     active = 'minor'
     for element in romMerged:
-        if "RomanNumeral" in element.classes:
+        if 'RomanNumeral' in element.classes:
             distanceToTonicInSemis = int((element.root().ps -
                                           pitch.Pitch(element.scale.tonic).ps) % 12)
-            longString = str(distanceToTonicInSemis) + " (" + str(int(
+            longString = str(distanceToTonicInSemis) + ' (' + str(int(
                                 element.duration.quarterLength * 10000 / totalDuration)
-                                                                  / 100) + ") "
+                                                                  / 100) + ') '
             if active == 'major':
                 major += longString
             else:
@@ -138,25 +139,25 @@ def iqSemitonesAndPercentage(analysisStream):
         elif hasattr(element, 'tonic'):
             if element.mode == 'major':
                 active = 'major'
-                major += "\n" + element.tonic + " " + element.mode + " "
+                major += '\n' + element.tonic + ' ' + element.mode + ' '
             else:
                 active = 'minor'
-                minor += "\n" + element.tonic + " " + element.mode + " "
+                minor += '\n' + element.tonic + ' ' + element.mode + ' '
     return (major, minor)
 
 def iqRootsAndPercentage(analysisStream):
     totalDuration = analysisStream.duration.quarterLength
     romMerged = analysisStream.flatten().stripTies()
-    major = ""
-    minor = ""
+    major = ''
+    minor = ''
     active = 'minor'
     for element in romMerged:
-        if "RomanNumeral" in element.classes:
-            #distanceToTonicInSemis = int((element.root().ps -
+        if 'RomanNumeral' in element.classes:
+            # distanceToTonicInSemis = int((element.root().ps -
             #    pitch.Pitch(element.scale.tonic).ps) % 12)
             elementLetter = str(element.root().name)
 
-            ## leave El
+            # # leave El
             if element.quality == 'minor' or element.quality == 'diminished':
                 elementLetter = elementLetter.lower()
             elif element.quality == 'other':
@@ -168,20 +169,20 @@ def iqRootsAndPercentage(analysisStream):
                         elementLetter = elementLetter.lower()
                 else:
                     pass
-            longString = elementLetter + " (" + str(int(
+            longString = elementLetter + ' (' + str(int(
                                 element.duration.quarterLength * 10000 / totalDuration)
-                                                    / 100) + ") "
+                                                    / 100) + ') '
             if active == 'major':
                 major += longString
             else:
                 minor += longString
-        elif "Key" in element.classes:
+        elif 'Key' in element.classes:
             if element.mode == 'major':
                 active = 'major'
-                major += "\n" + element.tonic + " " + element.mode + " "
+                major += '\n' + element.tonic + ' ' + element.mode + ' '
             else:
                 active = 'minor'
-                minor += "\n" + element.tonic + " " + element.mode + " "
+                minor += '\n' + element.tonic + ' ' + element.mode + ' '
     return (major, minor)
 
 def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
@@ -191,19 +192,19 @@ def monteverdiParallels(books=(3,), start=1, end=20, show=True, strict=False):
     for book in books:
         for i in range(start, end + 1):
             filename = 'monteverdi/madrigal.%s.%s.xml' % (book, i)
-            if strict == True:
+            if strict:
                 c = corpus.parse(filename)
-                print (book,i)
+                print(book, i)
             else:
                 try:
                     c = corpus.parse(filename)
-                    print (book,i)
-                except:
-                    print ("Cannot parse %s, maybe it does not exist..." % (filename))
+                    print(book, i)
+                except Exception:
+                    print(f'Cannot parse {filename}, maybe it does not exist...')
                     continue
             displayMe = False
             for i in range(len(c.parts) - 1):
-                #iName = c.parts[i].id
+                # iName = c.parts[i].id
                 ifn = c.parts[i].flatten().notesAndRests.stream()
                 omi = ifn.offsetMap()
                 for j in range(i + 1, len(c.parts)):
@@ -251,8 +252,10 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
     for p in sc.parts:
         partNotes = p.flatten().stripTies(matchByPitch=True).notesAndRests
-        #thisPartPhraseScores = [] # keeps track of the likelihood that a phrase boundary is after note i
-        for i in range(2, len(partNotes) - 2): # start on the third note and stop searching on the third to last note...
+        # thisPartPhraseScores = []  # keeps track of the likelihood that
+        # a phrase boundary is after note i
+        # start on the third note and stop searching on the third-to-last note
+        for i in range(2, len(partNotes) - 2):
             thisScore = 0
             twoNotesBack = partNotes[i - 2]
             previousNote = partNotes[i - 1]
@@ -267,15 +270,15 @@ def findPhraseBoundaries(book=4, madrigal=12):
                 phraseScoresByOffset[phraseOffset] = 0
                 existingScore = 0
 
-            if thisNote.isRest == True:
+            if thisNote.isRest:
                 continue
 
-            if nextNote.isRest == True:
+            if nextNote.isRest:
                 thisScore = thisScore + 10
             else:
                 intervalToNextNote = interval.notesToInterval(thisNote.pitches[0],
                                                               nextNote.pitches[0])
-                if intervalToNextNote.chromatic.undirected >= 6: # a tritone or bigger
+                if intervalToNextNote.chromatic.undirected >= 6:  # a tritone or bigger
                     thisScore = thisScore + 10
             if ((thisNote.quarterLength > previousNote.quarterLength)
                     and (thisNote.quarterLength > nextNote.quarterLength)):
@@ -304,10 +307,10 @@ def findPhraseBoundaries(book=4, madrigal=12):
     for thisOffset in sorted(phraseScoresByOffset.keys()):
         psbo = phraseScoresByOffset[thisOffset]
         if psbo > 0:
-            print (thisOffset, psbo)
+            print(thisOffset, psbo)
             relevantNote = flattenedBass.getElementAtOrBefore(thisOffset - 0.1)
             if hasattr(relevantNote, 'score'):
-                print ("adjusting score from %d to %d for note in measure %d" % (
+                print('adjusting score from %d to %d for note in measure %d' % (
                         relevantNote.score, relevantNote.score + psbo, relevantNote.measureNumber))
                 relevantNote.score += psbo
             else:
@@ -320,8 +323,8 @@ def findPhraseBoundaries(book=4, madrigal=12):
 
 
 if __name__ == '__main__':
-    #spliceAnalysis()
-    #analyzeBooks(books=[3, 4, 5])
-    #analyzeBooks(books=[4], start=10, end=10, show=True, strict=True)
+    # spliceAnalysis()
+    # analyzeBooks(books=[3, 4, 5])
+    # analyzeBooks(books=[4], start=10, end=10, show=True, strict=True)
     findPhraseBoundaries(book=4, madrigal=12)
-    #monteverdiParallels(books=[3], start=1, end=1, show=True, strict=True)
+    # monteverdiParallels(books=[3], start=1, end=1, show=True, strict=True)

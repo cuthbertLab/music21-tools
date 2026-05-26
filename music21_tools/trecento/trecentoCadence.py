@@ -49,7 +49,7 @@ class CadenceConverter(tinyNotation.Converter):
     '''
     Subclass of Tiny Notation that calls these tokens instead of the defaults
 
-
+    >>> from music21_tools.trecento.trecentoCadence import CadenceConverter
     >>> dLucaGloriaIncipit = CadenceConverter(
     ...     "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
     >>> dLucaGloriaIncipit.rightBarline = 'final'
@@ -58,7 +58,7 @@ class CadenceConverter(tinyNotation.Converter):
      <music21.stream.Measure 2 offset=3.0>,
      <music21.stream.Measure 3 offset=6.0>)
     '''
-    def __init__(self, stringRep=""):
+    def __init__(self, stringRep=''):
         super().__init__(stringRep)
         self.tokenMap = [
                     (r'(\d+\/\d+)', tinyNotation.TimeSignatureToken),
@@ -66,13 +66,8 @@ class CadenceConverter(tinyNotation.Converter):
                     (r'(\S*)', CadenceNoteToken), # last
         ]
 
-###### test routines
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testCopyAndDeepcopy(self):
         '''Test copying all objects defined in this module
         '''
@@ -90,25 +85,21 @@ class Test(unittest.TestCase):
                 self.assertNotEqual(a, obj)
                 self.assertNotEqual(b, obj)
 
-
     def testDotGroups(self):
         cn = CadenceConverter('c#2..')
         cn.parse()
 
-        a = cn.stream.flatten().notes[0] # returns the stored music21 note.
+        a = cn.stream.flatten().notes[0]  # returns the stored music21 note.
         self.assertEqual(a.name, 'C#')
         self.assertEqual(a.duration.type, 'half')
         self.assertEqual(a.duration.dotGroups, (1, 1))
         self.assertEqual(a.duration.quarterLength, 4.5)
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
+class TestExternal(unittest.TestCase):  # pragma: no cover
     '''
     These objects generate PNGs, etc.
     '''
-    def runTest(self):
-        pass
-
     def testTrecentoLine(self):
         '''
         should display a 6 beat long line with some triplets
@@ -117,10 +108,6 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         self.assertAlmostEqual(st.duration.quarterLength, 6.0)
         st.show()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative')
-
-# -----------------------------------------------------------------------------
-# eof
-

@@ -8,16 +8,19 @@
 # Copyright:    Copyright © 2011-2026 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-_DOC_IGNORE_MODULE_OR_PACKAGE = True
+import math
+import queue
+import threading
+import time
+import tkinter
 
 from music21 import corpus
 from music21 import converter
+from music21 import environment
 from music21 import exceptions21
-import threading
-import queue
-import tkinter
-import time
-import math
+from music21 import scale
+from music21.audioSearch import scoreFollower
+# from music21.audioSearch import recording
 
 _missingImport = []
 try:
@@ -30,21 +33,17 @@ except ImportError:
     except ImportError:
         _missingImport.append('PIL')
 
-from music21 import environment
-_MOD = 'audioSearch/graphicalInterfaceSF.py'
-environLocal = environment.Environment(_MOD)
-
-from music21.audioSearch import * #@UnusedWildImport
-#from music21.audioSearch import recording
-from music21 import scale
-
 try:
     import AppKit
 except ImportError:
     try:
         import ctypes
-    except:
+    except ImportError:
         pass
+
+_DOC_IGNORE_MODULE_OR_PACKAGE = True
+_MOD = 'audioSearch/graphicalInterfaceSF.py'
+environLocal = environment.Environment(_MOD)
 
 
 # TO DO
@@ -55,21 +54,25 @@ class SFApp():
     def __init__(self, master):
         self.debug = True
         if 'PIL' in _missingImport:
-            raise exceptions21.Music21Exception("Need PIL installed to run Score Follower")
+            raise exceptions21.Music21Exception('Need PIL installed to run Score Follower')
         self.master = master
         self.frame = tkinter.Frame(master)
-        self.master.wm_title("Score follower - music21")
+        self.master.wm_title('Score follower - music21')
 
         self.scoreNameSong = 'scores/d luca gloria_Page_'
-        #'/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/Saint-Saens-Clarinet-Sonata_Page_'
-        #C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
+        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/'
+        # 'Saint-Saens-Clarinet-Sonata_Page_'
+        # C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\
+        # Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata_Page_'
         #'scores/d luca gloria_Page_'
         #'scores/d luca gloria_Page_'
         self.format = 'tiff'#'jpg'
         self.nameRecordedSong = 'luca/gloria'
-        #'/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/saint-saens.xml'
-        #'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\Saint-Saens-Clarinet-Sonata\saint-saens.xml'
-        self.pageMeasureNumbers = [] # get directly from score - the last one is the last note of the score
+        # '/Users/cuthbert/Desktop/scores/Saint-Saens-Clarinet-Sonata/saint-saens.xml'
+        # 'C:\Users\Jordi\Desktop\m21\Saint-Saens-Clarinet-Sonata\
+        # Saint-Saens-Clarinet-Sonata\saint-saens.xml'
+        # get directly from score — the last entry is the last note
+        self.pageMeasureNumbers = []
         self.totalPagesScore = 1
         self.currentLeftPage = 1
         self.pagesScore = []
@@ -83,30 +86,33 @@ class SFApp():
 
         self.sizeButton = 11
 
-        try: # for windows
+        try:  # for windows
             unused_user32 = ctypes.windll.user32 # test for error...
             self.screenResolution = [1024, 600]
-            #self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-            environLocal.printDebug("screen resolution (windows) %d x %d" % (self.screenResolution[0], self.screenResolution[1]))
+            # self.screenResolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+            environLocal.printDebug('screen resolution (windows) %d x %d'
+                                    % (self.screenResolution[0], self.screenResolution[1]))
             self.resolution = True
-        except: # mac and linux
+        except Exception:  # mac and linux
             try:
                 for screen in AppKit.NSScreen.screens():  # @UndefinedVariable
-                    self.screenResolution = [int(screen.frame().size.width), int(screen.frame().size.height)]
-                environLocal.printDebug("screen resolution (MAC or linux) %d x %d" % (self.screenResolution[0], self.screenResolution[1]))
+                    self.screenResolution = [int(screen.frame().size.width),
+                                             int(screen.frame().size.height)]
+                environLocal.printDebug('screen resolution (MAC or linux) %d x %d'
+                                        % (self.screenResolution[0], self.screenResolution[1]))
                 self.resolution = True
-            except:
+            except Exception:
                 self.screenResolution = [1024, 600]
                 environLocal.printDebug('screen resolution not detected')
                 self.resolution = False
 
         self.y = int(self.screenResolution[1] / 1.25)
-        self.x = int(self.y / 1.29)# 1.29 = side relation of letter paper
-        if self.x > self.screenResolution[0] / 2.6: # 2.6 is a factor to scale canvas
+        self.x = int(self.y / 1.29)  # 1.29 = side relation of letter paper
+        if self.x > self.screenResolution[0] / 2.6:  # 2.6 is a factor to scale canvas
             self.x = int(self.screenResolution[0] / 2.6)
             self.y = int(self.x * 1.29)
-            environLocal.printDebug("resized! too big")
-        environLocal.printDebug("one page score size %d x %d" % (self.x, self.y))
+            environLocal.printDebug('resized! too big')
+        environLocal.printDebug('one page score size %d x %d' % (self.x, self.y))
         self.filenameRequest()
 
 
@@ -117,7 +123,7 @@ class SFApp():
         self.textVarName.set(self.scoreNameSong)
         self.box.grid(row=0, column=3, columnspan=2)
 
-        self.buttonSubmit = tkinter.Button(master, text="Submit score name",
+        self.buttonSubmit = tkinter.Button(master, text='Submit score name',
                                            width=2 * self.sizeButton, command=self.startMainCanvas)
         self.buttonSubmit.grid(row=1, column=3, columnspan=2, padx=0)
 
@@ -152,13 +158,13 @@ class SFApp():
                                     str(i + 1).zfill(numberLength),
                                     self.format)
             self.listNamePages.append(namePage)
-            pilPage = PILImage.open(namePage) # @UndefinedVariable
-            if pilPage.mode != "RGB":
-                pilPage = pilPage.convert("RGB")
+            pilPage = PILImage.open(namePage)
+            if pilPage.mode != 'RGB':
+                pilPage = pilPage.convert('RGB')
             pilPage = self.cropBorder(pilPage)
-            self.pagesScore.append(pilPage.resize(self.newSize, PILImage.ANTIALIAS)) # @UndefinedVariable
-            self.phimage.append(PILImageTk.PhotoImage(self.pagesScore[i])) # @UndefinedVariable
-        environLocal.printDebug("initializeName finished")
+            self.pagesScore.append(pilPage.resize(self.newSize, PILImage.ANTIALIAS))
+            self.phimage.append(PILImageTk.PhotoImage(self.pagesScore[i]))
+        environLocal.printDebug('initializeName finished')
 
 
     def cropBorder(self, img, minColor=240, maxColor=256):
@@ -170,9 +176,9 @@ class SFApp():
         topCut = 0
         bottomCut = 0
         rightCut = 0
-        numberPixels = int(math.sqrt(len(data)/3000000)*4)
+        numberPixels = int(math.sqrt(len(data) / 3000000) * 4)
 
-        #Find top
+        # Find top
         for i in range(0, len(data), numberPixels + int(resX / 10)):
             if (data[i][0] not in colorRange
                     and data[i][1] not in colorRange
@@ -180,7 +186,7 @@ class SFApp():
                 topCut = int(i / resX)
                 break
 
-        #Find bottom
+        # Find bottom
         for i in range(len(data) - 1, 0, -1 * numberPixels - int(resX / 10)):
             if (data[i][0] not in colorRange
                     and data[i][1] not in colorRange
@@ -188,7 +194,7 @@ class SFApp():
                 bottomCut = int((len(data) - i) / resX)
                 break
 
-        #Find left
+        # Find left
         stop = False
         for xPos in range(0, resX, numberPixels):  # check every 4th pixel
             for yPos in range(xPos, resY, int(resY / 15)):
@@ -203,7 +209,7 @@ class SFApp():
                 break
 
         comprovation = False
-        while comprovation == False:
+        while not comprovation:
             bad = False
             for yPos in range(0, resY, int(resY / resY)):
                 pixelPosition = yPos * resX + leftCut - numberPixels
@@ -213,12 +219,12 @@ class SFApp():
                         or data[pixelPosition][1] not in colorRange
                         or data[pixelPosition][2] not in colorRange):
                     bad = True
-            if bad == False:
+            if not bad:
                 comprovation = True
             else:
                 leftCut = leftCut - numberPixels
 
-        #Find right
+        # Find right
         stop = False
         for xPos in range(resX - 1, 0, -numberPixels):  # check every 4th pixel
             for yPos in range(resX - xPos, resY, int(resY / 15)):
@@ -233,7 +239,7 @@ class SFApp():
                 break
 
         comprovation = False
-        while comprovation == False:
+        while not comprovation:
             bad = False
             for yPos in range(0, resY, int(resY / resY)):
                 pixelPosition = yPos * resX + resX - (rightCut - numberPixels)
@@ -243,12 +249,12 @@ class SFApp():
                         and data[pixelPosition][1] not in colorRange
                         and data[pixelPosition][2] not in colorRange):
                     bad = True
-            if bad == False:
+            if not bad:
                 comprovation = True
             else:
                 rightCut = rightCut - numberPixels
 
-        margin = int(resX * 0.03) # leave border 3% of the size
+        margin = int(resX * 0.03)  # leave border 3% of the size
 
         leftCut = leftCut - margin
         topCut = topCut - margin
@@ -262,7 +268,7 @@ class SFApp():
             bottomCut = 0
         if rightCut < 0:
             rightCut = 0
-        #print (leftCut, topCut, rightCut, bottomCut)
+        # print(leftCut, topCut, rightCut, bottomCut)
         img = img.crop((leftCut, topCut, resX - rightCut, resY - bottomCut))
         return img
 
@@ -298,9 +304,9 @@ class SFApp():
                 self.middlePages.append(noteCounter)
                 middlePagesCounter += 1
             noteCounter += 1
-        environLocal.printDebug("beginning of the pages %s" % str(self.beginningPages))
-        environLocal.printDebug("middles of the pages %s" % str(self.middlePages))
-        environLocal.printDebug("initializeScore finished")
+        environLocal.printDebug('beginning of the pages %s' % str(self.beginningPages))
+        environLocal.printDebug('middles of the pages %s' % str(self.middlePages))
+        environLocal.printDebug('initializeScore finished')
 
 
     def initializeGraphicInterface(self):
@@ -317,7 +323,7 @@ class SFApp():
         self.sizeCanvasy = self.y
 
         self.canvas1 = tkinter.Canvas(master, borderwidth=1, width=self.sizeCanvasx,
-                                      height=self.sizeCanvasy, bg="black")
+                                      height=self.sizeCanvasy, bg='black')
         self.canvas1.create_image(self.positionxLeft, self.positionyLeft,
                                   image=self.phimage[0], tag='leftImage')
 
@@ -343,37 +349,37 @@ class SFApp():
 
         self.textVar3.set('That is a good song! :)')
 
-        if self.firstTime == True:
+        if self.firstTime:
             self.button2 = tkinter.Button(master,
-                                          text="START SF",
+                                          text='Start SF',
                                           width=self.sizeButton,
                                           command=self.startScoreFollower,
                                           bg='green')
             self.button2.grid(row=5, column=3)
 
             self.button3 = tkinter.Button(master,
-                                          text="1st page",
+                                          text='1st page',
                                           width=self.sizeButton,
                                           command=self.goTo1stPage)
             self.button3.grid(row=4, column=3)
 
-            self.button3 = tkinter.Button(master, text="Last page",
+            self.button3 = tkinter.Button(master, text='Last page',
                                           width=self.sizeButton, command=self.goToLastPage)
             self.button3.grid(row=4, column=4)
 
-            self.button4 = tkinter.Button(master, text="Forward",
+            self.button4 = tkinter.Button(master, text='Forward',
                                           width=self.sizeButton, command=self.pageForward)
             self.button4.grid(row=3, column=4)
 
-            self.button7 = tkinter.Button(master, text="Backward",
+            self.button7 = tkinter.Button(master, text='Backward',
                                           width=self.sizeButton, command=self.pageBackward)
             self.button7.grid(row=3, column=3)
 
-            self.button5 = tkinter.Button(master, text="MOVE",
+            self.button5 = tkinter.Button(master, text='Move',
                                           width=self.sizeButton, command=self.moving, bg='beige')
             self.button5.grid(row=2, column=3)
 
-            self.button6 = tkinter.Button(master, text="STOP SF",
+            self.button6 = tkinter.Button(master, text='Stop SF',
                                           width=self.sizeButton, command=self.stopScoreFollower,
                                           bg='red')
             self.button6.grid(row=5, column=4)
@@ -384,10 +390,10 @@ class SFApp():
             self.label2.grid(row=7, column=3, sticky=tkinter.E)
 
             self.firstTime = False
-        environLocal.printDebug("initializeGraphicInterface finished")
+        environLocal.printDebug('initializeGraphicInterface finished')
 
     def moving(self):
-        environLocal.printDebug("moving starting")
+        environLocal.printDebug('moving starting')
         if self.currentLeftPage + 1 < self.totalPagesScore:
             self.ntimes = 0
             self.newcoords = self.positionxRight, self.positionyLeft
@@ -395,32 +401,32 @@ class SFApp():
                                       image=self.phimage[self.currentLeftPage + 1], tag='3rdImage')
 
             self.refreshTime = 40
-            if self.ScF != None:
+            if self.ScF is not None:
                 if self.ScF.scoreStream[self.ScF.lastNotePosition].measureNumber < (
                         self.pageMeasureNumbers[self.currentLeftPage + 1]
                             + self.pageMeasureNumbers[self.currentLeftPage]) / 2.0:
                     self.speed = self.speed = int(3.0 * (self.screenResolution[0] / 1024.0))
                     environLocal.printDebug(
-                            "moving when last measure was at the first 50% of the right page")
+                            'moving when last measure was at the first 50% of the right page')
                 elif self.ScF.scoreStream[self.ScF.lastNotePosition].measureNumber < 3 * (
                                 self.pageMeasureNumbers[self.currentLeftPage + 1]
                                     + self.pageMeasureNumbers[self.currentLeftPage]) / 4.0:
                     self.speed = self.speed = int(4.0 * (self.screenResolution[0] / 1024.0))
                     environLocal.printDebug(
-                            "moving when last measure was between the first 50% " +
-                            "and the 75% of the right page")
+                            'moving when last measure was between the first 50% ' +
+                            'and the 75% of the right page')
                 else:
                     self.speed = self.speed = int(5.0 * (self.screenResolution[0] / 1024.0))
-                    environLocal.printDebug("moving when last measure was after " +
-                                            "the 75% of the right page")
+                    environLocal.printDebug('moving when last measure was after ' +
+                                            'the 75% of the right page')
 
             else:
-                environLocal.printDebug("moving at default speed")
+                environLocal.printDebug('moving at default speed')
                 self.speed = 3.0 * (self.screenResolution[0] / 1024.0)
             self.master.after(500, self.movingRoutine)
 
     def movingRoutine(self):
-        environLocal.printDebug("starting movingRoutine")
+        environLocal.printDebug('starting movingRoutine')
         if self.newcoords[0] > self.positionxLeft:
             self.newcoords = self.positionxRight - self.speed * self.ntimes, self.positionyRight
             self.canvas1.coords('rightImage', self.newcoords)
@@ -431,7 +437,7 @@ class SFApp():
             self.master.after(self.refreshTime, self.movingRoutine)
 
         else:
-            environLocal.printDebug("finished main moving routine")
+            environLocal.printDebug('finished main moving routine')
             if self.currentLeftPage + 2 <= self.totalPagesScore:
                 self.canvas1.delete('3rdImage')
             self.pageForward()
@@ -460,7 +466,7 @@ class SFApp():
 
             self.canvas1.grid(row=1, column=0, columnspan=3, rowspan=7)
             self.currentLeftPage += 1
-        environLocal.printDebug("page Forward %d, %d" % (self.currentLeftPage,
+        environLocal.printDebug('page Forward %d, %d' % (self.currentLeftPage,
                                                          self.totalPagesScore))
 
     def pageBackward(self):
@@ -478,7 +484,8 @@ class SFApp():
 
             self.canvas1.grid(row=1, column=0, columnspan=3, rowspan=7)
             self.currentLeftPage -= 1
-        environLocal.printDebug("page Backward %d %d" % (self.currentLeftPage, self.totalPagesScore))
+        environLocal.printDebug('page Backward %d %d'
+                                % (self.currentLeftPage, self.totalPagesScore))
 
     def goTo1stPage(self):
         self.currentLeftPage = 1
@@ -487,7 +494,7 @@ class SFApp():
                                   image=self.phimage[0], tag='leftImage')
         self.textVar1.set('Left page: %d/%d' % (1, self.totalPagesScore))
 
-        if self.totalPagesScore > 1: #there is more than 1 page
+        if self.totalPagesScore > 1:  # there is more than 1 page
             self.canvas1.delete('rightImage')
             self.canvas1.create_image(self.positionxRight, self.positionyRight,
                                       image=self.phimage[1], tag='rightImage')
@@ -502,7 +509,7 @@ class SFApp():
                                   image=self.phimage[self.totalPagesScore - 1], tag='leftImage')
         self.textVar1.set('Left page: %d/%d' % (self.totalPagesScore, self.totalPagesScore))
 
-        if self.totalPagesScore > 1: #there is more than 1 page
+        if self.totalPagesScore > 1:  # there is more than 1 page
             self.canvas1.delete('rightImage')
             self.textVar2.set('Right page: -/-')
 
@@ -511,8 +518,8 @@ class SFApp():
 
 
     def startScoreFollower(self):
-        environLocal.printDebug("startScoreFollower starting")
-        self.button2 = tkinter.Button(self.master, text="START SF", width=self.sizeButton,
+        environLocal.printDebug('startScoreFollower starting')
+        self.button2 = tkinter.Button(self.master, text='Start SF', width=self.sizeButton,
                                       command=self.startScoreFollower, state='disable', bg='green')
         self.button2.grid(row=5, column=3)
         scNotes = self.scorePart.flatten().notesAndRests
@@ -534,7 +541,7 @@ class SFApp():
         self.textVar3.set('Start playing!')
 
         self.scoreFollower = ScF
-        #parameters for the thread 2
+        # parameters for the thread 2
         self.dummyQueue = queue.Queue()
         self.sampleQueue = queue.Queue()
         self.dummyQueue2 = queue.Queue()
@@ -544,19 +551,19 @@ class SFApp():
 
 
     def continueScoreFollower(self):
-        environLocal.printDebug("continueScoreFollower starting")
+        environLocal.printDebug('continueScoreFollower starting')
         self.ScF = self.scoreFollower
         self.timeStart = time.time()
-        if self.stop == False and (self.firstTimeSF == True or self.rt.resultInThread == False):
-            environLocal.printDebug("firstTimeSF == True or resultInThread")
+        if not self.stop and (self.firstTimeSF or not self.rt.resultInThread):
+            environLocal.printDebug('firstTimeSF == True or resultInThread')
 
             self.lastNoteString = 'Note: %d, Measure: %d, Countdown:%d, Page:%d' % (
                                     self.ScF.lastNotePosition,
                                     self.ScF.scoreStream[self.ScF.lastNotePosition].measureNumber,
                                     self.ScF.countdown,
                                     self.currentLeftPage)
-            if self.firstTimeSF == False:
-                self.textVarComments.set("1st meas: %d, last meas: %d" % (
+            if not self.firstTimeSF:
+                self.textVarComments.set('1st meas: %d, last meas: %d' % (
                                     self.ScF.scoreStream[self.ScF.firstNotePage].measureNumber,
                                     self.ScF.scoreStream[self.ScF.lastNotePage].measureNumber))
             self.firstTimeSF = False
@@ -564,39 +571,39 @@ class SFApp():
             self.ScF.firstNotePage = self.beginningPages[self.currentLeftPage - 1] - 1
             if self.currentLeftPage + 1 < self.totalPagesScore:
                 self.ScF.lastNotePage = self.middlePages[self.currentLeftPage + 1] - 1
-                environLocal.printDebug("3 or more pages remaining %d %d" % (self.firstTimeSF,
+                environLocal.printDebug('3 or more pages remaining %d %d' % (self.firstTimeSF,
                                                                              self.ScF.lastNotePage))
             elif self.currentLeftPage < self.totalPagesScore:
                 self.ScF.lastNotePage = self.beginningPages[self.currentLeftPage + 1] - 1
-                environLocal.printDebug("2 pages on the screen %d %d" % (self.firstTimeSF,
+                environLocal.printDebug('2 pages on the screen %d %d' % (self.firstTimeSF,
                                                                          self.ScF.lastNotePage))
             else:
                 self.ScF.lastNotePage = self.beginningPages[self.currentLeftPage] - 1
-                environLocal.printDebug("only one page on the screen %d %d" % (self.firstTimeSF,
+                environLocal.printDebug('only one page on the screen %d %d' % (self.firstTimeSF,
                                                                     self.ScF.lastNotePage))
 
             self.rt = RecordThread(self.dummyQueue, self.sampleQueue, self.ScF)
             self.rt.daemon = True
-            environLocal.printDebug("2nd thread about to start")
-            self.rt.start() # the 2nd thread starts here
-            self.dummyQueue.put("Start")
-            environLocal.printDebug("about to put analyzeRecording into master...")
+            environLocal.printDebug('2nd thread about to start')
+            self.rt.start()  # the 2nd thread starts here
+            self.dummyQueue.put('Start')
+            environLocal.printDebug('about to put analyzeRecording into master...')
             self.master.after(7000, self.analyzeRecording)
         else:
-            environLocal.printDebug("stopped...")
+            environLocal.printDebug('stopped...')
 
             self.button2.destroy()
-            self.button2 = tkinter.Button(self.master, text="START SF", width=self.sizeButton,
+            self.button2 = tkinter.Button(self.master, text='Start SF', width=self.sizeButton,
                                           command=self.startScoreFollower, bg='green')
             self.button2.grid(row=5, column=3)
-            self.textVarComments.set('END!! %s' % (self.rt.resultInThread))
+            self.textVarComments.set('Done. %s' % (self.rt.resultInThread))
 
 
     def analyzeRecording(self):
         self.rt.outQueue.get()
         self.textVar3.set(self.lastNoteString)
         self.ScF.firstSlot = self.beginningPages[self.currentLeftPage - 1]
-        environLocal.printDebug("**** %d %d %d %d" % (self.ScF.lastNotePosition,
+        environLocal.printDebug('**** %d %d %d %d' % (self.ScF.lastNotePosition,
                                                       self.beginningPages[self.currentLeftPage - 1],
                                                       self.currentLeftPage,
                                                       (self.ScF.lastNotePosition <
@@ -608,7 +615,7 @@ class SFApp():
                 # case in which the musician plays a note of a not displayed page
                 pageNumber = 0
                 final = False
-                while final == False:
+                while not final:
                     if (pageNumber < self.totalPagesScore
                             and self.ScF.lastNotePosition >= self.beginningPages[pageNumber]):
                         pageNumber += 1
@@ -619,41 +626,41 @@ class SFApp():
                     totalPagesToMove = 0
                 else:
                     totalPagesToMove = pageNumber - self.currentLeftPage
-    #              print "TOTAL PAGES TO MOVE", totalPagesToMove, pageNumber, self.currentLeftPage
+                    # print('Total pages to move', totalPagesToMove,
+                    #       pageNumber, self.currentLeftPage)
                     if totalPagesToMove > 0:
                         for i in range(totalPagesToMove):
                             self.pageForward()
-    #                    print "has played a note not shown in the score (forward)"
+                        # print('has played a note not shown in the score (forward)')
                     elif totalPagesToMove < 0:
                         for i in range(int(math.fabs(totalPagesToMove))):
                             self.pageBackward()
-    #                   print "has played a note not shown in the score (backward)"
-
+                        # print('has played a note not shown in the score (backward)')
 
             elif (self.ScF.lastNotePosition >= self.middlePages[self.currentLeftPage]
-                    and self.isMoving == False):  #50% case
+                    and not self.isMoving):  # 50% case
                 self.isMoving = True
                 environLocal.printDebug('moving right page to left')
                 self.moving()
-                #self.isMoving = False
-                environLocal.printDebug("playing a note of the second half part of the right page")
+                # self.isMoving = False
+                environLocal.printDebug('playing a note of the second half part of the right page')
 
             elif (self.ScF.lastNotePosition >= self.beginningPages[self.currentLeftPage]
                     and self.ScF.lastNotePosition < (self.middlePages[self.currentLeftPage]
                                                      + self.beginningPages[self.currentLeftPage])):
                 self.hits += 1
-                environLocal.printDebug("playing a note of the first half part of the right " +
-                                        "page: hits=%d" % self.hits)
+                environLocal.printDebug('playing a note of the first half part of the right ' +
+                                        'page: hits=%d' % self.hits)
                 if self.hits == 2:
                     self.hits = 0
-                    if self.isMoving == False:
+                    if not self.isMoving:
                         self.isMoving = True
                         environLocal.printDebug('moving for hits')
                         self.moving()
-                        #self.isMoving = False
+                        # self.isMoving = False
             else:
                 self.hits = 0
-                environLocal.printDebug("playing a note of the left page")
+                environLocal.printDebug('playing a note of the left page')
 
 
         print('------------------last note position', self.ScF.lastNotePosition)
@@ -661,13 +668,13 @@ class SFApp():
 
     def stopScoreFollower(self):
         self.stop = True
-        environLocal.printDebug("Stop button pressed!")
+        environLocal.printDebug('Stop button pressed!')
 
 
 
 #
 #
-#class External():
+# class External():
 #
 #    def __init__(self, newcoords, positionxLeft, positionxRight, speed, positionyRight,
 #                    canvas,currentLeftPage,totalPagesScore,newcoords3rd,
@@ -720,18 +727,18 @@ class RecordThread(threading.Thread):
 
     def run(self):
         unused_startCommand = self.inQueue.get()
-        environLocal.printDebug("start command received: recording!")
+        environLocal.printDebug('start command received: recording!')
         self.resultInThread = self.object.repeatTranscription()
-        environLocal.printDebug("repeatTranscription has been run")
+        environLocal.printDebug('repeatTranscription has been run')
         self.outQueue.put(1)
-        environLocal.printDebug("put into outQueue")
+        environLocal.printDebug('put into outQueue')
         self.outQueue.task_done()
-        environLocal.printDebug("task is done")
+        environLocal.printDebug('task is done')
 
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     root = tkinter.Tk()
     sfapp = SFApp(root)
     root.mainloop()

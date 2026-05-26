@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         demos/seaver_presentation_2008.py
 # Purpose:      Demonstrations for the Seaver 2008 demo
@@ -23,8 +22,8 @@ from music21 import converter
 
 def createEasyScale():
     s1 = converter.parse("tinynotation: 3/4 d8 e f g a b")
-#    s1.timeSignature = time1
-#    s1.showTimeSignature = True
+    # s1.timeSignature = time1
+    # s1.showTimeSignature = True
     s1.show('lily.png')
 
 def createSleep():

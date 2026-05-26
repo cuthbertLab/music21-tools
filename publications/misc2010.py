@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         misc2010.py
 # Purpose:      demos from 2010
@@ -108,7 +107,7 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
     descendingPitches = [medPitch, lowPitch, highPitch]
     ascendingPitches = [lowPitch, medPitch, highPitch]
 
-    if (numParts/2.0) == int(numParts/2.0):
+    if (numParts / 2.0) == numParts // 2:
         oddPitches = descendingPitches
         evenPitches = ascendingPitches
     else:
@@ -120,7 +119,7 @@ def towersOfHanoi(show=False, numParts=6, transpose=False):
         firstNote = note.Note("E5")
         firstNote.quarterLength = baseQuarterLength
 
-        if (i / 2.0) == int(i / 2.0):
+        if (i / 2.0) == i // 2:
             pitchCycle = copy.deepcopy(evenPitches)
         else:
             pitchCycle = copy.deepcopy(oddPitches)

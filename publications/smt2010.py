@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         smt2010.py
 # Purpose:      Demonstrations for the SMT 2010 poster session
@@ -9,15 +8,11 @@
 # Copyright:    Copyright © 2009-14 Michael Scott Asato Cuthbert
 # License:      BSD, see license.txt
 # ------------------------------------------------------------------------------
-
-
 import unittest
 from music21 import corpus, converter, note, chord, stream, environment, graph, interval, meter
 
 _MOD = 'demo/smt2010.py'
 environLocal = environment.Environment(_MOD)
-
-
 
 def ex01(show=True, *arguments, **keywords):
     '''
@@ -184,8 +179,8 @@ def ex1_revised(show=True, *arguments, **keywords):
     else:
         beethovenScore = corpus.parse('opus133.xml')  # load a MusicXML file
 
-    violin2 = beethovenScore[1]      # most programming languages start counting from 0,
-    #  so part 0 = violin 1, part 1 = violin 2, etc.
+    violin2 = beethovenScore[1]  # most programming languages start counting from 0,
+    # so part 0 = violin 1, part 1 = violin 2, etc.
     display = stream.Stream()  # an empty container for filling with found notes
     for thisMeasure in violin2.getElementsByClass('Measure'):
         notes = thisMeasure.findConsecutiveNotes(skipUnisons=True,
@@ -294,8 +289,8 @@ def corpusMelodicIntervalSearch(show=True):
         msg.append(
             'locale: %s: found %s percent melodic sevenths, out of %s intervals in %s works' % (
                                                 name, pcentSevenths, intervalCount, workCount))
-#         for key in sorted(intervalDict.keys()):
-#             print intervalDict[key]
+        # for key in sorted(intervalDict.keys()):
+        #     print(intervalDict[key])
 
     for sub in msg:
         if show:
@@ -445,10 +440,6 @@ def chordifyAnalysisBrief():
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''
         smt2010: Test non-showing functions
@@ -460,7 +451,6 @@ class Test(unittest.TestCase):
         # for func in [findPotentialPassingTones]:
         for func in [findHighestNotes, demoJesse,
                      corpusMelodicIntervalSearchBrief, findPotentialPassingTones]:
-
             # func(show=False, op133=sStream)
             func(show=False)
 
@@ -489,7 +479,3 @@ if __name__ == "__main__":
         # chordifyAnalysisBrief()
         # corpusMelodicIntervalSearchBrief()
         chordifyAnalysisBrief()
-
-# -----------------------------------------------------------------------------
-# eof
-

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         icmc2011.py
 # Purpose:      Demonstrations for the ICMC 2011 poster session
@@ -23,11 +22,6 @@ environLocal = environment.Environment(_MOD)
 
 # ------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
-
     def testStreams01(self):
         '''
         Basic stream issues
@@ -241,7 +235,7 @@ class Test(unittest.TestCase):
         # Non-Hierarchical Object Associations
         # oldIds = []
         # for idKey in n1.sites.siteDict:
-        #     print (idKey, n1.sites.siteDict[idKey].isDead)
+        #     print(idKey, n1.sites.siteDict[idKey].isDead)
         #     oldIds.append(idKey)
         # print("-------")
 
@@ -253,7 +247,7 @@ class Test(unittest.TestCase):
 
         # print(id(sp1), id(sp1.spannerStorage), n1.sites.siteDict[id(sp1.spannerStorage)].isDead)
         # if id(sp1.spannerStorage) in oldIds:
-        #     print ("******!!!!!!!!!*******")
+        #     print("******!!!!!!!!!*******")
 
         # Elements can report on what Spanner they belong to
         ss1 = n1.getSpannerSites()
@@ -552,10 +546,10 @@ class Test(unittest.TestCase):
 
     # def testScalesPy10(self):
     #     # look through s = corpus.parse('bwv1080/06')
-    #     #part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
-    #     #part = corpus.parse('bwv1080/03').parts[0]
+    #     # part = corpus.parse('bwv1080/03').measures(24, 29).parts[0]
+    #     # part = corpus.parse('bwv1080/03').parts[0]
     #
-    #     #from music21 import corpus, scale, note
+    #     # from music21 import corpus, scale, note
     #     from music21 import analysis
     #
     #     scDMelodicMinor = scale.MelodicMinorScale('d4')
@@ -620,7 +614,7 @@ class Test(unittest.TestCase):
         sc2 = scale.WholeToneScale('f#')
 
         # get pitches from any range of this scale
-        # print str(sc2.getPitches('g2', 'c4'))
+        # print(str(sc2.getPitches('g2', 'c4')))
         self.assertEqual(common.pitchList(sc2.getPitches('g2', 'c4')),
                          '[A-2, B-2, C3, D3, F-3, G-3, A-3, B-3, C4]')
 
@@ -644,7 +638,7 @@ class Test(unittest.TestCase):
     #     # Labeling a vocal part based on scale degrees derived
     #     # from key signature and from a specified target key.
     #
-    #     s = corpus.parse('hwv56/movement3-03.md')#.measures(1, 7)
+    #     s = corpus.parse('hwv56/movement3-03.md')  # .measures(1, 7)
     #     basso = s.parts['basso']
     #     s.remove(basso)
     #

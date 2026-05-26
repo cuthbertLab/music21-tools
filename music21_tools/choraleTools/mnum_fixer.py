@@ -9,12 +9,12 @@
 # ------------------------------------------------------------------------------
 from pathlib import Path
 
-from music21 import *
+from music21 import converter, corpus, musicxml
 
 p = Path('/Users/Cuthbert/Desktop/Norman_Schmidt_Chorales')
 pOut = p.parent / 'Out_Chorales'
 
-def run():    
+def run():
     files = list(p.iterdir())
     filenames = [fp.name for fp in files]
     pos = 0
@@ -29,7 +29,7 @@ def run():
             continue
         pos += 1
         runOne(c, cName)
-        
+
 def runOne(c, cName):
     pName = p / cName
     newScore = converter.parse(pName)
@@ -48,7 +48,7 @@ def runOne(c, cName):
             mns = m.measureNumberWithSuffix()
             ts = m.timeSignature or m.getContextByClass('TimeSignature')
             if ts is None:
-                print("No time signature context!", cName, part.id, mns)
+                print('No time signature context!', cName, part.id, mns)
                 continue
             barQl = ts.barDuration.quarterLength
             mQl = m.duration.quarterLength
@@ -58,7 +58,7 @@ def runOne(c, cName):
             truncated = True if not perfect and short < (barQl / 2) else False
             half = True if not perfect and short == (barQl / 2) else False
 
-            if half and priorMeasureWasIncomplete==False:
+            if half and not priorMeasureWasIncomplete:
                 priorMeasureWasIncomplete = True
                 priorMeasureDuration = mQl
                 priorMeasure = m
@@ -77,7 +77,7 @@ def runOne(c, cName):
                 m.number = mn - measureNumberShift
                 m.numberSuffix = ms
                 partNumSuffix.append((mn - measureNumberShift, ms))
-                
+
             elif perfect:
                 priorMeasureWasIncomplete = False
                 priorMeasureDuration = mQl
@@ -90,7 +90,7 @@ def runOne(c, cName):
                 m.number = 0
                 measureNumberShift += 1
             elif truncated and priorMeasureWasIncomplete and priorMeasureDuration == short:
-                print("Truncated measure following pickup...", cName, part.id, mn)
+                print('Truncated measure following pickup...', cName, part.id, mn)
                 priorMeasure.paddingRight = priorMeasure.paddingLeft
                 priorMeasure.paddingLeft = 0
                 measureNumberShift += 1
@@ -102,7 +102,7 @@ def runOne(c, cName):
                     ms = ms + 'x'
                 m.number = mn - measureNumberShift
                 m.numberSuffix = ms
-                partNumSuffix.append((mn - measureNumberShift, ms))                
+                partNumSuffix.append((mn - measureNumberShift, ms))
             elif truncated:
                 priorMeasureWasIncomplete = True
                 m.paddingRight = short
@@ -111,7 +111,7 @@ def runOne(c, cName):
                 m.number = mn - measureNumberShift
                 partNumSuffix.append((mn - measureNumberShift, ms))
             elif pickup and not priorMeasureWasIncomplete:
-                print("Pickup following complete prior measure", cName, part.id, mn)
+                print('Pickup following complete prior measure', cName, part.id, mn)
                 priorMeasureWasIncomplete = True
                 m.paddingLeft = short
                 priorMeasure = m
@@ -133,7 +133,7 @@ def runOne(c, cName):
                 m.numberSuffix = ms
                 partNumSuffix.append((mn - measureNumberShift, ms))
             elif pickup and priorMeasureWasIncomplete and ts is not priorMeasure.timeSignature:
-                print("Changing TS Pickup", cName, part.id, mn)
+                print('Changing TS Pickup', cName, part.id, mn)
                 priorMeasureWasIncomplete = True
                 m.paddingLeft = short
                 priorMeasure = m
@@ -141,13 +141,13 @@ def runOne(c, cName):
                 measureNumberShift += 1
                 m.number = mn - measureNumberShift
                 partNumSuffix.append((mn - measureNumberShift, ms))
-        
+
         partSuffixesTuple = tuple(partNumSuffix)
         allSuffixesByPart.add(partSuffixesTuple)
-        
-        
+
+
     if len(allSuffixesByPart) != 1:
-        print("Multiple conflicting measures!", cName)
+        print('Multiple conflicting measures!', cName)
         print(cName, allSuffixesByPart)
 
     try:
@@ -156,15 +156,15 @@ def runOne(c, cName):
         sKOrig = str(kOrig)
         sKNew = str(kNew)
         if kOrig.sharps != kNew.sharps:
-            print("Key changed from", kOrig, kNew)
-        
+            print('Key changed from', kOrig, kNew)
+
         if sKNew != sKOrig:
             kNew.activeSite.replace(kNew, kOrig)
             analysisKey = newScore.analyze('key')
             print('Mode would have been changed from ', sKOrig, sKNew)
             if str(analysisKey) != sKOrig:
-                print("Key mismatch: ", sKOrig, sKNew, str(analysisKey))
-            
+                print('Key mismatch: ', sKOrig, sKNew, str(analysisKey))
+
     except IndexError:
         print('no key in ', cName)
 
@@ -175,21 +175,21 @@ def runOne(c, cName):
 #     for i, pOrig in enumerate(c.parts):
 #         expander = repeat.Expander(pOrig)
 #         if not expander.isExpandable():
-#             #print('incoherent repeats', cName)
+#             # print('incoherent repeats', cName)
 #             try:
-#                 pOrig = expander.process()       
+#                 pOrig = expander.process()
 #             except Exception:
 #                 pass
-# 
+#
 #         pNew = newScore.parts[i]
 #         expander = repeat.Expander(pNew)
 #         if not expander.isExpandable():
-#             #print('incoherent repeats', cName)
+#             # print('incoherent repeats', cName)
 #             try:
 #                 pNew = expander.process()
 #             except Exception:
 #                 pass
-# 
+#
 #         origPitches = tuple([p.nameWithOctave for p in pOrig.pitches])
 #         newPitches = tuple([p.nameWithOctave for p in pNew.pitches])
 #         if origPitches != newPitches:
@@ -202,7 +202,7 @@ def runOne(c, cName):
 #                     continue
 #                 if thisP != newP:
 #                     print(i, thisP, newP)
-            
+
 
 if __name__ == '__main__':
     run()

@@ -1,6 +1,2 @@
 
-__all__ = ["theoryAnalyzer", "theoryResult", "wwnortonMGTA"]
-
-
-# -----------------------------------------------------------------------------
-# eof
+__all__ = ['theoryAnalyzer', 'theoryResult', 'wwnortonMGTA']

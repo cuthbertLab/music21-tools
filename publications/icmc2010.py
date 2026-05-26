@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Name:         icmc2010.py
 # Purpose:      icmc2010.py
@@ -157,10 +156,6 @@ def oldAccent(show=True):
 
 
 class Test(unittest.TestCase):
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''icmc2010: Test non-showing functions
         '''
@@ -168,10 +163,6 @@ class Test(unittest.TestCase):
             func(show=False)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
-
-    def runTest(self):
-        pass
-
     def testBasic(self):
         '''Test showing functions
         '''
@@ -184,7 +175,4 @@ if __name__ == "__main__":
     import music21
     # bergEx01()
     music21.mainTest(Test)
-
-# -----------------------------------------------------------------------------
-# eof
 

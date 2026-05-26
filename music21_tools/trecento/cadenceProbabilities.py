@@ -22,16 +22,16 @@ from . import cadencebook
 def getLandiniRandomStart(i):
     '''according to distribution of starting tenor notes of Landini cadences'''
     if i < 16:
-        return "A"
+        return 'A'
     if i < 35:
-        return "C"
+        return 'C'
     if i < 67:
-        return "D"
+        return 'D'
     if i < 69:
-        return "E"
+        return 'E'
     if i < 85:
-        return "F"
-    return "G"
+        return 'F'
+    return 'G'
 
 # def findsame(total=1000):
 #     '''find out how often the first note and second note should be the same
@@ -58,8 +58,8 @@ def getLandiniRandomStart(i):
 def countCadencePercentages():
     ballatas = cadencebook.BallataSheet()
     totalPieces = 0.0
-    firstNoteTotal = defaultdict(lambda:0)
-    lastNoteTotal = defaultdict(lambda:0)
+    firstNoteTotal = defaultdict(lambda: 0)
+    lastNoteTotal = defaultdict(lambda: 0)
 
     for thisWork in ballatas:
         incipit = thisWork.incipit
@@ -90,19 +90,15 @@ def countCadencePercentages():
         firstNoteTotal[firstNote.name] += 1
         lastNoteTotal[lastNote.name] += 1
 
-    print("First note distribution:")
+    print('First note distribution:')
 
     for thisName in firstNoteTotal:
         print(thisName, firstNoteTotal[thisName] / totalPieces)
 
-    print("Last note distribution:")
+    print('Last note distribution:')
 
     for thisName in lastNoteTotal:
         print(thisName, lastNoteTotal[thisName] / totalPieces)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     countCadencePercentages()
-
-# -----------------------------------------------------------------------------
-# eof
-
