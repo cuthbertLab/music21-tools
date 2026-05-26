@@ -1044,29 +1044,7 @@ def ruleFrequency(startNumber=2, endNumber=459):
 
 class Test(unittest.TestCase):
     def testRunNonCrederDonna(self):
-        pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
-        ballataObj = cadencebook.BallataSheet()
-        pieceObj = ballataObj.makeWork(pieceNum)
-
-        applyCapuaToCadencebookWork(pieceObj)
-        srcStream = pieceObj.snippets[0].parts[0].flatten().notesAndRests.stream()
-        cmpStream = pieceObj.snippets[0].parts[1].flatten().notesAndRests.stream()
-        # ignore 3rd voice for now...
-        srcStream.attachIntervalsBetweenStreams(cmpStream)
-        cmpStream.attachIntervalsBetweenStreams(srcStream)
-
-        # colorCapuaFicta(srcStream, cmpStream, 'both')
-
-        outList = []
-        for n in srcStream:
-            if n.editorial.harmonicInterval is not None:
-                outSublist = [n.name, n.editorial.harmonicInterval.simpleName]
-                if 'capuaFicta' in n.editorial:
-                    outSublist.append(repr(n.editorial.capuaFicta))
-                else:
-                    outSublist.append(None)
-                outList.append(outSublist)
-
+        _pieceObj, outList = _analyzeNonCrederDonna()
         self.assertEqual(outList,
                          [
                              ['A', 'P5', None], ['A', 'M6', None],
@@ -1078,9 +1056,6 @@ class Test(unittest.TestCase):
                              ['F', 'd5', None], ['E', 'M3', None],
                              ['D', 'P1', None]
                           ])
-        # pieceObj.asOpus().show('lily.pdf')
-
-        return pieceObj
 
     def testRun1(self):
         ballataSht = cadencebook.BallataSheet()
@@ -1133,10 +1108,41 @@ class Test(unittest.TestCase):
 #        assert n13.style.color == 'green'
 
 
+def _analyzeNonCrederDonna():
+    '''
+    Run Capua on Francesco, "Non creder, donna" (PMFC 4 6-7, BallataSheet
+    row 331). Returns ``(pieceObj, outList)`` so both ``Test`` (which only
+    asserts on ``outList``) and ``TestExternal`` (which renders ``pieceObj``
+    with LilyPond) can share the analysis without a test method returning a
+    value (deprecated in unittest).
+    '''
+    pieceNum = 331  # Francesco, PMFC 4 6-7: Non creder, donna
+    ballataObj = cadencebook.BallataSheet()
+    pieceObj = ballataObj.makeWork(pieceNum)
+
+    applyCapuaToCadencebookWork(pieceObj)
+    srcStream = pieceObj.snippets[0].parts[0].flatten().notesAndRests.stream()
+    cmpStream = pieceObj.snippets[0].parts[1].flatten().notesAndRests.stream()
+    # ignore 3rd voice for now...
+    srcStream.attachIntervalsBetweenStreams(cmpStream)
+    cmpStream.attachIntervalsBetweenStreams(srcStream)
+
+    outList = []
+    for n in srcStream:
+        if n.editorial.harmonicInterval is not None:
+            outSublist = [n.name, n.editorial.harmonicInterval.simpleName]
+            if 'capuaFicta' in n.editorial:
+                outSublist.append(repr(n.editorial.capuaFicta))
+            else:
+                outSublist.append(None)
+            outList.append(outSublist)
+
+    return pieceObj, outList
+
+
 class TestExternal(unittest.TestCase):  # pragma: no cover
     def testRunNonCrederDonna(self):
-        t = Test()
-        pObj = t.testRunNonCrederDonna()
+        pObj, _outList = _analyzeNonCrederDonna()
         pObj.asOpus().show('lily.png')
 
     def testShowFourA(self):
