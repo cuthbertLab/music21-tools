@@ -1818,7 +1818,7 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
             for item in tempStream_2:
 
                 newStream.append(item)
-                if isinstance(item, (Mensuration, notation.Divisione)):
+                if isinstance(item, MedievalMeter):
                     if mOrDInAsNone:  # If first case or changed mOrD
                         mOrD = item
                     elif mOrD.standardSymbol != item.standardSymbol:
@@ -1854,7 +1854,7 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
 
             if isinstance(e, MensuralClef):
                 pendingFirstMeasureItems.append(e)
-            elif isinstance(e, (Mensuration, notation.Divisione)):
+            elif isinstance(e, MedievalMeter):
                 if mOrD is None:
                     mOrD = e
                     pendingFirstMeasureItems.append(e)
