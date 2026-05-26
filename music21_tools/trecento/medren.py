@@ -574,20 +574,23 @@ class MensuralRest(GeneralMensuralNote, note.Rest):
     '''
 
     # scaling?
-    def __init__(self, *arguments, **keywords):
-        note.Rest.__init__(self, *arguments, **keywords)  # do not replace with super
+    def __init__(self, mensuralTypeOrAbbr: str = 'brevis', **keywords):
+        # Do not forward the mensural-type string to note.Rest: in music21 v10
+        # the first positional arg is `length` (a Duration type or quarterLength),
+        # and a mensural abbreviation like 'SB' would raise DurationException.
+        note.Rest.__init__(self, **keywords)  # do not replace with super
         GeneralMensuralNote.__init__(self)  # due to different keywords...
         self._gettingDuration = False
         self._mensuralType = 'brevis'
 
-        if arguments:
-            tOrA = arguments[0]
-            if tOrA in _validMensuralTypes:
-                self._mensuralType = tOrA
-            elif tOrA in _validMensuralAbbr:
-                self._mensuralType = _validMensuralTypes[_validMensuralAbbr.index(tOrA)]
             else:
-                raise MedRenException('%s is not a valid mensural type or abbreviation' % tOrA)
+        tOrA = mensuralTypeOrAbbr
+        if tOrA in _validMensuralTypes:
+            self._mensuralType = tOrA
+        elif tOrA in _validMensuralAbbr:
+            self._mensuralType = _validMensuralTypes[_validMensuralAbbr.index(tOrA)]
+        else:
+            raise MedRenException('%s is not a valid mensural type or abbreviation' % tOrA)
 
         self._duration = None
         self._fontString = ''
