@@ -27,6 +27,8 @@ from music21 import common
 from music21 import duration
 from music21 import exceptions21
 from music21 import meter
+
+from ._base import MedievalMeter
 from music21 import note
 from music21 import stream
 from music21 import tie
@@ -430,7 +432,7 @@ class Punctus(base.Music21Object):
         '''The utf-8 code corresponding the punctus in Cicionia font'''
         return self._fontString
 
-class Divisione(meter.TimeSignature):
+class Divisione(MedievalMeter):
     '''
     An object representing a divisione found in Trecento Notation.
     Takes one argument, nameOrSymbol. This is the name of the divisione, or
@@ -597,7 +599,7 @@ def convertTrecentoStream(inpStream, inpDiv=None):
 
     for e in measuredStream:
 
-        if ('Metadata' in e.classes) or  ('TextBox' in e.classes): #Formatting
+        if ('Metadata' in e.classes) or  ('TextBox' in e.classes):  # Formatting
             convertedStream.append(e)
 
         elif 'MensuralClef' in e.classes:
@@ -673,7 +675,7 @@ def convertBrevisLength(brevisLength, convertedStream, inpDiv=None, measureNumOf
     else:
         raise TrecentoNotationException('Cannot find or determine  or divisione')
 
-    if lenList[0] > div.minimaPerBrevis: #Longa, Maxima
+    if lenList[0] > div.minimaPerBrevis:  # Longa, Maxima
         startNote = note.Note(mList[0].pitch)
         startNote.duration = div.barDuration
         startNote.tie = tie.Tie('start')
@@ -707,11 +709,11 @@ def convertBrevisLength(brevisLength, convertedStream, inpDiv=None, measureNumOf
 
             dur = lenList[i] * mDur
 
-            if (rem - dur) > -0.0001: #Fits w/i measure up to rounding error
+            if (rem - dur) > -0.0001:  # Fits w/i measure up to rounding error
                 n.duration = duration.Duration(dur)
                 m.append(n)
                 rem -= dur
-            else: #Syncopated across barline
+            else:  # Syncopated across barline
                 n.duration = duration.Duration(rem)
                 n.tie = tie.Tie('start')
                 m.append(n)
@@ -823,7 +825,7 @@ class BrevisLengthTranslator:
         strength = 0
         curBeat = 0
         for i in range(len(lengths)):
-            if math.isclose(curBeat - round(curBeat), 0): #Rounding error
+            if math.isclose(curBeat - round(curBeat), 0):  # Rounding error
                 curBeat = round(curBeat)
 
             if div.standardSymbol in ['.i.', '.n.']:
@@ -988,9 +990,9 @@ class BrevisLengthTranslator:
         unchangeableNoteLengthsList = []
         for obj in self.brevisLength:
             minimaLength = None
-            #If its duration is set, doesn't need to be determined
+            # If its duration is set, doesn't need to be determined
 
-            #Gets rid of everything known
+            # Gets rid of everything known
             if obj.mensuralType == 'maxima':
                 minimaLength = 4.0 * self.div.minimaPerBrevis
             elif obj.mensuralType == 'longa':
@@ -1001,7 +1003,7 @@ class BrevisLengthTranslator:
                 objC = obj.classes
                 if 'GeneralMensuralNote' not in objC:
                     continue
-                #Dep on div
+                # Dep on div
                 if obj.mensuralType == 'semibrevis':
                     if 'MensuralRest' in obj.classes:
                         if self.div.standardSymbol in ['.q.', '.i.']:
@@ -1053,8 +1055,8 @@ class BrevisLengthTranslator:
         semiminima_left_flag_list = []
         semiminima_rest_list = []
 
-        #Don't need these yet
-        #===================================================================
+        # Don't need these yet
+        # ===================================================================
         # dragmas_no_flag = []
         # dragmas_RNo_flag = []
         # dragmas_LNo_flag = []
@@ -1063,7 +1065,7 @@ class BrevisLengthTranslator:
         # dragmas_RL_flag = []
         # dragmas_LR_flag = []
         # dragmas_LL_flag = []
-        #===================================================================
+        # ===================================================================
 
         for i in range(len(self.brevisLength)):
             obj = self.brevisLength[i]
@@ -1126,7 +1128,7 @@ class BrevisLengthTranslator:
                 self.minimaRemaining -= kl
 
         if None in self.unchangeableNoteLengthsList:
-            #Process everything else
+            # Process everything else
             if self.div.standardSymbol == '.i.':
                 knownLengthsList = self.translateDivI()
             elif self.div.standardSymbol == '.n.':
@@ -1274,10 +1276,10 @@ class BrevisLengthTranslator:
         semibrevis_downstem_index = None
 
         if self.numberOfDownstems > 0:
-            semibrevis_downstem_index = semibrevis_downstem[0] #Only room for one downstem
+            semibrevis_downstem_index = semibrevis_downstem[0]  # Only room for one downstem
 
         knownLengthsList = unchangeableNoteLengthsList[:]
-        extend_list = [] #brevises able to be lengthened
+        extend_list = []  # brevises able to be lengthened
         extend_num = 0
         if self.numberOfSemibreves > 0:
 
@@ -1310,7 +1312,7 @@ class BrevisLengthTranslator:
                 extend_num = min(knownLengthsList[semibrevis_downstem_index] - 3, len(extend_list))
                 shrink_tup += (semibrevis_downstem_index,)
 
-            else: #no downstems
+            else:  # no downstems
 
                 if self.hasLastSB:
                     knownLengthsList[semibrevis_list[-1]] = max(minRem, 3.0)
@@ -1319,7 +1321,7 @@ class BrevisLengthTranslator:
                     extend_num = min(knownLengthsList[-1] - 3, len(extend_list))
                     shrink_tup += -1,
 
-                elif self.numberOfSemibreves > 0: #SBs, but no last SB
+                elif self.numberOfSemibreves > 0:  # SBs, but no last SB
                     if (self.brevisLength[semibrevis_list[-1] + 1].mensuralType == 'minima'):
                         knownLengthsList[semibrevis_list[-1]] = 2.0
                         minRem -= 2.0
@@ -1430,7 +1432,7 @@ class BrevisLengthTranslator:
         extend_num = 0
 
         semibrevis_downstem_index = None
-        if self.numberOfDownstems > 0: #Only room for one downstem per brevis length
+        if self.numberOfDownstems > 0:  # Only room for one downstem per brevis length
             semibrevis_downstem_index = semibrevis_downstem[0]
 
         for ind in semibrevis_list[:-1]:
@@ -1494,18 +1496,18 @@ class BrevisLengthTranslator:
                                                                             minRem_changeable)
                         minRem_changeable -= knownLengthsList_changeable[semibrevis_downstem_index]
 
-                    else: #no downstems
+                    else:  # no downstems
 
                         if self.hasLastSB:
                             knownLengthsList_changeable[semibrevis_list[-1]] = max(2.0,
                                                                             minRem_changeable)
                             minRem_changeable -= knownLengthsList_changeable[semibrevis_list[-1]]
 
-                        elif self.numberOfSemibreves > 0: #semibreves, but no ending SB
+                        elif self.numberOfSemibreves > 0:  # semibreves, but no ending SB
                             knownLengthsList_changeable[semibrevis_list[-1]] = 2.0
                             minRem_changeable -= 2.0
 
-                else: #left_length != right_length
+                else:  # left_length != right_length
 
                     master_list = (semiminima_left_flag_list +
                                    semiminima_right_flag_list +
@@ -1541,7 +1543,7 @@ class BrevisLengthTranslator:
                             knownLengthsList_changeable[ind] = right_length
                             minRem_changeable -= right_length
 
-                        #Otherwise, we don't know. Append SM Rest to extend list.
+                        # Otherwise, we don't know. Append SM Rest to extend list.
                         else:
                             knownLengthsList_changeable[ind] = 0.5
                             extend_list.append(ind)
@@ -1561,7 +1563,7 @@ class BrevisLengthTranslator:
 
                         shrink_tup += (semibrevis_downstem_index,)
 
-                    else: #No downstems
+                    else:  # No downstems
                         if self.hasLastSB:
 
                             knownLengthsList_changeable[semibrevis_list[-1]] = max(
@@ -1571,7 +1573,7 @@ class BrevisLengthTranslator:
 
                             shrink_tup += -1,
 
-                        elif self.numberOfSemibreves > 0: #SBs, but no last SB
+                        elif self.numberOfSemibreves > 0:  # SBs, but no last SB
                             knownLengthsList_changeable[semibrevis_list[-1]] = 2.0
                             minRem_changeable -= 2.0
                             extend_num = len(extend_list)
@@ -1593,7 +1595,7 @@ class BrevisLengthTranslator:
                 self.minimaRemaining = minRem_changeable
 
                 if (tempStrength > strength) and (minRem_changeable > -0.0001):
-                    #Technically, >= 0, but rounding error occurs.
+                    # Technically, >= 0, but rounding error occurs.
                     knownLengthsList = knownLengthsList_changeable[:]
                     minRem = minRem_changeable
                     strength = tempStrength
@@ -1754,7 +1756,7 @@ class BrevisLengthTranslator:
                         knownLengthsList_changeable[ind] = left_length
                         minRem_changeable -= left_length
 
-                else: #left_length != right_length
+                else:  # left_length != right_length
 
                     master_list = (semiminima_left_flag_list +
                                    semiminima_right_flag_list +
@@ -1783,8 +1785,8 @@ class BrevisLengthTranslator:
 
                         else:
                             knownLengthsList_changeable[ind] = 0.5
-                            #extend_list.append(ind)  ### BUG: extend_list does not exist
-                        #extend_list = _removeRepeatedElements(extend_list_2)
+                            # extend_list.append(ind)  # BUG: extend_list does not exist
+                        # extend_list = _removeRepeatedElements(extend_list_2)
 
                 if self.numberOfDownstems > 0:
 
@@ -1808,7 +1810,7 @@ class BrevisLengthTranslator:
                         if extend_list_2:
                             shrink_tup += (semibrevis_downstem_index,)
 
-                    else: #downstems >= 2
+                    else:  # downstems >= 2
                         newMensuralBL = [medren.MensuralNote('A', 'SB') for i in
                                             range(len(semibrevis_downstem))]
 
@@ -1821,7 +1823,7 @@ class BrevisLengthTranslator:
 
                         for i, ind in enumerate(semibrevis_downstem):
                             knownLengthsList_changeable[ind] = dSLengthList[i]
-                        #Don't need shrink_tup. There is no room to extend anything.
+                        # Don't need shrink_tup. There is no room to extend anything.
 
                 elif self.numberOfSemibreves > 0: # no downstems
                     if self.hasLastSB:
@@ -1893,7 +1895,7 @@ def _allCombinations(combinationList, num):
     combs.insert(0, [])
     return combs
 
-def _removeRepeatedElements(listOrTup): #So I don't have to use set
+def _removeRepeatedElements(listOrTup):  # So I don't have to use set
     newListOrTup = []
 
     for item in listOrTup:
@@ -2085,7 +2087,7 @@ class TestExternal(unittest.TestCase): # pragma: no cover
                     print('norm only: %s' % SePerDureca[i + 1][j])
                     print('')
 
-        #TinySePerDureca.show('text')
+        # TinySePerDureca.show('text')
 
 class Test(unittest.TestCase):
 
