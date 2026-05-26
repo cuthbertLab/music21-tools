@@ -240,7 +240,7 @@ class Test(unittest.TestCase):
         # Non-Hierarchical Object Associations
         # oldIds = []
         # for idKey in n1.sites.siteDict:
-        #     print (idKey, n1.sites.siteDict[idKey].isDead)
+        #     print(idKey, n1.sites.siteDict[idKey].isDead)
         #     oldIds.append(idKey)
         # print("-------")
 
@@ -252,7 +252,7 @@ class Test(unittest.TestCase):
 
         # print(id(sp1), id(sp1.spannerStorage), n1.sites.siteDict[id(sp1.spannerStorage)].isDead)
         # if id(sp1.spannerStorage) in oldIds:
-        #     print ("******!!!!!!!!!*******")
+        #     print("******!!!!!!!!!*******")
 
         # Elements can report on what Spanner they belong to
         ss1 = n1.getSpannerSites()
@@ -619,7 +619,7 @@ class Test(unittest.TestCase):
         sc2 = scale.WholeToneScale('f#')
 
         # get pitches from any range of this scale
-        # print str(sc2.getPitches('g2', 'c4'))
+        # print(str(sc2.getPitches('g2', 'c4')))
         self.assertEqual(common.pitchList(sc2.getPitches('g2', 'c4')),
                          '[A-2, B-2, C3, D3, F-3, G-3, A-3, B-3, C4]')
 

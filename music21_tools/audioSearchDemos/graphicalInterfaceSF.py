@@ -619,16 +619,16 @@ class SFApp():
                     totalPagesToMove = 0
                 else:
                     totalPagesToMove = pageNumber - self.currentLeftPage
-    #              print "TOTAL PAGES TO MOVE", totalPagesToMove, pageNumber, self.currentLeftPage
+                    # print('Total pages to move', totalPagesToMove,
+                    #       pageNumber, self.currentLeftPage)
                     if totalPagesToMove > 0:
                         for i in range(totalPagesToMove):
                             self.pageForward()
-    #                    print "has played a note not shown in the score (forward)"
+                        # print('has played a note not shown in the score (forward)')
                     elif totalPagesToMove < 0:
                         for i in range(int(math.fabs(totalPagesToMove))):
                             self.pageBackward()
-    #                   print "has played a note not shown in the score (backward)"
-
+                        # print('has played a note not shown in the score (backward)')
 
             elif (self.ScF.lastNotePosition >= self.middlePages[self.currentLeftPage]
                     and not self.isMoving):  # 50% case

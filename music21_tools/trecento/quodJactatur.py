@@ -231,7 +231,7 @@ def findRetrogradeVoices(show=True):
                     thisScore = strength
                 else:
                     int1 = interval.Interval(n.pitches[0], n.pitches[1])
-                    # print int1.generic.simpleUndirected
+                    # print(int1.generic.simpleUndirected)
                     if int1.generic.simpleUndirected in [1, 3, 4, 5]:
                         thisScore = strength
                     elif int1.generic.simpleUndirected == 6:  # less good
@@ -429,7 +429,7 @@ def multipleSolve():
                                                         continue
                                                         # same as lowestInvert == True and
                                                         #    middleInvert == False
-                                                    if (transLowest == 1 and transMiddle == 1):
+                                                    if transLowest == 1 and transMiddle == 1
                                                         continue
                                                         # if transHighest == 4 then it's the same
                                                         # as (-4, -4, 1) except for a few tritones

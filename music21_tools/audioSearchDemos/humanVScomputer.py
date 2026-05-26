@@ -31,7 +31,7 @@ def runGame():
     time.sleep(2)
     print('3, 2, 1 GO!')
     nameNotes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    while(good):
+    while good:
         randomNumber = random.randint(0, 6)
         octaveNumber = 4 # I can put a random number here...
         fullNameNote = '%s%d' % (nameNotes[randomNumber], octaveNumber)

@@ -1219,7 +1219,7 @@ if __name__ == '__main__':
     # runPiece(267)
     # (totalDict, foundPieceOpus) = findCorrections(correctionType='min6',
     #             startPiece=21, endPiece=22)
-    # print totalDict
+    # print(totalDict)
     # if len(foundPieceOpus) > 0:
     #     foundPieceOpus.show('lily.png')
     import music21

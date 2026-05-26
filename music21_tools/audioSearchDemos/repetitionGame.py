@@ -35,9 +35,9 @@ class repetitionGame():
 
         self.round = self.round + 1
         print('self.round %d' % self.round)
-    #    print "NOTES UNTIL NOW: (this will not be shown in the final version)"
-    #    for k in range(len(self.gameNotes)):
-    #        print self.gameNotes[k].fullName
+        # print('Notes until now: (this will not be shown in the final version)')
+        # for k in range(len(self.gameNotes)):
+        #    print(self.gameNotes[k].fullName)
 
         seconds = 2 + self.round
         freqFromAQList = base.getFrequenciesFromMicrophone(length=seconds, storeWaveFilename=None)

@@ -17,13 +17,13 @@ from music21_tools import trecento
 # def example2():
 #     handel = corpus.parse('hwv56/movement3-05.md')
 #     fe = features.jSymbolic.TripleMeterFeature(handel)
-#     print (fe.extract().vector)
+#     print(fe.extract().vector)
 #
 #     # no longer works...
 #     soft = converter.parse("https://github.com/cuthbertLab/music21/raw/master/music21/" +
 #                            "corpus/leadSheet/fosterBrownHair.mxl")
 #     fe.setData(soft)
-#     print (fe.extract().vector)
+#     print(fe.extract().vector)
 
 class MusicaFictaFeature(features.FeatureExtractor):
     name = 'Musica Ficta'

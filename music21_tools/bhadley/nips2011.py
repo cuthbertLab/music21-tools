@@ -328,8 +328,8 @@ def getLeadsheetDatesFromBillboard():
                         if e.lower() == piece.metadata.movementName.lower():
                             rank =  (tempList.index(x) + 1 )  # position on Billboard 100
 
-                # print "Title:", piece.metadata.movementName, "  Composer:", piece.metadata.composer, "  Date:", date, "  Position on Billboard:", rank
-                # print "Title:", piece.metadata.movementName, "  Date:", date
+                # print('Title:', piece.metadata.movementName, '  Composer:', piece.metadata.composer, '  Date:', date, '  Position on Billboard:', rank)
+                # print('Title:', piece.metadata.movementName, '  Date:', date)
                 matches = matches + 1
                 outputjson = outputjson + '{"%s":[%s,%s]}, ' % (i, date, rank)
         if (i % 500) == 0:

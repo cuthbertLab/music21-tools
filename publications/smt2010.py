@@ -293,8 +293,8 @@ def corpusMelodicIntervalSearch(show=True):
         msg.append(
             'locale: %s: found %s percent melodic sevenths, out of %s intervals in %s works' % (
                                                 name, pcentSevenths, intervalCount, workCount))
-#         for key in sorted(intervalDict.keys()):
-#             print intervalDict[key]
+        # for key in sorted(intervalDict.keys()):
+        #     print(intervalDict[key])
 
     for sub in msg:
         if show:

@@ -30,7 +30,7 @@ def countTimeSig():
             pass
         else:
             totalPieces += 1
-            if (thisTime in timeSigCounter):
+            if thisTime in timeSigCounter
                 timeSigCounter[thisTime] += 1
             else:
                 timeSigCounter[thisTime] = 1
@@ -167,8 +167,8 @@ def checkValidity():
 
 
 # temporarily commenting out for adding standard test approach
-# if (__name__ == "__main__"):
-# #    countTimeSig()
+# if __name__ == "__main__"
+#     # countTimeSig()
 #     makePDFfromPiecesWithCapua()
 
 

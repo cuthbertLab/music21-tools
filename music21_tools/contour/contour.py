@@ -796,7 +796,7 @@ def _runExperiment():
 
             if successes > 50:
                 totalSuccesses += 1
-                # print "GREAT SUCCESS!"
+                # print('Great success!')
             else:
                 totalFailures += 1
                 print('failure: chorale ' + goodChorales[j])  # index ", str(i)
@@ -821,7 +821,7 @@ def _plotChoraleContours():
     pass
 
 
-#------------------------
+# ------------------------
 class Test(unittest.TestCase):
 
     def runTest(self):
