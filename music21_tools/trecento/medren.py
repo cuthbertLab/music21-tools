@@ -262,7 +262,7 @@ class GeneralMensuralNote(base.Music21Object):
         mensural type is tested rather than equality of duration
 
         >>> from music21 import stream
-        
+
         >>> m = GeneralMensuralNote('minima')
         >>> n = GeneralMensuralNote('brevis')
         >>> m == n
@@ -431,7 +431,7 @@ class GeneralMensuralNote(base.Music21Object):
         If no context is present, returns None.
 
         >>> from music21_tools import trecento
-        
+
         >>> gmn = GeneralMensuralNote('longa')
         >>> gmn._determineMensurationOrDivisione()
         >>>
@@ -2132,7 +2132,7 @@ if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'importPlusRelative')  # TestExternal)
     # music21.testConvertMensuralMeasure()
-    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') #liber 277 (pdf401)
+    # almaRedemptoris = converter.parse("C4 E F G A G G G A B c G", '4/4') # Liber 277 (pdf 401)
     # puer = converter.parse('G4 d d d e d c c d c e d d', '4/4') # puer natus est 408 (pdf 554)
     # almaRedemptoris.title = "Alma Redemptoris Mater LU p. 277"
     # puer.title = "Puer Natus Est Nobis"

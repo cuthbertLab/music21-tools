@@ -484,14 +484,10 @@ class Test(unittest.TestCase):
         pass
 
 
-
 if __name__ == '__main__':
     import music21
     music21.mainTest('importPlusRelative')
-#    bentWolfSolution()
-#    possibleSolution()
-#    findRetrogradeVoices()
+    # bentWolfSolution()
+    # possibleSolution()
+    # findRetrogradeVoices()
     pass
-# -----------------------------------------------------------------------------
-# eof
-

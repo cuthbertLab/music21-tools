@@ -28,7 +28,6 @@ from music21 import environment
 _MOD = 'chant.py'
 environLocal = environment.Environment(_MOD)
 
-
 def fromStream(inputStream):
     if inputStream.metadata is not None:
         incipit = inputStream.metadata.title
@@ -574,6 +573,3 @@ _DOC_ORDER = []
 if __name__ == '__main__':
     import music21
     music21.mainTest(Test, 'moduleRelative')
-
-# -----------------------------------------------------------------------------
-# eof

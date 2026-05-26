@@ -185,7 +185,3 @@ if __name__ == '__main__':
     #makePDFfromPiecesWithCapua()
     import music21
     music21.mainTest(Test, 'moduleRelative')
-
-
-# -----------------------------------------------------------------------------
-# eof

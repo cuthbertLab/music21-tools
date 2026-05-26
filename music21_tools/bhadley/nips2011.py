@@ -87,7 +87,7 @@ def nipsBuild(useOurExtractors=True, buildSet=1, evaluationMethod='coarse'):
         ## ignore 1960s and 1970s pieces...
         if year < 1961 or year >= 1981:
             fn = leadsheetDir + str(wf) + '.mxl'
-            print (fn, year, entryDict[wf][1])
+            print(fn, year, entryDict[wf][1])
             s = converter.parse(fn)
             title_id = s.metadata.title
             #cv = year  # if not using coarse but instead using the exact year as the class value
@@ -312,7 +312,7 @@ def getLeadsheetDatesFromBillboard():
         fn = fn.replace(' ', '0')
         dst = os.path.join(DIR, fn)
         dates = []
-        print (dst)
+        print(dst)
         if os.path.exists(dst):
             piece = converter.parse(dst)
             for year in DICT:
@@ -336,15 +336,15 @@ def getLeadsheetDatesFromBillboard():
                 outputjson = outputjson + '{"%s":[%s,%s]}, ' % (i, date, rank)
         if (i % 500) == 0:
             j = ((i - 1000) / (11938.00)) * 100.00
-            print ('%s %%' % round(j, 2))
-            print (outputjson)
+            print('%s %%' % round(j, 2))
+            print(outputjson)
 
 
 
     foo = len(outputjson) - 2
     outputjson = outputjson[0:foo] + "]'"
-    print (outputjson)
-    print ('FINISHED! Found this many matches: ', matches)
+    print(outputjson)
+    print('FINISHED! Found this many matches: ', matches)
 
 def probabilityOfChance():
     '''
@@ -430,7 +430,7 @@ def probabilityOfChance():
     k = 148 #number of times music21 found correct date (successes)
     n = TOTAL_TRIALS #total number of trials
     p = getPFromExperiment()
-    print ('The probability of a successful guess, as calculated by previous experiment', p)
+    print('The probability of a successful guess, as calculated by previous experiment', p)
     q = 1 - p
     prob = 0.0
     #Probability of getting 148 or more correct (sum
@@ -438,7 +438,7 @@ def probabilityOfChance():
     for k in range(k, TOTAL_TRIALS):
         prob = prob + BinomialProbability(n, k, p, q)
 
-    print ('The probability that the computer would guess correctly 69% or more of the time', prob)
+    print('The probability that the computer would guess correctly 69% or more of the time', prob)
 
 if __name__ == '__main__':
     #nipsBuild()

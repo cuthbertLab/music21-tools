@@ -196,10 +196,3 @@ if __name__ == '__main__':
     elif len(sys.argv) > 1:
         t = Test()
         t.testBasic(cycles=None, show=True)
-
-
-
-
-# -----------------------------------------------------------------------------
-# eof
-

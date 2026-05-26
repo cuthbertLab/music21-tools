@@ -46,9 +46,9 @@ a direct pointer to the original object in the score.
 * :meth:`~Analyzer.getMelodicIntervals`
 
 You can then iterate through these objects and access the attributes directly. Here is an example
-of this that will analyze the root motion in a score:
+of this that will analyze the root motion in a score::
 
-
+    >>> from music21 import harmony
     >>> p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony').stream()
     >>> p = harmony.realizeChordSymbolDurations(p)
     >>> averageMotion = 0
@@ -122,19 +122,18 @@ As an example, the steps involved in these methods calls include:
 7. if all checks are true, the passingTone or neighborTone is removed from the score
    (because the whole point of parsing the score into voiceLeadingObjects was to
    maintain a direct pointer to the original object in the score.)
-8. the gap created by the deletion is filled in by extending the duration of the previous note
+8. the gap created by the deletion is filled in by extending the duration of the previous note::
 
+    >>> p = corpus.parse('bwv6.6').measures(0, 20)
+    >>> #_DOCS_SHOW p.show()
+        .. image:: images/completebach.*
+        :width: 500
 
->>> p = corpus.parse('bwv6.6').measures(0, 20)
->>> #_DOCS_SHOW p.show()
-    .. image:: images/completebach.*
-    :width: 500
-
->>> ads.removePassingTones(p)
->>> ads.removeNeighborTones(p)
->>> #_DOCS_SHOW p.show()
-    .. image:: images/bachnononharm.*
-    :width: 500
+    >>> ads.removePassingTones(p)
+    >>> ads.removeNeighborTones(p)
+    >>> #_DOCS_SHOW p.show()
+        .. image:: images/bachnononharm.*
+        :width: 500
 
 ===========================================
 Detailed Method Documentation
@@ -161,10 +160,8 @@ from music21 import chord
 from music21 import corpus
 from music21 import duration
 from music21 import exceptions21
-from music21 import harmony  # used in doctests
 from music21 import interval
 from music21 import key
-from music21 import meter  # used in doctests
 from music21 import note
 from music21 import roman
 from music21 import stream
@@ -178,29 +175,29 @@ environLocal = environment.Environment(_MOD)
 
 class Analyzer:
     _DOC_ORDER = ['getVerticalities', 'getVLQs', 'getThreeNoteLinearSegments',
-              'getLinearSegments', 'getVerticalityNTuplets', 'getHarmonicIntervals',
-              'getMelodicIntervals', 'getParallelFifths', 'getPassingTones',
-              'getNeighborTones', 'getParallelOctaves', 'identifyParallelFifths',
-              'identifyParallelOctaves', 'identifyParallelUnisons',
-              'identifyHiddenFifths', 'identifyHiddenOctaves', 'identifyImproperResolutions',
-              'identifyLeapNotSetWithStep', 'identifyOpensIncorrectly',
-              'identifyClosesIncorrectly',
-              'identifyPassingTones', 'removePassingTones', 'identifyNeighborTones',
-              'removeNeighborTones', 'identifyDissonantHarmonicIntervals',
-              'identifyImproperDissonantIntervals',
-              'identifyDissonantMelodicIntervals', 'identifyObliqueMotion',
-              'identifySimilarMotion',
-              'identifyParallelMotion',
-              'identifyContraryMotion', 'identifyOutwardContraryMotion',
-              'identifyInwardContraryMotion', 'identifyAntiParallelMotion',
-              'identifyTonicAndDominant', 'identifyHarmonicIntervals',
-              'identifyScaleDegrees', 'identifyMotionType',
-              'identifyCommonPracticeErrors',
-              'addAnalysisData', 'removeFromAnalysisData', 'setKeyMeasureMap',
-              'getKeyMeasureMap', 'getKeyAtMeasure',
-              'getResultsString', 'colorResults', 'getHTMLResultsString',
-              'getAllPartNumPairs', 'getNotes'
-            ]
+                  'getLinearSegments', 'getVerticalityNTuplets', 'getHarmonicIntervals',
+                  'getMelodicIntervals', 'getParallelFifths', 'getPassingTones',
+                  'getNeighborTones', 'getParallelOctaves', 'identifyParallelFifths',
+                  'identifyParallelOctaves', 'identifyParallelUnisons',
+                  'identifyHiddenFifths', 'identifyHiddenOctaves', 'identifyImproperResolutions',
+                  'identifyLeapNotSetWithStep', 'identifyOpensIncorrectly',
+                  'identifyClosesIncorrectly',
+                  'identifyPassingTones', 'removePassingTones', 'identifyNeighborTones',
+                  'removeNeighborTones', 'identifyDissonantHarmonicIntervals',
+                  'identifyImproperDissonantIntervals',
+                  'identifyDissonantMelodicIntervals', 'identifyObliqueMotion',
+                  'identifySimilarMotion',
+                  'identifyParallelMotion',
+                  'identifyContraryMotion', 'identifyOutwardContraryMotion',
+                  'identifyInwardContraryMotion', 'identifyAntiParallelMotion',
+                  'identifyTonicAndDominant', 'identifyHarmonicIntervals',
+                  'identifyScaleDegrees', 'identifyMotionType',
+                  'identifyCommonPracticeErrors',
+                  'addAnalysisData', 'removeFromAnalysisData', 'setKeyMeasureMap',
+                  'getKeyMeasureMap', 'getKeyAtMeasure',
+                  'getResultsString', 'colorResults', 'getHTMLResultsString',
+                  'getAllPartNumPairs', 'getNotes',
+                  ]
 
 
     def __init__(self):
@@ -233,8 +230,6 @@ class Analyzer:
                 dd = defaultdict(list)
                 dd['ResultDict'] = defaultdict(dict)
                 self.store[p.id] = dd
-
-
 
     # --------------------------------------------------------------------------------------
     # Methods to split the score up into little pieces for analysis
@@ -285,6 +280,7 @@ class Analyzer:
          <music21.voiceLeading.Verticality contentDict=defaultdict(<... 'list'>,
                  {0: [<music21.chord.Chord A B C>]})>]
 
+        >>> from music21 import harmony
         >>> sc3 = stream.Score()
         >>> p1 = stream.Part()
         >>> p1.append(harmony.ChordSymbol('C', quarterLength = 1))
@@ -479,6 +475,7 @@ class Analyzer:
         <music21.interval.ChromaticInterval -7> <music21.interval.ChromaticInterval -2>
         <music21.interval.ChromaticInterval 5> <music21.interval.ChromaticInterval 0>
 
+        >>> from music21 import *
         >>> sc3 = stream.Score()
         >>> part2 = stream.Part()
         >>> part2.append(harmony.ChordSymbol('D-', quarterLength=1))
@@ -522,7 +519,7 @@ class Analyzer:
         setList = []
         for obj in objectList:
             if obj != None:
-                setList.append(set (obj.classes) )
+                setList.append(set(obj.classes) )
 
         if setList:
             lastSet = setList[0]
@@ -1445,6 +1442,7 @@ class Analyzer:
         :class:`~music21.editorial.NoteEditorial` value of
         editorialValue at ``note.editorial.[editorialDictKey]``
 
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1485,8 +1483,7 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified by
         :meth:`~music21.voiceLeading.VerticalityTriplet.hasPassingTone`
 
-
-
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1526,8 +1523,7 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified
         by :meth:`~music21.voiceLeading.VerticalityTriplet.hasNeighborTone`
 
-
-
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1568,7 +1564,7 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
-
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1613,6 +1609,7 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -1662,8 +1659,7 @@ class Analyzer:
         on weak beats). unaccentedOnly
         by default set to True
 
-
-
+        >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
         >>> part0 = stream.Part()
@@ -2459,17 +2455,17 @@ class TheoryAnalyzerException(exceptions21.Music21Exception):
 class Test(unittest.TestCase):
 
     def testChordMotionExample(self):
-        pass # in doctest
-#         from music21 import harmony, theoryAnalysis
-#         p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony')
-#         harmony.realizeChordSymbolDurations(p)
-#         averageMotion = 0
-#         l = ads.getLinearSegments(p, 0, 2, ['Harmony'])
-#         for x in l:
-#             averageMotion += abs(x.rootInterval().intervalClass)
-#         averageMotion = averageMotion // len(l)
-#         self.assertEqual(averageMotion, 4)
-#
+        pass  # in doctest
+        # from music21 import harmony, theoryAnalysis
+        # p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony')
+        # harmony.realizeChordSymbolDurations(p)
+        # averageMotion = 0
+        # l = ads.getLinearSegments(p, 0, 2, ['Harmony'])
+        # for x in l:
+        #     averageMotion += abs(x.rootInterval().intervalClass)
+        # averageMotion = averageMotion // len(l)
+        # self.assertEqual(averageMotion, 4)
+
     def testFastVerticalityCheck(self):
         sc = stream.Score()
         part0 = stream.Part()
@@ -2496,8 +2492,7 @@ class Test(unittest.TestCase):
                          'Roman Numeral of B-,G is I')
 
 
-class TestExternal(unittest.TestCase): # pragma: no cover
-
+class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
         pass
 
@@ -2507,12 +2502,11 @@ class TestExternal(unittest.TestCase): # pragma: no cover
             '/Users/bhadley/Dropbox/Music21Theory/TestFiles/TheoryAnalyzer/TATest.xml')
         ads = Analyzer()
         ads.identifyCommonPracticeErrors(sc)
+        # sc.show()
 
-        #sc.show()
     def removeNHTones(self):
         p = corpus.parse('bwv6.6').measures(0, 20)
         p.show()
-
         ads = Analyzer()
         ads.removePassingTones(p)
         ads.removeNeighborTones(p)
@@ -2520,4 +2514,4 @@ class TestExternal(unittest.TestCase): # pragma: no cover
 
 if __name__ == '__main__':
     import music21
-    music21.mainTest(Test, 'moduleRelative') #, runTest='testFastVerticalityCheck')
+    music21.mainTest(Test, 'moduleRelative')

@@ -290,9 +290,3 @@ def savedSearches():
 if __name__ == '__main__':
     savedSearches()
     # audioVirelaiSearch()
-
-
-
-# -----------------------------------------------------------------------------
-# eof
-

@@ -82,8 +82,5 @@ class repetitionGame():
 if __name__ == '__main__':
     rG = repetitionGame()
     good = True
-    while good == True:
+    while good:
         good = rG.game()
-
-# -----------------------------------------------------------------------------
-# eof
