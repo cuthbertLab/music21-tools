@@ -56,25 +56,25 @@ class repetitionGame():
                 i = i + 1
                 j = j + 1
             else:
-                print('WRONG NOTE! You played', notesList[i].fullName,
-                      'and should have been', self.gameNotes[j].fullName)
+                print('Wrong note. You played', notesList[i].fullName,
+                      'and it should have been', self.gameNotes[j].fullName)
                 self.good = False
 
         if self.good and j != len(self.gameNotes):
             self.good = False
-            print('YOU ARE VERY SLOW!!! PLAY FASTER NEXT TIME!')
+            print("Time's up — try a faster pace next round.")
 
         if not self.good:
-            print('YOU LOSE!! HAHAHAHA')
+            print('Game over.')
 
         else:
             while i < len(notesList) and notesList[i].name == 'rest':
                 i = i + 1
             if i < len(notesList):
                 self.gameNotes.append(notesList[i])  #add a new note
-                print('WELL DONE!')
+                print('Well done!')
             else:
-                print('YOU HAVE NOT ADDED A NEW NOTE! REPEAT AGAIN NOW')
+                print('No new note added — please add one before repeating.')
                 self.round = self.round - 1
         return self.good
 

@@ -1002,7 +1002,7 @@ class ModalCounterpoint:
         while (not goodHarmony or not goodMelody or not thirdsGood or not sixthsGood):
             environLocal.printDebug([''])
             environLocal.printDebug(['-------------------------------------'])
-            environLocal.printDebug(['STARTING OVER NOW'])
+            environLocal.printDebug(['starting over'])
             try:
                 top = self.getValidSecondVoice(cantusFirmus, minorScale, 'random')
                 top = self.raiseLeadingTone(top, minorScale)

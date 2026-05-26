@@ -345,7 +345,7 @@ class SFApp():
 
         if self.firstTime:
             self.button2 = tkinter.Button(master,
-                                          text='START SF',
+                                          text='Start SF',
                                           width=self.sizeButton,
                                           command=self.startScoreFollower,
                                           bg='green')
@@ -369,11 +369,11 @@ class SFApp():
                                           width=self.sizeButton, command=self.pageBackward)
             self.button7.grid(row=3, column=3)
 
-            self.button5 = tkinter.Button(master, text='MOVE',
+            self.button5 = tkinter.Button(master, text='Move',
                                           width=self.sizeButton, command=self.moving, bg='beige')
             self.button5.grid(row=2, column=3)
 
-            self.button6 = tkinter.Button(master, text='STOP SF',
+            self.button6 = tkinter.Button(master, text='Stop SF',
                                           width=self.sizeButton, command=self.stopScoreFollower,
                                           bg='red')
             self.button6.grid(row=5, column=4)
@@ -512,7 +512,7 @@ class SFApp():
 
     def startScoreFollower(self):
         environLocal.printDebug('startScoreFollower starting')
-        self.button2 = tkinter.Button(self.master, text='START SF', width=self.sizeButton,
+        self.button2 = tkinter.Button(self.master, text='Start SF', width=self.sizeButton,
                                       command=self.startScoreFollower, state='disable', bg='green')
         self.button2.grid(row=5, column=3)
         scNotes = self.scorePart.flatten().notesAndRests
@@ -586,10 +586,10 @@ class SFApp():
             environLocal.printDebug('stopped...')
 
             self.button2.destroy()
-            self.button2 = tkinter.Button(self.master, text='START SF', width=self.sizeButton,
+            self.button2 = tkinter.Button(self.master, text='Start SF', width=self.sizeButton,
                                           command=self.startScoreFollower, bg='green')
             self.button2.grid(row=5, column=3)
-            self.textVarComments.set('END!! %s' % (self.rt.resultInThread))
+            self.textVarComments.set('Done. %s' % (self.rt.resultInThread))
 
 
     def analyzeRecording(self):

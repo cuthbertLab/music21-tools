@@ -96,11 +96,11 @@ class SFApp():
     def startGame(self):
         #master = self.master
         self.good = True
-        self.textFinal.set('WAIT...')
+        self.textFinal.set('Wait...')
         #self.boxName6.grid(row=4, column=0, columnspan=3)
         self.rG = repetitionGame.repetitionGame()
         self.good = True
-        self.textFinal.set('GO!')
+        self.textFinal.set('Go!')
         self.master.after(0, self.mainLoop)
 
 
@@ -131,9 +131,9 @@ class SFApp():
             self.master.after(10, self.mainLoop)
         else:
             if self.counter == -1:
-                self.textP1Result.set('WINNER!')
+                self.textP1Result.set('Winner!')
                 #boxName.grid(row=2, column=0)
-                self.textP2Result.set('LOSER')
+                self.textP2Result.set('Second place')
                 #boxName.grid(row=2, column=2)
                 self.canvas1.create_oval(1, 1, 40, 40, fill='yellow')
                 self.canvas1.grid(row=1, column=0)
@@ -141,8 +141,8 @@ class SFApp():
                 self.canvas2.create_oval(1, 1, 40, 40, fill='grey')
                 self.canvas2.grid(row=1, column=2)
             else:
-                self.textP1Result.set('LOSER')
-                self.textP2Result.set('WINNER!')
+                self.textP1Result.set('Second place')
+                self.textP2Result.set('Winner!')
 
                 self.canvas1.create_oval(1, 1, 40, 40, fill='grey')
                 self.canvas1.grid(row=1, column=0)

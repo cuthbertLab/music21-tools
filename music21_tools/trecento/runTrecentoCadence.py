@@ -120,7 +120,7 @@ def makePDFfromPiecesWithCapua(start=2, finish=3):
             if randomPiece.incipit:
                 retrievedPieces.append(randomPiece)
         except:
-            raise Exception('Ugg ' + str(i))
+            raise Exception('Could not retrieve random piece at index ' + str(i))
 
 #    lilyString = ""
 #    retrievedPieces.sort(key=sortByPMFC)

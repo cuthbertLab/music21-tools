@@ -38,8 +38,8 @@ def runGame():
         gameNotes.append(note.Note(fullNameNote))
 
         roundNumber = roundNumber + 1
-        print('ROUND %d' % roundNumber)
-        print('NOTES UNTIL NOW: (this will not be shown in the final version)')
+        print('Round %d' % roundNumber)
+        print('Notes so far (debug-only, will not appear in the final version):')
         for k in range(len(gameNotes)):
             print(gameNotes[k].fullName)
 
@@ -58,15 +58,15 @@ def runGame():
                 i = i + 1
                 j = j + 1
             else:
-                print('WRONG NOTE! You played', notesList[i].fullName, 'and should have been', gameNotes[j].fullName)
+                print('Wrong note. You played', notesList[i].fullName, 'and it should have been', gameNotes[j].fullName)
                 good = False
 
         if good and j != len(gameNotes):
             good = False
-            print('YOU ARE VERY SLOW!!! PLAY FASTER NEXT TIME!')
+            print("Time's up — try a faster pace next round.")
 
         if not good:
-            print('GAME OVER! TOTAL ROUNDS: %d' % roundNumber)
+            print('Game over. Total rounds: %d' % roundNumber)
 
 if __name__ == '__main__':
     runGame()

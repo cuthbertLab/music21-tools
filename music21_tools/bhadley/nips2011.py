@@ -344,7 +344,7 @@ def getLeadsheetDatesFromBillboard():
     foo = len(outputjson) - 2
     outputjson = outputjson[0:foo] + "]'"
     print(outputjson)
-    print('FINISHED! Found this many matches: ', matches)
+    print('Finished. Found this many matches: ', matches)
 
 def probabilityOfChance():
     '''
