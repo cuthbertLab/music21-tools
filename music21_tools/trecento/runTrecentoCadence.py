@@ -10,7 +10,6 @@
 '''
 Python script to find out certain statistics about the trecento cadences
 '''
-
 import unittest
 from . import cadencebook
 

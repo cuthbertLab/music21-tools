@@ -40,6 +40,7 @@ class TrecentoSheet:
 
     See the specialized subclasses below, esp. BallataSheet for more details.
 
+    >>> from music21_tools.trecento.cadencebook import TrecentoSheet
     >>> kyrieSheet = TrecentoSheet(sheetname='kyrie')
     >>> for thisKyrie in kyrieSheet:
     ...     print(thisKyrie.title)
@@ -113,7 +114,7 @@ class TrecentoSheet:
 
         Row 1 is a header, so makeWork(2) gives the first piece.
 
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> ballataSheet = BallataSheet()
         >>> b = ballataSheet.makeWork(3)
         >>> print(b.title)
@@ -126,7 +127,7 @@ class TrecentoSheet:
         '''
         return the first work with TITLE in the work's title.  Case insensitive
 
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> ballataSheet = BallataSheet()
         >>> farina = ballataSheet.workByTitle('farina')
         >>> print(farina.title)
@@ -163,24 +164,18 @@ class CacciaSheet(TrecentoSheet):
     '''
     shortcut to a worksheet containing all the caccia cadences encoded
 
-
     2011-May: none encoded.
 
-
-
+    >>> from music21_tools.trecento.cadencebook import CacciaSheet
     >>> cacciaSheet = CacciaSheet()
     '''
-
     sheetname = 'fischer_caccia'
 
 class MadrigalSheet(TrecentoSheet):
     '''
     shortcut to a worksheet containing all the madrigal cadences encoded
 
-
     2011-May: none encoded.
-
-
     '''
 
     sheetname = 'fischer_madr'
@@ -189,11 +184,8 @@ class BallataSheet(TrecentoSheet):
     '''
     shortcut to a worksheet containing all the ballata cadences encoded.
 
-
     2011-May: over 400 of 460 encoded; unencoded pieces are mostly fragmentary.
-
     '''
-
     sheetname = 'fischer_ballata'
 
     def makeWork(self, rownumber=1):
@@ -210,9 +202,9 @@ class GloriaSheet(TrecentoSheet):
     French, Spanish, and Italian Gloria's openings of the Et in Terra, Dominus Deus,
     Qui Tollis, encoded along with the ends of the Cum Sancto and Amen.
 
-
     2011-August: all encoded except some very fragmentary pieces.
 
+    >>> from music21_tools.trecento.cadencebook import GloriaSheet
     >>> cadenceSpreadSheet = GloriaSheet()
     >>> gloriaNo20 = cadenceSpreadSheet.makeWork(20)
     >>> incipit = gloriaNo20.incipit
@@ -249,9 +241,7 @@ class GloriaSheet(TrecentoSheet):
         {16.0} <music21.stream.Measure 9 offset=16.0>
             {0.0} <music21.note.Note E>
             {2.0} <music21.bar.Barline type=final>
-
     '''
-
     sheetname = 'gloria'
 
     def makeWork(self, rownumber=1):
@@ -298,7 +288,7 @@ class TrecentoCadenceWork:
 
     test just creating an empty TrecentoCadenceWork:
 
-
+    >>> from music21_tools.trecento.cadencebook import TrecentoCadenceWork
     >>> tcw = TrecentoCadenceWork()
     '''
     beginSnippetPositions = [8]
@@ -365,13 +355,14 @@ class TrecentoCadenceWork:
         '''
         returns all snippets as a :class:`~music21.stream.Opus` object
 
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> deduto = BallataSheet().workByTitle('deduto')
         >>> deduto.title
         'Deduto sey a quel'
         >>> dedutoScore = deduto.asOpus()
         >>> dedutoScore
         <music21.stream.Opus ...>
-        >>> #_DOCS_SHOW dedutoScore.show('lily.png')
+        >>> # _DOCS_SHOW dedutoScore.show('lily.png')
         '''
         o = stream.Opus()
         md = metadata.Metadata()
@@ -426,7 +417,7 @@ class TrecentoCadenceWork:
         '''
         returns all snippets as a score chunk
 
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> deduto = BallataSheet().workByTitle('deduto')
         >>> deduto.title
         'Deduto sey a quel'
@@ -497,6 +488,7 @@ class TrecentoCadenceWork:
         Returns None if the piece or timeSignature is
         undefined
 
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> bs = BallataSheet()
         >>> accur = bs.makeWork(2)
         >>> accurIncipit = accur.incipit
@@ -516,8 +508,7 @@ class TrecentoCadenceWork:
         returns a list of bits of music notation that are not the actual
         incipits of the piece.
 
-
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> bs = BallataSheet()
         >>> accur = bs.makeWork(2)
         >>> accurSnippets = accur.getOtherSnippets()
@@ -555,7 +546,7 @@ class TrecentoCadenceWork:
         gets a "snippet" which is a collection of up to 3 lines of music, a timeSignature
         and a description of the cadence.
 
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> bs = BallataSheet()
         >>> accur = bs.makeWork(2)
         >>> print(accur.getSnippetAtPosition(12))
@@ -580,8 +571,7 @@ class TrecentoCadenceWork:
         :class:`~trecentoCadence.TrecentoCadenceStream` notation)
         and returns a list of Streams and other information
 
-
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> block1 = ['e4 f g a', 'g4 a b cc', '', 'no-cadence', '2/4']
         >>> bs = BallataSheet()
         >>> dummyPiece = bs.makeWork(2)
@@ -681,7 +671,7 @@ class TrecentoCadenceWork:
         Get all streams in the work as a List, losing association with
         the other polyphonic units.
 
-
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> b = BallataSheet().makeWork(20)
         >>> sList = b.getAllStreams()
         >>> sList
@@ -702,6 +692,7 @@ class TrecentoCadenceWork:
         returns a nicely formatted string giving the page numbers in PMFC where the piece
         can be found
 
+        >>> from music21_tools.trecento.cadencebook import BallataSheet
         >>> bs = BallataSheet()
         >>> altroCheSospirar = bs.makeWork(4)
         >>> altroCheSospirar.title

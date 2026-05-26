@@ -27,14 +27,15 @@ class PolyphonicSnippet(stream.Score):
     The fourth is the cadence type (optional), the fifth is the time signature
     if not the same as the time signature of the parentPiece.
 
-    >>> from . import trecentoCadence
-    >>> cantus = trecentoCadence.CadenceConverter(
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
+    >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
+    >>> from music21_tools.trecento.trecentoCadence import CadenceConverter
+    >>> cantus = CadenceConverter(
     ...         "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
-    >>> tenor = trecentoCadence.CadenceConverter("6/8 F1. f2. e4. d").parse().stream
-    >>> from . import cadencebook
+    >>> tenor = CadenceConverter("6/8 F1. f2. e4. d").parse().stream
     >>> ps = PolyphonicSnippet(
     ...         [cantus, tenor, None, "8-8", "6/8"],
-    ...         parentPiece=cadencebook.BallataSheet().makeWork(3))
+    ...         parentPiece=BallataSheet().makeWork(3))
     >>> ps.elements
     (<music21.metadata.Metadata object at 0x...>, <music21.stream.Part C>, <music21.stream.Part T>)
 
@@ -64,6 +65,7 @@ class PolyphonicSnippet(stream.Score):
     >>> ps2.elements
     ()
 
+    >>> from music21_tools.trecento.polyphonicSnippet import Incipit
     >>> dummy2 = Incipit()
     >>> dummy2.elements
     ()
@@ -161,7 +163,7 @@ class PolyphonicSnippet(stream.Score):
         returns the length. (in quarterLengths) for the longest line
         in the parts
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
         >>> s1 = stream.Part([note.Note(type='whole')])
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
@@ -169,7 +171,6 @@ class PolyphonicSnippet(stream.Score):
         >>> ps = PolyphonicSnippet(fiveExcelRows)
         >>> ps.findLongestCadence()
         4.0
-
         '''
         longestLineLength = 0
         for thisStream in self.parts:
@@ -185,6 +186,7 @@ class PolyphonicSnippet(stream.Score):
         '''
         returns the number of measures short that each stream is compared to the longest stream.
 
+        >>> from music21_tools.trecento.polyphonicSnippet import PolyphonicSnippet
         >>> s1 = stream.Part([note.Note(type='whole')])
         >>> s2 = stream.Part([note.Note(type='half')])
         >>> s3 = stream.Part([note.Note(type='quarter')])
@@ -199,14 +201,11 @@ class PolyphonicSnippet(stream.Score):
         >>> ps.measuresShort(s1)
         0.0
         '''
-
-
         timeSigLength = self.timeSig.barDuration.quarterLength
         thisStreamLength = thisStream.duration.quarterLength
         shortness = self.findLongestCadence() - thisStreamLength
         shortmeasures = shortness / timeSigLength
         return shortmeasures
-
 
 
 class Incipit(PolyphonicSnippet):
@@ -217,7 +216,7 @@ class Incipit(PolyphonicSnippet):
         Pads a Stream with a bunch of rests at the
         end to make it the same length as the longest line
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import Incipit
         >>> ts = meter.TimeSignature('1/4')
         >>> s1 = stream.Part([ts])
         >>> s1.repeatAppend(note.Note(type='quarter'), 4)
@@ -240,7 +239,6 @@ class Incipit(PolyphonicSnippet):
         {3.0} <music21.stream.Measure 4 offset=3.0>
             {0.0} <music21.note.Rest quarter>
             {1.0} <music21.bar.Barline type=final>
-
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
@@ -275,15 +273,15 @@ class Incipit(PolyphonicSnippet):
                 lastMeasure.rightBarline = oldRightBarline
 
 
-
 class FrontPaddedSnippet(PolyphonicSnippet):
     snippetName = ''
 
     def frontPadLine(self, thisStream):
-        '''Pads a line with a bunch of rests at the
+        '''
+        Pads a line with a bunch of rests at the
         front to make it the same length as the longest line
 
-
+        >>> from music21_tools.trecento.polyphonicSnippet import FrontPaddedSnippet
         >>> ts = meter.TimeSignature('1/4')
         >>> s1 = stream.Part([ts])
         >>> s1.repeatAppend(note.Note(type='quarter'), 4)
@@ -306,7 +304,6 @@ class FrontPaddedSnippet(PolyphonicSnippet):
         {3.0} <music21.stream.Measure 4 offset=3.0>
             {0.0} <music21.note.Note C>
             {1.0} <music21.bar.Barline type=final>
-
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
@@ -325,7 +322,6 @@ class FrontPaddedSnippet(PolyphonicSnippet):
             else:
                 for thisNote in thisStream.iter.notesAndRests:
                     thisNote.setOffsetBySite(thisStream, thisStream.elementOffset(m) + offsetShift)
-
 
             for i in range(shortMeasures):
                 newRest = note.Rest()
@@ -355,10 +351,6 @@ class FrontPaddedSnippet(PolyphonicSnippet):
                         newFirstM.insert(nOffset, n)
 
 
-
-
-
-
 class Test(unittest.TestCase):
     pass
 
@@ -366,7 +358,8 @@ class Test(unittest.TestCase):
         pass
 
     def testCopyAndDeepcopy(self):
-        '''Test copying all objects defined in this module
+        '''
+        Test copying all objects defined in this module
         '''
         import sys
         for part in sys.modules[self.__module__].__dict__:
@@ -388,6 +381,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def runTest(self):
         pass
+
     def testLily(self):
         from . import trecentoCadence, cadencebook
         cantus = trecentoCadence.CadenceConverter(

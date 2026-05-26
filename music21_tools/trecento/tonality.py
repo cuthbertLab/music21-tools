@@ -28,14 +28,12 @@ from . import cadencebook
 class TonalityCounter:
     '''
     The TonalityCounter object takes a list of Trecento Works
-    (defined in music21.trecento.cadencebook) and when run()
+    (defined in music21_tools.trecento.cadencebook) and when run()
     is called, stores a set of information about the cadence
     tonalities of the works.
 
-
     streamName can be "C" (cantus), "T" (tenor, default), or "Ct"
     (contratenor), or very rarely "4" (fourth voice).
-
 
     cadenceName can be "A" or "B" (which by default uses the
     second ending of cadence B if there are two endings) or
@@ -44,15 +42,14 @@ class TonalityCounter:
     want the Amen no matter how many internal cadences there
     are).
 
-
     This example takes three ballata and how that all three of
     them cadence on a different note than they began on.  All
     three cadence on D despite beginning on C, A, and B (or B
-    flat) repsectively.
+    flat) respectively.
 
-
-    >>> from music21_tools.trecento import cadencebook
-    >>> threeBallata = cadencebook.BallataSheet()[15:18]
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
+    >>> from music21_tools.trecento.tonality import TonalityCounter
+    >>> threeBallata = BallataSheet()[15:18]
     >>> tc1 = TonalityCounter(threeBallata)
     >>> tc1.run()
     >>> print(tc1.output)
@@ -160,17 +157,15 @@ def landiniTonality(show=True):
     generates information about the tonality of Landini's ballate using
     the tenor (streamName = "T") and the A cadence (which we would believe
     would end the piece)
-
     '''
-
-    ballataObj  = cadencebook.BallataSheet()
+    ballataObj = cadencebook.BallataSheet()
     worksList = []
     for thisWork in ballataObj:
         if thisWork.composer == 'Landini':
             worksList.append(thisWork)
-    tCounter = TonalityCounter(worksList, streamName = 'T', cadenceName = 'A')
+    tCounter = TonalityCounter(worksList, streamName='T', cadenceName='A')
     tCounter.run()
-    if show is True:
+    if show:
         print(tCounter.output)
 
 def nonLandiniTonality(show=True):
@@ -181,6 +176,7 @@ def nonLandiniTonality(show=True):
     would end the piece)
 
 
+    >>> from music21_tools import trecento
     >>> #_DOCS_SHOW trecento.tonality.nonLandiniTonality(show=True)
 
 

@@ -49,7 +49,7 @@ class CadenceConverter(tinyNotation.Converter):
     '''
     Subclass of Tiny Notation that calls these tokens instead of the defaults
 
-
+    >>> from music21_tools.trecento.trecentoCadence import CadenceConverter
     >>> dLucaGloriaIncipit = CadenceConverter(
     ...     "6/8 c'2. d'8 c'4 a8 f4 f8 a4 c'4 c'8").parse().stream
     >>> dLucaGloriaIncipit.rightBarline = 'final'

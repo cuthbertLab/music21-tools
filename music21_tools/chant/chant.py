@@ -81,6 +81,7 @@ class GregorianStream(stream.Stream):
 
     def clefToGABC(self, clefIn):
         '''
+        >>> from music21_tools.chant.chant import GregorianStream
         >>> s = GregorianStream()
         >>> c = clef.AltoClef()
         >>> s.clefToGABC(c)
@@ -95,13 +96,11 @@ class GregorianNote(note.Note):
     contains extra attributes which represent the interpretation or
     graphical representation of the note.
 
-
     Most of the attributes default to False.  Exceptions are noted below.
-
 
     Example: a very special note.
 
-
+    >>> from music21_tools.chant.chant import GregorianNote
     >>> n = GregorianNote("C4")
     >>> n.liquescent = True
     >>> n.quilisma = True
@@ -204,6 +203,7 @@ class GregorianNote(note.Note):
 
         see http://home.gna.org/gregorio/gabc/ for more details.  'd' = lowest line
 
+        >>> from music21_tools.chant.chant import GregorianNote
         >>> n = GregorianNote("C4")
         >>> c = clef.AltoClef()
         >>> n.toBasicGABC(c)
@@ -330,6 +330,7 @@ class BaseScoreConverter:
     def writeFile(self, text=None):
         '''
 
+        >>> from music21_tools.chant.chant import BaseScoreConverter
         >>> bsc = BaseScoreConverter()
         >>> filePath = bsc.writeFile('hello')
         >>> assert(str(filePath).endswith('.gabc'))  # _DOCS_HIDE
@@ -353,6 +354,7 @@ class BaseScoreConverter:
         converts a .gabc file to LaTeX using the
         gregorio converter.  Returns the filename with .tex substituted for .gabc
 
+        >>> from music21_tools.chant.chant import BaseScoreConverter
         >>> bsc = BaseScoreConverter()
         >>> fn = '~cuthbert/Library/Gregorio/examples/Populas.gabc'
         >>> # _DOCS_SHOW newFp = bsc.launchGregorio(fn)
@@ -465,7 +467,7 @@ SCOREGOESHERE
         r'''
         Puts the correct information into the TeXWrapper for the document
 
-
+        >>> from music21_tools.chant.chant import DefaultTeXWrapper
         >>> wrapper = DefaultTeXWrapper()
         >>> class Converter():
         ...    score = r'\note{C}' + "\n" + r'\endgregorioscore %' + "\n" + r'\endinput %'

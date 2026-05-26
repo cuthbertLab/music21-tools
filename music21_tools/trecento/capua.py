@@ -59,9 +59,11 @@ def applyCapuaToCadencebookWork(thisWork):
     :class:`~music21.alpha.trecento.polyphonicSnippet.PolyphonicSnippet` objects
     (a Score subclass)
 
+    >>> from music21_tools.trecento.capua import applyCapuaToCadencebookWork, capuaFictaToAccidental
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
     >>> import copy
 
-    >>> b = cadencebook.BallataSheet().makeWork(331)  # Francesco, Non Creder Donna
+    >>> b = BallataSheet().makeWork(331)  # Francesco, Non Creder Donna
     >>> bOrig = copy.deepcopy(b)
     >>> applyCapuaToCadencebookWork(b)
     >>> bFN = b.asScore().flatten().notes
@@ -573,8 +575,10 @@ def compareThreeFictas(srcStream1, srcStream2):
 
     srcStream1 and srcStream2 should be .flatten().notesAndRests
 
-    >>> b = cadencebook.BallataSheet().makeWork(331).asScore()
-    >>> #_DOCS_SHOW b.show()
+    >>> from music21_tools.trecento.capua import applyCapuaToStream, compareThreeFictas
+    >>> from music21_tools.trecento.cadencebook import BallataSheet
+    >>> b = BallataSheet().makeWork(331).asScore()
+    >>> # _DOCS_SHOW b.show()
     >>> b0n = b.parts[0].flatten().notesAndRests.stream()
     >>> b1n = b.parts[1].flatten().notesAndRests.stream()
     >>> applyCapuaToStream(b0n)

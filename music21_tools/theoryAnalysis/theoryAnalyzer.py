@@ -48,6 +48,7 @@ a direct pointer to the original object in the score.
 You can then iterate through these objects and access the attributes directly. Here is an example
 of this that will analyze the root motion in a score::
 
+    >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
     >>> from music21 import harmony
     >>> p = corpus.parse('leadsheet').flatten().getElementsByClass('Harmony').stream()
     >>> p = harmony.realizeChordSymbolDurations(p)
@@ -209,6 +210,7 @@ class Analyzer:
 
         also adds to any embedded Streams...
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> p = stream.Part()
         >>> s = stream.Score()
         >>> s.insert(0, p)
@@ -243,6 +245,7 @@ class Analyzer:
         to determine what vertical slices to take. Default is to return only objects of
         type Note, Chord, Harmony, and Rest.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> n1 = note.Note('c5')
         >>> n1.quarterLength = 4
         >>> n2 = note.Note('f4')
@@ -345,6 +348,7 @@ class Analyzer:
         extracts and returns a list of the :class:`~music21.voiceLeading.VoiceLeadingQuartet`
         objects present between partNum1 and partNum2 in the score
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -389,6 +393,7 @@ class Analyzer:
         objects present in partNum in the score (three note linear segments are made up of ONLY
         three notes)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -436,6 +441,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -538,6 +544,7 @@ class Analyzer:
         :class:`~music21.voiceLeading.VerticalityNTuplet` or the
         corresponding subclass (currently only supports triplets)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part1 = stream.Part()
@@ -591,6 +598,7 @@ class Analyzer:
         returns a list of all the harmonic intervals (:class:`~music21.interval.Interval` )
         occurring between the two specified parts.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('e4'))
@@ -630,6 +638,7 @@ class Analyzer:
         returns a list of all the melodic intervals (:class:`~music21.interval.Interval`)
         in the specified part.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c4'))
@@ -664,6 +673,7 @@ class Analyzer:
         returns a list of notes present in the score. If Rests are present,
         appends None to the list
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> p = stream.Part()
         >>> p.repeatAppend(note.Note('C'), 3)
@@ -695,6 +705,7 @@ class Analyzer:
         Gets a list of all possible pairs of partNumbers:
         tuples (partNum1, partNum2) where 0 <= partNum1 < partnum2 < numParts
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> part0.append(note.Note('c5'))
@@ -946,6 +957,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -992,6 +1004,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1040,6 +1053,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1082,6 +1096,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1122,6 +1137,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1174,6 +1190,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1221,6 +1238,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1268,6 +1286,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1317,6 +1336,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1360,6 +1380,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1396,6 +1417,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1442,6 +1464,7 @@ class Analyzer:
         :class:`~music21.editorial.NoteEditorial` value of
         editorialValue at ``note.editorial.[editorialDictKey]``
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1483,6 +1506,7 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified by
         :meth:`~music21.voiceLeading.VerticalityTriplet.hasPassingTone`
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1523,6 +1547,7 @@ class Analyzer:
         returns a list of all passing tones present in the score, as identified
         by :meth:`~music21.voiceLeading.VerticalityTriplet.hasNeighborTone`
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1564,6 +1589,7 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1609,6 +1635,7 @@ class Analyzer:
         extending note duraitons
         (method under development)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1659,6 +1686,7 @@ class Analyzer:
         on weak beats). unaccentedOnly
         by default set to True
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> from music21 import *
         >>> sc = stream.Score()
         >>> sc.insert(0, meter.TimeSignature('2/4'))
@@ -1709,6 +1737,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1756,6 +1785,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1832,6 +1862,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -1972,6 +2003,7 @@ class Analyzer:
         slice at offset 0, 6, and 7
         in the piece, pass ``responseOffsetMap=[0, 6, 7]``
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2075,6 +2107,7 @@ class Analyzer:
         created with ``.value`` set to the string most commonly
         used to identify the interval (0 through 9, with A4 and d5)
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2124,6 +2157,7 @@ class Analyzer:
         '''
         identify all the scale degrees in the score in partNum, or if not specified ALL partNums
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2174,6 +2208,7 @@ class Analyzer:
 
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2250,6 +2285,7 @@ class Analyzer:
         returns string of all results found by calling all
         identify methods on the TheoryAnalyzer score
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> part0 = stream.Part()
         >>> p0measure1 = stream.Measure(number=1)
@@ -2330,6 +2366,7 @@ class Analyzer:
         you'd like removed. Pass in a list of dictKeys or just a single dictionary key.
 
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> sc = stream.Score()
         >>> ads = Analyzer()
         >>> ads.addAnalysisData(sc)
@@ -2337,7 +2374,7 @@ class Analyzer:
         ...        'h1':'another sample response', '5':'third sample response'}
         >>> ads.removeFromAnalysisData(sc, 'sampleDictKey')
         >>> for k in sorted(list(ads.store[sc.id]['ResultDict'].keys())):
-        ...     print("{0}\t{1}".format(k, ads.store[sc.id]['ResultDict'][k]))
+        ...     print("{0}	{1}".format(k, ads.store[sc.id]['ResultDict'][k]))
         5   third sample response
         h1  another sample response
 
@@ -2386,6 +2423,7 @@ class Analyzer:
         for analysis purposes only - no key object is actually added to the score.
         Check the music xml to verify measure numbers; pickup measures are usually 0.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> n1 = note.Note('c5')
         >>> n1.quarterLength = 4
         >>> n2 = note.Note('f4')
@@ -2418,6 +2456,7 @@ class Analyzer:
         uses keyMeasureMap to return music21 key object. If keyMeasureMap not specified,
         returns key analysis of theory score as a whole.
 
+        >>> from music21_tools.theoryAnalysis.theoryAnalyzer import Analyzer
         >>> s = stream.Score()
 
         >>> ads = Analyzer()

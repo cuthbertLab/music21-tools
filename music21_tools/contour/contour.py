@@ -14,7 +14,7 @@ This module defines the ContourFinder and AggregateContour objects.
 import random
 import unittest
 
-from music21 import base # for _missingImport testing.
+from music21 import base  # for _missingImport testing.
 from music21 import repeat
 from music21 import exceptions21
 from music21 import corpus
@@ -64,6 +64,7 @@ class ContourFinder:
     M and n are specified by 'window' and 'slide', which are both 1 by default.
 
 
+    >>> from music21_tools.contour.contour import ContourFinder
     >>> s = corpus.parse('bwv29.8')
     >>> tonalContour = ContourFinder(s).getContour('tonality')
     >>> isinstance(tonalContour, dict)
@@ -79,14 +80,15 @@ class ContourFinder:
         self.sChords = None  # lazy evaluation...
         self.key = None
 
-        self._contours = { }  # A dictionary mapping a contour type to a normalized contour dictionary
+        # A dictionary mapping a contour type to a normalized contour dictionary
+        self._contours = {}
 
         # self.metrics contains a dictionary mapping the name of a metric to a tuple (x,y)
         # where x=metric function and y=needsChordify
 
         self._metrics = {'dissonance': (self.dissonanceMetric, True),
                          'spacing': (self.spacingMetric, True),
-                        'tonality': (self.tonalDistanceMetric, False) }
+                         'tonality': (self.tonalDistanceMetric, False) }
         self.isContourFinder = True
 
 
@@ -94,7 +96,6 @@ class ContourFinder:
         '''
         Sets the key of ContourFinder's internal stream.  If not set manually, self.key will
         be determined by self.s.analyze('key').
-
         '''
         self.key = key
 
@@ -114,6 +115,7 @@ class ContourFinder:
         measures 3-6: f(measures 3-6),
         measures 5-8: f( measures5-8), ...}
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> metric = lambda s: len(s.measureOffsetMap())
         >>> c = corpus.parse('bwv10.7')
         >>> res = ContourFinder(c).getContourValuesForMetric(metric, 3, 2, False)
@@ -184,6 +186,7 @@ class ContourFinder:
         use normalized=False (the default), but to get a contour
         which evenly divides time between 1.0 and 100.0, use normalized=True
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> cf = ContourFinder( corpus.parse('bwv10.7'))
         >>> mycontour = cf.getContour('dissonance')
         >>> [mycontour[x] for x in sorted(mycontour.keys())]  # doctest: +NORMALIZE_WHITESPACE
@@ -196,7 +199,7 @@ class ContourFinder:
 
         >>> mycontour = cf.getContour('spacing', metric = lambda x: 2, overwrite=False)
         Traceback (most recent call last):
-        contour.OverwriteException: Attempted to overwrite 'spacing' metric but did not specify overwrite=True
+        music21_tools.contour.contour.OverwriteException: Attempted to overwrite 'spacing' metric but did not specify overwrite=True
 
         >>> mycontour = cf.getContour('spacing', slide=3, metric = lambda x: 2.0, overwrite=True)
         >>> [mycontour[x] for x in sorted(mycontour.keys())]
@@ -251,6 +254,7 @@ class ContourFinder:
         '''
         Normalize a contour dictionary so that the values of the keys range from 0.0 to length.
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> mycontour = { 0.0: 1.0, 3.0: 0.5, 6.0: 0.8, 9.0: 0.3, 12.0: 0.15,
         ...            15.0: 0.13, 18.0: 0.4, 21.0: 0.6 }
         >>> res = ContourFinder()._normalizeContour(mycontour, 100)
@@ -275,7 +279,7 @@ class ContourFinder:
         myKeys.sort()
         numKeys = len(myKeys)
 
-        spacing = (maxKey) / (numKeys - 1.0)
+        spacing = maxKey / (numKeys - 1.0)
         res = {}
         i = 0.0
 
@@ -331,6 +335,7 @@ class ContourFinder:
         Returns a version of contourDict where the keys-to-values mapping is scrambled.
 
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> myDict = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 11:11, 12:12, 13:13,
         ...           14:14, 15:15, 16:16, 17:17, 18:18, 19:19, 20:20}
         >>> res = ContourFinder().randomize(myDict)
@@ -388,6 +393,7 @@ class ContourFinder:
         To work correctly, input must contain measures and no parts.
 
 
+        >>> from music21_tools.contour.contour import ContourFinder
         >>> c = corpus.parse('bwv102.7').chordify()
         >>> ContourFinder().dissonanceMetric( c.measures(1, 1) )
         0.25
@@ -423,16 +429,10 @@ class ContourFinder:
         return self._calcGenericMetric(inpStream, spacingForChord)
 
 
-
     def tonalDistanceMetric(self, inpStream):
         '''
         Returns a number between 0.0 and 1.0 that is a measure of how far away the key of
         inpStream is from the key of ContourFinder's internal stream.
-
-        Music21 v10's discrete analyzer now strictly raises
-        :class:`~music21.analysis.discrete.DiscreteAnalysisException` when a
-        fragment has too few pitches for Krumhansl-Schmuckler analysis to find any
-        candidate keys; in that case this method returns 0.5 (neutral).
         '''
         from music21.analysis.discrete import DiscreteAnalysisException
 
@@ -442,6 +442,7 @@ class ContourFinder:
         try:
             guessedKey = inpStream.analyze('key')
         except DiscreteAnalysisException:
+            # music21 raises exception when stream has no notes. 
             return 0.5
 
         certainty = -2  # should be replaced by a value between -1 and 1

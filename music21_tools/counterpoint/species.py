@@ -56,6 +56,7 @@ class ModalCounterpoint:
         any note that has harmonic interval of a fifth and is preceded by a
         harmonic interval of a fifth.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
@@ -103,6 +104,7 @@ class ModalCounterpoint:
         where the two streams reach a fifth through parallel motion, but is
         not a parallel fifth.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
@@ -143,6 +145,7 @@ class ModalCounterpoint:
         (i.e. argument order is isParallelFifth(v1n1, v1n2, v2n1, v2n2)),
         returns True if the two harmonic intervals are P5 and False otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('B-3')
@@ -172,6 +175,7 @@ class ModalCounterpoint:
         is isHiddenFifth(v1n1, v1n2, v2n1, v2n2)), returns True if
         there is a hidden fifth and false otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('B-3')
@@ -214,6 +218,7 @@ class ModalCounterpoint:
         any note that has harmonic interval of an octave and is preceded by a
         harmonic interval of an octave.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G3')
         >>> n2 = note.Note('A3')
@@ -267,6 +272,7 @@ class ModalCounterpoint:
         anything where the two streams reach an octave through parallel motion,
         but is not a parallel octave.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('F3')
         >>> n2 = note.Note('A3')
@@ -313,6 +319,7 @@ class ModalCounterpoint:
         isParallelOctave(v1n1, v1n2, v2n1, v2n2)), returns True if the two
         harmonic intervals are P8 and False otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
@@ -344,6 +351,7 @@ class ModalCounterpoint:
         (i.e. argument order is isHiddenOctave(v1n1, v1n2, v2n1, v2n2))
         returns True if there is a hidden octave and false otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
@@ -384,6 +392,7 @@ class ModalCounterpoint:
         assigns a flag under note.editorial["parallelUnison"] for
         any note that has harmonic interval of P1 and is preceded by a P1.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -430,6 +439,7 @@ class ModalCounterpoint:
         isParallelFifth(v1n1, v1n2, v2n1, v2n2)) returns True if the two
         harmonic intervals are P1 and False otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('A3')
         >>> n2 = note.Note('B-3')
@@ -461,6 +471,7 @@ class ModalCounterpoint:
         "legal" according to 21M.301 rules of counterpoint. Legal harmonic
         intervals include 'P1', 'P5', 'P8', 'm3', 'M3', 'm6', and 'M6'.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
@@ -488,6 +499,7 @@ class ModalCounterpoint:
         'm6', and 'M6', from before. 'P4' is now included because it is legal
         for middle harmonies.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
@@ -516,6 +528,7 @@ class ModalCounterpoint:
         include 'P1', 'P5', 'P8', 'm3', 'M3', 'm6', and 'M6'. Also assumes that
         final interval must be a perfect unison or octave.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -573,6 +586,7 @@ class ModalCounterpoint:
         middle voices, 'P4' is also allowed and the final interval is allowed
         to be a fifth.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -614,6 +628,7 @@ class ModalCounterpoint:
         '''Given two simultaneous streams, counts the number of notes (in the
         first stream given) that create illegal harmonies when attacked.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G4')
         >>> n2 = note.Note('A4')
@@ -649,6 +664,7 @@ class ModalCounterpoint:
 
         SHOULD BE RENAMED isValidMelody?
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> c = note.Note('C4')
         >>> d = note.Note('D4')
@@ -675,6 +691,7 @@ class ModalCounterpoint:
 
         SHOULD BE RENAMED allValidMelody?
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G-4')
         >>> n2 = note.Note('A4')
@@ -709,6 +726,7 @@ class ModalCounterpoint:
 
         SHOULD BE RENAMED countBadMelodies?
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('G-4')
         >>> n2 = note.Note('A4')
@@ -746,6 +764,7 @@ class ModalCounterpoint:
         and also puts the appropriate tags in note.editorial under
         `.parallelFifth` and `.hiddenFifth`.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('D4')
@@ -773,6 +792,7 @@ class ModalCounterpoint:
         and also puts the appropriate tags in note.editorial under
         `.parallelOctave` and `.hiddenOctave`.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('D4')
@@ -799,6 +819,7 @@ class ModalCounterpoint:
         number of consecutive harmonic thirds exceeds the limit and False
         otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('E4')
         >>> n2 = note.Note('F4')
@@ -869,6 +890,7 @@ class ModalCounterpoint:
         number of consecutive harmonic sixths exceeds the limit and False
         otherwise.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('E4')
         >>> n2 = note.Note('F4')
@@ -938,6 +960,7 @@ class ModalCounterpoint:
         stream that raises all the leading tones of the original stream. Also
         raises the sixth if applicable to avoid augmented intervals.
 
+        >>> from music21_tools.counterpoint.species import ModalCounterpoint
         >>> from music21 import *
         >>> n1 = note.Note('C4')
         >>> n2 = note.Note('G4')
