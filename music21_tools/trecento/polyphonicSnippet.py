@@ -137,10 +137,10 @@ class PolyphonicSnippet(stream.Score):
     def header(self):
         '''returns a string that prints an appropriate header for this cadence'''
         if self.snippetName == '':
-            if self.parentPiece is not None
+            if self.parentPiece is not None:
                 headOut = ''
                 parentPiece = self.parentPiece
-                if parentPiece.fischerNum
+                if parentPiece.fischerNum:
                     headOut += str(parentPiece.fischerNum) + '. '
                 if parentPiece.title:
                     headOut += parentPiece.title
@@ -151,7 +151,7 @@ class PolyphonicSnippet(stream.Score):
             else:
                 return ''
         else:
-            if self.parentPiece is not None
+            if self.parentPiece is not None:
                 headOut = self.parentPiece.title + ' -- ' + self.snippetName
             else:
                 return self.snippetName
@@ -244,7 +244,7 @@ class Incipit(PolyphonicSnippet):
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
-        if shortMeasures > 0
+        if shortMeasures:
             shortDuration = self.timeSig.barDuration
             hasMeasures = thisStream.hasMeasures()
             if hasMeasures:
@@ -310,7 +310,7 @@ class FrontPaddedSnippet(PolyphonicSnippet):
         '''
         shortMeasures = int(self.measuresShort(thisStream))
 
-        if shortMeasures > 0
+        if shortMeasures:
             shortDuration = self.timeSig.barDuration
             offsetShift = shortDuration.quarterLength * shortMeasures
             hasMeasures = thisStream.hasMeasures()
