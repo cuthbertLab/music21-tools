@@ -583,7 +583,6 @@ class MensuralRest(GeneralMensuralNote, note.Rest):
         self._gettingDuration = False
         self._mensuralType = 'brevis'
 
-            else:
         tOrA = mensuralTypeOrAbbr
         if tOrA in _validMensuralTypes:
             self._mensuralType = tOrA
