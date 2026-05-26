@@ -1769,30 +1769,30 @@ def breakMensuralStreamIntoBrevisLengths(inpStream, inpMOrD=None, printUpdates=F
     inpStream_copy = copy.deepcopy(inpStream)  # Preserve your input
     newStream = inpStream.__class__()
 
-    def isHigherInhierarchy(l, u):
+    def isHigherInhierarchy(lower, upper):
         hierarchy = ['Stream', 'Score',  'Part', 'Measure']
-        uclass0 = None
-        for tryClass in u.classes:
+        upperClass = None
+        for tryClass in upper.classes:
             if tryClass in hierarchy:
-                uclass0 = tryClass
+                upperClass = tryClass
                 break
 
-        lclass0 = None
-        for tryClass in l.classes:
+        lowerClass = None
+        for tryClass in lower.classes:
             if tryClass in hierarchy:
-                lclass0 = tryClass
+                lowerClass = tryClass
                 break
 
 
-        if uclass0 is None:
-            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (u))
-        if lclass0 is None:
-            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (l))
+        if upperClass is None:
+            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (upper))
+        if lowerClass is None:
+            raise MedRenException('Cannot find class in our hierarchy of streams: %s' % (lower))
 
-        if hierarchy.index(uclass0) == 0:
+        if hierarchy.index(upperClass) == 0:
             return False
         else:
-            return hierarchy.index(lclass0) <= hierarchy.index(uclass0)
+            return hierarchy.index(lowerClass) <= hierarchy.index(upperClass)
 
     tempStream_1, tempStream_2 = inpStream_copy.splitByClass(None, lambda x: x.isStream)
     if tempStream_1:
@@ -2054,8 +2054,8 @@ def cummingSchubertStrettoFuga(score):
         print(score.title)
 
     print('intv.\tcount\tpercent')
-    for l in sorted(strettoKeys):
-        print('%2d\t%3d\t%2d%%' % (l, strettoKeys[l], strettoKeys[l] * 100 / len(sn) - 1))
+    for intv in sorted(strettoKeys):
+        print('%2d\t%3d\t%2d%%' % (intv, strettoKeys[intv], strettoKeys[intv] * 100 / len(sn) - 1))
     print('\n')
 
 class MedRenException(exceptions21.Music21Exception):

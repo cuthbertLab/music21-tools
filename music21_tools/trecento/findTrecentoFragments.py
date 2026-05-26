@@ -241,10 +241,10 @@ def audioVirelaiSearch():
     # from music21 import converter
     # searchScore = converter.parse("c'4 a8 a4 g8 b4. d'4. c8 b a g f4", '6/8')
     # searchScore.show()
-    l = search.approximateNoteSearch(searchScore, virelaiCantuses)
-    for i in l:
-        print(i.metadata.title, i.matchProbability)
-    l[0].show()
+    matches = search.approximateNoteSearch(searchScore, virelaiCantuses)
+    for match in matches:
+        print(match.metadata.title, match.matchProbability)
+    matches[0].show()
 
 def findSimilarGloriaParts():
     '''

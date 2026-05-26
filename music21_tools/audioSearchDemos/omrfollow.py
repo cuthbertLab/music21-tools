@@ -86,16 +86,16 @@ def recognizeScore(scorePart, pageMeasureNumbers, iterations=1):
             time.sleep(3)
         searchScore = audioSearch.transcriber.runTranscribe(show=False, plot=False,
                                                             seconds=15.0, saveFile=False)
-        l = search.approximateNoteSearch(searchScore, allStreams)
+        matches = search.approximateNoteSearch(searchScore, allStreams)
 
         scores = [0 for j in range(len(pages))]
         for i in range(8): # top 8 searches
-            topStream = l[i]
+            topStream = matches[i]
             scorePage = topStream.pageNumber - 1
             scores[scorePage] += (topStream.matchProbability / (i + 1.5)) * 10
 
         print('\nBest guesses (pg#, starting measure, probability)')
-        for i, st in enumerate(l):
+        for i, st in enumerate(matches):
             print(st.pageNumber, st.startMeasure, st.matchProbability)
             if i >= 7:
                 break

@@ -91,13 +91,13 @@ def generateSmoothBassLine(harmonyObjects):
         octavePlus = interval.Interval(lastBass, copy.deepcopy(cs.bass()))
         cs.bass().octave = cs.bass().octave - 2
         octaveMinus = interval.Interval(lastBass, copy.deepcopy(cs.bass()))
-        l = [sameOctave, octavePlus, octaveMinus]
+        candidates = [sameOctave, octavePlus, octaveMinus]
         minimum = sameOctave.generic.undirected
         ret = sameOctave
-        for i in l:
-            if i.generic.undirected < minimum:
-                minimum = i.generic.undirected
-                ret = i
+        for candidate in candidates:
+            if candidate.generic.undirected < minimum:
+                minimum = candidate.generic.undirected
+                ret = candidate
 
         if ret.noteEnd.octave > 3 or ret.noteEnd.octave < 1:
             ret.noteEnd.octave = lastBass.octave

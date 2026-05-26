@@ -530,9 +530,9 @@ class TestExternal(unittest.TestCase): # pragma: no cover
         s.append(clef.AltoClef())
 
         n = GregorianNote('C4')
-        l = note.Lyric('Po')
-        l.syllabic = 'begin'
-        n.lyrics.append(l)
+        lyric = note.Lyric('Po')
+        lyric.syllabic = 'begin'
+        n.lyrics.append(lyric)
         n.oriscus = True
         s.append(n)
         n2 = GregorianNote('D4')

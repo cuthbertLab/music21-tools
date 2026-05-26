@@ -925,8 +925,8 @@ class BrevisLengthTranslator:
         remain = lenRem
         lenRem_final  = lenRem
 
-        for l in _allCombinations(change, change_num):
-            for i in l:
+        for combo in _allCombinations(change, change_num):
+            for i in combo:
                 lengths_changeable[i] += diff
                 if release is not None:
                     lengths_changeable[release] -= diff
@@ -1155,7 +1155,7 @@ class BrevisLengthTranslator:
             except TypeError:
                 raise TypeError('ml is screwed up! %s' % ml)
 
-        return [float(l) for l in knownLengthsList]
+        return [float(length) for length in knownLengthsList]
 
     def translateDivI(self, unchangeableNoteLengthsList=None, unknownLengthsDict=None, minRem=None):
         '''
