@@ -55,7 +55,12 @@ default-groups = ["dev"]
 packages = ['music21_tools']
 
 [tool.pytest.ini_options]
+# `uv run pytest` is equivalent to:
+#     pytest --doctest-modules -o python_files='*.py' music21_tools/
+addopts = ['--doctest-modules']
 doctest_optionflags = ['NORMALIZE_WHITESPACE', 'ELLIPSIS']
+python_files = ['*.py']
+testpaths = ['music21_tools']
 
 [tool.ruff]
 line-length = 100

@@ -42,21 +42,22 @@ under `webapps/`. The project is described in:
 
 ## Running the tests
 
-This project uses [`uv`](https://docs.astral.sh/uv/) and `pytest`. From the
-repository root:
-
 ```sh
-# install (creates .venv/ with music21 >= 10 and dev dependencies)
-uv sync
-
-# run the full test + doctest suite
-uv run pytest --doctest-modules music21_tools/
+uv sync           # one-time: install music21 >= 10 + dev deps
+uv run pytest     # full sweep (doctests + Test classes)
 ```
 
-To test a single module:
+A single module:
 
 ```sh
-uv run pytest --doctest-modules music21_tools/theoryAnalysis/theoryAnalyzer.py
+uv run pytest music21_tools/theoryAnalysis/theoryAnalyzer.py
+```
+
+`TestExternal` (interactive / display) and `TestSlow` (full-corpus) classes are
+skipped by default. Run them one method at a time via `unittest`:
+
+```sh
+uv run python -m unittest music21_tools.chant.chant.TestExternal.testSimpleFile
 ```
 
 

@@ -40,7 +40,7 @@ class MusicaFictaFeature(features.FeatureExtractor):
                 fictaPitches += 1
         self._feature.vector[0] = fictaPitches / len(allPitches)
 
-def testFictaFeature():
+def demoFictaFeature():
     luca = corpus.parse('luca/gloria.mxl')
     fe = MusicaFictaFeature(luca)
     print(fe.extract().vector)
@@ -48,7 +48,7 @@ def testFictaFeature():
     fe.setData(mv)
     print(fe.extract().vector)
 
-def testDataSet():
+def demoDataSet():
     fes = features.extractorsById(['ql1', 'ql2', 'ql3'])
     ds = features.DataSet(classLabel='Composer')
     ds.addFeatureExtractors(fes)
@@ -126,7 +126,7 @@ def prepareChinaEurope2():
     ds2.process()
     ds2.write('d:/desktop/folkTest.tab')
 
-def testChinaEuropeFull():
+def demoChinaEuropeFull():
     import orange
     import orngTree
     data1 = orange.ExampleTable('d:/desktop/1.tab')
@@ -214,7 +214,7 @@ def prepareTrecentoCadences():
     ds2.write('d:/desktop/trecento2.tab')
 
 
-def testTrecentoSimpler():
+def demoTrecentoSimpler():
     import orange
 
     trainData = orange.ExampleTable('d:/desktop/trecento2.tab')
@@ -346,13 +346,13 @@ def fbFeatureExtraction():
 
 if __name__ == '__main__':
     pass
-    # testTrecentoSimpler()
+    # demoTrecentoSimpler()
     # prepareTrecentoCadences()
     # figuredBassScale()
     # fbFeatureExtraction()
     # testChinaEuropeSimpler()
 
     # prepareChinaEurope2()
-    # testDataSet()
-    # testFictaFeature()
+    # demoDataSet()
+    # demoFictaFeature()
     # example2()

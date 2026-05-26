@@ -1071,7 +1071,7 @@ class Test(unittest.TestCase):
                          [
                              ['A', 'P5', None], ['A', 'M6', None],
                              ['G', 'P5', None], ['G', 'm6', None],
-                             ['A', 'm7', None], ['F', 'd5', '<accidental sharp>'],
+                             ['A', 'm7', None], ['F', 'd5', '<music21.pitch.Accidental sharp>'],
                              ['G', 'm6', None], ['A', 'P1', None],
                              ['B', 'M6', None], ['A', 'P5', None],
                              ['G', 'm7', None], ['G', 'm6', None],

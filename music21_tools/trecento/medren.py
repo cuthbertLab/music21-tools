@@ -2142,7 +2142,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         gloriaNew = convertHouseStyle(gloria)
         gloriaNew.show()
 
-def testStretto():
+def demoStretto():
     from music21 import converter
     # salveRegina liber p. 276
     salve = converter.parse('tinyNotation: 4/4 A4 A G A D A G F E F G F E D')

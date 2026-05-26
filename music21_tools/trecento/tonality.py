@@ -323,7 +323,7 @@ def sacredTonality(show=True):
         print(tCounter.output)
         tCounter.displayStream.show('lily.png')
 
-def testAll(show=True, fast=False):
+def runAll(show=True, fast=False):
     sacredTonality(show)
     if fast is False:
         nonLandiniTonality(show)
@@ -332,11 +332,11 @@ def testAll(show=True, fast=False):
 
 class Test(unittest.TestCase):
     def runTest(self):
-        testAll(show=False, fast=True)
+        runAll(show=False, fast=True)
 
 class TestExternal(unittest.TestCase):  # pragma: no cover
     def runTest(self):
-        testAll(show=True, fast=False)
+        runAll(show=True, fast=False)
 
 if __name__ == '__main__':
     import music21
