@@ -51,6 +51,15 @@ class GregorianStream(stream.Stream):
     >>> s.append(n)
     >>> s.toGABCText()
     '(c3) Po(ho)\n'
+
+    A note whose lyric carries no text continues the open syllable rather than
+    starting an empty one:
+
+    >>> n2 = GregorianNote("D4")
+    >>> n2.lyrics.append(note.Lyric(""))
+    >>> s.append(n2)
+    >>> s.toGABCText()
+    '(c3) Po(hoi)\n'
     '''
     def toGABCText(self):
         currentClef = None
@@ -58,7 +67,7 @@ class GregorianStream(stream.Stream):
         startedSyllable = False
         for e in self:
             if hasattr(e, 'isNote') and e.isNote is True:
-                if e.lyrics and e.lyrics[0] != '':
+                if e.lyrics and e.lyrics[0].text:
                     if startedSyllable:
                         outLine += ')'
                         startedSyllable = False
